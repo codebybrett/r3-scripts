@@ -2,7 +2,7 @@ REBOL [
 	Title: "interactive-cmd-server"
 	File: %interactive-cmd-server.r3.r
 	Author: "Brett Handley"
-	Date: 13-Jun-2013
+	Date: 21-Jun-2013
 	Purpose: "Provides a way to interact with an interactive shell command."
 	License: {
 
@@ -21,16 +21,67 @@ REBOL [
 		limitations under the License.
 	}
 	History: [
+		1.1.0 [21-Jun-2013 "Significant changes. Now useable." "Brett Handley"]
 		1.0.0 [13-Jun-2013 "Initial unfinished REBOL 3 Alpha version." "Brett Handley"]
 	]
 ]
 
 ; ---------------------------------------------------------------------------------------------------------------------
 ;
+;	NOTE I WILL BE RENAMING THIS SCRIPT AND MAKING FURTHER SIGNIFICANT CHANGES.
 ;
-;	Purpose:
+; ---------------------------------------------------------------------------------------------------------------------
 ;
-;		Allow calling interactive console programs (those that prompt for and process keystrokes) using REBOL.
+;
+;	Purpose/Usage:
+;
+;	(1) Call a program and return it's output.
+;
+;		Example: Returning a result from PING:
+;	
+;			call-output {ping rebol.net}
+;
+;
+;	(2) Allow calling interactive console programs (those that prompt for and process keystrokes) using REBOL.
+;
+;		Using it is fairly straight forward, make the command server then
+;		call /startup /send /get-reponse /shutdown.
+;
+;		If you need to use /receive then test the connection with /connection?
+;		before calling /receive.
+;
+;		Example: Controlling PSFTP.exe:
+;
+;			tell-psftp: func [
+;				{Sends command to utility, returns response.}
+;				cmd [char! string! block!] {Command to send - must be a single command no newline.}
+;				/expect prompt [string! block!] {Prompt to expect following a response from the command. Default is "psftp> ".}
+;				/local response
+;			] [
+;				if not expect [prompt: {psftp> }]
+;				if block? cmd [cmd: rejoin cmd]
+;				server/send join cmd newline
+;				response: server/get-response prompt
+;				if 'closed = response/status [
+;					do make error! rejoin [{The command has exited with message: } mold trim copy response/string]
+;				]
+;				response/string
+;			]
+;		
+;			server: make-cmd-server {"C:\Program Files (x86)\PuTTY\psftp.exe"}
+;			server/startup
+;			server/get-response {psftp> }
+;			print tell-psftp {help}
+;			server/send {quit^/}
+;			server/shutdown
+;
+;	Requirements:
+;
+;		* Windows.
+;		* This Rebol 3 program currently requires Rebol 2 to run.
+;
+;
+;	Comments/Warnings:
 ;
 ;		I couldn't find a simpler approach so this is what I came up with:
 ;
@@ -40,27 +91,39 @@ REBOL [
 ;			to the second REBOL process, which finally sends the output back to the Command
 ;			server object.
 ;
-;		Using it is fairly straight forward, make the command server then
-;		call /startup /send /get-next-reponse /shutdown.
-;
-;
-;	Rebol 3 Alpha - problems.
-;
-;		At the time of writing this, I can't get any sort of redirection working in REBOL 3 Alpha,
-;		so I have decided that this REBOL 3 version will call REBOL 2 for the helper processes.
-;		I hope that Call in REBOL 3 will be upgraded to make this script redundant.
-;
-;
-;	Note:
-;
-;		It may or may not work for you - I found it works for PSFTP (Putty) but not fully for
-;		FTP (part of windows).
-;
-;		The assumption is you will be using a command that waits for user input from sysinput.
+;		It may or may not work for you - I found it works for PING and PSFTP (Putty) but not properly
+;		for FTP (part of windows).
 ;
 ;		No checking is done on the connections, so you could have problems (security?) if some other
 ;		network program tries to connect to these processes, or you run more than one instance of this
 ;		without changing the network port.
+;
+;
+;	Rebol 3 Alpha - problems.
+;
+;		At the time of writing this, I can't get any sort of redirection working in REBOL 3 Alpha (Saphirion build),
+;		so I have decided that this REBOL 3 version will call REBOL 2 for the helper processes.
+;		I hope that Call in REBOL 3 will be upgraded to make this script redundant.
+;
+;
+;	To Do (maybe):
+;
+;		o Replace use of Does, Has and Func with Funct.
+;
+;		o Add handshaking to prevent collisions and add connection security.
+;			- To allow port range for listeners - a component to manage this resource.
+;			- To check that helper is legit.
+;			- To allow multiple simultaneous command calls.
+;
+; ---------------------------------------------------------------------------------------------------------------------
+;
+; Summary
+;
+; ---------------------------------------------------------------------------------------------------------------------
+;
+;	call-output
+;
+;		This function calls a command and returns the output from it.
 ;
 ;
 ;	make-cmd-server
@@ -82,16 +145,33 @@ REBOL [
 ;
 ;			Receives a response from the command - this is a low level function. 
 ;
-;			Normally you should use get-next-response which will buffer the response
+;			Normally you should use get-response which will buffer the response
 ;			until it finds a specifc prompt.
 ;
 ;
-;		get-next-response
+;		wait-response
 ;
-;			Give expected prompt or alternative prompts, it buffers input until
-;			one of the prompts is found or the connection is closed.
+;			Waits until something is received from called program, or times out.
 ;
-;			The function returns a block of key/value pairs:
+;
+;		get-response
+;
+;			Specify expected prompt or alternative prompts, it buffers input until
+;			one of the prompts is found or the connection is closed. If none is
+;			specified it returns entire output entire connections is closed.
+;			A function may be specified, but must follow the result profile
+;			of tokenise-response.
+;
+;			The return value is that of tokenise-response.
+;
+;
+;		tokenise-response
+;
+;			Low-level function used to find a prompt within a response.
+;
+;			When the function cannot find a delimiter it returns none.
+;
+;			When the function finds a delimiter it returns a block of key/value pairs:
 ;
 ;				string [string!]
 ;
@@ -106,41 +186,28 @@ REBOL [
 ;					  string may contain the error message from the command.
 ;
 ;
-;	Example:
-;
-;		Controlling PSFTP.exe:
-;
-;		tell-psftp: func [
-;			{Sends command to utility, returns response.}
-;			cmd [char! string! block!] {Command to send - must be a single command no newline.}
-;			/expect prompt [string! block!] {Prompt to expect following a response from the command. Default is "psftp> ".}
-;			/local response
-;		] [
-;			if not expect [prompt: {psftp> }]
-;			if block? cmd [cmd: rejoin cmd]
-;			cmd-server/send join cmd newline
-;			response: cmd-server/get-next-response prompt
-;			if 'closed = response/status [
-;				make error! rejoin [{The command has exited with message: } mold trim copy response/string]
-;			]
-;			response
-;		]
-;
-;		cmd-server: make-cmd-server {"C:\Program Files (x86)\PuTTY\psftp.exe"}
-;		cmd-server/startup
-;		cmd-server/get-next-response {psftp> }
-;		tell-psftp {help}
-;		cmd-server/send {quit^/}
-;		cmd-server/shutdown
-;
 ;
 ; ---------------------------------------------------------------------------------------------------------------------
 
 
+call-output: func [
+	{Calls Command and returns output.}
+	command [string!] {The command to Call in CMD.EXE.}
+	/local server result
+][
+	server: make-cmd-server command
+	attempt [
+		server/startup
+		result: server/get-response none
+	]
+	server/shutdown
+	result/string
+]
+
 
 make-cmd-server: func [
-	{Returns an object that can send a receive messages to a shell command.}
-	command [string!] {The command to Call in a shell.}
+	{Returns an object that can send and receive messages to/from a command.}
+	command [string!] {The command to Call in CMD.EXE.}
 	/nosyserr {Prevents append of redirection operator "2>&1" to command.}
 	/trace-send {Print data sent the command.}
 	/trace-receive {Print data received from the command.}
@@ -148,15 +215,23 @@ make-cmd-server: func [
 
 	context [
 
+		;;; log: func [x][write/append %cmd-test.log.txt rejoin [newline now {: } reform :x]]
+		log: none
+
+
 		; Port to listen on.
 		listen: 8000 ; This needs to be configurable.
 
 		; Path to REBOL 2 - used for helper processes.
 		rebol.exe: {REBOL.EXE}
 
-		; Timeout time. The only reason we'd have to wait this long is if the
+		; Startup-timeout time. The only reason we'd have to wait this long is if the
 		; process wasn't created at all due to an error in the command.
-		timeout: 1
+		startup-timeout: 1
+
+		; Response-timeout time. Used by get-response.
+		; Amount of time to wait for data to be emitted by the called program.
+		response-timeout: 1
 
 		; The interactive command. It will be bookended in a pipe by sender and receiver REBOL processes.
 		cmdstr: either nosyserr [command] [rejoin [command { 2>&1}]]
@@ -167,6 +242,9 @@ make-cmd-server: func [
 		; Connection receiver process
 		receiver: none
 
+		; Buffer to accummulate data until timeout of 0.1 seconds occurs.
+		receive-buffer: none
+
 		; Response buffer - accumulates responses.
 		response-buffer: none
 
@@ -176,47 +254,55 @@ make-cmd-server: func [
 
 		; Startup
 		startup: func [
+			/noinput {No input will be passed to called program.}
 			/local listener
 		] [
 
-			; Initialise response buffer.
+			;
+			; Initialise.
+
+			receive-buffer: copy {}
 			response-buffer: copy {}
 
-			; Open listen port
+			;
+			; Setup listener.
+
 			listener: open rejoin [tcp://: listen]
 			listener/awake: func [event /local port] [
-;;;				print ["listener: " :event/type]
+				log ["listener: " :event/type]
 				if event/type = 'accept [
+
 					port: first event/port
-					if none? sender [
-;;;						print "got sender"
+
+					; First connection is from sender.
+					if all [not noinput none? sender] [
+						log "Accepted connection from sender."
 						sender: port
 						sender/awake: func [event] [
-;;;							print ["sender: " :event/type]
-							switch event/type [
-								close [
-									close event/port
-									return true
-								]
+							log ["sender: " :event/type]
+							if 'close = event/type [
+								closeports
+								return true
 							]
 							false
 						]
 						return true ; Return from wait.
 					]
 
-;;;					print "got receiver"
+					; Second connection is from receiver.
+					log "Accepted connection from receiver."
 					receiver: port
 					receiver/awake: func [event] [
+						log ["receiver: " :event/type]
 						switch event/type [
-;;;							print ["receiver: " :event/type]
 							read [
-;;;								append any [response response: copy {}] event/data
-;;;								clear event/port/data ; Remove processed data from buffer.
-;; Will let /receive do the read.								read event/port
+								if trace-receiving [log ["received: " mold to string! receiver/data]]
+								append receive-buffer to string! receiver/data
+								clear receiver/data ; Remove processed data from port buffer.
 								return true ; Return from Wait.
 							]
 							close [
-								close event/port
+								closeports
 								return true
 							]
 						]
@@ -228,110 +314,158 @@ make-cmd-server: func [
 				false
 			]
 
-			; Get input from control script server (this script) send to system output which is then piped to command.
-			sender-cmd: rejoin [
-				rebol.exe { -w --do "wait svr: open/direct/no-wait tcp://localhost:} listen
-				{ x: copy svr while [not none? x][prin x wait svr x: copy svr] close svr"}
+			;
+			; Call Rebol with a generated script which will connect to the listener and output to
+			; sysoutput everything it sent.
+
+			sender-cmd: either noinput [{}][
+				rejoin [
+					rebol.exe { -w --do "wait svr: open/direct/no-wait tcp://localhost:} listen
+					{ x: copy svr while [not none? x][prin x wait svr x: copy svr] close svr" | }
+				]
 			]
 
-			; Get input which comes from piped command and send to the control script server (this script).
-			; Note that CRs are removed from the command output to fit REBOL's newline line-termination.
+			;
+			; Call Rebol with a generated script which will connect to the listener and send it
+			; everything it receives on sysinput (which happens to come from the command via piping).
 
 			receiver-cmd: rejoin [
-				rebol.exe { -w --do "s: open/direct tcp://localhost:} listen
+				{ | } rebol.exe { -w --do "s: open/direct tcp://localhost:} listen
 				{ set-modes system/ports/input [lines: false] b: make string! n: 1024 forever [r: read-io system/ports/input clear b n if r < 0 [break] insert s replace/all b CR {}] close svr"}
 			]
 
-			; Call command;
-			;;; R2 ; call/shell rejoin [sender-cmd { | } cmdstr { | } receiver-cmd]
-			call rejoin [{cmd /c } sender-cmd { | } cmdstr { | } receiver-cmd]
+			;
+			; Call command piping input from sender and piping its output to receiver.
 
+			call rejoin [{cmd /c } sender-cmd cmdstr receiver-cmd]
+
+			;
 			; Wait for connection from sender REBOL process. Timeout indicates failure of the command.
-;;;			print "wait for connection from sender"
-;;; Note that timeout must be last in the wait list in R3 why?! Bug?
-			if none? wait [listener timeout] [
+
+			log "wait for connection from sender"
+			if none? wait [listener startup-timeout] [
 				close listener
 				closeports
 				do make error! probe rejoin [{The following shell command appears to have failed: } cmdstr]
 			]
 
+			;
 			; Wait for connection from receiver REBOL process. Shouldn't have a timeout here - but check anyway.
-;;;			print "wait for connection from receiver"
-;;; Note that timeout must be last in the wait list in R3 why?! Bug?
-			if none? wait [listener timeout] [
+
+			log "wait for connection from receiver"
+			if none? wait [listener startup-timeout] [
 				close listener
 				closeports
 				do make error! probe rejoin [{Could not setup pipeline to the shell command: } cmdstr]
 			]
 
+			;
 			; Close listener, no longer need it.
-;;;			print "closing listner"
+
 			close listener
-;;;			print "listener closed."
+			log "listener closed."
+
 		]
 
 		send: func [
 			{Send the command some input.}
 			data [string! char!]
 		] [
-			if none? :sender [make error! rejoin [{Sender connection to } mold cmdstr { is closed.}]]
-			if trace-sending [print ["sending: " mold :data]]
+			if none? :sender [do make error! rejoin [{Sender connection to } mold cmdstr { is closed.}]]
+			if trace-sending [log ["sending: " mold :data]]
 			write sender to binary! data
-			wait [sender 0.01] ; Need a wait for the write to occur.
+			wait 0.01 ; Need a wait for the write to occur.
 		]
+
+
+		;
+		;
+		; Receive reads the next data from the receiver port, returns it as string.
+		; Returns none when connection has been closed.
+		;
+		; Accumulating data here until short timeout so as accumulate packets of data
+		; into more fully formed responses by the called program, not necessarily a
+		; complete response.
+
 
 		receive: func [
 			{Get's next response from receiver. Returns empty string if nothing new. Returns none if connection closed.}
 			/local response
 		] [
-			if none? :receiver [make error! rejoin [{Receiver connection to } mold cmdstr { is closed.}]]
+			if none? :receiver [do make error! rejoin [{Receiver connection to } mold cmdstr { is closed.}]]
+			log "read receiver"
 			read receiver
-			wait [receiver 0.1]
-			while [not empty? receiver/data] [
-				append any [response response: copy {}] to string! receiver/data
-				clear receiver/data ; Remove processed data from buffer.
+			wait-response
+			while [not empty? receive-buffer][
+				append any [response response: copy {}] receive-buffer
+				clear receive-buffer
 				read receiver
 				wait [receiver 0.1]
 			]
-			if trace-receiving [print ["received: " mold :response]]
 			if none? response [shutdown]
 			response
 		]
 
-		wait-response: func [] [wait receiver]
+		;
+		;
+
+		wait-response: func [
+			/timeout wait-time
+		] [
+			if not timeout [wait-time: response-timeout]
+			wait reduce [receiver wait-time]
+		]
 
 		;
-		; Need buffering because:
-		; - you can't guarantee that receive will return everything at once.
-		; - it is useful to wait until the next prompt.
+		; tokenise-response is used to determine is a complete
+		; response has been received. It takes a block of strings
+		; which are treated as delimiters that delimit
+		; the complete response. Typically these will be prompt or
+		; an error message from the interactive program.
+		; It should return none if no delimiter is found.
 
-		get-next-response: func [
-			{Buffers response up to the specified prompt or end of connection. Returns block - status can be a string or 'exited}
-			prompt [string! block!] {The prompt to wait for, or block of alternative prompts.}
-			/local result find-prompt
-		] [
-			if none? response-buffer [return none]
-			prompt: compose [(prompt)]
-			find-prompt: has [a b] [
-				foreach string prompt [
-					if parse/all response-buffer [to string a: string b: to end] [
-						result: compose [string (copy/part response-buffer a) status (string)]
-						remove/part response-buffer b
-						return true
-					]
+		tokenise-response: func [delimiters /local a b result] [
+			foreach string delimiters [
+				if parse/all response-buffer [to string a: string b: to end] [
+					result: compose [string (copy/part response-buffer a) status (string)]
+					remove/part response-buffer b
+					return result
 				]
-				none
 			]
-			while [not find-prompt] [
-				wait 0.01 ; Need a small delay for output to be captured.
-				wait receiver ; Wait for something to happen on the port.
-				resp: receive
-				either none? resp [
-					result: compose [string (response-buffer) status closed] ; Command must have exited.
-					response-buffer: none
-					break
-				] [
+			none
+		]
+
+
+		;
+		; get-response accumulates output until a condition is met
+		; that indicates the response has been completely received or
+		; the connection is closed. It returns string and status.
+		; If a function is specified, it should use the same result profile as tokenise-response.
+
+		get-response: func [
+			{Buffers response up to the specified delimiters or end of connection. Returns block - status can be a string or 'exited}
+			delimiter [none! string! block! function!] {Prompt, or block of prompts, or function that will tokenise the response. None = all output until connection closed.}
+			/local result resp unfinished
+		] [
+			if none? response-buffer [return none] ; Not connected.
+			switch type?/word :delimiter [
+				none! [
+					unfinished: [true]
+				]
+				function! [
+					unfinished: compose [not result: (:delimiter)]
+				]
+				string! block! [
+					unfinished: compose/deep [not result: (:tokenise-response) [(delimiter)]]
+				]
+			]
+			while unfinished [
+				either all [connection? resp: receive][
 					append response-buffer resp
+				] [
+					result: compose [string (response-buffer) status closed] ; Command must have exited.
+					response-buffer: none ; Nothing left and connection closed.
+					break
 				]
 			]
 			result
@@ -342,6 +476,7 @@ make-cmd-server: func [
 		]
 
 		closeports: does [
+			log "Closing ports."
 			if sender [close sender sender: none]
 			if receiver [close receiver receiver: none]
 		]
