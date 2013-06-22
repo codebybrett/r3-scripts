@@ -242,7 +242,7 @@ make-cmd-server: func [
 		response-timeout: 1
 
 		; Need input helper?
-		need-input: nosysinput
+		need-input: not nosysinput
 
 		; Maximum number of bytes that receiver will send by TCP.
 		max-receiver-packet: 10240
