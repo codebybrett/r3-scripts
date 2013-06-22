@@ -67,7 +67,7 @@ REBOL [
 ;				response/string
 ;			]
 ;		
-;			server: make-cmd-server {"C:\Program Files (x86)\PuTTY\psftp.exe"}
+;			server: make-call-server {"C:\Program Files (x86)\PuTTY\psftp.exe"}
 ;			server/startup
 ;			server/get-response {psftp> }
 ;			print tell-psftp {help}
@@ -133,7 +133,7 @@ REBOL [
 ;		This function calls a command and returns the output from it.
 ;
 ;
-;	make-cmd-server
+;	make-call-server
 ;
 ;		This function creates a command server object that will manage the command.
 ;
@@ -202,7 +202,7 @@ call-output: func [
 	command [string!] {The command to Call in CMD.EXE.}
 	/local server result
 ][
-	server: make-cmd-server/nosysinput command
+	server: make-call-server/nosysinput command
 	attempt [
 		server/startup
 		result: server/get-response none
@@ -212,7 +212,7 @@ call-output: func [
 ]
 
 
-make-cmd-server: func [
+make-call-server: func [
 	{Returns an object that can send and receive messages to/from a command.}
 	command [string!] {The command to Call in CMD.EXE.}
 	/nosysinput {No input will be passed to called program. Saves starting input helper process.}
