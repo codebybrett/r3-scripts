@@ -21,6 +21,7 @@ REBOL [
 		limitations under the License.
 	}
 	History: [
+		1.3.0 [22-Jun-2013 "Changed behaviour of /receive /get-response." "Brett Handley"]
 		1.2.0 [22-Jun-2013 "Renamed (was interactive-cmd-server.r3.r), fix /nosysinput." "Brett Handley"]
 		1.1.0 [21-Jun-2013 "Significant changes. Now useable." "Brett Handley"]
 		1.0.0 [13-Jun-2013 "Initial unfinished REBOL 3 Alpha version." "Brett Handley"]
@@ -150,7 +151,8 @@ REBOL [
 ;
 ;		receive
 ;
-;			Receives a response from the command - this is a low level function. 
+;			Receives a response from the command - this is a low level function.
+;			Returns response, or none if a timeout or connection is closed.
 ;
 ;			Normally you should use get-response which will buffer the response
 ;			until it finds a specifc prompt.
@@ -164,12 +166,21 @@ REBOL [
 ;		get-response
 ;
 ;			Specify expected prompt or alternative prompts, it buffers input until
-;			one of the prompts is found or the connection is closed. If none is
-;			specified it returns entire output entire connections is closed.
-;			A function may be specified, but must follow the result profile
+;			one of the prompts is found, response-timeout is exceeded or the connection
+;			is closed. If none is specified it returns entire output until the connection
+;			is closed.	A function may be specified, but must follow the result profile
 ;			of tokenise-response.
 ;
-;			The return value is that of tokenise-response.
+;			The return value is like that of tokenise-response. When STATUS is CLOSED,
+;			an additional key/value pair (CLOSED-BY) describes why the connection was closed.
+;
+;				- A STATUS of the word CLOSED indicates the connection was closed. This can
+;				  considered an error because the response was not properly completed.
+;				  If syserr is being redirected, which is the default, the response
+;				  string may contain the error message from the command. The connection may be
+;				  closed by the called program (CLOSED-BY CMD-EXIT), or by get-response
+;				  when a timeout occurs (CLOSED-BY TIMEOUT).
+;
 ;
 ;
 ;		tokenise-response
@@ -188,9 +199,6 @@ REBOL [
 ;
 ;					- A string! indicates which prompt terminates the response.
 ;
-;					- The word CLOSED indicates the connection was closed. This should be treated
-;					  as an error. If syserr is being redirected, which is the default, the response
-;					  string may contain the error message from the command.
 ;
 ;
 ;
@@ -203,11 +211,12 @@ call-output: func [
 	/local server result
 ][
 	server: make-call-server/nosysinput command
-	attempt [
+	result: try [
 		server/startup
-		result: server/get-response none
+		server/get-response none
 	]
 	server/shutdown
+	if error? result [do result]
 	result/string
 ]
 
@@ -223,9 +232,8 @@ make-call-server: func [
 
 	context [
 
-		;;; log: func [x][write/append %cmd-test.log.txt rejoin [newline now {: } reform :x]]
+		;;;log: func [x][write/append %cmd-test.log.txt rejoin [newline now {: } reform :x]]
 		log: none
-
 
 		; Port to listen on.
 		listen: 8000 ; This needs to be configurable.
@@ -244,11 +252,14 @@ make-call-server: func [
 		; Need input helper?
 		need-input: not nosysinput
 
+		; Need error redirection?
+		need-errors: not nosyserr
+
 		; Maximum number of bytes that receiver will send by TCP.
 		max-receiver-packet: 10240
 
 		; The interactive command. It will be bookended in a pipe by sender and receiver REBOL processes.
-		cmdstr: either nosyserr [command] [rejoin [command { 2>&1}]]
+		command-string: command
 
 		; Connection to sender process
 		sender: none
@@ -268,7 +279,7 @@ make-call-server: func [
 
 		; Startup
 		startup: func [
-			/local listener
+			/local listener cmdstr
 		] [
 
 			;
@@ -276,6 +287,9 @@ make-call-server: func [
 
 			receive-buffer: copy {}
 			response-buffer: copy {}
+
+			if not integer? startup-timeout [do make error! {startup-timeout must be an integer!}]
+			if not integer? response-timeout [do make error! {response-timeout must be an integer!}]
 
 			;
 			; Setup listener.
@@ -334,7 +348,8 @@ make-call-server: func [
 			sender-cmd: either need-input [
 				rejoin [
 					rebol.exe { -w --do "wait svr: open/direct/no-wait tcp://localhost:} listen
-					{ x: copy svr while [not none? x][prin x wait svr x: copy svr] close svr" | }
+					{ x: copy svr while [not none? x][prin x wait svr x: copy svr] close svr"}
+					{ | }
 				]
 			][{}]
 
@@ -343,14 +358,16 @@ make-call-server: func [
 			; everything it receives on sysinput (which happens to come from the command via piping).
 
 			receiver-cmd: rejoin [
-				{ | } rebol.exe { -w --do "s: open/direct tcp://localhost:} listen
+				{ | }
+				rebol.exe { -w --do "s: open/direct tcp://localhost:} listen
 				{ set-modes system/ports/input [lines: false] b: make string! n: } max-receiver-packet
 				{ forever [r: read-io system/ports/input clear b n if r < 0 [break] insert s replace/all b CR {}] close svr"}
 			]
 
 			;
 			; Call command piping input from sender and piping its output to receiver.
-
+		
+			cmdstr: either need-errors [rejoin [command-string { 2>&1}]] [command-string]
 			call rejoin [{cmd /c } sender-cmd cmdstr receiver-cmd]
 
 			;
@@ -361,7 +378,7 @@ make-call-server: func [
 				if none? wait [listener startup-timeout] [
 					close listener
 					closeports
-					do make error! probe rejoin [{The following command appears to have failed: } cmdstr]
+					do make error! rejoin [{The following command appears to have failed: } cmdstr]
 				]
 			]
 
@@ -372,7 +389,7 @@ make-call-server: func [
 			if none? wait [listener startup-timeout] [
 				close listener
 				closeports
-				do make error! probe rejoin [{Could not setup pipeline to the command: } cmdstr]
+				do make error! rejoin [{Could not setup pipeline to the command: } cmdstr]
 			]
 
 			;
@@ -399,7 +416,7 @@ make-call-server: func [
 		;
 		;
 		; Receive reads the next data from the receiver port, returns it as string.
-		; Returns none when connection has been closed.
+		; Returns none when response-timeout occures or connection has been closed.
 		;
 		; Accumulating data here until short timeout so as accumulate packets of data
 		; into more fully formed responses by the called program, not necessarily a
@@ -408,7 +425,7 @@ make-call-server: func [
 
 
 		receive: func [
-			{Get's next response from receiver. Returns empty string if nothing new. Returns none if connection closed.}
+			{Get's next response from receiver. Returns none if timeout or connection closed.}
 			/local response
 		] [
 			if none? :receiver [do make error! rejoin [{Receiver connection to } mold cmdstr { is closed.}]]
@@ -419,9 +436,8 @@ make-call-server: func [
 				append any [response response: copy {}] receive-buffer
 				clear receive-buffer
 				read receiver
-				wait 0.1 ; Wait for a short time to see if more packets are coming.
+				wait [receiver 0.1] ; Wait for a short time to see if more packets are coming.
 			]
-			if none? response [shutdown]
 			response
 		]
 
@@ -456,7 +472,7 @@ make-call-server: func [
 
 		;
 		; get-response accumulates output until a condition is met that indicates the
-		; response has been completely received or the connection is closed.
+		; response has been completely received, or the connection is closed.
 		; It returns string and status when the response is complete, status indicates
 		; if the connection was closed at the end of the response.
 		; It will return none if there is no unprocessed response and the connection is closed.
@@ -465,9 +481,10 @@ make-call-server: func [
 		get-response: func [
 			{Buffers response up to the specified delimiters or end of connection. Returns block - status can be a string or 'exited}
 			delimiter [none! string! block! function!] {Prompt, or block of prompts, or function that will tokenise the response. None = all output until connection closed.}
-			/local result resp unfinished
+			/local result resp unfinished start-time timeout-time
 		] [
 			if none? response-buffer [return none] ; Not connected.
+			timeout-time: now/precise + to time! reduce [0 0 response-timeout]
 			switch type?/word :delimiter [
 				none! [
 					unfinished: [true]
@@ -480,13 +497,18 @@ make-call-server: func [
 				]
 			]
 			while unfinished [
-				either all [connection? resp: receive][
+				if all [connection? resp: receive] [
 					append response-buffer resp
-				] [
-					result: compose [string (response-buffer) status closed] ; Command must have exited.
-					response-buffer: none ; Nothing left and connection closed.
-					break
+					continue
 				]
+				if all [
+					connection? ; Loss of connection indicates command exited.
+					lesser? now/precise timeout-time ; A timeout, indicates a problem with client logic.
+				][continue]
+				result: compose [string (response-buffer) status closed closed-by (either connection? ['timeout]['cmd-exit])]
+				response-buffer: none ; Nothing left and connection closed.
+				shutdown
+				break
 			]
 			result
 		]
