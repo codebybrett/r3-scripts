@@ -1,9 +1,9 @@
 REBOL [
-	Title: "interactive-cmd-server"
-	File: %interactive-cmd-server.r3.r
+	Title: "call-server"
+	File: %call-server.r
 	Author: "Brett Handley"
-	Date: 21-Jun-2013
-	Purpose: "Provides a way to interact with an interactive shell command."
+	Date: 22-Jun-2013
+	Purpose: "Provides a way to capture output from console program and send input to interactive console programs."
 	License: {
 
 		Copyright 2013 Brett Handley
@@ -21,6 +21,7 @@ REBOL [
 		limitations under the License.
 	}
 	History: [
+		1.2.0 [22-Jun-2013 "Renamed (was interactive-cmd-server.r3.r), fix /nosysinput." "Brett Handley"]
 		1.1.0 [21-Jun-2013 "Significant changes. Now useable." "Brett Handley"]
 		1.0.0 [13-Jun-2013 "Initial unfinished REBOL 3 Alpha version." "Brett Handley"]
 	]
@@ -28,12 +29,10 @@ REBOL [
 
 ; ---------------------------------------------------------------------------------------------------------------------
 ;
-;	NOTE I WILL BE RENAMING THIS SCRIPT AND MAKING FURTHER SIGNIFICANT CHANGES.
+; Purpose/Usage:
 ;
 ; ---------------------------------------------------------------------------------------------------------------------
 ;
-;
-;	Purpose/Usage:
 ;
 ;	(1) Call a program and return it's output.
 ;
@@ -75,6 +74,9 @@ REBOL [
 ;			server/send {quit^/}
 ;			server/shutdown
 ;
+;		I hope that Call in REBOL 3 will be upgraded enough to make this script redundant.
+;
+;
 ;	Requirements:
 ;
 ;		* Windows.
@@ -98,12 +100,17 @@ REBOL [
 ;		network program tries to connect to these processes, or you run more than one instance of this
 ;		without changing the network port.
 ;
+;		I have included many comments as much for myself as anyone else as this is my first Rebol 3
+;		networking script.
+;
 ;
 ;	Rebol 3 Alpha - problems.
 ;
 ;		At the time of writing this, I can't get any sort of redirection working in REBOL 3 Alpha (Saphirion build),
 ;		so I have decided that this REBOL 3 version will call REBOL 2 for the helper processes.
-;		I hope that Call in REBOL 3 will be upgraded to make this script redundant.
+;
+;		To remove the need for Rebol 2, you would need to use a Rebol 3 version that support redirection for
+;		console programs and you need to rewrite the helper networking code.
 ;
 ;
 ;	To Do (maybe):
@@ -117,7 +124,7 @@ REBOL [
 ;
 ; ---------------------------------------------------------------------------------------------------------------------
 ;
-; Summary
+; Script Summary
 ;
 ; ---------------------------------------------------------------------------------------------------------------------
 ;
@@ -195,7 +202,7 @@ call-output: func [
 	command [string!] {The command to Call in CMD.EXE.}
 	/local server result
 ][
-	server: make-cmd-server command
+	server: make-cmd-server/nosysinput command
 	attempt [
 		server/startup
 		result: server/get-response none
@@ -208,6 +215,7 @@ call-output: func [
 make-cmd-server: func [
 	{Returns an object that can send and receive messages to/from a command.}
 	command [string!] {The command to Call in CMD.EXE.}
+	/nosysinput {No input will be passed to called program. Saves starting input helper process.}
 	/nosyserr {Prevents append of redirection operator "2>&1" to command.}
 	/trace-send {Print data sent the command.}
 	/trace-receive {Print data received from the command.}
@@ -233,6 +241,12 @@ make-cmd-server: func [
 		; Amount of time to wait for data to be emitted by the called program.
 		response-timeout: 1
 
+		; Need input helper?
+		need-input: nosysinput
+
+		; Maximum number of bytes that receiver will send by TCP.
+		max-receiver-packet: 10240
+
 		; The interactive command. It will be bookended in a pipe by sender and receiver REBOL processes.
 		cmdstr: either nosyserr [command] [rejoin [command { 2>&1}]]
 
@@ -254,7 +268,6 @@ make-cmd-server: func [
 
 		; Startup
 		startup: func [
-			/noinput {No input will be passed to called program.}
 			/local listener
 		] [
 
@@ -275,7 +288,7 @@ make-cmd-server: func [
 					port: first event/port
 
 					; First connection is from sender.
-					if all [not noinput none? sender] [
+					if all [need-input none? sender] [
 						log "Accepted connection from sender."
 						sender: port
 						sender/awake: func [event] [
@@ -315,23 +328,24 @@ make-cmd-server: func [
 			]
 
 			;
-			; Call Rebol with a generated script which will connect to the listener and output to
+			; Call Rebol with a generated command line script which will connect to the listener and output to
 			; sysoutput everything it sent.
 
-			sender-cmd: either noinput [{}][
+			sender-cmd: either need-input [
 				rejoin [
 					rebol.exe { -w --do "wait svr: open/direct/no-wait tcp://localhost:} listen
 					{ x: copy svr while [not none? x][prin x wait svr x: copy svr] close svr" | }
 				]
-			]
+			][{}]
 
 			;
-			; Call Rebol with a generated script which will connect to the listener and send it
+			; Call Rebol with a generated command line script which will connect to the listener and send it
 			; everything it receives on sysinput (which happens to come from the command via piping).
 
 			receiver-cmd: rejoin [
 				{ | } rebol.exe { -w --do "s: open/direct tcp://localhost:} listen
-				{ set-modes system/ports/input [lines: false] b: make string! n: 1024 forever [r: read-io system/ports/input clear b n if r < 0 [break] insert s replace/all b CR {}] close svr"}
+				{ set-modes system/ports/input [lines: false] b: make string! n: } max-receiver-packet
+				{ forever [r: read-io system/ports/input clear b n if r < 0 [break] insert s replace/all b CR {}] close svr"}
 			]
 
 			;
@@ -342,11 +356,13 @@ make-cmd-server: func [
 			;
 			; Wait for connection from sender REBOL process. Timeout indicates failure of the command.
 
-			log "wait for connection from sender"
-			if none? wait [listener startup-timeout] [
-				close listener
-				closeports
-				do make error! probe rejoin [{The following shell command appears to have failed: } cmdstr]
+			if need-input [
+				log "wait for connection from sender"
+				if none? wait [listener startup-timeout] [
+					close listener
+					closeports
+					do make error! probe rejoin [{The following command appears to have failed: } cmdstr]
+				]
 			]
 
 			;
@@ -356,7 +372,7 @@ make-cmd-server: func [
 			if none? wait [listener startup-timeout] [
 				close listener
 				closeports
-				do make error! probe rejoin [{Could not setup pipeline to the shell command: } cmdstr]
+				do make error! probe rejoin [{Could not setup pipeline to the command: } cmdstr]
 			]
 
 			;
@@ -364,6 +380,8 @@ make-cmd-server: func [
 
 			close listener
 			log "listener closed."
+
+			exit
 
 		]
 
@@ -385,7 +403,8 @@ make-cmd-server: func [
 		;
 		; Accumulating data here until short timeout so as accumulate packets of data
 		; into more fully formed responses by the called program, not necessarily a
-		; complete response.
+		; complete response. Packet size is determined by the helper program and the amount
+		; emitted by called program.
 
 
 		receive: func [
@@ -400,7 +419,7 @@ make-cmd-server: func [
 				append any [response response: copy {}] receive-buffer
 				clear receive-buffer
 				read receiver
-				wait [receiver 0.1]
+				wait 0.1 ; Wait for a short time to see if more packets are coming.
 			]
 			if none? response [shutdown]
 			response
@@ -413,7 +432,7 @@ make-cmd-server: func [
 			/timeout wait-time
 		] [
 			if not timeout [wait-time: response-timeout]
-			wait reduce [receiver wait-time]
+			wait [receiver wait-time]
 		]
 
 		;
@@ -435,11 +454,12 @@ make-cmd-server: func [
 			none
 		]
 
-
 		;
-		; get-response accumulates output until a condition is met
-		; that indicates the response has been completely received or
-		; the connection is closed. It returns string and status.
+		; get-response accumulates output until a condition is met that indicates the
+		; response has been completely received or the connection is closed.
+		; It returns string and status when the response is complete, status indicates
+		; if the connection was closed at the end of the response.
+		; It will return none if there is no unprocessed response and the connection is closed.
 		; If a function is specified, it should use the same result profile as tokenise-response.
 
 		get-response: func [
@@ -472,7 +492,10 @@ make-cmd-server: func [
 		]
 
 		connection?: func [] [
-			all [found? sender found? receiver]
+			all [
+				any [not need-input found? sender]
+				found? receiver
+			]
 		]
 
 		closeports: does [
