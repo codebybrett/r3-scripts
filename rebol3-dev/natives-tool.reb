@@ -29,6 +29,7 @@ REBOL [
 ;	* Not overwrite any existing notes in the comments.
 ;	  - Here I used a bar "|" to identify auto-inserted specs.
 ;	  - Perhaps another scheme can be used if it's considered ugly.
+;	* Be robust in the face of introduced parse rule bugs.
 ;
 ; Note:
 ;	Some c identifiers are different to the words they define.
@@ -195,11 +196,13 @@ natives-tool: context [
 
 			cache: none
 
-			list: func [/local files] [
-				remove-each name files: read core-folder [
+			list: func [/local ugly-tmp-var] [
+
+				remove-each name ugly-tmp-var: read core-folder [
 					not parse/all name [thru %.c]
 				]
-				files
+
+				ugly-tmp-var
 			]
 
 			process: func [file /local source tokens] [
