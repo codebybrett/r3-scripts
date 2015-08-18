@@ -149,7 +149,7 @@ natives-tool: context [
 
 			specification: func [
 				spec
-				/local fn words pad desc
+				/local fn words desc
 			] [
 
 				pad: func [string] [head insert/dup copy string { } 3 - length? string]
@@ -158,18 +158,14 @@ natives-tool: context [
 				words: reflect :fn 'words
 				desc: reflect :fn 'spec
 
-				if find desc '~~ [do make error! {Cannot create specification comment, ~~ is already used.}]
-
 				for i 1 length? words 1 [
 					pos: find desc words/:i
 					new-line pos false
-					insert pos '~~
+					insert pos to tag! i
 					new-line pos true
 				]
 
 				desc: mold desc
-
-				for i 1 length? words 1 [replace desc "~~" (join pad form i ":")]
 
 				remove/part desc 2
 				clear skip tail desc -2
