@@ -50,10 +50,10 @@ requirements: funct [
 	]
 ]
 
-do %comment-block-encoding.reb
+do %comment-blocks.reb
 
-encode-decode: func [block] [block = decode-comment-block encode-comment-block block]
-decode-encode: func [string] [string = encode-comment-block decode-comment-block string]
+encode-decode: func [block] [block = load-comment mold-comment block]
+decode-encode: func [string] [string = mold-comment load-comment string]
 
 print mold requirements 'mold-contents [
 
@@ -68,15 +68,15 @@ print mold requirements 'mold-contents [
 	] ; Fails R2 because R2 puts a space in front first newline.
 ]
 
-print mold requirements 'comment-encoding [
+print mold requirements 'comment-blocks [
 
-	[quote "**^/" = encode-comment-block []]
+	[quote "**^/" = mold-comment []]
 
-	[quote "**  1^/" = encode-comment-block [1]]
+	[quote "**  1^/" = mold-comment [1]]
 
-	[quote "**^/**  1^/**^/" = encode-comment-block new-line [1] true]
+	[quote "**^/**  1^/**^/" = mold-comment new-line [1] true]
 
-	[quote "**  1^/**      2 3^/**^/" = encode-comment-block [1
+	[quote "**  1^/**      2 3^/**^/" = mold-comment [1
 		2 3]
 	] ; Fails R2 because R2 puts a space in front first newline.
 

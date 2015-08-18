@@ -17,8 +17,8 @@ grammar: context [
 	]
 ]
 
-decode-comment-block: func [
-	{Decode block from comment lines.}
+load-comment: func [
+	{Load next block from comment lines.}
 	string [string!]
 	/local p1 p2 text clean-line emit wsp block
 ] [
@@ -32,8 +32,8 @@ decode-comment-block: func [
 	]
 ]
 
-encode-comment-block: func [
-	{Encode block into comment lines.}
+mold-comment: func [
+	{Mold block into comment lines.}
 	block [block!]
 	/indent inward [string!] {String to use as an indent.}
 	/local text bol pos
