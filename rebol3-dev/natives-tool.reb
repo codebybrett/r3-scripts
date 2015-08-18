@@ -340,18 +340,18 @@ natives-tool: context [
 
 		text: context [
 
-			mark: position: result: segment: text: this: none
+			bmrk: position: result: segment: text: this: none
 			wsp: charset {^- }
 
 			grammar: context [
-				rule: [mark: some segment to end emit]
-				segment: [thru-keyword identifier comment mark:]
+				rule: [bmrk: some segment to end emit]
+				segment: [thru-keyword identifier comment bmrk:]
 				thru-keyword: [to {REBNATIVE} emit (native)]
-				identifier: [thru #"(" mark: to #")" dup (this/id: text) skip newline]
-				comment: [mark: any newline {/*} thru newline opt spec opt notes mark: thru {*/} emit]
-				spec: [mark: some [{**} some wsp #"|" thru newline] {**^/} dup (this/spec: text)]
-				notes: [mark: some [any #"*" some wsp thru newline] dup (this/notes: text)]
-				dup: [position: (text: copy/part mark position)]
+				identifier: [thru #"(" bmrk: to #")" dup (this/id: text) skip newline]
+				comment: [bmrk: any newline {/*} thru newline opt spec opt notes bmrk: thru {*/} emit]
+				spec: [bmrk: some [{**} some wsp #"|" thru newline] {**^/} dup (this/spec: text)]
+				notes: [bmrk: some [any #"*" some wsp thru newline] dup (this/notes: text)]
+				dup: [position: (text: copy/part bmrk position)]
 				emit: [dup (append result text)]
 			] ; Easier to debug than a monolithic rule.
 
