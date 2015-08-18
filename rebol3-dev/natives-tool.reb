@@ -1,6 +1,7 @@
 REBOL [
 	purpose: {Compare and maintain function specs with C code comments.}
-	comment: {Draft. Use at your own risk.}
+	author: {Brett Handley}
+	license: {Apache 2.0}
 ]
 
 ; --------------------------------------------------------------
