@@ -133,14 +133,14 @@ natives-tool: context [
 
 		comment: context [
 
-			line*: func [] [
-				head insert/dup copy {} #"*" 71
-			]
-
-			pretty: func [
-				comments
+			generate: func [
+				spec
 				/local text bol
 			] [
+
+				comments: mold spec
+				remove/part comments 2
+				clear skip tail comments -2
 
 				bol: {^/**^-|}
 				text: head insert replace/all copy comments newline bol bol
@@ -148,7 +148,12 @@ natives-tool: context [
 				rejoin [text {^/**^/}]
 			]
 
+			line*: func [] [
+				head insert/dup copy {} #"*" 71
+			]
+
 			specification: func [
+				{Return block specification of native.}
 				spec
 				/local fn words desc
 			] [
@@ -166,19 +171,15 @@ natives-tool: context [
 					new-line pos true
 				]
 
-				desc: mold desc
-
-				remove/part desc 2
-				clear skip tail desc -2
-
 				desc
+
 			]
 
 			update: func [name block] [
 
 				log [update-comment (:name)]
 
-				index/(:name)/spec: pretty specification block
+				index/(:name)/spec: generate specification block
 			]
 
 			words: func [] [
@@ -337,8 +338,10 @@ natives-tool: context [
 			index: none
 		]
 
-
 		text: context [
+
+			; It is too hard to parse C source properly (even for just comments).
+			; So here we just recognise our own conventions.
 
 			bmrk: position: result: segment: text: this: none
 			wsp: charset {^- }
