@@ -142,7 +142,7 @@ natives-tool: context [
 				remove/part comments 2
 				clear skip tail comments -2
 
-				bol: {^/**  |}
+				bol: {^/**^/|}
 				text: head insert replace/all copy comments newline bol bol
 				remove text
 				rejoin [text {^/**^/}]

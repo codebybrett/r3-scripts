@@ -1,6 +1,7 @@
 REBOL []
 
 either system/version > 2.100.0 [;Rebol3
+
 	user-error: funct [match [string! block!] test [block!]] [
 		if string? match [match: compose [(match) to end]]
 		all [
@@ -8,7 +9,10 @@ either system/version > 2.100.0 [;Rebol3
 			parse err/arg1 match
 		]
 	]
-] [
+] [ ;Rebol2
+
+	print {Some tests will fail in Rebol2 due to behaviour changes.}
+
 	user-error: funct [match [string! block!] test [block!]] [
 		if string? match [match: compose [(match) to end]]
 		all compose [
@@ -17,6 +21,7 @@ either system/version > 2.100.0 [;Rebol3
 			parse/all err/arg1 match
 		]
 	]
+
 ]
 
 requirements: funct [
@@ -55,6 +60,12 @@ do %comment-blocks.reb
 encode-decode: func [block] [block = load-comment mold-comment block]
 decode-encode: func [string] [string = mold-comment load-comment string]
 
+print mold requirements {Outstanding} [
+
+	[{Use mold/only for mold-contents.}]
+
+]
+
 print mold requirements 'mold-contents [
 
 	[quote {} = mold-contents []]
@@ -65,7 +76,7 @@ print mold requirements 'mold-contents [
 
 	[quote {1^/    2 3^/} = mold-contents [1
 		2 3]
-	] ; Fails R2 because R2 puts a space in front first newline.
+	]
 ]
 
 print mold requirements 'comment-blocks [
@@ -78,7 +89,7 @@ print mold requirements 'comment-blocks [
 
 	[quote "**  1^/**      2 3^/**^/" = mold-comment [1
 		2 3]
-	] ; Fails R2 because R2 puts a space in front first newline.
+	]
 
 	[{Blocks should decode from their encoded comment accurately.}
 
