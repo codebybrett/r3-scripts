@@ -142,7 +142,7 @@ natives-tool: context [
 				remove/part comments 2
 				clear skip tail comments -2
 
-				bol: {^/**^-|}
+				bol: {^/**  |}
 				text: head insert replace/all copy comments newline bol bol
 				remove text
 				rejoin [text {^/**^/}]
@@ -155,23 +155,28 @@ natives-tool: context [
 			specification: func [
 				{Return block specification of native.}
 				spec
-				/local fn words desc
+				/local fn words description summary
 			] [
 
 				pad: func [string] [head insert/dup copy string { } 3 - length? string]
 
 				fn: func spec []
 				words: reflect :fn 'words
-				desc: reflect :fn 'spec
 
-				for i 1 length? words 1 [
-					pos: find desc words/:i
-					new-line pos false
-					insert pos to tag! i
-					new-line pos true
+				description: collect [
+
+					if string? first spec [keep first spec]
+
+					for i 1 length? words 1 [
+						keep to-tag i
+						keep words/:i
+					]
 				]
 
-				desc
+				new-line description true
+				new-line/all/skip next description true 2
+
+				description
 
 			]
 
