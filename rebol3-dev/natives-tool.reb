@@ -38,6 +38,8 @@ REBOL [
 ;
 ; --------------------------------------------------------------
 
+do %comment-blocks.reb
+
 natives-tool: context [
 
 	; --- Config 
@@ -139,13 +141,8 @@ natives-tool: context [
 			] [
 
 				comments: mold spec
-				remove/part comments 2
-				clear skip tail comments -2
 
-				bol: {^/**^/|}
-				text: head insert replace/all copy comments newline bol bol
-				remove text
-				rejoin [text {^/**^/}]
+				{<TODO>}
 			]
 
 			line*: func [] [
@@ -352,22 +349,23 @@ natives-tool: context [
 			wsp: charset {^- }
 
 			grammar: context [
+
 				rule: [bmrk: some segment to end emit]
 				segment: [thru-keyword identifier comment bmrk:]
 				thru-keyword: [to {REBNATIVE} emit (native)]
 				identifier: [thru #"(" bmrk: to #")" dup (this/id: text) skip newline]
-				comment: [bmrk: any newline {/*} thru newline opt spec opt notes bmrk: thru {*/} emit]
-				spec: [bmrk: some [{**} some wsp #"|" thru newline] {**^/} dup (this/spec: text)]
+				comment: [bmrk: any newline {/*} thru newline opt notes bmrk: thru {*/} emit]
 				notes: [bmrk: some [any #"*" some wsp thru newline] dup (this/notes: text)]
 				dup: [position: (text: copy/part bmrk position)]
 				emit: [dup (append result text)]
+
 			] ; Easier to debug than a monolithic rule.
 
-			native: func [/local txt banner chars] [
+			native: func [/local txt intro chars] [
 				chars: charset {/* ^-^/}
 				if txt: find/last last result {/*} [
 					if parse/all txt compose [some chars] [
-						banner: copy txt
+						intro: copy txt
 						clear txt
 					]
 				]
@@ -375,16 +373,21 @@ natives-tool: context [
 					'rebnative
 					this: compose [
 						id none
-						banner (any [banner {}])
+						intro (any [intro {}])
 						spec ({})
 						notes ({})
 					]
 				]
 			]
 
-			rebnative: func [source] [
+			rebnative: func [source /local post] [
+
+				post: either source/notes [
+					join {/*^/} source/notes
+				][{}]
+
 				rejoin [
-					source/banner {REBNATIVE} "(" source/id ")^/" {/*^/} source/spec source/notes
+					source/intro {REBNATIVE} "(" source/id ")^/" post
 				]
 			]
 
