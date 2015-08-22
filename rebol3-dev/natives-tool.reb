@@ -111,6 +111,7 @@ natives-tool: context [
 		comments: func [{Update source comments (in-memory).}] [
 
 			foreach name list/paired-words [
+
 				c-source/comment/update name r-source/cache/(name)
 			]
 
@@ -120,6 +121,7 @@ natives-tool: context [
 		files: func [{Write changes to source files.}] [
 
 			foreach name c-source/list/changed [
+
 				c-source/file/update name
 			]
 
@@ -140,13 +142,16 @@ natives-tool: context [
 				/local text bol
 			] [
 
-				comments: mold spec
-
-				{<TODO>}
+				rejoin [
+					{/*} line* 78 newline
+					mold-comment spec
+					line* 78 {*/} newline
+				]
 			]
 
-			line*: func [] [
-				head insert/dup copy {} #"*" 71
+			line*: func [{Return a line of *.} count] [
+
+				head insert/dup copy {} #"*" count
 			]
 
 			specification: func [
@@ -181,7 +186,7 @@ natives-tool: context [
 
 				log [update-comment (:name)]
 
-				index/(:name)/spec: generate specification block
+				index/(:name)/intro: generate specification block
 			]
 
 			words: func [] [
