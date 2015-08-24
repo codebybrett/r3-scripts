@@ -60,11 +60,6 @@ mold-comment: func [
 	string
 ]
 
-line*: func [{Return a line of *.} count] [
-
-	head insert/dup copy {} #"*" count
-]
-
 mold-contents: func [
 	{Mold block without the outer brakets.}
 	block [block! paren!]
