@@ -8,6 +8,11 @@ REBOL [
 ; Change the CONFIG section below as necessary.
 ; Debugging mode writes old and new files to subfolders of current.
 ;
+; INITIAL CONVERSION of old format to new
+;
+;	Run it once for the conversion to the new format.
+;
+;
 ; NORMAL USAGE:
 ;
 ;	source-tool/update/all
@@ -83,10 +88,10 @@ source-tool: context [
 
 		]
 
-		notes: func [{Words that have notes in the comments.} /local ugly-tmp-var] [
+		details: func [{Words that have details in the comments.} /local ugly-tmp-var] [
 
 			if none? c-source/index [do make error! {No source comments loaded. Use /init.}]
-			remove-each [word def] ugly-tmp-var: copy c-source/index [none? def/post-decl]
+			remove-each [word def] ugly-tmp-var: copy c-source/index [none? def/meta/details]
 			map-each [word def] ugly-tmp-var [word]
 		]
 
@@ -116,7 +121,7 @@ source-tool: context [
 			pretty-spec compose/only [
 				Name: (form name)
 				Summary: (summary)
-				Details: (c-info/notes)
+				Details: (c-info/meta/details)
 				Spec: (data)
 			]
 		]
@@ -205,39 +210,21 @@ source-tool: context [
 				head insert/dup copy {} #"*" count
 			]
 
-			oneoff-note-conversion: funct [name [word!]] [
+			load: func [string /local lines][
 
-				; --------------------------------------------------------
-				; Convert from original format for comments to new format.
-				; Once done, this function will become obsolete.
-				; --------------------------------------------------------
+				if none? string [return none]
 
-				notes: attempt [copy index/(:name)/post-decl]
-
-				if not notes [exit]
-
-				remove/part notes find notes newline
-				clear find/last notes newline
-
-				bol.ch: charset {* ^-}
-				bol: none
-				parse/all notes [newline copy bol [some bol.ch]]
-				if bol [
-					insert bol newline
-					replace/all notes bol newline
-					if parse/all notes [to {**} pos: {**}][clear pos]
+				parse/all string [
+					{/*} 20 200 #"*" newline
+					copy lines some [{**} [newline | #" " thru newline]]
+					20 200 #"*" #"/" newline
+					to end
 				]
 
-				if empty? notes [notes: none]
-				index/(:name)/notes: notes
-				index/(:name)/post-decl: none ; Obliterate the following comment.
-
-				exit
+				if lines [load-comment lines]
 			]
 
-			update: func [name [word!] /local spec notes] [
-
-				oneoff-note-conversion name ; TODO: Remove after conversion.
+			update: func [name [word!] /local c-info] [
 
 				log [update-comment (:name)]
 
@@ -328,7 +315,39 @@ source-tool: context [
 		]
 
 
-		indexing: func [] [
+		indexing: func [/local oneoff-note-conversion] [
+
+
+			oneoff-note-conversion: funct [name [word!] /local c-info] [
+
+				; --------------------------------------------------------
+				; Convert from original format for comments to new format.
+				; TODO: Once done, this function will become obsolete.
+				; --------------------------------------------------------
+
+				notes: attempt [copy index/(:name)/post-decl]
+
+				if not notes [exit]
+
+;				remove/part notes find notes newline
+;				trim/tail notes
+
+				replace/all notes tab {  }
+
+				if empty? notes [notes: none]
+
+				c-info: index/(:name)
+				if none? c-info/meta [
+					c-info/meta: compose [details: none]
+				]
+				c-info/meta/details: notes
+				c-info/post-decl: none ; Obliterate the following comment.
+
+				log [notes-converted (:name)]
+
+				exit
+			]
+
 
 			if none? file/cache [
 				do make error! {Indexing requires files to be loaded in the file cache. Use /init, check core folder.}
@@ -338,7 +357,7 @@ source-tool: context [
 
 			use [rebnative name] [
 
-				rebnative: func [def] [
+				rebnative: func [def /local meta] [
 
 					use [id] [
 
@@ -349,8 +368,16 @@ source-tool: context [
 						]
 
 						append index reduce [id def]
+
 						insert def compose [file (name)]
-						
+						append def compose/only [meta (none)]
+
+						either def/is-new-format [
+							def/meta: construct comment/load def/intro
+						][
+							def/meta: context [Details: none]
+							oneoff-note-conversion id
+						]
 					]
 
 				]
@@ -417,20 +444,26 @@ source-tool: context [
 
 			] ; Easier to debug than a monolithic rule.
 
-			native: func [/local txt intro chars comment-ch] [
+			native: func [/local txt intro line not-eol new-format pos] [
 
 				if txt: find/last last result {/*} [
 
-					; Logic for new format...
-					comment-ch: complement charset {*^/}
+					; Logic for new format... compatible with Rebol 2 for the moment.
+					not-eol: complement charset {^/}
+					line: [
+						"**" any not-eol
+						opt [pos: (if #"/" = first back pos [pos: back pos]) :pos]
+						newline
+					]
 					either all [
 						parse/all txt [
 							{/*} 20 200 #"*" newline
-							some ["**" any comment-ch newline]
+							some line
 							20 200 #"*" #"/" newline
 							any newline
 						]
 					][
+						new-format: true
 						intro: copy txt
 						clear txt
 					][
@@ -438,11 +471,12 @@ source-tool: context [
 						; Logic for old format.... TODO: eventually to be removed.
 						; Grab comment before declaration.
 						; Need to be sure it's our comment and not some earlier comment.
-
-						chars: charset {/* ^-^/}
-						if parse/all txt compose [some chars] [
-							intro: copy txt
-							clear txt
+						use [chars][
+							chars: charset {/* ^-^/}
+							if parse/all txt compose [some chars] [
+								intro: copy txt
+								clear txt
+							]
 						]
 					]
 				]
@@ -453,7 +487,8 @@ source-tool: context [
 						id (none)
 						intro (any [intro {}])
 						post-decl (none)
-						notes (none)
+						is-new-format (new-format)
+						meta (none)
 					]
 				]
 			]

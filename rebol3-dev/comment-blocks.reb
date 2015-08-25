@@ -35,26 +35,21 @@ load-comment: func [
 mold-comment: func [
 	{Mold block into comment lines.}
 	block [block!]
-	/indent inward [string!] {String to use as an indent.}
 	/local text bol pos
 ] [
 
 	; Note: Preserves newline formatting of the block.
 
-	bol: {**} inward: any [inward {  }]
+	bol: {**} indent: {  }
 
 	string: mold-contents block
 
-	if indent [
-		replace/all replace/all string {    } tab tab inward
-	]
-
-	replace/all string newline rejoin [newline bol inward]
+	replace/all string newline rejoin [newline bol indent]
 
 	pos: insert string bol
-	if not equal? newline pos/1 [insert pos inward]
+	if not equal? newline pos/1 [insert pos indent]
 
-	if inward = pos: skip tail string 0 - length? inward [clear pos]
+	if indent = pos: skip tail string 0 - length? indent [clear pos]
 	append string newline
 
 	string
