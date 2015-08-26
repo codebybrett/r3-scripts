@@ -1,6 +1,17 @@
-REBOL []
+REBOL [
+	Purpose: {Specify and test requirements that code should meet.}
+	Author: {Brett Handley}
+	License: {Apache 2.0}
+]
 
-; A to specify and test requirements that code should meet.
+; -------------------------------------------------------------------------------
+;
+; Each test can optionally begin with a string description of the requirement,
+; stated in the positive sense (the requirement is met if the test returns true).
+;
+; This format should be compatible with Rebol test format.
+;
+; -------------------------------------------------------------------------------
 
 either system/version > 2.100.0 [; Rebol3
 
