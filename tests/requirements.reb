@@ -8,8 +8,9 @@ either system/version > 2.100.0 [; Rebol3
 		condition [block!] {Bound to error object. Evaluated by ALL.}
 		test [block!]
 	] [
-		error? err: try test
-		all bind/copy condition construct body-of err
+		if error? err: try test [
+			all bind/copy condition in err 'type
+		]
 	]
 
 	user-error: funct [match [string! block!] test [block!]] [
@@ -25,8 +26,9 @@ either system/version > 2.100.0 [; Rebol3
 		condition [block!] {Bound to error object. Evaluated by ALL.}
 		test [block!]
 	] [
-		error? err: try test
-		all bind/copy condition construct body-of disarm err
+		if error? err: try test [
+			all bind/copy condition in disarm err 'type
+		]
 	]
 
 	user-error: funct [match [string! block!] test [block!]] [
