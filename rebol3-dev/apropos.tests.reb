@@ -24,11 +24,11 @@ ctx1: context [
 
 print mold requirements 'apropos [
 
-	[1 = apropos ctx1 [ctx1/value]]
+	[1 = apropos ctx1 [value]]
 
-	[1 = apropos [ctx1] [ctx1/value]]
+	[1 = apropos [ctx1] [value]]
 
-	[1 = apropos (to path! 'ctx1) [ctx1/value]]
+	[1 = apropos (to path! 'ctx1) [value]]
 
 	[2 = apropos 'ctx1/ctx2 [value]]
 
