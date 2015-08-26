@@ -21,7 +21,8 @@ either system/version > 2.100.0 [; Rebol3
 
 ] [; Rebol2
 
-	evaluate-path: func [path] [do :path
+	evaluate-path: func [path] [
+		do :path
 	]
 
 ]
