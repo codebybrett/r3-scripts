@@ -7,7 +7,7 @@ grammar: context [
 	p1: p2: text: init-nl: none
 
 	emit: [p2: (append text copy/part p1 p2)]
-	wsp: compose [some (charset { ^-})]
+	wsp: compose ["  "]
 	clean-line: [{**} opt wsp newline]
 	line: [{**} wsp p1: thru newline emit]
 	rule: [ (init-nl: false)
