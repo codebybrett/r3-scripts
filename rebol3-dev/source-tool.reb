@@ -33,8 +33,16 @@ REBOL [
 ;	* Be robust in the face of introduced parse rule bugs.
 ;
 ; NOTE:
+;
 ;	Some c identifiers are different to the words they define.
 ;	- See ID-TO-WORD for the mapping.
+;
+;	Supports tools (e.g. coverity that use comments
+;	to annotate declarations by maintaing a comment intact
+;	that follows the intro comment but just prior to the
+;	declaration.
+;
+;	Runs on Rebol 2 and Rebol 3.
 ;
 ; --------------------------------------------------------------
 
@@ -48,9 +56,9 @@ source-tool: context [
 
 	; --- Config 
 
-	boot.natives.file: %../github-repos/ren-c/src/boot/natives.r
-	core.source.folder: %../github-repos/ren-c/src/core/
-	core.output.folder: %../github-repos/ren-c/src/core/
+	boot.natives.file: %../../ren-c/src/boot/natives.r
+	core.source.folder: %../../ren-c/src/core/
+	core.output.folder: %../../ren-c/src/core/
 
 	max-line-length: 80 ; Not counting newline.
 
