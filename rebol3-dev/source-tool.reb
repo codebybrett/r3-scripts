@@ -23,10 +23,6 @@ REBOL [
 ;
 ;	help source-tool/list
 ;
-; Interrogate the source definition of CONTEXT (including c source filename):
-;
-;	source-tool/init
-;	print mold source-tool/c-source/rebnative-index/context
 ;
 ; OBJECTIVES:
 ;
@@ -71,7 +67,7 @@ source-tool: context [
 	stats: context [
 		parsed: none
 		not-parsed: none
-		comments-updated: none
+		decl-updated: none
 		files-written: none
 	]
 
@@ -102,49 +98,6 @@ source-tool: context [
 		]
 	]
 
-	native: context [
-
-		meta-of: func [
-			{Return function metadata.}
-			name
-			/local c-info r-info summary notes data
-		] [
-
-			c-info: c-source/rebnative-index/:name
-			r-info: attempt [r-source/native/cache/:name]
-
-			if r-info [
-				summary: if string? first r-info [first r-info]
-				data: synopsis r-info
-			]
-
-			pretty-spec compose/only [
-				Name: (form name)
-				Summary: (summary)
-				Details: (c-info/meta/details)
-				Spec: (data)
-			]
-		]
-
-		synopsis: funct [spec /local block] [
-
-			block: pretty-spec collect [
-
-				count: 0
-
-				foreach x spec [
-					if any [word? x refinement? x] [
-						count: count + 1
-						keep to-tag count
-						keep :x
-					]
-				]
-			]
-
-			if not empty? block [block]
-		]
-	]
-
 	reset: func [{Clear caches.}] [
 
 		r-source/reset
@@ -156,8 +109,9 @@ source-tool: context [
 	update: context [
 
 		all: func [] [
+
 			init
-			comments
+			code
 			files
 
 			log [stats (body-of stats)]
@@ -165,16 +119,13 @@ source-tool: context [
 			reset ; Allow caches to be garbage collected.
 		]
 
-		comments: func [{Update source comments (in-memory).}] [
+		code: func [{Update source comments (in-memory).}] [
 
-			debug [update-comments]
+			debug [update-code]
 
-			apropos c-source [
-
-				foreach id identifiers [comment/update id]
+			apropos c-source/decl [
+				foreach def list [sync-to-code def]
 			]
-
-			exit
 		]
 
 		files: func [{Write changes to source files.}] [
@@ -187,12 +138,10 @@ source-tool: context [
 
 			exit
 		]
-
 	]
 
 	c-source: context [
 
-		decl-list: none
 		rebnative-index: none
 
 		comment: context [
@@ -205,7 +154,7 @@ source-tool: context [
 				rejoin [
 					{/*} line* width newline
 					mold-comment spec
-					line* width {*/} newline newline
+					line* width {*/} newline
 				]
 			]
 
@@ -228,15 +177,93 @@ source-tool: context [
 				if lines [load-comment lines]
 			]
 
-			update: func [name [word!] /local c-info] [
+			width: 78
+		]
 
-				log [update-comment (:name)]
+		decl: context [
 
-				rebnative-index/(:name)/intro: format native/meta-of name
-				stats/comments-updated: 1 + any [stats/comments-updated 0]
+			list: none
+
+			format: func [def][
+
+				rejoin [
+
+					comment/format meta-of def
+					newline
+
+					rejoin collect [
+						foreach word def/keywords [keep word keep #" "]
+						keep def/name
+					] #"(" def/param #")" newline
+
+					#"^{"
+				]
 			]
 
-			width: 78
+			meta-of: funct [
+				{Return function metadata.}
+				def
+			] [
+		
+				name: def/name
+
+				if native: rebnative? def [
+					r.id: id-to-word name: def/param
+					r-info: attempt [r-source/native/cache/:r.id]
+				]
+
+				if r-info [
+					summary: if string? first r-info [first r-info]
+					spec: synopsis r-info
+				]
+
+				pretty-spec compose/only [
+					Name: (form name)
+					Summary: (summary)
+					Details: (def/post-notes)
+					Spec: (spec)
+				]
+			]
+
+			synopsis: funct [spec /local block] [
+
+				block: pretty-spec collect [
+
+					count: 0
+
+					foreach x spec [
+						if any [word? x refinement? x] [
+							count: count + 1
+							keep to-tag count
+							keep :x
+						]
+					]
+				]
+
+				if not empty? block [block]
+			]
+
+			sync-to-code: funct [def][
+
+				tree: file/cache/(def/file)/tree
+				position: at tree def/token
+				node: first position
+				node/1: 'new-style-decl
+				node/3/content: format def
+
+				log [update-decl (def/name) (def/param)]
+				stats/decl-updated: 1 + any [stats/decl-updated 0]
+			]
+
+			where: funct [condition [block!] "DEF is bound"] [
+
+				collect [
+					foreach def list compose/only [
+						if (to paren! condition) [keep/only def]
+					]
+				]
+			]
+
 		]
 
 		file: context [
@@ -244,14 +271,14 @@ source-tool: context [
 			cache: none
 
 			declarations: funct [name] [
-	
+
 				result: make block! []
-	
+
 				tree: attempt [cache/:name/tree]
 				if not tree [return result]
-	
+
 				position: at tree 4
-	
+
 				forskip position 2 [
 
 					pattern: first position
@@ -349,9 +376,8 @@ source-tool: context [
 			to word! id
 		]
 
-		rebnatives: func [] [
+		rebnatives: funct [] [
 
-			if none? rebnative-index [do make error! {No source comments loaded. Use /init.}]
 			extract rebnative-index 2
 		]
 
@@ -368,14 +394,16 @@ source-tool: context [
 
 		indexing: func [/local id] [
 
+			decl/list: make block! []
+
 			foreach name file/list [
 				debug [indexing-file (name)]
-				index-file name
+				append decl/list file/declarations name
 			]
 
 			rebnative-index: collect [
 
-				foreach def decl-list [
+				foreach def decl/list [
 
 					if rebnative? def [
 
@@ -391,13 +419,6 @@ source-tool: context [
 
 			sort/skip rebnative-index 2
 			new-line/all/skip rebnative-index true 2
-		]
-
-		index-file: func [name][
-
-			if not decl-list [decl-list: make block! []]
-
-			append decl-list file/declarations name
 		]
 
 		list: context [
@@ -433,24 +454,24 @@ source-tool: context [
 		reset: func [] [
 
 			file/cache: none
-			decl-list: none
+			decl/list: none
 			rebnative-index: none
 		]
 
 		text: context [
 
 			declaration-parsers: context [
-	
+
 				; TODO: Is there a simpler way to get info from tree while checking assumptions?
-	
+
 				assert-node: funct [
 					{Check node at child slot position.}
 					condition [word! block!] {Check condition for NODE, POSITION.}
 					position
 				][
-	
+
 					if word? condition [condition: compose [(to lit-word! condition) = node/1]]
-	
+
 					if not attempt [
 						node: position/1
 						do bind bind/copy condition 'node 'position
@@ -458,33 +479,33 @@ source-tool: context [
 						?? position
 						do make error! reform [{Node does not satisfy} mold condition]
 					]
-	
+
 					node
 				]
-	
+
 				old-style-decl: funct [ref /structure] [
-	
+
 					node: ref/1
 					string: node/3/content
-	
+
 					apropos text/parser/grammar [
-	
+
 						tree: get-parse [parse/all string old-style-decl] [
 							decl.words decl.args.single decl.args.multi c.id comment.notes
 						]
 					]
-	
+
 					using-tree-content tree
-	
+
 					if structure [return tree] ; Used for debugging.
-	
+
 					position: at tree 4
-	
+
 					if 'comment.notes = position/1/1 [
 						pre-notes: position/1/3/content
 						position: next position
 					]
-	
+
 					decl.words: assert-node 'decl.words position
 					childslot: at decl.words 4
 					decl.words: collect [
@@ -493,10 +514,10 @@ source-tool: context [
 							keep c.id/3/content
 						]
 					]
-	
+
 					name: last decl.words
 					clear back tail decl.words
-	
+
 					position: next position
 					decl.args: position/1
 					either single-param: equal? 'decl.args.single decl.args/1 [
@@ -506,15 +527,19 @@ source-tool: context [
 						assert-node 'decl.args.multi position
 						param: decl.args/3/content
 					]
-	
+
 					position: next position
 					if all [
 						not tail? position
 						position/1/1 = 'comment.notes
 					][
 						post-notes: position/1/3/content
+						insert post-notes newline
+						replace/all post-notes {^/**} newline
+						replace/all post-notes tab {  }
+						trim/tail post-notes
 					]
-	
+
 					compose/only [
 						name (name)
 						keywords (decl.words)
@@ -526,7 +551,7 @@ source-tool: context [
 					]
 				]
 			]
-	
+
 			parser: context [
 
 				guard: pos: none
@@ -575,7 +600,7 @@ source-tool: context [
 					stars: [#"*" some #"*" opt [pos: #"/" (pos: back pos) :pos]]
 
 					not-eoc: either system/version > 2.100.0 [; Rebol3
-						[not [stars #"/" | newline]]
+						[not [stars | newline]]
 					] [; Rebol2
 						[(guard: [none]) [opt [[stars | newline] (guard: [end skip])] guard]]
 					]
@@ -617,7 +642,6 @@ source-tool: context [
 			]
 
 		]
-
 	]
 
 	pretty-spec: func [block] [
