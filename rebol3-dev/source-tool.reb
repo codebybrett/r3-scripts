@@ -50,9 +50,18 @@ source-tool: context [
 
 	boot.natives.file: %../github-repos/ren-c/src/boot/natives.r
 	core.source.folder: %../github-repos/ren-c/src/core/
+	core.output.folder: %../github-repos/ren-c/src/core/
 
-	log: func [message] [print mold new-line/all compose/only message false]
-	debug: func [message] [print mold new-line/all compose/only message false] ; use none to turn off.
+	max-line-length: 80 ; Not counting newline.
+
+	logfile: clean-path %source-tool.log.txt
+	attempt [delete logfile]
+
+	log: func [message] [write/append logfile join newline mold new-line/all compose/only message false]
+
+	debug: none
+	; Set to NONE or :LOG ...
+
 	timing: funct [code /local result] [
 		started: now/precise
 		log [started (started) (code)]
@@ -148,8 +157,10 @@ source-tool: context [
 
 			format: func [
 				spec
-				/local text bol
+				/local text bol width
 			] [
+
+				width: max-line-length - 2
 
 				rejoin [
 					{/*} line* width newline
@@ -177,27 +188,45 @@ source-tool: context [
 				if lines [load-comment lines]
 			]
 
-			width: 78
 		]
 
 		decl: context [
 
 			list: none
 
-			format: func [def][
+			format: funct [def][
 
-				rejoin [
+				string: rejoin collect [
 
-					comment/format meta-of def
-					newline
+					keep comment/format meta-of def
+					keep newline
 
-					rejoin collect [
-						foreach word def/keywords [keep word keep #" "]
-						keep def/name
-					] #"(" def/param #")" newline
+					if def/pre-comment [
+						keep def/pre-comment
+						keep newline
+					]
 
-					#"^{"
+					foreach word def/keywords [keep word keep #" "]
+					keep def/name
+					keep rejoin [#"(" def/param #")" newline]
+
+					keep #"^{"
 				]
+
+				parse/all string [
+					some [
+						bol: to newline eol: skip (
+							if max-line-length < subtract index? eol index? bol [
+								width-exceeded: true
+							]
+						)
+					]
+				]
+				if width-exceeded [
+					log [line-width-exceeded (mold def/file) (def/name) (def/param)]
+				]
+
+				string
 			]
 
 			meta-of: funct [
@@ -217,10 +246,24 @@ source-tool: context [
 					spec: synopsis r-info
 				]
 
+				either def/style = 'new-style-decl [
+
+					meta: comment/load def/intro-notes
+					details: attempt [second find meta first [Details:]]
+
+				][ ; old-style-decl
+
+					details: def/post-notes
+					if def/intro-notes [
+						def/pre-comment: rejoin [{/*} def/intro-notes {*/}]
+						def/intro-notes: none
+					]
+				]
+
 				pretty-spec compose/only [
 					Name: (form name)
 					Summary: (summary)
-					Details: (def/post-notes)
+					Details: (details)
 					Spec: (spec)
 				]
 			]
@@ -247,11 +290,12 @@ source-tool: context [
 
 				tree: file/cache/(def/file)/tree
 				position: at tree def/token
+
 				node: first position
 				node/1: 'new-style-decl
 				node/3/content: format def
 
-				log [update-decl (def/name) (def/param)]
+				debug [update-decl (def/name) (def/param)]
 				stats/decl-updated: 1 + any [stats/decl-updated 0]
 			]
 
@@ -279,7 +323,7 @@ source-tool: context [
 
 				position: at tree 4
 
-				forskip position 2 [
+				forall position [
 
 					pattern: first position
 
@@ -306,7 +350,7 @@ source-tool: context [
 
 			process: func [file /local source tree] [
 
-				log [process-c (file)]
+				debug [process-c (file)]
 
 				if not cache [cache: make block! 200]
 
@@ -357,7 +401,7 @@ source-tool: context [
 
 					write core.output.folder/:name new
 					stats/files-written: 1 + any [stats/files-written 0]
-					log [wrote (:name)]
+					debug [wrote (:name)]
 
 					cache/(name)/source: new
 				]
@@ -483,15 +527,18 @@ source-tool: context [
 					node
 				]
 
-				old-style-decl: funct [ref /structure] [
+				new-style-decl: funct [ref /structure] [
+
+					; TODO: Refactor out common code with old-style-decl
 
 					node: ref/1
 					string: node/3/content
 
 					apropos text/parser/grammar [
 
-						tree: get-parse [parse/all string old-style-decl] [
-							decl.words decl.args.single decl.args.multi c.id comment.notes
+						tree: get-parse [parse/all string new-style-decl] [
+							decl.words decl.args.single decl.args.multi c.id
+							comment.banner comment.multiline.intact
 						]
 					]
 
@@ -501,16 +548,21 @@ source-tool: context [
 
 					position: at tree 4
 
-					if 'comment.notes = position/1/1 [
-						pre-notes: position/1/3/content
+					if 'comment.banner = position/1/1 [
+						intro-notes: position/1/3/content
+						position: next position
+					]
+
+					if 'comment.multiline.intact = position/1/1 [
+						pre-comment: position/1/3/content
 						position: next position
 					]
 
 					decl.words: assert-node 'decl.words position
-					childslot: at decl.words 4
+					childpos: at decl.words 4
 					decl.words: collect [
-						forall childslot [
-							c.id: assert-node 'c.id childslot
+						forall childpos [
+							c.id: assert-node 'c.id childpos
 							keep c.id/3/content
 						]
 					]
@@ -536,7 +588,7 @@ source-tool: context [
 						post-notes: position/1/3/content
 						insert post-notes newline
 						replace/all post-notes {^/**} newline
-						replace/all post-notes tab {  }
+						replace/all post-notes tab {    }
 						trim/tail post-notes
 					]
 
@@ -545,8 +597,83 @@ source-tool: context [
 						keywords (decl.words)
 						single-param (single-param)
 						param (param)
-						pre-notes (pre-notes)
+						intro-notes (intro-notes)
+						pre-comment (pre-comment)
 						post-notes (post-notes)
+						style new-style-decl
+						token (index? ref)
+					]
+
+				]
+
+				old-style-decl: funct [ref /structure] [
+
+					node: ref/1
+					string: node/3/content
+
+					apropos text/parser/grammar [
+
+						tree: get-parse [parse/all string old-style-decl] [
+							decl.words decl.args.single decl.args.multi c.id comment.notes
+						]
+					]
+
+					using-tree-content tree
+
+					if structure [return tree] ; Used for debugging.
+
+					position: at tree 4
+
+					if 'comment.notes = position/1/1 [
+						intro-notes: position/1/3/content
+						position: next position
+					]
+
+					pre-comment: none
+
+					decl.words: assert-node 'decl.words position
+					childpos: at decl.words 4
+					decl.words: collect [
+						forall childpos [
+							c.id: assert-node 'c.id childpos
+							keep c.id/3/content
+						]
+					]
+
+					name: last decl.words
+					clear back tail decl.words
+
+					position: next position
+					decl.args: position/1
+					either single-param: equal? 'decl.args.single decl.args/1 [
+						c.id: assert-node 'c.id at decl.args 4
+						param: c.id/3/content
+					][
+						assert-node 'decl.args.multi position
+						param: decl.args/3/content
+					]
+
+					position: next position
+					if all [
+						not tail? position
+						position/1/1 = 'comment.notes
+					][
+						post-notes: position/1/3/content
+						insert post-notes newline
+						replace/all post-notes {^/**} newline
+						replace/all post-notes tab {    }
+						trim/tail post-notes
+					]
+
+					compose/only [
+						name (name)
+						keywords (decl.words)
+						single-param (single-param)
+						param (param)
+						intro-notes (intro-notes)
+						pre-comment (pre-comment)
+						post-notes (post-notes)
+						style old-style-decl
 						token (index? ref)
 					]
 				]
@@ -566,20 +693,23 @@ source-tool: context [
 				grammar: context bind [
 
 					rule: [opt file-comment some pattern rest]
-					file-comment: [comment.multline]
+					file-comment: [comment.multiline]
 					pattern: [old-style-decl | new-style-decl | to-next]
 					old-style-decl: [
-						[comment.decorative | comment.multline]
+						[comment.decorative | comment.multiline]
 						wsp decl
-						[comment.decorative | comment.multline]
+						[comment.decorative | comment.multiline]
 						any newline #"{"
 					]
 					new-style-decl: [
 						comment.banner
+						any newline
+						opt comment.multiline.intact
+						any newline
 						decl
 						any newline #"{"
 					]
-					comment: [comment.multline | comment.decorative]
+					comment: [comment.multiline | comment.decorative]
 					to-next: [to {^//*} newline]
 					rest: [to end]
 
@@ -590,9 +720,10 @@ source-tool: context [
 					decl.args.multi: [to #")"]
 					c.id: [id.nondigit any id.rest]
 
-					comment.banner: [{/*} stars newline opt comment.notes stars {*/}]
+					comment.banner: [{/*} stars newline opt comment.notes stars {*/} newline]
 					comment.decorative: [{/*} some [stars | wsp | newline] {*/}]
-					comment.multline: [{/*} opt stars newline opt comment.notes opt stars {*/}]
+					comment.multiline.intact: [{/*} opt stars newline any comment.note.line opt stars {*/}]
+					comment.multiline: [{/*} opt stars newline opt comment.notes opt stars {*/}]
 					comment.notes: [some comment.note.line]
 					comment.note.line: [[{**} comment.note.text | stars] newline]
 					comment.note.text: [some [not-eoc skip]]
@@ -667,7 +798,7 @@ source-tool: context [
 			] [
 
 				file: boot.natives.file
-				log [process-natives (file)]
+				debug [process-natives (file)]
 
 				if not cache [cache: make block! 200]
 
