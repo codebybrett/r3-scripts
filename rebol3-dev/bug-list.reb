@@ -2,6 +2,7 @@ REBOL [
 	purpose: {Track status of some bugs I have encountered}.
 ]
 
+; NOTE: Some of these may be fixed in some intepreters.
 
 requirements 'problems-encountered [
 
