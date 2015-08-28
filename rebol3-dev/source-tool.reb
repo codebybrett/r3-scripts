@@ -26,7 +26,7 @@ REBOL [
 ; Interrogate the source definition of CONTEXT (including c source filename):
 ;
 ;	source-tool/init
-;	print mold source-tool/c-source/index/context
+;	print mold source-tool/c-source/rebnative-index/context
 ;
 ; OBJECTIVES:
 ;
@@ -45,6 +45,8 @@ REBOL [
 do %comment-blocks.reb
 
 do %apropos.reb
+do %parse-kit.reb
+do %trees.reb
 
 source-tool: context [
 
@@ -54,10 +56,21 @@ source-tool: context [
 	core.source.folder: %../github-repos/ren-c/src/core/
 
 	log: func [message] [print mold new-line/all compose/only message false]
+	debug: func [message] [print mold new-line/all compose/only message false] ; use none to turn off.
+	timing: funct [code /local result] [
+		started: now/precise
+		log [started (started) (code)]
+		set/any 'result do code
+		finished: now/precise
+		log [finished (difference finished started) (code)]
+		get/any 'result
+	]
 
 	; --- End Config
 
 	stats: context [
+		parsed: none
+		not-parsed: none
 		comments-updated: none
 		files-written: none
 	]
@@ -67,39 +80,26 @@ source-tool: context [
 
 		reset ; Start fresh.
 
-		r-source/process
-		c-source/process
+		timing [r-source/process]
+		timing [c-source/process]
 
 		log [words-missing-specs (new-line/all list/missing/specs false)]
-		log [words-missing-comments (new-line/all list/missing/comments false)]
+		log [words-missing-rebnatives (new-line/all list/missing/rebnatives false)]
 	]
 
 	list: context [
 
 		missing: context [
 
-			comments: func [] [
-				exclude r-source/native/names c-source/identifiers
+			rebnatives: func [] [
+				exclude r-source/native/names c-source/rebnatives
 			]
 
 			specs: func [] [
-				exclude c-source/identifiers r-source/native/names
+				exclude c-source/rebnatives r-source/native/names
 			]
 
 		]
-
-		details: func [{Words that have details in the comments.} /local ugly-tmp-var] [
-
-			if none? c-source/index [do make error! {No source comments loaded. Use /init.}]
-			remove-each [word def] ugly-tmp-var: copy c-source/index [none? def/meta/details]
-			map-each [word def] ugly-tmp-var [word]
-		]
-
-
-		paired-words: func [{Words found in rebol spec (r-source) and c sources (c-source)}] [
-			intersect r-source/native/names c-source/identifiers
-		]
-
 	]
 
 	native: context [
@@ -110,7 +110,7 @@ source-tool: context [
 			/local c-info r-info summary notes data
 		] [
 
-			c-info: c-source/index/:name
+			c-info: c-source/rebnative-index/:name
 			r-info: attempt [r-source/native/cache/:name]
 
 			if r-info [
@@ -167,6 +167,8 @@ source-tool: context [
 
 		comments: func [{Update source comments (in-memory).}] [
 
+			debug [update-comments]
+
 			apropos c-source [
 
 				foreach id identifiers [comment/update id]
@@ -177,8 +179,9 @@ source-tool: context [
 
 		files: func [{Write changes to source files.}] [
 
-			apropos c-source [
+			debug [update-files]
 
+			apropos c-source [
 				foreach name list/changed [file/update name]
 			]
 
@@ -189,7 +192,8 @@ source-tool: context [
 
 	c-source: context [
 
-		index: none
+		decl-list: none
+		rebnative-index: none
 
 		comment: context [
 
@@ -210,7 +214,7 @@ source-tool: context [
 				head insert/dup copy {} #"*" count
 			]
 
-			load: func [string /local lines][
+			load: func [string /local lines] [
 
 				if none? string [return none]
 
@@ -228,7 +232,7 @@ source-tool: context [
 
 				log [update-comment (:name)]
 
-				index/(:name)/intro: format native/meta-of name
+				rebnative-index/(:name)/intro: format native/meta-of name
 				stats/comments-updated: 1 + any [stats/comments-updated 0]
 			]
 
@@ -239,6 +243,31 @@ source-tool: context [
 
 			cache: none
 
+			declarations: funct [name] [
+	
+				result: make block! []
+	
+				tree: attempt [cache/:name/tree]
+				if not tree [return result]
+	
+				position: at tree 4
+	
+				forskip position 2 [
+
+					pattern: first position
+
+					if all [
+						word: in text/declaration-parsers pattern/1
+						def: do get word position
+					] [
+						insert def reduce ['file name]
+						append/only result def
+					]
+				]
+
+				result	
+			]
+
 			list: func [/local ugly-tmp-var] [
 
 				remove-each name ugly-tmp-var: read core.source.folder [
@@ -248,26 +277,38 @@ source-tool: context [
 				ugly-tmp-var
 			]
 
-			process: func [file /local source tokens] [
+			process: func [file /local source tree] [
+
+				log [process-c (file)]
 
 				if not cache [cache: make block! 200]
 
 				source: read/string core.source.folder/:file
-				tokens: text/tokenise source
+				tree: text/parse-source source
 
-				if not equal? source text/regenerate tokens [
-					do make error! reform [{Tokens for} mold file {do not represent the source file.}]
-				]
-
-				if parse tokens [string!] [; No keywords found.
+				either tree [
+					stats/parsed: 1 + any [stats/parsed 0]
+				] [
+					log [not-parsed (file)]
+					stats/not-parsed: 1 + any [stats/not-parsed 0]
 					return none
 				]
+
+				debug [tokenised-c (file)]
+
+				if not equal? source text/regenerate tree [
+					do make error! reform [{Tree for} mold file {does not represent the source file.}]
+				]
+
+				debug [check-regenerated-c (file)]
 
 				if not find cache file [append cache reduce [file none]]
 				cache/(file): compose/only [
 					source (source)
-					tokens (tokens)
+					tree (tree)
 				]
+
+				debug [cached (file)]
 			]
 
 			respecified?: func [file] [
@@ -277,7 +318,7 @@ source-tool: context [
 
 			source-for: func [file] [
 
-				text/regenerate cache/(file)/tokens
+				text/regenerate cache/(file)/tree
 			]
 
 			update: func [name /local old new] [
@@ -308,90 +349,55 @@ source-tool: context [
 			to word! id
 		]
 
-		identifiers: func [] [
+		rebnatives: func [] [
 
-			if none? index [do make error! {No source comments loaded. Use /init.}]
-			extract index 2
+			if none? rebnative-index [do make error! {No source comments loaded. Use /init.}]
+			extract rebnative-index 2
 		]
 
+		rebnative?: funct [def][
 
-		indexing: func [/local oneoff-note-conversion] [
-
-
-			oneoff-note-conversion: funct [name [word!] /local c-info] [
-
-				; --------------------------------------------------------
-				; Convert from original format for comments to new format.
-				; TODO: Once done, this function will become obsolete.
-				; --------------------------------------------------------
-
-				notes: attempt [copy index/(:name)/post-decl]
-
-				if not notes [exit]
-
-;				remove/part notes find notes newline
-;				trim/tail notes
-
-				replace/all notes tab {  }
-
-				if empty? notes [notes: none]
-
-				c-info: index/(:name)
-				if none? c-info/meta [
-					c-info/meta: compose [details: none]
+			if def/name = "REBNATIVE" [
+				if not def/single-param [
+					?? def
+					do make error! reform [{Expected REBNATIVE to have single parameter.}]
 				]
-				c-info/meta/details: notes
-				c-info/post-decl: none ; Obliterate the following comment.
+				true
+			]
+		]
 
-				log [notes-converted (:name)]
+		indexing: func [/local id] [
 
-				exit
+			foreach name file/list [
+				debug [indexing-file (name)]
+				index-file name
 			]
 
+			rebnative-index: collect [
 
-			if none? file/cache [
-				do make error! {Indexing requires files to be loaded in the file cache. Use /init, check core folder.}
-			]
+				foreach def decl-list [
 
-			index: make block! 100
+					if rebnative? def [
 
-			use [rebnative name] [
+						keep id: id-to-word def/param
 
-				rebnative: func [def /local meta] [
-
-					use [id] [
-
-						id: id-to-word def/id
-
-						if find index id [
-							do make error! reform [{Expected} mold def/identifer {to be declared only once.}]
-						]
-
-						append index reduce [id def]
-
-						insert def compose [file (name)]
-						append def compose/only [meta (none)]
-
-						either def/is-new-format [
-							def/meta: construct comment/load def/intro
-						][
-							def/meta: context [Details: none]
-							oneoff-note-conversion id
+						keep/only compose/only [
+							c.id (def/param)
+							def (def)
 						]
 					]
-
 				]
-
-				foreach [file definition] file/cache [
-
-					name: file
-					do bind copy definition/tokens 'rebnative
-				]
-
 			]
 
-			sort/skip index 2
-			new-line/all/skip index true 2
+			sort/skip rebnative-index 2
+			new-line/all/skip rebnative-index true 2
+		]
+
+		index-file: func [name][
+
+			if not decl-list [decl-list: make block! []]
+
+			append decl-list file/declarations name
 		]
 
 		list: context [
@@ -411,113 +417,203 @@ source-tool: context [
 			]
 		]
 
+		parsing: func [] [
+
+			foreach name file/list [file/process name]
+		]
+
 		process: func [] [
 
 			reset
-			foreach name file/list [file/process name]
-			indexing
+			timing [parsing]
+			timing [indexing]
 			exit
 		]
 
 		reset: func [] [
 
 			file/cache: none
-			index: none
+			decl-list: none
+			rebnative-index: none
 		]
 
 		text: context [
 
-			bmrk: pos: result: segment: text: this: guard: none
-			wsp: charset {^- }
-
-			grammar: context [
-
-				rule: [bmrk: some segment to end emit]
-				segment: [thru-keyword identifier opt post-decl bmrk:]
-				thru-keyword: [to {REBNATIVE} emit (native)]
-				identifier: [thru #"(" bmrk: to #")" dup (this/id: text) skip newline]
-				post-decl: [bmrk: any newline {/*} thru newline opt post-decl.lines thru {*/} dup (this/post-decl: text)]
-				post-decl.lines: [some [any #"*" some wsp thru newline]]
-
-				dup: [pos: (text: copy/part bmrk pos)]
-				emit: [dup (append result text)]
-
-			] ; Easier to debug than a monolithic rule.
-
-			native: func [/local txt intro line not-eol new-format pos] [
-
-				if txt: find/last last result {/*} [
-
-					; Logic for new format... compatible with Rebol 2 for the moment.
-					not-eol: complement charset {^/}
-					line: [
-						"**" any not-eol
-						opt [pos: (if #"/" = first back pos [pos: back pos]) :pos]
-						newline
+			declaration-parsers: context [
+	
+				; TODO: Is there a simpler way to get info from tree while checking assumptions?
+	
+				assert-node: funct [
+					{Check node at child slot position.}
+					condition [word! block!] {Check condition for NODE, POSITION.}
+					position
+				][
+	
+					if word? condition [condition: compose [(to lit-word! condition) = node/1]]
+	
+					if not attempt [
+						node: position/1
+						do bind bind/copy condition 'node 'position
+					][
+						?? position
+						do make error! reform [{Node does not satisfy} mold condition]
 					]
-					either all [
-						parse/all txt [
-							{/*} 20 200 #"*" newline
-							some line
-							20 200 #"*" #"/" newline
-							any newline
-						]
-					][
-						new-format: true
-						intro: copy txt
-						clear txt
-					][
-
-						; Logic for old format.... TODO: eventually to be removed.
-						; Grab comment before declaration.
-						; Need to be sure it's our comment and not some earlier comment.
-						use [chars][
-							chars: charset {/* ^-^/}
-							if parse/all txt compose [some chars] [
-								intro: copy txt
-								clear txt
-							]
+	
+					node
+				]
+	
+				old-style-decl: funct [ref /structure] [
+	
+					node: ref/1
+					string: node/3/content
+	
+					apropos text/parser/grammar [
+	
+						tree: get-parse [parse/all string old-style-decl] [
+							decl.words decl.args.single decl.args.multi c.id comment.notes
 						]
 					]
-				]
-
-				append result reduce [
-					'rebnative
-					this: compose [
-						id (none)
-						intro (any [intro {}])
-						post-decl (none)
-						is-new-format (new-format)
-						meta (none)
+	
+					using-tree-content tree
+	
+					if structure [return tree] ; Used for debugging.
+	
+					position: at tree 4
+	
+					if 'comment.notes = position/1/1 [
+						pre-notes: position/1/3/content
+						position: next position
+					]
+	
+					decl.words: assert-node 'decl.words position
+					childslot: at decl.words 4
+					decl.words: collect [
+						forall childslot [
+							c.id: assert-node 'c.id childslot
+							keep c.id/3/content
+						]
+					]
+	
+					name: last decl.words
+					clear back tail decl.words
+	
+					position: next position
+					decl.args: position/1
+					either single-param: equal? 'decl.args.single decl.args/1 [
+						c.id: assert-node 'c.id at decl.args 4
+						param: c.id/3/content
+					][
+						assert-node 'decl.args.multi position
+						param: decl.args/3/content
+					]
+	
+					position: next position
+					if all [
+						not tail? position
+						position/1/1 = 'comment.notes
+					][
+						post-notes: position/1/3/content
+					]
+	
+					compose/only [
+						name (name)
+						keywords (decl.words)
+						single-param (single-param)
+						param (param)
+						pre-notes (pre-notes)
+						post-notes (post-notes)
+						token (index? ref)
 					]
 				]
 			]
+	
+			parser: context [
 
-			rebnative: func [source /local post-decl] [
+				guard: pos: none
 
-				post-decl: any [source/post-decl copy {}]
+				charsets: context [
 
-				rejoin [
-					source/intro {REBNATIVE} "(" source/id ")^/" post-decl
+					id.nondigit: charset [#"_" #"a" - #"z" #"A" - #"Z"]
+					id.digit: charset {0123456789}
+					id.rest: union id.nondigit id.digit
 				]
+
+				grammar: context bind [
+
+					rule: [opt file-comment some pattern rest]
+					file-comment: [comment.multline]
+					pattern: [old-style-decl | new-style-decl | to-next]
+					old-style-decl: [
+						[comment.decorative | comment.multline]
+						wsp decl
+						[comment.decorative | comment.multline]
+						any newline #"{"
+					]
+					new-style-decl: [
+						comment.banner
+						decl
+						any newline #"{"
+					]
+					comment: [comment.multline | comment.decorative]
+					to-next: [to {^//*} newline]
+					rest: [to end]
+
+					decl: [decl.words #"(" decl.args #")" opt wsp newline]
+					decl.words: [c.id any [wsp c.id]]
+					decl.args: [decl.args.single | decl.args.multi]
+					decl.args.single: [c.id pos: #")" :pos]
+					decl.args.multi: [to #")"]
+					c.id: [id.nondigit any id.rest]
+
+					comment.banner: [{/*} stars newline opt comment.notes stars {*/}]
+					comment.decorative: [{/*} some [stars | wsp | newline] {*/}]
+					comment.multline: [{/*} opt stars newline opt comment.notes opt stars {*/}]
+					comment.notes: [some comment.note.line]
+					comment.note.line: [[{**} comment.note.text | stars] newline]
+					comment.note.text: [some [not-eoc skip]]
+
+					stars: [#"*" some #"*" opt [pos: #"/" (pos: back pos) :pos]]
+
+					not-eoc: either system/version > 2.100.0 [; Rebol3
+						[not [stars #"/" | newline]]
+					] [; Rebol2
+						[(guard: [none]) [opt [[stars | newline] (guard: [end skip])] guard]]
+					]
+
+					wsp: compose [some (charset { ^-})]
+
+				] charsets
+				; Processed using action injection
+
 			]
 
-			regenerate: func [
-				{Generate source text from tokens.}
-				block [block!] {As returned from tokenise.}
-			] [
-				rejoin block
-			]
-
-			tokenise: func [
-				{Tokenise the source into a block.}
+			parse-source: func [
+				{Parse tree structure from the source.}
 				string
+				/local parsed result terms
 			] [
-				result: make block! 100
-				if not parse/all string grammar/rule [
-					result: reduce [string]
+
+				terms: bind [
+					file-comment
+					old-style-decl
+					new-style-decl
+					to-next rest
+				] parser/grammar
+
+				result: get-parse [parsed: parse/all string parser/grammar/rule] terms
+				if not parsed [return none]
+
+				prettify-tree using-tree-content result
+			]
+
+			regenerate: funct [
+				{Generate source text from source.}
+				block [block!] {As returned from parse-source.}
+			] [
+				children: at block 4
+				either empty? children [block/3/content] [
+					rejoin map-each node children [regenerate node]
 				]
-				result
 			]
 
 		]
@@ -543,12 +639,15 @@ source-tool: context [
 			]
 
 			processing: func [
-				/local block errors name spec position cache-item
+				/local block errors name spec position cache-item file
 			] [
+
+				file: boot.natives.file
+				log [process-natives (file)]
 
 				if not cache [cache: make block! 200]
 
-				block: load boot.natives.file
+				block: load file
 
 				cache-item: func [] [
 					name: to word! :name
@@ -566,7 +665,6 @@ source-tool: context [
 
 				sort/skip cache 2
 				spec
-
 			]
 
 		]
