@@ -819,6 +819,7 @@ source-tool: context [
 				if not parse block [
 					some [position:
 						set name set-word! 'native set spec block! (cache-item)
+						| skip ; TODO: Review - Error will never happen with this.
 					]
 				] [
 					do make error! reform [{File} mold file {has unexpected format at position.} index? position]
