@@ -63,8 +63,6 @@ source-tool: context [
 	max-line-length: 80 ; Not counting newline.
 
 	logfile: clean-path %source-tool.log.txt
-	attempt [delete logfile]
-
 	log: func [message] [write/append logfile join newline mold new-line/all compose/only message false]
 
 	debug: none
