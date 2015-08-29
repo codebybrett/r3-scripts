@@ -2,6 +2,10 @@ REBOL [
 	purpose: {Encode and Decode comment encoded Rebol blocks.}
 ]
 
+;
+; Note: Newline are encoded with {^/**  }
+;
+
 
 grammar: context [
 	p1: p2: text: init-nl: none
@@ -56,7 +60,7 @@ mold-comment: func [
 ]
 
 mold-contents: func [
-	{Mold block without the outer brakets.}
+	{Mold block without the outer brakets (a little different to MOLD/ONLY).}
 	block [block! paren!]
 	/local string bol
 ][
