@@ -365,9 +365,8 @@ either system/version > 2.100.0 [; Rebol 3
 	parsing-unless: func [
 		{Creates a rule that fails if the rule matches, succeeds if the rule fails. Will not consume input. Susperseeded by Rebol 3's NOT.}
 		rule [block!] {Parse rule.}
-		/local new
 	] [
-		compose [not (rule)]
+		compose/only [not (rule)]
 	]
 
 ] [; Rebol 2
