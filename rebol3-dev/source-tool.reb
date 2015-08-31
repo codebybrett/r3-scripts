@@ -698,6 +698,11 @@ source-tool: context [
 
 				grammar: context bind [
 
+					;
+					; Be aware that other parts of the program depend
+					; on the structure of this grammar definition.
+					;
+
 					rule: [opt file-comment some pattern rest]
 					file-comment: [comment.multiline]
 					pattern: [old-style-decl | new-style-decl | to-next]
@@ -745,7 +750,7 @@ source-tool: context [
 					wsp: compose [some (charset { ^-})]
 
 				] charsets
-				; Processed using action injection
+				; Processed using action injection.
 
 			]
 
