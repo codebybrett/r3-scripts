@@ -2,8 +2,8 @@ REBOL [
 	Title: {Parsing Kit}
 	Purpose: "A collection of parsing tools."
 	File: %parse-kit.r
-	Date: 26-Aug-2015
-	Version: 1.5.0
+	Date: 31-Aug-2015
+	Version: 1.5.1
 	Author: "Brett Handley"
 	Web: http://www.codeconscious.com
 	License: {
@@ -31,6 +31,7 @@ REBOL [
 		1.3.0 [17-Jun-2015 "Added parsing-expression. Impose." "Brett Handley"]
 		1.4.0 [8-Jul-2015 "Added after." "Brett Handley"]
 		1.5.0 [26-Aug-2015 "Added position and length properties to root. Rename ctx to output." "Brett Handley"]
+		1.5.1 [31-Aug-2015 "Fix parsing-unless and optimise for Rebol 3." "Brett Handley"]
 	]
 ]
 
@@ -359,16 +360,30 @@ parsing-to: funct [
 
 ]
 
-parsing-unless: func [
-	{Creates a rule that fails if the rule matches, succeeds if the rule fails. Will not consume input.}
-	rule [block!] {Parse rule.}
-	/local new
-] [
-	use [position result][
-		new: copy/deep [[position: rule (result: [end skip]) | (result: [:position])] result]
-		change/only/part next new/1 rule 1
-		new
+either system/version > 2.100.0 [; Rebol 3
+
+	parsing-unless: func [
+		{Creates a rule that fails if the rule matches, succeeds if the rule fails. Will not consume input. Susperseeded by Rebol 3's NOT.}
+		rule [block!] {Parse rule.}
+		/local new
+	] [
+		compose [not (rule)]
 	]
+
+] [; Rebol 2
+
+	parsing-unless: func [
+		{Creates a rule that fails if the rule matches, succeeds if the rule fails. Will not consume input.}
+		rule [block!] {Parse rule.}
+		/local new
+	] [
+		use [position result] [
+			new: copy/deep [[position: rule (result: [end skip]) | (result: [:position])] result]
+			change/only/part next new/1 rule 1
+			new
+		]
+	]
+
 ]
 
 parsing-when: func [
