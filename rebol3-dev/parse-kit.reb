@@ -366,7 +366,8 @@ parsing-unless: func [
 ] [
 	use [position result][
 		new: copy/deep [[position: rule (result: [end skip]) | (result: [:position])] result]
-		head change/only/part next new/1 rule 1
+		change/only/part next new/1 rule 1
+		new
 	]
 ]
 
