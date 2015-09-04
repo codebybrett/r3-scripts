@@ -87,7 +87,7 @@ load-until-blank: funct [
 	; Could be replaced with Not in Rebol 3 parse.
 
 	rule: [
-		some [pos: not-terminator rebol-value]
+		some [not-terminator rebol-value]
 		opt newline position: to end
 	]
 
