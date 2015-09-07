@@ -170,7 +170,7 @@ source-tool: context [
 
 				rejoin [
 					{/*} line* width newline
-					mold-comment spec
+					encode-lines {**} {  } mold-contents spec
 					line* width {*/} newline
 				]
 			]
@@ -191,9 +191,11 @@ source-tool: context [
 					to end
 				]
 
-				if lines [load-comment lines]
+				if lines [
+					lines: decode-lines {**} {  } lines
+					load-until-blank lines
+				]
 			]
-
 		]
 
 		decl: context [
@@ -255,6 +257,8 @@ source-tool: context [
 				either def/style = 'new-style-decl [
 
 					meta: comment/load def/intro-notes
+					?? def
+					meta: first meta
 					details: attempt [second find meta first [Details:]]
 
 				][ ; old-style-decl
@@ -544,7 +548,7 @@ source-tool: context [
 
 						tree: get-parse [parse/all string new-style-decl] [
 							decl.words decl.args.single decl.args.multi c.id
-							comment.banner comment.multiline.intact
+							comment.doubleslash comment.banner comment.multiline.intact
 						]
 					]
 
@@ -554,7 +558,7 @@ source-tool: context [
 
 					position: at tree 4
 
-					if 'comment.banner = position/1/1 [
+					if find [comment.doubleslash comment.banner] position/1/1 [
 						intro-notes: position/1/3/content
 						position: next position
 					]
@@ -705,7 +709,8 @@ source-tool: context [
 
 					rule: [opt file-comment some pattern rest]
 					file-comment: [comment.multiline]
-					pattern: [old-style-decl | new-style-decl | to-next]
+					pattern: [old-section | old-style-decl | new-style-decl | to-next]
+					old-section: [{/*} stars newline stars newline opt comment.notes stars {*/} newline]
 					old-style-decl: [
 						[comment.decorative | comment.multiline]
 						wsp decl
@@ -713,7 +718,7 @@ source-tool: context [
 						any newline #"{"
 					]
 					new-style-decl: [
-						comment.banner
+						[comment.doubleslash | comment.banner]
 						any newline
 						opt comment.multiline.intact
 						any newline
@@ -735,9 +740,13 @@ source-tool: context [
 					comment.decorative: [{/*} some [stars | wsp | newline] {*/}]
 					comment.multiline.intact: [{/*} opt stars newline any comment.note.line opt stars {*/}]
 					comment.multiline: [{/*} opt stars newline opt comment.notes opt stars {*/}]
+
+					comment.doubleslash: [pos: {//} :pos comment.notes]
+
 					comment.notes: [some comment.note.line]
-					comment.note.line: [[{**} comment.note.text | stars] newline]
+					comment.note.line: [[[{**} | {//}] comment.note.text | stars] newline]
 					comment.note.text: [some [not-eoc skip]]
+					; Modified cheaply to accept doubleslash comments.
 
 					stars: [#"*" some #"*" opt [pos: #"/" (pos: back pos) :pos]]
 
@@ -762,6 +771,7 @@ source-tool: context [
 
 				terms: bind [
 					file-comment
+					old-section
 					old-style-decl
 					new-style-decl
 					to-next rest
