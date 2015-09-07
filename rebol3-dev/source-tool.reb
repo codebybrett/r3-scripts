@@ -161,17 +161,28 @@ source-tool: context [
 
 		comment: context [
 
-			format: func [
-				spec
-				/local text bol width
-			] [
+			format: context [
 
-				width: max-line-length - 2
+				slashed: func [
+					spec
+					/local text bol width
+				] [
 
-				rejoin [
-					{/*} line* width newline
-					encode-lines {**} {  } mold-contents spec
-					line* width {*/} newline
+					encode-lines {//} {  } mold-contents spec
+				]
+
+				starred: func [
+					spec
+					/local text bol width
+				] [
+
+					width: max-line-length - 2
+
+					rejoin [
+						{/*} line* width newline
+						encode-lines {**} {  } mold-contents spec
+						line* width {*/} newline
+					]
 				]
 			]
 
@@ -180,19 +191,27 @@ source-tool: context [
 				head insert/dup copy {} #"*" count
 			]
 
-			load: func [string /local lines] [
+			load: func [string /local lines prefix] [
 
 				if none? string [return none]
 
 				parse/all string [
-					{/*} 20 200 #"*" newline
-					copy lines some [{**} [newline | #" " thru newline]]
-					20 200 #"*" #"/" newline
-					to end
+
+					; Slashed.
+					copy lines some [{//} [newline | #" " thru newline]]
+					(prefix: {//})
+
+					| [ ; Starred
+						{/*} 20 200 #"*" newline
+						copy lines some [{**} [newline | #" " thru newline]]
+						20 200 #"*" #"/" newline
+						to end
+						(prefix: {**})
+					]
 				]
 
 				if lines [
-					lines: decode-lines {**} {  } lines
+					lines: decode-lines prefix {  } lines
 					load-until-blank lines
 				]
 			]
@@ -206,7 +225,7 @@ source-tool: context [
 
 				string: rejoin collect [
 
-					keep comment/format meta-of def
+					keep comment/format/slashed meta-of def
 					keep newline
 
 					if def/pre-comment [
