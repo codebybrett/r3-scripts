@@ -276,7 +276,6 @@ source-tool: context [
 				either def/style = 'new-style-decl [
 
 					meta: comment/load def/intro-notes
-					?? def
 					meta: first meta
 					details: attempt [second find meta first [Details:]]
 
@@ -473,6 +472,8 @@ source-tool: context [
 				debug [indexing-file (name)]
 				append decl/list file/declarations name
 			]
+
+			if empty? decl/list [do make error! {No declarations found. Check declaration parsing.}]
 
 			rebnative-index: collect [
 
@@ -745,7 +746,7 @@ source-tool: context [
 						any newline #"{"
 					]
 					comment: [comment.multiline | comment.decorative]
-					to-next: [to {^//*} newline]
+					to-next: [to {^///} newline | to {^//*} newline]
 					rest: [to end]
 
 					decl: [decl.words #"(" decl.args #")" opt wsp newline]
@@ -760,7 +761,7 @@ source-tool: context [
 					comment.multiline.intact: [{/*} opt stars newline any comment.note.line opt stars {*/}]
 					comment.multiline: [{/*} opt stars newline opt comment.notes opt stars {*/}]
 
-					comment.doubleslash: [pos: {//} :pos comment.notes]
+					comment.doubleslash: [pos: {//} :pos comment.notes {//} newline]
 
 					comment.notes: [some comment.note.line]
 					comment.note.line: [[[{**} | {//}] comment.note.text | stars] newline]
