@@ -373,7 +373,7 @@ source-tool: context [
 					not parse/all name [thru %.c]
 				]
 
-				ugly-tmp-var
+				sort ugly-tmp-var
 			]
 
 			process: func [file /local source tree] [
@@ -728,13 +728,13 @@ source-tool: context [
 					;
 
 					rule: [opt file-comment some pattern rest]
-					file-comment: [comment.multiline]
-					pattern: [old-section | old-style-decl | new-style-decl | to-next]
+					file-comment: [comment.multiline.standard]
+					pattern: [old-section | old-style-decl | new-style-decl | comment | to-next]
 					old-section: [{/*} stars newline stars newline opt comment.notes stars {*/} newline]
 					old-style-decl: [
-						[comment.decorative | comment.multiline]
+						[comment.decorative | comment.multiline.standard]
 						wsp decl
-						[comment.decorative | comment.multiline]
+						[comment.decorative | comment.multiline.standard]
 						any newline #"{"
 					]
 					new-style-decl: [
@@ -745,8 +745,9 @@ source-tool: context [
 						decl
 						any newline #"{"
 					]
-					comment: [comment.multiline | comment.decorative]
-					to-next: [to {^///} newline | to {^//*} newline]
+					comment: [comment.doubleslash | comment.multiline.other]
+					to-next: [first-comment-marker newline]
+					first-comment-marker: parsing-earliest [[to {^///}] [to {^//*}]]
 					rest: [to end]
 
 					decl: [decl.words #"(" decl.args #")" opt wsp newline]
@@ -759,7 +760,8 @@ source-tool: context [
 					comment.banner: [{/*} stars newline opt comment.notes stars {*/} newline]
 					comment.decorative: [{/*} some [stars | wsp | newline] {*/}]
 					comment.multiline.intact: [{/*} opt stars newline any comment.note.line opt stars {*/}]
-					comment.multiline: [{/*} opt stars newline opt comment.notes opt stars {*/}]
+					comment.multiline.standard: [{/*} opt stars newline opt comment.notes opt stars {*/}]
+					comment.multiline.other: [{/*} some [newline | stars | comment.note.text] {*/}]
 
 					comment.doubleslash: [pos: {//} :pos comment.notes {//} newline]
 
@@ -771,9 +773,9 @@ source-tool: context [
 					stars: [#"*" some #"*" opt [pos: #"/" (pos: back pos) :pos]]
 
 					not-eoc: either system/version > 2.100.0 [; Rebol3
-						[not [stars | newline]]
+						[not [{*/} | stars | newline]]
 					] [; Rebol2
-						[(guard: [none]) [opt [[stars | newline] (guard: [end skip])] guard]]
+						[(guard: [none]) [opt [[{*/} | stars | newline] (guard: [end skip])] guard]]
 					]
 
 					wsp: compose [some (charset { ^-})]
@@ -794,6 +796,7 @@ source-tool: context [
 					old-section
 					old-style-decl
 					new-style-decl
+					comment
 					to-next rest
 				] parser/grammar
 
