@@ -161,39 +161,42 @@ source-tool: context [
 
 		comment: context [
 
-			format: func [
-				spec
-				/local text bol width
-			] [
+			starred: context [
 
-				width: max-line-length - 2
+				line*: func [{Return a line of *.} count] [
 
-				rejoin [
-					{/*} line* width newline
-					encode-lines {**} {  } mold-contents spec
-					line* width {*/} newline
-				]
-			]
-
-			line*: func [{Return a line of *.} count] [
-
-				head insert/dup copy {} #"*" count
-			]
-
-			load: func [string /local lines] [
-
-				if none? string [return none]
-
-				parse/all string [
-					{/*} 20 200 #"*" newline
-					copy lines some [{**} [newline | #" " thru newline]]
-					20 200 #"*" #"/" newline
-					to end
+					head insert/dup copy {} #"*" count
 				]
 
-				if lines [
-					lines: decode-lines {**} {  } lines
-					load-until-blank lines
+				load: func [string /local lines] [
+
+					if none? string [return none]
+
+					parse/all string [
+						{/*} 20 200 #"*" newline
+						copy lines some [{**} [newline | #" " thru newline]]
+						20 200 #"*" #"/" newline
+						to end
+					]
+
+					if lines [
+						lines: decode-lines {**} {  } lines
+						load-until-blank lines
+					]
+				]
+
+				mold: func [
+					spec
+					/local text bol width
+				] [
+
+					width: max-line-length - 2
+
+					rejoin [
+						{/*} line* width newline
+						encode-lines {**} {  } mold-contents spec
+						line* width {*/} newline
+					]
 				]
 			]
 		]
@@ -206,7 +209,7 @@ source-tool: context [
 
 				string: rejoin collect [
 
-					keep comment/format meta-of def
+					keep comment/starred/mold meta-of def
 					keep newline
 
 					if def/pre-comment [
@@ -256,7 +259,7 @@ source-tool: context [
 
 				either def/style = 'new-style-decl [
 
-					meta: comment/load def/intro-notes
+					meta: comment/starred/load def/intro-notes
 					?? def
 					meta: first meta
 					details: attempt [second find meta first [Details:]]
