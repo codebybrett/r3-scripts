@@ -253,8 +253,6 @@ source-tool: context [
 
 			normalise: funct [def][
 
-				if not equal? def/style 'old-style-decl [exit]
-
 				name: def/name
 
 				if native: rebnative? def [
@@ -264,15 +262,22 @@ source-tool: context [
 
 				if r-info [
 					summary: if string? first r-info [first r-info]
-					spec: synopsis r-info
+					spec: synopsis.native r-info
 				]
 
-				notes: def/post-notes
-				def/post-notes: none
+				either def/style = 'new-style-decl [
 
-				if def/intro-notes [
-					def/pre-comment: rejoin [{/*} def/intro-notes {*/}]
-					def/intro-notes: none
+					meta: def/intro-notes
+					set [meta notes] meta
+				][
+
+					notes: def/post-notes
+					def/post-notes: none
+
+					if def/intro-notes [
+						def/pre-comment: rejoin [{/*} def/intro-notes {*/}]
+						def/intro-notes: none
+					]
 				]
 
 				meta: pretty-spec compose/only [
@@ -285,7 +290,7 @@ source-tool: context [
 				def/style: 'new-style-decl
 			]
 
-			synopsis: funct [spec /local block] [
+			synopsis.native: funct [spec /local block] [
 
 				block: pretty-spec collect [
 
