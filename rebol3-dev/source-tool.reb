@@ -267,10 +267,11 @@ source-tool: context [
 
 				either def/style = 'new-style-decl [
 
-					meta: def/intro-notes
+					meta: comment/load def/intro-notes
 					set [meta notes] meta
 				][
 
+					if def/post-notes [def/post-notes: rejoin [newline def/post-notes newline]]
 					notes: def/post-notes
 					def/post-notes: none
 
@@ -286,7 +287,9 @@ source-tool: context [
 					Spec: (spec)
 				]
 
-				def/intro-notes: rejoin [mold-contents meta notes newline]
+				notes: any [notes {}]
+
+				def/intro-notes: rejoin [mold-contents meta notes]
 				def/style: 'new-style-decl
 			]
 
@@ -314,7 +317,7 @@ source-tool: context [
 				position: at tree def/token
 
 				node: first position
-				node/1: 'new-style-decl
+				node/1: def/style
 				node/3/content: format def
 
 				debug [update-decl (def/name) (def/param)]
@@ -350,7 +353,7 @@ source-tool: context [
 					pattern: first position
 
 					if all [
-						word: in text/declaration-parsers pattern/1
+						word: in text/decl-parsers pattern/1
 						def: do get word position
 					] [
 						insert def reduce ['file name]
@@ -502,7 +505,7 @@ source-tool: context [
 			decl/list: make block! []
 
 			foreach name file/list [
-				debug [indexing-file (name)]
+				debug [file-decls (name)]
 				append decl/list file/declarations name
 			]
 
@@ -538,7 +541,7 @@ source-tool: context [
 
 		text: context [
 
-			declaration-parsers: context [
+			decl-parsers: context [
 
 				; TODO: Is there a simpler way to get info from tree while checking assumptions?
 
@@ -620,9 +623,13 @@ source-tool: context [
 						position/1/1 = 'comment.notes
 					][
 						post-notes: position/1/3/content
+
 						insert post-notes newline
-						replace/all post-notes {^/**} newline
+						replace/all post-notes {^/**^-} {^/**  }
+						remove post-notes
+						decode-lines post-notes {**} {  }
 						replace/all post-notes tab {    }
+
 						trim/tail post-notes
 					]
 
@@ -693,9 +700,13 @@ source-tool: context [
 						position/1/1 = 'comment.notes
 					][
 						post-notes: position/1/3/content
+
 						insert post-notes newline
-						replace/all post-notes {^/**} newline
+						replace/all post-notes {^/**^-} {^/**  }
+						remove post-notes
+						decode-lines post-notes {**} {  }
 						replace/all post-notes tab {    }
+
 						trim/tail post-notes
 					]
 
@@ -767,7 +778,7 @@ source-tool: context [
 					comment.multiline.standard: [{/*} opt stars newline opt comment.notes opt stars {*/}]
 					comment.multiline.other: [{/*} some [newline | stars | comment.note.text] {*/}]
 
-					comment.doubleslash: [pos: {//} :pos comment.notes {//} newline]
+					comment.doubleslash: [some [{//} thru newline]]
 
 					comment.notes: [some comment.note.line]
 					comment.note.line: [[[{**} | {//}] comment.note.text | stars] newline]
@@ -868,7 +879,7 @@ source-tool: context [
 				]
 
 				sort/skip cache 2
-				spec
+				exit
 			]
 
 		]
