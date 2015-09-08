@@ -708,7 +708,6 @@ ConversionResult ConvertUTF8toUTF32 (
 //  
 //      Tell us what UTF encoding the string has. Negative for LE.
 //
-
 REBINT What_UTF(REBYTE *bp, REBCNT len)
 {
 	// UTF8:
@@ -739,7 +738,6 @@ REBINT What_UTF(REBYTE *bp, REBCNT len)
 //  
 //      Returns TRUE if char is legal.
 //
-
 REBFLG Legal_UTF8_Char(const REBYTE *str, REBCNT len)
 {
 	return isLegalUTF8Sequence(str, str + len);
@@ -751,7 +749,6 @@ REBFLG Legal_UTF8_Char(const REBYTE *str, REBCNT len)
 //  
 //      Returns 0 for success, else str where error occurred.
 //
-
 REBYTE *Check_UTF8(REBYTE *str, REBCNT len)
 {
 	REBINT n;
@@ -774,7 +771,6 @@ REBYTE *Check_UTF8(REBYTE *str, REBCNT len)
 //      Increments str by extra chars needed.
 //      Decrements len by extra chars needed.
 //
-
 REBCNT Decode_UTF8_Char(const REBYTE **str, REBCNT *len)
 {
 	const UTF8 *source = *str;
@@ -830,7 +826,6 @@ REBCNT Decode_UTF8_Char(const REBYTE **str, REBCNT *len)
 //      Returns length in chars (negative if all chars are latin-1).
 //      No terminator is added.
 //
-
 int Decode_UTF8(REBUNI *dst, const REBYTE *src, REBCNT len, REBFLG ccr)
 {
 	int flag = -1;
@@ -865,7 +860,6 @@ int Decode_UTF8(REBUNI *dst, const REBYTE *src, REBCNT len, REBFLG ccr)
 //      Returns length in chars (negative if all chars are latin-1).
 //      No terminator is added.
 //
-
 int Decode_UTF16(REBUNI *dst, REBYTE *src, REBCNT len, REBFLG lee, REBFLG ccr)
 {
 #define EXPECT_LF 2
@@ -910,7 +904,6 @@ int Decode_UTF16(REBUNI *dst, REBYTE *src, REBCNT len, REBFLG lee, REBFLG ccr)
 //
 //  Decode_UTF32: C
 //
-
 int Decode_UTF32(REBUNI *dst, REBYTE *src, REBINT len, REBFLG lee, REBFLG ccr)
 {
 	return 0;
@@ -927,7 +920,6 @@ int Decode_UTF32(REBUNI *dst, REBYTE *src, REBINT len, REBFLG lee, REBFLG ccr)
 //  
 //      Returns the decoded string or NULL for unsupported encodings.
 //
-
 REBSER *Decode_UTF_String(REBYTE *bp, REBCNT len, REBINT utf)
 {
 	REBSER *ser = BUF_UTF8; // buffer is Unicode width
@@ -978,7 +970,6 @@ REBSER *Decode_UTF_String(REBYTE *bp, REBCNT len, REBINT utf)
 //  
 //      Returns how long the UTF8 encoded string would be.
 //
-
 REBCNT Length_As_UTF8(const void *p, REBCNT len, REBOOL uni, REBOOL ccr)
 {
 	REBCNT size = 0;
@@ -1011,7 +1002,6 @@ REBCNT Length_As_UTF8(const void *p, REBCNT len, REBOOL uni, REBOOL ccr)
 //      Returns length of char stored in dst.
 //      Be sure dst has at least 4 bytes available.
 //
-
 REBCNT Encode_UTF8_Char(REBYTE *dst, REBCNT src)
 {
 	int len = 0;
@@ -1051,7 +1041,6 @@ REBCNT Encode_UTF8_Char(REBYTE *dst, REBCNT src)
 //      Updates len for dst bytes used.
 //      Does not add a terminator.
 //
-
 REBCNT Encode_UTF8(REBYTE *dst, REBINT max, const void *src, REBCNT *len, REBFLG uni, REBFLG ccr)
 {
 	REBUNI c;
@@ -1102,7 +1091,6 @@ REBCNT Encode_UTF8(REBYTE *dst, REBINT max, const void *src, REBCNT *len, REBFLG
 //      Include the LF terminator in the result.
 //      Return the length of the line buffer.
 //
-
 int Encode_UTF8_Line(REBSER *dst, REBSER *src, REBCNT idx)
 {
 	REBUNI *up = UNI_HEAD(src);
@@ -1142,7 +1130,6 @@ int Encode_UTF8_Line(REBSER *dst, REBSER *src, REBCNT idx)
 //      No_copy means do not make a copy.
 //      Result can be a shared buffer!
 //
-
 REBSER *Encode_UTF8_Value(REBVAL *arg, REBCNT len, REBFLG opts)
 {
 	REBSER *ser = BUF_FORM; // a shared buffer
@@ -1183,7 +1170,6 @@ REBSER *Encode_UTF8_Value(REBVAL *arg, REBCNT len, REBFLG opts)
 //      len: length in chars
 //      opt: special options (UTF, LE/BE, CR/LF, BOM)
 //
-
 REBSER *Encode_String(void *str, REBCNT len, REBCNT opts)
 {
 	REBSER *ser = 0;
@@ -1217,7 +1203,6 @@ REBSER *Encode_String(void *str, REBCNT len, REBCNT opts)
 //      memmem() is not POSIX and only on GNU.  So this uses a simple
 //      byte-by-byte search.
 //
-
 REBCNT Strlen_Uni(const REBUNI *up)
 {
 	REBCNT len;

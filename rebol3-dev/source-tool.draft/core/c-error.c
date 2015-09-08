@@ -117,7 +117,6 @@
 //      Used by both TRY and TRY_ANY, whose differentiation comes
 //      from how they react to HALT.
 //
-
 void Push_Trap_Helper(REBOL_STATE *s)
 {
 	assert(Saved_State || (DSP == -1 && !DSF));
@@ -162,7 +161,6 @@ void Push_Trap_Helper(REBOL_STATE *s)
 //  
 //      Returns whether the trapped error was a RE_HALT or not.
 //
-
 REBOOL Trapped_Helper_Halted(REBOL_STATE *state)
 {
 	struct Reb_Call *call = CS_Top;
@@ -202,7 +200,6 @@ REBOOL Trapped_Helper_Halted(REBOL_STATE *state)
 //      Sets a task-local value to be associated with the name and
 //      mark it as the proxy value indicating a THROW().
 //
-
 void Convert_Name_To_Thrown_Debug(REBVAL *name, const REBVAL *arg)
 {
 	assert(!THROWN(name));
@@ -232,7 +229,6 @@ void Convert_Name_To_Thrown_Debug(REBVAL *name, const REBVAL *arg)
 //  
 //      WARNING: 'out' can be the same pointer as 'thrown'
 //
-
 void Take_Thrown_Arg_Debug(REBVAL *out, REBVAL *thrown)
 {
 	assert(THROWN(thrown));
@@ -260,7 +256,6 @@ void Take_Thrown_Arg_Debug(REBVAL *out, REBVAL *thrown)
 //      passed to this routine then it has not been caught by its
 //      intended recipient, and is being treated as an error.
 //
-
 void Do_Error(const REBVAL *err)
 {
 	ASSERT_ERROR(err);
@@ -311,7 +306,6 @@ void Do_Error(const REBVAL *err)
 //      objects or locals...and doesn't run any code that itself
 //      might wind up calling CHECK_C_STACK_OVERFLOW.
 //
-
 void Trap_Stack_Overflow(void)
 {
 	if (!Saved_State) Panic(RP_NO_SAVED_STATE);
@@ -330,7 +324,6 @@ void Trap_Stack_Overflow(void)
 //      the CATCH stack.  They cannot be intercepted by any
 //      intermediate stack levels.
 //
-
 void Halt(void)
 {
 	Do_Error(TASK_HALT_ERROR);
@@ -340,7 +333,6 @@ void Halt(void)
 //
 //  Stack_Depth: C
 //
-
 REBCNT Stack_Depth(void)
 {
 	struct Reb_Call *call = DSF;
@@ -359,7 +351,6 @@ REBCNT Stack_Depth(void)
 //  
 //      Return a block of backtrace words.
 //
-
 REBSER *Make_Backtrace(REBINT start)
 {
 	REBCNT depth = Stack_Depth();
@@ -383,7 +374,6 @@ REBSER *Make_Backtrace(REBINT start)
 //  
 //      Sets error type and id fields based on code number.
 //
-
 void Set_Error_Type(ERROR_OBJ *error)
 {
 	REBSER *cats;		// Error catalog object
@@ -420,7 +410,6 @@ void Set_Error_Type(ERROR_OBJ *error)
 //      to be bound to the error catalog context.
 //      If the message is not found, return null.
 //
-
 REBVAL *Find_Error_Info(ERROR_OBJ *error, REBINT *num)
 {
 	REBSER *frame;
@@ -456,7 +445,6 @@ REBVAL *Find_Error_Info(ERROR_OBJ *error, REBINT *num)
 //  
 //      Returns FALSE if a THROWN() value is made during evaluation.
 //
-
 void Val_Init_Error(REBVAL *out, REBSER *err_frame)
 {
 	ENSURE_FRAME_MANAGED(err_frame);
@@ -478,7 +466,6 @@ void Val_Init_Error(REBVAL *out, REBSER *err_frame)
 //  
 //      Returns FALSE if a THROWN() value is made during evaluation.
 //
-
 REBOOL Make_Error_Object(REBVAL *out, REBVAL *arg)
 {
 	REBSER *err;		// Error object
@@ -554,7 +541,6 @@ REBOOL Make_Error_Object(REBVAL *out, REBVAL *arg)
 //  
 //      Create and init a new error object.
 //
-
 REBSER *Make_Error(REBINT code, const REBVAL *arg1, const REBVAL *arg2, const REBVAL *arg3)
 {
 	REBSER *err;		// Error object
@@ -601,7 +587,6 @@ REBSER *Make_Error(REBINT code, const REBVAL *arg1, const REBVAL *arg2, const RE
 //
 //  Trap: C
 //
-
 void Trap(REBCNT num)
 {
 	REBVAL error;
@@ -613,7 +598,6 @@ void Trap(REBCNT num)
 //
 //  Trap1: C
 //
-
 void Trap1(REBCNT num, const REBVAL *arg1)
 {
 	REBVAL error;
@@ -625,7 +609,6 @@ void Trap1(REBCNT num, const REBVAL *arg1)
 //
 //  Trap2: C
 //
-
 void Trap2(REBCNT num, const REBVAL *arg1, const REBVAL *arg2)
 {
 	REBVAL error;
@@ -637,7 +620,6 @@ void Trap2(REBCNT num, const REBVAL *arg1, const REBVAL *arg2)
 //
 //  Trap3: C
 //
-
 void Trap3(REBCNT num, const REBVAL *arg1, const REBVAL *arg2, const REBVAL *arg3)
 {
 	REBVAL error;
@@ -649,7 +631,6 @@ void Trap3(REBCNT num, const REBVAL *arg1, const REBVAL *arg2, const REBVAL *arg
 //
 //  Trap_Arg: C
 //
-
 void Trap_Arg(const REBVAL *arg)
 {
 	Trap1(RE_INVALID_ARG, arg);
@@ -659,7 +640,6 @@ void Trap_Arg(const REBVAL *arg)
 //
 //  Trap_Thrown: C
 //
-
 void Trap_Thrown(REBVAL *thrown)
 {
 	REBVAL arg;
@@ -680,7 +660,6 @@ void Trap_Thrown(REBVAL *thrown)
 //  
 //      <type> type is not allowed here
 //
-
 void Trap_Type(const REBVAL *arg)
 {
 	Trap1(RE_INVALID_TYPE, Of_Type(arg));
@@ -692,7 +671,6 @@ void Trap_Type(const REBVAL *arg)
 //  
 //      value out of range: <value>
 //
-
 void Trap_Range(const REBVAL *arg)
 {
 	Trap1(RE_OUT_OF_RANGE, arg);
@@ -702,7 +680,6 @@ void Trap_Range(const REBVAL *arg)
 //
 //  Trap_Word: C
 //
-
 void Trap_Word(REBCNT num, REBCNT sym, const REBVAL *arg)
 {
 	Val_Init_Word_Unbound(DS_TOP, REB_WORD, sym);
@@ -714,7 +691,6 @@ void Trap_Word(REBCNT num, REBCNT sym, const REBVAL *arg)
 //
 //  Trap_Action: C
 //
-
 void Trap_Action(REBCNT type, REBCNT action)
 {
 	Trap2(RE_CANNOT_USE, Get_Action_Word(action), Get_Type(type));
@@ -724,7 +700,6 @@ void Trap_Action(REBCNT type, REBCNT action)
 //
 //  Trap_Math_Args: C
 //
-
 void Trap_Math_Args(REBCNT type, REBCNT action)
 {
 	Trap2(RE_NOT_RELATED, Get_Action_Word(action), Get_Type(type));
@@ -734,7 +709,6 @@ void Trap_Math_Args(REBCNT type, REBCNT action)
 //
 //  Trap_Types: C
 //
-
 void Trap_Types(REBCNT errnum, REBCNT type1, REBCNT type2)
 {
 	if (type2 != 0) Trap2(errnum, Get_Type(type1), Get_Type(type2));
@@ -748,7 +722,6 @@ void Trap_Types(REBCNT errnum, REBCNT type1, REBCNT type2)
 //      Object field is not of expected type.
 //      PORT expected SCHEME of OBJECT type
 //
-
 void Trap_Expect(const REBVAL *object, REBCNT index, REBCNT type)
 {
 	Trap3(RE_EXPECT_TYPE, Of_Type(object), Obj_Word(object, index), Get_Type(type));
@@ -758,7 +731,6 @@ void Trap_Expect(const REBVAL *object, REBCNT index, REBCNT type)
 //
 //  Trap_Make: C
 //
-
 void Trap_Make(REBCNT type, const REBVAL *spec)
 {
 	Trap2(RE_BAD_MAKE_ARG, Get_Type(type), spec);
@@ -768,7 +740,6 @@ void Trap_Make(REBCNT type, const REBVAL *spec)
 //
 //  Trap_Num: C
 //
-
 void Trap_Num(REBCNT err, REBCNT num)
 {
 	DS_PUSH_INTEGER(num);
@@ -779,7 +750,6 @@ void Trap_Num(REBCNT err, REBCNT num)
 //
 //  Trap_Reflect: C
 //
-
 void Trap_Reflect(REBCNT type, const REBVAL *arg)
 {
 	Trap2(RE_CANNOT_USE, arg, Get_Type(type));
@@ -789,7 +759,6 @@ void Trap_Reflect(REBCNT type, const REBVAL *arg)
 //
 //  Trap_Port: C
 //
-
 void Trap_Port(REBCNT errnum, REBSER *port, REBINT err_code)
 {
 	REBVAL *spec = OFV(port, STD_PORT_SPEC);
@@ -815,7 +784,6 @@ void Trap_Port(REBCNT errnum, REBSER *port, REBINT err_code)
 //           0 - if not break or continue
 //          else: error if not an ERROR value
 //
-
 REBINT Process_Loop_Throw(REBVAL *val)
 {
 	assert(THROWN(val));
@@ -849,7 +817,6 @@ REBINT Process_Loop_Throw(REBVAL *val)
 //  
 //          https://en.wikipedia.org/wiki/Exit_status
 //
-
 int Exit_Status_From_Value(REBVAL *value)
 {
 	assert(!THROWN(value));
@@ -889,7 +856,6 @@ int Exit_Status_From_Value(REBVAL *value)
 //
 //  Init_Errors: C
 //
-
 void Init_Errors(REBVAL *errors)
 {
 	REBSER *errs;
@@ -941,7 +907,6 @@ void Init_Errors(REBVAL *errors)
 //          eval:  integer (limit)
 //      ]
 //
-
 REBYTE *Security_Policy(REBCNT sym, REBVAL *name)
 {
 	REBVAL *policy = Get_System(SYS_STATE, STATE_POLICIES);
@@ -1012,7 +977,6 @@ error:
 //      Take action on the policy flags provided. The sym and value
 //      are provided for error message purposes only.
 //
-
 void Trap_Security(REBCNT flag, REBCNT sym, REBVAL *value)
 {
 	if (flag == SEC_THROW) {
@@ -1033,7 +997,6 @@ void Trap_Security(REBCNT flag, REBCNT sym, REBVAL *value)
 //      a given symbol (FILE) and value (path), and then tests
 //      that they are allowed.
 //
-
 void Check_Security(REBCNT sym, REBCNT policy, REBVAL *value)
 {
 	REBYTE *flags;
@@ -1050,7 +1013,6 @@ void Check_Security(REBCNT sym, REBCNT policy, REBVAL *value)
 //  
 //      Debug-only implementation of ASSERT_ERROR
 //
-
 void Assert_Error_Debug(const REBVAL *err)
 {
 	assert(IS_ERROR(err));

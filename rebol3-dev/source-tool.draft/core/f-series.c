@@ -36,7 +36,6 @@
 //  
 //      Common series functions.
 //
-
 REBINT Do_Series_Action(struct Reb_Call *call_, REBCNT action, REBVAL *value, REBVAL *arg)
 {
 	REBINT	index;
@@ -152,7 +151,6 @@ is_true:
 //      Compare two blocks and return the difference of the first
 //      non-matching value.
 //
-
 REBINT Cmp_Block(const REBVAL *sval, const REBVAL *tval, REBFLG is_case)
 {
 	REBVAL	*s = VAL_BLK_DATA(sval);
@@ -182,7 +180,6 @@ REBINT Cmp_Block(const REBVAL *sval, const REBVAL *tval, REBFLG is_case)
 //  
 //      is_case TRUE for case sensitive compare
 //
-
 REBINT Cmp_Value(const REBVAL *s, const REBVAL *t, REBFLG is_case)
 {
 	REBDEC	d1, d2;
@@ -317,7 +314,6 @@ chkDecimal:
 //      Simple search for a value in a block. Return the index of
 //      the value or the TAIL index if not found.
 //
-
 REBCNT Find_Block_Simple(REBSER *series, REBCNT index, REBVAL *target)
 {
 	REBVAL *value = BLK_HEAD(series);

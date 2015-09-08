@@ -69,7 +69,6 @@ extern int Do_Callback(REBSER *obj, u32 name, RXIARG *args, RXIARG *result);
 //      This function can be called before any other initialization
 //      to determine version compatiblity with the caller.
 //
-
 RL_API void RL_Version(REBYTE vers[])
 {
 	// [0] is length
@@ -99,7 +98,6 @@ RL_API void RL_Version(REBYTE vers[])
 //      structures used by the REBOL interpreter. This is an
 //      extensive process that takes time.
 //
-
 RL_API int RL_Init(REBARGS *rargs, void *lib)
 {
 	int marker;
@@ -167,7 +165,6 @@ RL_API int RL_Init(REBARGS *rargs, void *lib)
 //      This function completes the startup sequence by calling
 //      the sys/start function.
 //
-
 RL_API int RL_Start(REBYTE *bin, REBINT len, REBYTE *script, REBINT script_len, REBCNT flags)
 {
 	REBVAL *val;
@@ -291,7 +288,6 @@ RL_API int RL_Start(REBYTE *bin, REBINT len, REBYTE *script, REBINT script_len, 
 //  Notes:
 //      Intended to reset the REBOL interpreter.
 //
-
 RL_API void RL_Reset(void)
 {
 	Panic(RP_NA);
@@ -317,7 +313,6 @@ RL_API void RL_Reset(void)
 //      queried and init using LOAD-EXTENSION system native.
 //      See c:extensions-embedded
 //
-
 RL_API void *RL_Extend(const REBYTE *source, RXICAL call)
 {
 	REBVAL *value;
@@ -353,7 +348,6 @@ RL_API void *RL_Extend(const REBYTE *source, RXICAL call)
 //      trap. Note that control must be passed back to REBOL for the
 //      signal to be recognized and handled.
 //
-
 RL_API void RL_Escape(REBINT reserved)
 {
 	SET_SIGNAL(SIG_ESCAPE);
@@ -373,7 +367,6 @@ RL_API void RL_Escape(REBINT reserved)
 //      flags - set to zero for now
 //      result - value returned from evaluation.
 //
-
 RL_API int RL_Do_String(const REBYTE *text, REBCNT flags, RXIARG *result)
 {
 	REBSER *code;
@@ -516,7 +509,6 @@ RL_API int RL_Do_String(const REBYTE *text, REBCNT flags, RXIARG *result)
 //      As of A104, only compressed scripts are supported, however,
 //      rebin, cloaked, signed, and encrypted formats will be supported.
 //
-
 RL_API int RL_Do_Binary(const REBYTE *bin, REBINT length, REBCNT flags, REBCNT key, RXIARG *result)
 {
 	REBSER *text;
@@ -559,7 +551,6 @@ RL_API int RL_Do_Binary(const REBYTE *bin, REBINT length, REBCNT flags, REBCNT k
 //      Not implemented. Contact Carl on R3 Chat if you think you
 //      could use it for something.
 //
-
 RL_API int RL_Do_Block(REBSER *blk, REBCNT flags, RXIARG *result)
 {
 	return 0;
@@ -583,7 +574,6 @@ RL_API int RL_Do_Block(REBSER *blk, REBCNT flags, RXIARG *result)
 //      used for back-referencing your environment data or for tracking
 //      the evaluation block and its index.
 //
-
 RL_API void RL_Do_Commands(REBSER *blk, REBCNT flags, REBCEC *context)
 {
 	REBVAL out;
@@ -606,7 +596,6 @@ RL_API void RL_Do_Commands(REBSER *blk, REBCNT flags, REBCEC *context)
 //      This function is low level and handles only a few C datatypes
 //      at this time.
 //
-
 RL_API void RL_Print(const REBYTE *fmt, ...)
 {
 	va_list args;
@@ -636,7 +625,6 @@ RL_API void RL_Print(const REBYTE *fmt, ...)
 //      The system/options/result-types determine which values
 //      are automatically printed.
 //
-
 RL_API void RL_Print_TOS(REBCNT flags, const REBYTE *marker)
 {
 	if (DSP != 0)
@@ -670,7 +658,6 @@ RL_API void RL_Print_TOS(REBCNT flags, const REBYTE *marker)
 //      To avoid environment problems, this function only appends
 //      to the event queue (no auto-expand). So if the queue is full
 //
-
 RL_API int RL_Event(REBEVT *evt)
 {
 	REBVAL *event = Append_Event();		// sets signal
@@ -698,7 +685,6 @@ RL_API int RL_Event(REBEVT *evt)
 //           the unhandled event in the queue, when it is found,
 //           it will be replaced with this one
 //
-
 RL_API int RL_Update_Event(REBEVT *evt)
 {
 	REBVAL *event = Find_Last_Event(evt->model, evt->type);
@@ -754,7 +740,6 @@ RL_API int RL_Update_Event(REBEVT *evt)
 //      no references to them from REBOL code (C code does nothing.)
 //      However, you can lock blocks to prevent deallocation. (?? default)
 //
-
 RL_API void *RL_Make_Block(u32 size)
 {
 	return Make_Array(size);
@@ -780,7 +765,6 @@ RL_API void *RL_Make_Block(u32 size)
 //      no references to them from REBOL code (C code does nothing.)
 //      However, you can lock strings to prevent deallocation. (?? default)
 //
-
 RL_API void *RL_Make_String(u32 size, int unicode)
 {
 	REBSER *result = unicode ? Make_Unicode(size) : Make_Binary(size);
@@ -808,7 +792,6 @@ RL_API void *RL_Make_String(u32 size, int unicode)
 //      Image are automatically garbage collected if there are
 //      no references to them from REBOL code (C code does nothing.)
 //
-
 RL_API void *RL_Make_Image(u32 width, u32 height)
 {
 	return Make_Image(width, height, FALSE);
@@ -834,7 +817,6 @@ RL_API void *RL_Make_Image(u32 width, u32 height)
 //      and you don't store those references somewhere where the GC can
 //      find them, such as in an existing block or object (variable).
 //
-
 RL_API void RL_Protect_GC(REBSER *series, u32 flags)
 {
 	(flags == 1) ? SERIES_SET_FLAG(series, SER_KEEP) : SERIES_CLR_FLAG(series, SER_KEEP);
@@ -859,7 +841,6 @@ RL_API void RL_Protect_GC(REBSER *series, u32 flags)
 //      Strings are allowed to move in memory. Therefore, you will want
 //      to make a copy of the string if needed.
 //
-
 RL_API int RL_Get_String(REBSER *series, u32 index, void **str)
 {	// ret: len or -len
 	int len = (index >= series->tail) ? 0 : series->tail - index;
@@ -890,7 +871,6 @@ RL_API int RL_Get_String(REBSER *series, u32 index, void **str)
 //      If the word is new (not found in master symbol table)
 //      it will be added and the new word identifier is returned.
 //
-
 RL_API u32 RL_Map_Word(REBYTE *string)
 {
 	return Make_Word(string, LEN_BYTES(string));
@@ -912,7 +892,6 @@ RL_API u32 RL_Map_Word(REBYTE *string)
 //      If the input block contains non-words, they will be skipped.
 //      The array is allocated with OS_ALLOC and you can OS_FREE it any time.
 //
-
 RL_API u32 *RL_Map_Words(REBSER *series)
 {
 	REBCNT i = 1;
@@ -948,7 +927,6 @@ RL_API u32 *RL_Map_Words(REBSER *series)
 //      the returned string may have different spelling/casing than expected.
 //      The string is allocated with OS_ALLOC and you can OS_FREE it any time.
 //
-
 RL_API REBYTE *RL_Word_String(u32 word)
 {
 	REBYTE *s1, *s2;
@@ -974,7 +952,6 @@ RL_API REBYTE *RL_Word_String(u32 word)
 //  Notes:
 //      The first element of the word array is the length of the array.
 //
-
 RL_API u32 RL_Find_Word(u32 *words, u32 word)
 {
 	REBCNT n = 0;
@@ -1001,7 +978,6 @@ RL_API u32 RL_Find_Word(u32 *words, u32 word)
 //  Notes:
 //      Invalid what arg nums will return zero.
 //
-
 RL_API REBUPT RL_Series(REBSER *series, REBCNT what)
 {
 	switch (what) {
@@ -1031,7 +1007,6 @@ RL_API REBUPT RL_Series(REBSER *series, REBCNT what)
 //      The maximum size of a Unicode char is determined by
 //      R3 build options. The default is 16 bits.
 //
-
 RL_API int RL_Get_Char(REBSER *series, u32 index)
 {
 	if (index >= series->tail) return -1;
@@ -1052,7 +1027,6 @@ RL_API int RL_Get_Char(REBSER *series, u32 index)
 //          the string will be auto-expanded by one and the char
 //          will be appended.
 //
-
 RL_API u32 RL_Set_Char(REBSER *series, u32 index, u32 chr)
 {
 	if (index >= series->tail) {
@@ -1076,7 +1050,6 @@ RL_API u32 RL_Set_Char(REBSER *series, u32 index, u32 chr)
 //      index - index of the value in the block (zero based)
 //      result - set to the value of the field
 //
-
 RL_API int RL_Get_Value(REBSER *series, u32 index, RXIARG *result)
 {
 	REBVAL *value;
@@ -1100,7 +1073,6 @@ RL_API int RL_Get_Value(REBSER *series, u32 index, RXIARG *result)
 //      val  - new value for field
 //      type - datatype of value
 //
-
 RL_API int RL_Set_Value(REBSER *series, u32 index, RXIARG val, int type)
 {
 	REBVAL value;
@@ -1128,7 +1100,6 @@ RL_API int RL_Set_Value(REBSER *series, u32 index, RXIARG val, int type)
 //      Returns a word array similar to MAP_WORDS().
 //      The array is allocated with OS_ALLOC. You can OS_FREE it any time.
 //
-
 RL_API u32 *RL_Words_Of_Object(REBSER *obj)
 {
 	REBCNT index;
@@ -1158,7 +1129,6 @@ RL_API u32 *RL_Words_Of_Object(REBSER *obj)
 //      word - global word identifier (integer)
 //      result - gets set to the value of the field
 //
-
 RL_API int RL_Get_Field(REBSER *obj, u32 word, RXIARG *result)
 {
 	REBVAL *value;
@@ -1182,7 +1152,6 @@ RL_API int RL_Get_Field(REBSER *obj, u32 word, RXIARG *result)
 //      val  - new value for field
 //      type - datatype of value
 //
-
 RL_API int RL_Set_Field(REBSER *obj, u32 word, RXIARG val, int type)
 {
 	REBVAL value;
@@ -1218,7 +1187,6 @@ RL_API int RL_Set_Field(REBSER *obj, u32 word, RXIARG val, int type)
 //      the C stack; they should be dynamic (or global if so desired.)
 //      See c:extensions-callbacks
 //
-
 RL_API int RL_Callback(RXICBI *cbi)
 {
 	REBEVT evt;
@@ -1257,7 +1225,6 @@ RL_API int RL_Callback(RXICBI *cbi)
 //      length routine, as it was being used by host code.  It should
 //      be reviewed along with the rest of the RL_Api.
 //
-
 RL_API REBCNT RL_Length_As_UTF8(const void *p, REBCNT len, REBOOL uni, REBOOL ccr)
 {
 	return Length_As_UTF8(p, len, uni, ccr);
@@ -1288,7 +1255,6 @@ RL_API REBCNT RL_Length_As_UTF8(const void *p, REBCNT len, REBOOL uni, REBOOL cc
 //      length routine, as it was being used by the Linux host code by
 //      Atronix.  Should be reviewed along with the rest of the RL_Api.
 //
-
 RL_API REBCNT RL_Encode_UTF8(REBYTE *dst, REBINT max, const void *src, REBCNT *len, REBFLG uni, REBFLG ccr)
 {
 	return Encode_UTF8(dst, max, src, len, uni, ccr);
@@ -1300,7 +1266,6 @@ RL_API REBCNT RL_Encode_UTF8(REBYTE *dst, REBINT max, const void *src, REBCNT *l
 //
 //  Extension_Lib: C
 //
-
 void *Extension_Lib(void)
 {
 	return &Ext_Lib;

@@ -35,7 +35,6 @@
 //
 //  CT_Integer: C
 //
-
 REBINT CT_Integer(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	if (mode >= 0)  return (VAL_INT64(a) == VAL_INT64(b));
@@ -47,7 +46,6 @@ REBINT CT_Integer(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Integer)
 {
 	REBVAL *val = D_ARG(1);

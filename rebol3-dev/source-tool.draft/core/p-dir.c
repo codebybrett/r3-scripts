@@ -40,7 +40,6 @@
 //      Provide option to prepend dir path.
 //      Provide option to use wildcards.
 //
-
 static int Read_Dir(REBREQ *dir, REBSER *files)
 {
 	REBINT result;
@@ -94,7 +93,6 @@ static int Read_Dir(REBREQ *dir, REBSER *files)
 //          1 - accept wild cards * and ?, and * if need
 //         -1 - not wild, if path does not end in /, add it
 //
-
 static void Init_Dir_Path(REBREQ *dir, REBVAL *path, REBINT wild, REBCNT policy)
 {
 	REBINT len;
@@ -161,7 +159,6 @@ static void Init_Dir_Path(REBREQ *dir, REBVAL *path, REBINT wild, REBCNT policy)
 //  
 //      Internal port handler for file directories.
 //
-
 static REB_R Dir_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
 	REBVAL *spec;
@@ -316,7 +313,6 @@ create:
 //
 //  Init_Dir_Scheme: C
 //
-
 void Init_Dir_Scheme(void)
 {
 	Register_Scheme(SYM_DIR, 0, Dir_Actor);

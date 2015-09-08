@@ -10801,7 +10801,6 @@ extern void Init_JPEG_Codec(void);
 //
 //  Codec_JPEG_Image: C
 //
-
 REBINT Codec_JPEG_Image(REBCDI *codi)
 {
 	codi->error = 0;
@@ -10837,7 +10836,6 @@ REBINT Codec_JPEG_Image(REBCDI *codi)
 //
 //  Init_JPEG_Codec: C
 //
-
 void Init_JPEG_Codec(void)
 {
 	Register_Codec(cb_cast("jpeg"), Codec_JPEG_Image);

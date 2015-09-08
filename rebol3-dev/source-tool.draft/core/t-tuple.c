@@ -33,7 +33,6 @@
 //
 //  CT_Tuple: C
 //
-
 REBINT CT_Tuple(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	REBINT num = Cmp_Tuple(a, b);
@@ -47,7 +46,6 @@ REBINT CT_Tuple(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  MT_Tuple: C
 //
-
 REBFLG MT_Tuple(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	REBYTE	*vp;
@@ -82,7 +80,6 @@ REBFLG MT_Tuple(REBVAL *out, REBVAL *data, REBCNT type)
 //  
 //  Given two tuples, compare them.
 //
-
 REBINT Cmp_Tuple(const REBVAL *t1, const REBVAL *t2)
 {
 	REBCNT	len;
@@ -108,7 +105,6 @@ REBINT Cmp_Tuple(const REBVAL *t1, const REBVAL *t2)
 //      Implements PATH and SET_PATH for tuple.
 //      Sets DS_TOP if found. Always returns 0.
 //
-
 REBINT PD_Tuple(REBPVS *pvs)
 {
 	REBVAL *val;
@@ -153,7 +149,6 @@ REBINT PD_Tuple(REBPVS *pvs)
 //      The out array must be large enough to hold longest tuple.
 //      Longest is: (3 digits + '.') * 11 nums + 1 term => 45
 //
-
 REBINT Emit_Tuple(const REBVAL *value, REBYTE *out)
 {
 	REBCNT len = VAL_TUPLE_LEN(value);
@@ -179,7 +174,6 @@ REBINT Emit_Tuple(const REBVAL *value, REBYTE *out)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Tuple)
 {
 	REBVAL *value = D_ARG(1);

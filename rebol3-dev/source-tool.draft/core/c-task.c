@@ -62,7 +62,6 @@
 //
 //  Launch_Task: C
 //
-
 static void Launch_Task(void *task_rebval)
 {
 	REBVAL *task = cast(REBVAL*, task_rebval);
@@ -87,7 +86,6 @@ static void Launch_Task(void *task_rebval)
 //
 //  Do_Task: C
 //
-
 void Do_Task(REBVAL *task)
 {
 	OS_CREATE_THREAD(Launch_Task, task, 50000);

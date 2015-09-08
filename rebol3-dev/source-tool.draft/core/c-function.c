@@ -57,7 +57,6 @@
 //      Return a block of function words, unbound.
 //      Note: skips 0th entry.
 //
-
 REBSER *List_Func_Words(const REBVAL *func)
 {
 	REBSER *block;
@@ -86,7 +85,6 @@ REBSER *List_Func_Words(const REBVAL *func)
 //      Return a block of function arg types.
 //      Note: skips 0th entry.
 //
-
 REBSER *List_Func_Types(REBVAL *func)
 {
 	REBSER *block;
@@ -118,7 +116,6 @@ REBSER *List_Func_Types(REBVAL *func)
 //  
 //      Throw an error for invalid values.
 //
-
 REBSER *Check_Func_Spec(REBSER *block, REBYTE *exts)
 {
 	REBVAL *blk;
@@ -204,7 +201,6 @@ REBSER *Check_Func_Spec(REBSER *block, REBYTE *exts)
 //
 //  Make_Native: C
 //
-
 void Make_Native(REBVAL *value, REBSER *spec, REBFUN func, REBINT type)
 {
 	REBYTE exts;
@@ -224,7 +220,6 @@ void Make_Native(REBVAL *value, REBSER *spec, REBFUN func, REBINT type)
 //
 //  Make_Function: C
 //
-
 REBFLG Make_Function(REBCNT type, REBVAL *value, REBVAL *def)
 {
 	REBVAL *spec;
@@ -263,7 +258,6 @@ REBFLG Make_Function(REBCNT type, REBVAL *value, REBVAL *def)
 //
 //  Copy_Function: C
 //
-
 REBFLG Copy_Function(REBVAL *value, REBVAL *args)
 {
 	REBVAL *spec;
@@ -315,7 +309,6 @@ REBFLG Copy_Function(REBVAL *value, REBVAL *args)
 //
 //  Do_Native: C
 //
-
 void Do_Native(const REBVAL *func)
 {
 	REBVAL *out = DSF_OUT(DSF);
@@ -358,7 +351,6 @@ void Do_Native(const REBVAL *func)
 //
 //  Do_Action: C
 //
-
 void Do_Action(const REBVAL *func)
 {
 	REBVAL *out = DSF_OUT(DSF);
@@ -414,7 +406,6 @@ void Do_Action(const REBVAL *func)
 //
 //  Do_Function: C
 //
-
 void Do_Function(const REBVAL *func)
 {
 	REBVAL *out = DSF_OUT(DSF);
@@ -439,7 +430,6 @@ void Do_Function(const REBVAL *func)
 //      Do a closure by cloning its body and rebinding it to
 //      a new frame of words/values.
 //
-
 void Do_Closure(const REBVAL *func)
 {
 	REBSER *body;
@@ -510,7 +500,6 @@ void Do_Closure(const REBVAL *func)
 //
 //  Do_Routine: C
 //
-
 void Do_Routine(const REBVAL *routine)
 {
 	//RL_Print("%s, %d\n", __func__, __LINE__);

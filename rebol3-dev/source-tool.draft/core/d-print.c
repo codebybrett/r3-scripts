@@ -50,7 +50,6 @@ static REBREQ *Req_SIO;
 //
 //  Init_StdIO: C
 //
-
 void Init_StdIO(void)
 {
 	//OS_CALL_DEVICE(RDI_STDIO, RDC_INIT);
@@ -68,7 +67,6 @@ void Init_StdIO(void)
 //  
 //      Print a new line.
 //
-
 static void Print_OS_Line(void)
 {
 	// !!! Don't put const literal directly into mutable Req_SIO->data
@@ -91,7 +89,6 @@ static void Print_OS_Line(void)
 //  
 //      The width of the input is specified by UNI.
 //
-
 static void Prin_OS_String(const void *p, REBCNT len, REBOOL uni)
 {
 	#define BUF_SIZE 1024
@@ -142,7 +139,6 @@ static void Prin_OS_String(const void *p, REBCNT len, REBOOL uni)
 //
 //  Out_Value: C
 //
-
 void Out_Value(const REBVAL *value, REBCNT limit, REBOOL mold, REBINT lines)
 {
 	Print_Value(value, limit, mold); // higher level!
@@ -153,7 +149,6 @@ void Out_Value(const REBVAL *value, REBCNT limit, REBOOL mold, REBINT lines)
 //
 //  Out_Str: C
 //
-
 void Out_Str(const REBYTE *bp, REBINT lines)
 {
 	Prin_OS_String(bp, UNKNOWN, 0);
@@ -174,7 +169,6 @@ void Out_Str(const REBYTE *bp, REBINT lines)
 //
 //  Enable_Backtrace: C
 //
-
 void Enable_Backtrace(REBFLG on)
 {
 	if (on) {
@@ -195,7 +189,6 @@ void Enable_Backtrace(REBFLG on)
 //
 //  Display_Backtrace: C
 //
-
 void Display_Backtrace(REBCNT lines)
 {
 	REBCNT tail;
@@ -225,7 +218,6 @@ void Display_Backtrace(REBCNT lines)
 //
 //  Debug_String: C
 //
-
 void Debug_String(const void *p, REBCNT len, REBOOL uni, REBINT lines)
 {
 	REBUNI uc;
@@ -260,7 +252,6 @@ void Debug_String(const void *p, REBCNT len, REBOOL uni, REBINT lines)
 //
 //  Debug_Line: C
 //
-
 void Debug_Line(void)
 {
 	Debug_String(cb_cast(""), UNKNOWN, 0, 1);
@@ -272,7 +263,6 @@ void Debug_Line(void)
 //  
 //      Print a string followed by a newline.
 //
-
 void Debug_Str(const char *str)
 {
 	Debug_String(cb_cast(str), UNKNOWN, 0, 1);
@@ -284,7 +274,6 @@ void Debug_Str(const char *str)
 //  
 //      Print debug unicode string followed by a newline.
 //
-
 void Debug_Uni(const REBSER *ser)
 {
 	REBCNT ul;
@@ -313,7 +302,6 @@ void Debug_Uni(const REBSER *ser)
 //
 //  Debug_Series: C
 //
-
 void Debug_Series(const REBSER *ser)
 {
 	REBINT disabled = GC_Disabled;
@@ -358,7 +346,6 @@ void Debug_Series(const REBSER *ser)
 //  
 //      Print a string followed by a number.
 //
-
 void Debug_Num(const REBYTE *str, REBINT num)
 {
 	REBYTE buf[40];
@@ -375,7 +362,6 @@ void Debug_Num(const REBYTE *str, REBINT num)
 //  
 //      Print a number of spaces.
 //
-
 void Debug_Chars(REBYTE chr, REBCNT num)
 {
 	REBYTE spaces[100];
@@ -391,7 +377,6 @@ void Debug_Chars(REBYTE chr, REBCNT num)
 //  
 //      Print a number of spaces.
 //
-
 void Debug_Space(REBCNT num)
 {
 	if (num > 0) Debug_Chars(' ', num);
@@ -403,7 +388,6 @@ void Debug_Space(REBCNT num)
 //  
 //      Print a REBOL word.
 //
-
 void Debug_Word(const REBVAL *word)
 {
 	Debug_Str(cs_cast(Get_Word_Name(word)));
@@ -415,7 +399,6 @@ void Debug_Word(const REBVAL *word)
 //  
 //      Print a REBOL datatype name.
 //
-
 void Debug_Type(const REBVAL *value)
 {
 	if (VAL_TYPE(value) < REB_MAX) Debug_Str(cs_cast(Get_Type_Name(value)));
@@ -426,7 +409,6 @@ void Debug_Type(const REBVAL *value)
 //
 //  Debug_Value: C
 //
-
 void Debug_Value(const REBVAL *value, REBCNT limit, REBOOL mold)
 {
 	Print_Value(value, limit, mold); // higher level!
@@ -436,7 +418,6 @@ void Debug_Value(const REBVAL *value, REBCNT limit, REBOOL mold)
 //
 //  Debug_Values: C
 //
-
 void Debug_Values(const REBVAL *value, REBCNT count, REBCNT limit)
 {
 	REBSER *out;
@@ -483,7 +464,6 @@ void Debug_Values(const REBVAL *value, REBCNT count, REBCNT limit)
 //      will not exceed its max size.  No line termination
 //      is supplied after the print.
 //
-
 void Debug_Buf(const char *fmt, va_list *args)
 {
 	REBSER *buf = BUF_PRINT;
@@ -524,7 +504,6 @@ void Debug_Buf(const char *fmt, va_list *args)
 //      will not exceed its max size.  No line termination
 //      is supplied after the print.
 //
-
 void Debug_Fmt_(const char *fmt, ...)
 {
 	va_list args;
@@ -544,7 +523,6 @@ void Debug_Fmt_(const char *fmt, ...)
 //      will not exceed its max size.  A line termination
 //      is supplied after the print.
 //
-
 void Debug_Fmt(const char *fmt, ...)
 {
 	va_list args;
@@ -564,7 +542,6 @@ void Debug_Fmt(const char *fmt, ...)
 //      instead of just a macro due to how easy it is with varargs
 //      to order the types of the parameters wrong.  :-/
 //
-
 void Probe_Core_Debug(const char *msg, const char *file, int line, const REBVAL *val)
 {
 	if (msg)
@@ -579,7 +556,6 @@ void Probe_Core_Debug(const char *msg, const char *file, int line, const REBVAL 
 //
 //  Echo_File: C
 //
-
 REBFLG Echo_File(REBCHR *file)
 {
 	Req_SIO->special.file.path = file;
@@ -596,7 +572,6 @@ REBFLG Echo_File(REBCHR *file)
 //      Does not insert a #.
 //      Make sure you have room in your buffer before calling this!
 //
-
 REBYTE *Form_Hex_Pad(REBYTE *buf, REBI64 val, REBINT len)
 {
 	REBYTE buffer[MAX_HEX_LEN+4];
@@ -626,7 +601,6 @@ REBYTE *Form_Hex_Pad(REBYTE *buf, REBI64 val, REBINT len)
 //  
 //      Convert byte-sized int to xx format. Very fast.
 //
-
 REBYTE *Form_Hex2(REBYTE *bp, REBCNT val)
 {
 	bp[0] = Hex_Digits[(val & 0xf0) >> 4];
@@ -641,7 +615,6 @@ REBYTE *Form_Hex2(REBYTE *bp, REBCNT val)
 //  
 //      Convert byte-sized int to unicode xx format. Very fast.
 //
-
 REBUNI *Form_Hex2_Uni(REBUNI *up, REBCNT val)
 {
 	up[0] = Hex_Digits[(val & 0xf0) >> 4];
@@ -656,7 +629,6 @@ REBUNI *Form_Hex2_Uni(REBUNI *up, REBCNT val)
 //  
 //      Convert byte int to %xx format (in unicode destination)
 //
-
 REBUNI *Form_Hex_Esc_Uni(REBUNI *up, REBUNI c)
 {
 	up[0] = '%';
@@ -672,7 +644,6 @@ REBUNI *Form_Hex_Esc_Uni(REBUNI *up, REBUNI c)
 //  
 //      Convert 24 bit RGB to xxxxxx format.
 //
-
 REBUNI *Form_RGB_Uni(REBUNI *up, REBCNT val)
 {
 #ifdef ENDIAN_LITTLE
@@ -702,7 +673,6 @@ REBUNI *Form_RGB_Uni(REBUNI *up, REBCNT val)
 //      Fast var-length hex output for uni-chars.
 //      Returns next position (just past the insert).
 //
-
 REBUNI *Form_Uni_Hex(REBUNI *out, REBCNT n)
 {
 	REBUNI buffer[10];
@@ -727,7 +697,6 @@ REBUNI *Form_Uni_Hex(REBUNI *out, REBCNT n)
 //      Lower level (debugging) value formatter.
 //      Can restrict to max char size.
 //
-
 REBYTE *Form_Var_Args(REBYTE *bp, REBCNT max, const char *fmt, va_list *args)
 {
 	REBYTE *cp;
@@ -863,7 +832,6 @@ mold_value:
 //      Print a value or block's contents for user viewing.
 //      Can limit output to a given size. Set limit to 0 for full size.
 //
-
 void Prin_Value(const REBVAL *value, REBCNT limit, REBOOL mold)
 {
 	REBSER *out = Mold_Print_Value(value, limit, mold);
@@ -877,7 +845,6 @@ void Prin_Value(const REBVAL *value, REBCNT limit, REBOOL mold)
 //      Print a value or block's contents for user viewing.
 //      Can limit output to a given size. Set limit to 0 for full size.
 //
-
 void Print_Value(const REBVAL *value, REBCNT limit, REBOOL mold)
 {
 	Prin_Value(value, limit, mold);
@@ -890,7 +857,6 @@ void Print_Value(const REBVAL *value, REBCNT limit, REBOOL mold)
 //  
 //      Initialize print module.
 //
-
 void Init_Raw_Print(void)
 {
 	Set_Root_Series(TASK_BUF_PRINT, Make_Binary(1000), "print buffer");

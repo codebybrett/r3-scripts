@@ -57,7 +57,6 @@ enum Panic_Msg_Nums {
 //  
 //      See panics.h for list of crash errors.
 //
-
 /***
 ** coverity[+kill]
 */
@@ -135,7 +134,6 @@ void Panic_Core(REBINT id, ...)
 //  
 //      Feature not available.
 //
-
 void NA(void)
 {
 	Panic(RP_NA);

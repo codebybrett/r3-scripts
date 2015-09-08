@@ -40,7 +40,6 @@
 //
 //  CT_Image: C
 //
-
 REBINT CT_Image(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	REBINT e;
@@ -56,7 +55,6 @@ REBINT CT_Image(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  MT_Image: C
 //
-
 REBFLG MT_Image(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	if (!Create_Image(data, out, 1)) return FALSE;
@@ -70,7 +68,6 @@ REBFLG MT_Image(REBVAL *out, REBVAL *data, REBCNT type)
 //  
 //      Set height based on tail and width.
 //
-
 void Reset_Height(REBVAL *value)
 {
 	REBCNT w = VAL_IMAGE_WIDE(value);
@@ -81,7 +78,6 @@ void Reset_Height(REBVAL *value)
 //
 //  Set_Pixel_Tuple: C
 //
-
 void Set_Pixel_Tuple(REBYTE *dp, const REBVAL *tuple)
 {
 	// Tuple to pixel.
@@ -100,7 +96,6 @@ void Set_Pixel_Tuple(REBYTE *dp, const REBVAL *tuple)
 //
 //  Set_Tuple_Pixel: C
 //
-
 void Set_Tuple_Pixel(REBYTE *dp, REBVAL *tuple)
 {
 	// Pixel to tuple.
@@ -117,7 +112,6 @@ void Set_Tuple_Pixel(REBYTE *dp, REBVAL *tuple)
 //
 //  Fill_Line: C
 //
-
 void Fill_Line(REBCNT *ip, REBCNT color, REBCNT len, REBOOL only)
 {
 	if (only) {// only RGB, do not touch Alpha
@@ -131,7 +125,6 @@ void Fill_Line(REBCNT *ip, REBCNT color, REBCNT len, REBOOL only)
 //
 //  Fill_Rect: C
 //
-
 void Fill_Rect(REBCNT *ip, REBCNT color, REBCNT w, REBINT dupx, REBINT dupy, REBOOL only)
 {
 	for (; dupy > 0; dupy--, ip += w)
@@ -142,7 +135,6 @@ void Fill_Rect(REBCNT *ip, REBCNT color, REBCNT w, REBINT dupx, REBINT dupy, REB
 //
 //  Fill_Alpha_Line: C
 //
-
 void Fill_Alpha_Line(REBYTE *rgba, REBYTE alpha, REBINT len)
 {
 	for (; len > 0; len--, rgba += 4)
@@ -153,7 +145,6 @@ void Fill_Alpha_Line(REBYTE *rgba, REBYTE alpha, REBINT len)
 //
 //  Fill_Alpha_Rect: C
 //
-
 void Fill_Alpha_Rect(REBCNT *ip, REBYTE alpha, REBINT w, REBINT dupx, REBINT dupy)
 {
 	for (; dupy > 0; dupy--, ip += w)
@@ -164,7 +155,6 @@ void Fill_Alpha_Rect(REBCNT *ip, REBYTE alpha, REBINT w, REBINT dupx, REBINT dup
 //
 //  Find_Color: C
 //
-
 REBCNT *Find_Color(REBCNT *ip, REBCNT color, REBCNT len, REBOOL only)
 {
 	if (only) { // only RGB, do not touch Alpha
@@ -181,7 +171,6 @@ REBCNT *Find_Color(REBCNT *ip, REBCNT color, REBCNT len, REBOOL only)
 //
 //  Find_Alpha: C
 //
-
 REBCNT *Find_Alpha(REBCNT *ip, REBCNT alpha, REBCNT len)
 {
 	for (; len > 0; len--, ip++) {
@@ -194,7 +183,6 @@ REBCNT *Find_Alpha(REBCNT *ip, REBCNT alpha, REBCNT len)
 //
 //  RGB_To_Bin: C
 //
-
 void RGB_To_Bin(REBYTE *bin, REBYTE *rgba, REBINT len, REBOOL alpha)
 {
 	// Convert internal image (integer) to RGB/A order binary string:
@@ -219,7 +207,6 @@ void RGB_To_Bin(REBYTE *bin, REBYTE *rgba, REBINT len, REBOOL alpha)
 //
 //  Bin_To_RGB: C
 //
-
 void Bin_To_RGB(REBYTE *rgba, REBCNT size, REBYTE *bin, REBCNT len)
 {
 	if (len > size) len = size; // avoid over-run
@@ -236,7 +223,6 @@ void Bin_To_RGB(REBYTE *rgba, REBCNT size, REBYTE *bin, REBCNT len)
 //
 //  Bin_To_RGBA: C
 //
-
 void Bin_To_RGBA(REBYTE *rgba, REBCNT size, REBYTE *bin, REBINT len, REBOOL only)
 {
 	if (len > (REBINT)size) len = size; // avoid over-run
@@ -254,7 +240,6 @@ void Bin_To_RGBA(REBYTE *rgba, REBCNT size, REBYTE *bin, REBINT len, REBOOL only
 //
 //  Alpha_To_Bin: C
 //
-
 void Alpha_To_Bin(REBYTE *bin, REBYTE *rgba, REBINT len)
 {
 	for (; len > 0; len--, rgba += 4)
@@ -265,7 +250,6 @@ void Alpha_To_Bin(REBYTE *bin, REBYTE *rgba, REBINT len)
 //
 //  Bin_To_Alpha: C
 //
-
 void Bin_To_Alpha(REBYTE *rgba, REBCNT size, REBYTE *bin, REBINT len)
 {
 	if (len > (REBINT)size) len = size; // avoid over-run
@@ -278,7 +262,6 @@ void Bin_To_Alpha(REBYTE *rgba, REBCNT size, REBYTE *bin, REBINT len)
 //
 //  Valid_Tuples: C
 //
-
 REBFLG Valid_Tuples(REBVAL *blk)
 {
 	REBCNT n = VAL_INDEX(blk);
@@ -296,7 +279,6 @@ REBFLG Valid_Tuples(REBVAL *blk)
 //
 //  Tuples_To_RGBA: C
 //
-
 void Tuples_To_RGBA(REBYTE *rgba, REBCNT size, REBVAL *blk, REBCNT len)
 {
 	REBYTE *bin;
@@ -316,7 +298,6 @@ void Tuples_To_RGBA(REBYTE *rgba, REBCNT size, REBVAL *blk, REBCNT len)
 //
 //  Image_To_RGBA: C
 //
-
 void Image_To_RGBA(REBYTE *rgba, REBYTE *bin, REBINT len)
 {
 	// Convert from internal image (integer) to RGBA binary order:
@@ -341,7 +322,6 @@ REBCNT ARGB_To_BGR(REBCNT i)
 //
 //  Mold_Image_Data: C
 //
-
 void Mold_Image_Data(const REBVAL *value, REB_MOLD *mold)
 {
 	REBUNI *up;
@@ -385,7 +365,6 @@ void Mold_Image_Data(const REBVAL *value, REB_MOLD *mold)
 //
 //  Make_Image_Binary: C
 //
-
 REBSER *Make_Image_Binary(REBVAL *image)
 {
 	REBSER *ser;
@@ -405,7 +384,6 @@ REBSER *Make_Image_Binary(REBVAL *image)
 //      If error is TRUE, throw error on bad size.
 //      Return zero on oversized image.
 //
-
 REBSER *Make_Image(REBCNT w, REBCNT h, REBFLG error)
 {
 	REBSER *img;
@@ -430,7 +408,6 @@ REBSER *Make_Image(REBCNT w, REBCNT h, REBFLG error)
 //  
 //  Clear image data.
 //
-
 void Clear_Image(REBVAL *img)
 {
 	REBCNT w = VAL_IMAGE_WIDE(img);
@@ -445,7 +422,6 @@ void Clear_Image(REBVAL *img)
 //  
 //  Create an image value from components block [pair rgb alpha].
 //
-
 REBVAL *Create_Image(REBVAL *block, REBVAL *val, REBCNT modes)
 {
 	REBINT w, h;
@@ -513,7 +489,6 @@ REBVAL *Create_Image(REBVAL *block, REBVAL *val, REBCNT modes)
 //      Insert or change image
 //      ACTION value arg /part len /only /dup count
 //
-
 REBVAL *Modify_Image(struct Reb_Call *call_, REBCNT action)
 {
 	REBVAL	*value = D_ARG(1);
@@ -695,7 +670,6 @@ REBVAL *Modify_Image(struct Reb_Call *call_, REBCNT action)
 //      14 /last  {Backwards from end of string.}
 //      15 /reverse {Backwards from the current position.}
 //
-
 REBVAL *Find_Image(struct Reb_Call *call_)
 {
 	REBVAL	*value = D_ARG(1);
@@ -751,7 +725,6 @@ find_none:
 //
 //  Image_Has_Alpha: C
 //
-
 REBFLG Image_Has_Alpha(const REBVAL *v, REBFLG save)
 {
 	int i;
@@ -777,7 +750,6 @@ REBFLG Image_Has_Alpha(const REBVAL *v, REBFLG save)
 //
 //  Copy_Rect_Data: C
 //
-
 void Copy_Rect_Data(REBVAL *dst, REBINT dx, REBINT dy, REBINT w, REBINT h, REBVAL *src, REBINT sx, REBINT sy)
 {
 	REBCNT	*sbits, *dbits;
@@ -801,7 +773,6 @@ void Copy_Rect_Data(REBVAL *dst, REBINT dx, REBINT dy, REBINT w, REBINT h, REBVA
 //
 //  Complement_Image: C
 //
-
 static REBSER *Complement_Image(REBVAL *value)
 {
 	REBCNT *img = (REBCNT*) VAL_IMAGE_DATA(value);
@@ -821,7 +792,6 @@ static REBSER *Complement_Image(REBVAL *value)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Image)
 {
 	REBVAL	*value = D_ARG(1);
@@ -1113,7 +1083,6 @@ is_true:
 //
 //  PD_Image: C
 //
-
 REBINT PD_Image(REBPVS *pvs)
 {
 	REBVAL *data = pvs->value;

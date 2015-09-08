@@ -196,7 +196,6 @@ void Set_Vector_Row(REBSER *ser, REBVAL *blk)
 //  
 //      Convert a vector to a block.
 //
-
 REBSER *Make_Vector_Block(REBVAL *vect)
 {
 	REBCNT len = VAL_LEN(vect);
@@ -227,7 +226,6 @@ REBSER *Make_Vector_Block(REBVAL *vect)
 //
 //  Compare_Vector: C
 //
-
 REBINT Compare_Vector(const REBVAL *v1, const REBVAL *v2)
 {
 	REBCNT l1 = VAL_LEN(v1);
@@ -264,7 +262,6 @@ REBINT Compare_Vector(const REBVAL *v1, const REBVAL *v2)
 //
 //  Shuffle_Vector: C
 //
-
 void Shuffle_Vector(REBVAL *vect, REBFLG secure)
 {
 	REBCNT n;
@@ -291,7 +288,6 @@ void Shuffle_Vector(REBVAL *vect, REBFLG secure)
 //
 //  Set_Vector_Value: C
 //
-
 void Set_Vector_Value(REBVAL *var, REBSER *series, REBCNT index)
 {
 	REBYTE *data = series->data;
@@ -312,7 +308,6 @@ void Set_Vector_Value(REBVAL *var, REBSER *series, REBCNT index)
 //      bits: number of bits per unit (8, 16, 32, 64)
 //      size: size of array ?
 //
-
 REBSER *Make_Vector(REBINT type, REBINT sign, REBINT dims, REBINT bits, REBINT size)
 {
 	REBCNT len;
@@ -354,7 +349,6 @@ REBSER *Make_Vector(REBINT type, REBINT sign, REBINT dims, REBINT bits, REBINT s
 //            size:       integer units
 //            init:        block of values
 //
-
 REBVAL *Make_Vector_Spec(REBVAL *bp, REBVAL *value)
 {
 	REBINT type = -1; // 0 = int,    1 = float
@@ -441,7 +435,6 @@ REBVAL *Make_Vector_Spec(REBVAL *bp, REBVAL *value)
 //
 //  MT_Vector: C
 //
-
 REBFLG MT_Vector(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	if (Make_Vector_Spec(data, out)) return TRUE;
@@ -452,7 +445,6 @@ REBFLG MT_Vector(REBVAL *out, REBVAL *data, REBCNT type)
 //
 //  CT_Vector: C
 //
-
 REBINT CT_Vector(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	REBINT n = Compare_Vector(a, b);  // needs to be expanded for equality
@@ -467,7 +459,6 @@ REBINT CT_Vector(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  PD_Vector: C
 //
-
 REBINT PD_Vector(REBPVS *pvs)
 {
 	REBSER *vect;
@@ -540,7 +531,6 @@ REBINT PD_Vector(REBPVS *pvs)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Vector)
 {
 	REBVAL *value = D_ARG(1);
@@ -627,7 +617,6 @@ bad_make:
 //
 //  Mold_Vector: C
 //
-
 void Mold_Vector(const REBVAL *value, REB_MOLD *mold, REBFLG molded)
 {
 	REBSER *vect = VAL_SERIES(value);

@@ -33,7 +33,6 @@
 //
 //  CT_Pair: C
 //
-
 REBINT CT_Pair(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	if (mode >= 0) return Cmp_Pair(a, b) == 0; // works for INTEGER=0 too (spans x y)
@@ -49,7 +48,6 @@ REBINT CT_Pair(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  MT_Pair: C
 //
-
 REBFLG MT_Pair(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	REBD32 x;
@@ -85,7 +83,6 @@ REBFLG MT_Pair(REBVAL *out, REBVAL *data, REBCNT type)
 //  
 //  Given two pairs, compare them.
 //
-
 REBINT Cmp_Pair(const REBVAL *t1, const REBVAL *t2)
 {
 	REBD32	diff;
@@ -99,7 +96,6 @@ REBINT Cmp_Pair(const REBVAL *t1, const REBVAL *t2)
 //
 //  Min_Max_Pair: C
 //
-
 void Min_Max_Pair(REBVAL *out, const REBVAL *a, const REBVAL *b, REBFLG maxed)
 {
 	REBXYF aa;
@@ -130,7 +126,6 @@ void Min_Max_Pair(REBVAL *out, const REBVAL *a, const REBVAL *b, REBFLG maxed)
 //
 //  PD_Pair: C
 //
-
 REBINT PD_Pair(REBPVS *pvs)
 {
 	REBVAL *sel;
@@ -168,7 +163,6 @@ REBINT PD_Pair(REBPVS *pvs)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Pair)
 {
 	REBVAL *val = NULL;

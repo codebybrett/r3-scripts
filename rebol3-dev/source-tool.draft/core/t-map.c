@@ -59,7 +59,6 @@
 //
 //  CT_Map: C
 //
-
 REBINT CT_Map(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	if (mode < 0) return -1;
@@ -75,7 +74,6 @@ REBINT CT_Map(REBVAL *a, REBVAL *b, REBINT mode)
 //      Size is the number of key-value pairs.
 //      If size >= MIN_DICT, then a hash series is also created.
 //
-
 static REBSER *Make_Map(REBINT size)
 {
 	REBSER *blk = Make_Array(size * 2);
@@ -102,7 +100,6 @@ static REBSER *Make_Map(REBINT size)
 //          1 - search, return hash, else return -1 if not
 //          2 - search, return hash, else append value and return -1
 //
-
 REBINT Find_Key(REBSER *series, REBSER *hser, REBVAL *key, REBINT wide, REBCNT cased, REBYTE mode)
 {
 	REBCNT *hashes;
@@ -172,7 +169,6 @@ REBINT Find_Key(REBSER *series, REBSER *hser, REBVAL *key, REBINT wide, REBCNT c
 //  
 //      Recompute the entire hash table. Table must be large enough.
 //
-
 static void Rehash_Hash(REBSER *series)
 {
 	REBVAL *val;
@@ -201,7 +197,6 @@ static void Rehash_Hash(REBSER *series)
 //  
 //      RETURNS: the index to the VALUE or zero if there is none.
 //
-
 static REBCNT Find_Entry(REBSER *series, REBVAL *key, REBVAL *val)
 {
 	REBSER *hser = series->extra.series; // can be null
@@ -296,7 +291,6 @@ static REBCNT Find_Entry(REBSER *series, REBVAL *key, REBVAL *val)
 //
 //  Length_Map: C
 //
-
 REBINT Length_Map(REBSER *series)
 {
 	REBCNT n, c = 0;
@@ -313,7 +307,6 @@ REBINT Length_Map(REBSER *series)
 //
 //  PD_Map: C
 //
-
 REBINT PD_Map(REBPVS *pvs)
 {
 	REBVAL *data = pvs->value;
@@ -340,7 +333,6 @@ REBINT PD_Map(REBPVS *pvs)
 //
 //  Append_Map: C
 //
-
 static void Append_Map(REBSER *ser, REBVAL *arg, REBCNT len)
 {
 	REBVAL *val;
@@ -356,7 +348,6 @@ static void Append_Map(REBSER *ser, REBVAL *arg, REBCNT len)
 //
 //  MT_Map: C
 //
-
 REBFLG MT_Map(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	REBCNT n;
@@ -385,7 +376,6 @@ REBFLG MT_Map(REBVAL *out, REBVAL *data, REBCNT type)
 //      mapser = series of the map
 //      what: -1 - words, +1 - values, 0 -both
 //
-
 REBSER *Map_To_Block(REBSER *mapser, REBINT what)
 {
 	REBVAL *val;
@@ -419,7 +409,6 @@ REBSER *Map_To_Block(REBSER *mapser, REBINT what)
 //  
 //      Convert existing block to a map.
 //
-
 void Block_As_Map(REBSER *blk)
 {
 	REBSER *ser = 0;
@@ -434,7 +423,6 @@ void Block_As_Map(REBSER *blk)
 //
 //  Map_To_Object: C
 //
-
 REBSER *Map_To_Object(REBSER *mapser)
 {
 	REBVAL *val;
@@ -478,7 +466,6 @@ REBSER *Map_To_Object(REBSER *mapser)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Map)
 {
 	REBVAL *val = D_ARG(1);

@@ -63,7 +63,6 @@ static const char *Dia_Fmt = "DELECT - cmd: %s length: %d missed: %d total: %d";
 //      Search a block of objects for a given word symbol and
 //      return the value for the word. NULL if not found.
 //
-
 REBVAL *Find_Mutable_In_Contexts(REBCNT sym, REBVAL *where)
 {
 	REBVAL *val;
@@ -96,7 +95,6 @@ REBVAL *Find_Mutable_In_Contexts(REBCNT sym, REBVAL *where)
 //      Given a word, check to see if it is in the dialect object.
 //      If so, return its index. If not, return 0.
 //
-
 static int Find_Command(REBSER *dialect, REBVAL *word)
 {
 	REBINT n;
@@ -122,7 +120,6 @@ static int Find_Command(REBSER *dialect, REBVAL *word)
 //      Return number of formal args provided to the function.
 //      This is just a guess, because * repeats count as zero.
 //
-
 static int Count_Dia_Args(REBVAL *args)
 {
 	REBINT n = 0;
@@ -150,7 +147,6 @@ static int Count_Dia_Args(REBVAL *args)
 //      Returns zero on error.
 //      Note: stack used to hold temp values
 //
-
 static REBVAL *Eval_Arg(REBDIA *dia)
 {
 	REBVAL *value = BLK_SKIP(dia->args, dia->argi);
@@ -215,7 +211,6 @@ static REBVAL *Eval_Arg(REBDIA *dia)
 //        0: no arg of that type was found
 //       -N: error (type block contains a bad value)
 //
-
 static REBINT Add_Arg(REBDIA *dia, REBVAL *value)
 {
 	REBINT type = 0;
@@ -366,7 +361,6 @@ again:
 //  
 //      Returns the length of command processed or error. See below.
 //
-
 static REBINT Do_Cmd(REBDIA *dia)
 {
 	REBVAL *fargs;
@@ -444,7 +438,6 @@ static REBINT Do_Cmd(REBDIA *dia)
 //      Negative indicate error.
 //      The args holds resulting args.
 //
-
 static REBINT Do_Dia(REBDIA *dia)
 {
 	REBVAL *next = BLK_SKIP(dia->args, dia->argi);
@@ -500,7 +493,6 @@ static REBINT Do_Dia(REBDIA *dia)
 //          3. Encountering a new CMD
 //          4. End of the dialect block
 //
-
 REBINT Do_Dialect(REBSER *dialect, REBSER *block, REBCNT *index, REBSER **out)
 {
 	REBDIA dia;
@@ -552,7 +544,6 @@ REBINT Do_Dialect(REBSER *dialect, REBSER *block, REBCNT *index, REBSER **out)
 //      /all "Parse entire block, not just one command at a time"
 //  ]
 //
-
 REBNATIVE(delect)
 {
 	REBDIA dia;
@@ -605,7 +596,6 @@ REBNATIVE(delect)
 //
 //  Trace_Delect: C
 //
-
 void Trace_Delect(REBINT level)
 {
 	Delect_Debug = level;

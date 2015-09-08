@@ -37,7 +37,6 @@
 //      marked for the garbage collector to look into recursively).
 //      Terminator included implicitly. Sets TAIL to zero.
 //
-
 REBSER *Make_Array(REBCNT capacity)
 {
 	REBSER *series = Make_Series(capacity + 1, sizeof(REBVAL), MKS_ARRAY);
@@ -54,7 +53,6 @@ REBSER *Make_Array(REBCNT capacity)
 //      Additional capacity beyond what is required can be added
 //      by giving an `extra` count of how many value cells one needs.
 //
-
 REBSER *Copy_Array_At_Extra_Shallow(REBSER *array, REBCNT index, REBCNT extra)
 {
 	REBCNT len = SERIES_TAIL(array);
@@ -79,7 +77,6 @@ REBSER *Copy_Array_At_Extra_Shallow(REBSER *array, REBCNT index, REBCNT extra)
 //      Shallow copy an array from the given index for given maximum
 //      length (clipping if it exceeds the array length)
 //
-
 REBSER *Copy_Array_At_Max_Shallow(REBSER *array, REBCNT index, REBCNT max)
 {
 	REBSER *series;
@@ -103,7 +100,6 @@ REBSER *Copy_Array_At_Max_Shallow(REBSER *array, REBCNT index, REBCNT max)
 //      Shallow copy the first 'len' values of `value[]` into a new
 //      series created to hold exactly that many entries.
 //
-
 REBSER *Copy_Values_Len_Shallow(REBVAL value[], REBCNT len)
 {
 	REBSER *series;
@@ -133,7 +129,6 @@ REBSER *Copy_Values_Len_Shallow(REBVAL value[], REBCNT len)
 //      live inside of an array.  (We also assume the source values
 //      are in an array, and assert that they are managed.)
 //
-
 void Clonify_Values_Len_Managed(REBVAL value[], REBCNT len, REBOOL deep, REBU64 types)
 {
 	REBCNT index;
@@ -220,7 +215,6 @@ void Clonify_Values_Len_Managed(REBVAL value[], REBCNT len, REBOOL deep, REBU64 
 //      The resulting series will already be under GC management,
 //      and hence cannot be freed with Free_Series().
 //
-
 REBSER *Copy_Array_Core_Managed(REBSER *block, REBCNT index, REBCNT tail, REBOOL deep, REBU64 types)
 {
 	REBSER *series;
@@ -264,7 +258,6 @@ REBSER *Copy_Array_Core_Managed(REBSER *block, REBCNT index, REBCNT tail, REBOOL
 //      `array` parameter more than once, and have to be in all-caps
 //      to warn against usage with arguments that have side-effects.
 //
-
 REBSER *Copy_Array_At_Deep_Managed(REBSER *array, REBCNT index)
 {
 	return Copy_Array_Core_Managed(
@@ -285,7 +278,6 @@ REBSER *Copy_Array_At_Deep_Managed(REBSER *array, REBCNT index)
 //      block on top of the stack.  (Also checks to see if into
 //      is protected, and will trigger a trap if that is the case.)
 //
-
 void Copy_Stack_Values(REBINT start, REBVAL *into)
 {
 	// REVIEW: Can we change the interface to not take a REBVAL
@@ -373,7 +365,6 @@ void Copy_Stack_Values(REBINT start, REBVAL *into)
 //  
 //      Note: Updates the termination and tail.
 //
-
 REBVAL *Alloc_Tail_Array(REBSER *block)
 {
 	REBVAL *tail;
@@ -395,7 +386,6 @@ REBVAL *Alloc_Tail_Array(REBSER *block)
 //  
 //      Defect: only checks certain kinds of values.
 //
-
 REBINT Find_Same_Block(REBSER *blk, const REBVAL *val)
 {
 	REBVAL *bp;
@@ -438,7 +428,6 @@ REBINT Find_Same_Block(REBSER *blk, const REBVAL *val)
 //      Note: these markers are also used for GC. Functions that
 //      call this must not be able to trigger GC!
 //
-
 void Unmark(REBVAL *val)
 {
 	REBSER *series;

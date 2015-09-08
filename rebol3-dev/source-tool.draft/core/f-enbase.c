@@ -182,7 +182,6 @@
 //
 //  Decode_Base2: C
 //
-
 static REBSER *Decode_Base2(const REBYTE **src, REBCNT len, REBYTE delim)
 {
 	REBYTE *bp;
@@ -232,7 +231,6 @@ err:
 //
 //  Decode_Base16: C
 //
-
 static REBSER *Decode_Base16(const REBYTE **src, REBCNT len, REBYTE delim)
 {
 	REBYTE *bp;
@@ -277,7 +275,6 @@ err:
 //
 //  Decode_Base64: C
 //
-
 static REBSER *Decode_Base64(const REBYTE **src, REBCNT len, REBYTE delim)
 {
 	REBYTE *bp;
@@ -357,7 +354,6 @@ err:
 //  
 //      Scan and convert a binary string.
 //
-
 const REBYTE *Decode_Binary(REBVAL *value, const REBYTE *src, REBCNT len, REBINT base, REBYTE delim)
 {
 	REBSER *ser = 0;
@@ -387,7 +383,6 @@ const REBYTE *Decode_Binary(REBVAL *value, const REBYTE *src, REBCNT len, REBINT
 //  
 //      Base2 encode a given series. Must be BYTES, not UNICODE.
 //
-
 REBSER *Encode_Base2(const REBVAL *value, REBSER *series, REBFLG brk)
 {
 	REBYTE *p;	// ?? should it be REBYTE? Same with below functions?
@@ -437,7 +432,6 @@ REBSER *Encode_Base2(const REBVAL *value, REBSER *series, REBFLG brk)
 //  
 //      Base16 encode a given series. Must be BYTES, not UNICODE.
 //
-
 REBSER *Encode_Base16(const REBVAL *value, REBSER *series, REBFLG brk)
 {
 	REBCNT count;
@@ -479,7 +473,6 @@ REBSER *Encode_Base16(const REBVAL *value, REBSER *series, REBFLG brk)
 //  
 //      Base64 encode a given series. Must be BYTES, not UNICODE.
 //
-
 REBSER *Encode_Base64(const REBVAL *value, REBSER *series, REBFLG brk)
 {
 	REBYTE *p;

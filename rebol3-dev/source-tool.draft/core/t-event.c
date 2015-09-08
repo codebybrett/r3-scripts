@@ -38,7 +38,6 @@
 //
 //  CT_Event: C
 //
-
 REBINT CT_Event(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	REBINT diff = Cmp_Event(a, b);
@@ -52,7 +51,6 @@ REBINT CT_Event(REBVAL *a, REBVAL *b, REBINT mode)
 //  
 //  Given two events, compare them.
 //
-
 REBINT Cmp_Event(const REBVAL *t1, const REBVAL *t2)
 {
 	REBINT	diff;
@@ -70,7 +68,6 @@ REBINT Cmp_Event(const REBVAL *t1, const REBVAL *t2)
 //
 //  Set_Event_Var: C
 //
-
 static REBFLG Set_Event_Var(REBVAL *value, const REBVAL *word, const REBVAL *val)
 {
 	REBVAL *arg;
@@ -186,7 +183,6 @@ static REBFLG Set_Event_Var(REBVAL *value, const REBVAL *word, const REBVAL *val
 //
 //  Set_Event_Vars: C
 //
-
 static void Set_Event_Vars(REBVAL *evt, REBVAL *blk)
 {
 	REBVAL *var;
@@ -211,7 +207,6 @@ static void Set_Event_Vars(REBVAL *evt, REBVAL *blk)
 //
 //  Get_Event_Var: C
 //
-
 static REBFLG Get_Event_Var(const REBVAL *value, REBCNT sym, REBVAL *val)
 {
 	REBVAL *arg;
@@ -352,7 +347,6 @@ is_none:
 //
 //  MT_Event: C
 //
-
 REBFLG MT_Event(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	if (IS_BLOCK(data)) {
@@ -369,7 +363,6 @@ REBFLG MT_Event(REBVAL *out, REBVAL *data, REBCNT type)
 //
 //  PD_Event: C
 //
-
 REBINT PD_Event(REBPVS *pvs)
 {
 	if (IS_WORD(pvs->select)) {
@@ -388,7 +381,6 @@ REBINT PD_Event(REBPVS *pvs)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Event)
 {
 	REBVAL *value;
@@ -541,7 +533,6 @@ enum rebol_event_fields {
 //
 //  Mold_Event: C
 //
-
 void Mold_Event(const REBVAL *value, REB_MOLD *mold)
 {
 	REBVAL val;

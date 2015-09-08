@@ -76,7 +76,6 @@ void Chrom_Key_Alpha(REBVAL *v,REBCNT col,REBINT blitmode) {
 //  
 //  Perform LZW decompression.
 //
-
 void Decode_LZW(REBCNT *data, REBYTE **cpp, REBYTE *colortab, REBINT w, REBINT h, REBOOL interlaced)
 {
 	REBYTE	*cp = *cpp;
@@ -209,7 +208,6 @@ void Decode_LZW(REBCNT *data, REBYTE **cpp, REBYTE *colortab, REBINT w, REBINT h
 //      Error:  Code in codi->error
 //      Return: Success as TRUE or FALSE
 //
-
 void Decode_GIF_Image(REBCDI *codi)
 {
 	REBINT	w, h;
@@ -325,7 +323,6 @@ void Decode_GIF_Image(REBCDI *codi)
 //
 //  Codec_GIF_Image: C
 //
-
 REBINT Codec_GIF_Image(REBCDI *codi)
 {
 	codi->error = 0;
@@ -348,7 +345,6 @@ REBINT Codec_GIF_Image(REBCDI *codi)
 //
 //  Init_GIF_Codec: C
 //
-
 void Init_GIF_Codec(void)
 {
 	Register_Codec(cb_cast("gif"), Codec_GIF_Image);

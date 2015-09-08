@@ -32,7 +32,6 @@
 //
 //  Init_Stacks: C
 //
-
 void Init_Stacks(REBCNT size)
 {
 	// We always keep one call stack chunk frame around for the first
@@ -57,7 +56,6 @@ void Init_Stacks(REBCNT size)
 //
 //  Shutdown_Stacks: C
 //
-
 void Shutdown_Stacks(void)
 {
 	struct Reb_Chunk* chunk = cast(struct Reb_Chunk*,
@@ -85,7 +83,6 @@ void Shutdown_Stacks(void)
 //      !!! Notably simple implementation, just hammering out the
 //      client interfaces that made sequential stack memory assumptions.
 //
-
 void Push_Stack_Values(const REBVAL *values, REBINT length)
 {
 	Insert_Series(
@@ -104,7 +101,6 @@ void Push_Stack_Values(const REBVAL *values, REBINT length)
 //  
 //      Protocol for /INTO is to set the position to the tail.
 //
-
 void Pop_Stack_Values(REBVAL *out, REBINT dsp_start, REBOOL into)
 {
 	REBSER *series;
@@ -135,7 +131,6 @@ void Pop_Stack_Values(REBVAL *out, REBINT dsp_start, REBOOL into)
 //      values, so code should generally use stack index integers,
 //      not pointers into the stack.
 //
-
 void Expand_Stack(REBCNT amount)
 {
 	if (SERIES_REST(DS_Series) >= STACK_LIMIT) Trap_Stack_Overflow();
@@ -158,7 +153,6 @@ void Expand_Stack(REBCNT amount)
 //      it, because we need to fulfill its arguments in the caller's
 //      frame before we actually invoke the function.
 //
-
 struct Reb_Call *Make_Call(REBVAL *out, REBSER *block, REBCNT index, const REBVAL *label, const REBVAL *func)
 {
 	REBCNT num_vars = VAL_FUNC_NUM_WORDS(func);
@@ -278,7 +272,6 @@ struct Reb_Call *Make_Call(REBVAL *out, REBSER *block, REBCNT index, const REBVA
 //      call to Free_Mem(), due to allocating call frames sequentially
 //      in chunks of memory.
 //
-
 void Free_Call(struct Reb_Call* call)
 {
 	assert(call == CS_Top);
@@ -321,7 +314,6 @@ void Free_Call(struct Reb_Call* call)
 //      frame, which asserts if you use an index that is higher
 //      than the number of arguments in the frame.
 //
-
 REBVAL *DSF_VAR_Debug(struct Reb_Call *call, REBCNT n)
 {
 	assert(n <= call->num_vars);

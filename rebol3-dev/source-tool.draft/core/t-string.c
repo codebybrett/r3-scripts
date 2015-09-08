@@ -41,7 +41,6 @@ extern void reb_qsort(void *a, size_t n, size_t es, cmp_t *cmp);
 //
 //  CT_String: C
 //
-
 REBINT CT_String(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	REBINT num;
@@ -63,7 +62,6 @@ REBINT CT_String(REBVAL *a, REBVAL *b, REBINT mode)
 ***********************************************************************/
 
 //  !!! "STRING value to CHAR value (save some code space)" <-- what?
-
 static void str_to_char(REBVAL *out, REBVAL *val, REBCNT idx)
 {
 	// Note: out may equal val, do assignment in two steps
@@ -283,7 +281,6 @@ static REBSER *make_binary(REBVAL *arg, REBOOL make)
 //
 //  MT_String: C
 //
-
 REBFLG MT_String(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	REBCNT i;
@@ -301,7 +298,6 @@ REBFLG MT_String(REBVAL *out, REBVAL *data, REBCNT type)
 //
 //  Compare_Chr: C
 //
-
 static int Compare_Chr(const void *v1, const void *v2)
 {
 	return cast(int, *cast(const REBYTE *, v1))
@@ -312,7 +308,6 @@ static int Compare_Chr(const void *v1, const void *v2)
 //
 //  Compare_Chr_Rev: C
 //
-
 static int Compare_Chr_Rev(const void *v1, const void *v2)
 {
 	return cast(int, *cast(const REBYTE *, v2))
@@ -323,7 +318,6 @@ static int Compare_Chr_Rev(const void *v1, const void *v2)
 //
 //  Sort_String: C
 //
-
 static void Sort_String(REBVAL *string, REBFLG ccase, REBVAL *skipv, REBVAL *compv, REBVAL *part, REBFLG all, REBFLG rev)
 {
 	REBCNT len;
@@ -354,7 +348,6 @@ static void Sort_String(REBVAL *string, REBFLG ccase, REBVAL *skipv, REBVAL *com
 //
 //  PD_String: C
 //
-
 REBINT PD_String(REBPVS *pvs)
 {
 	REBVAL *data = pvs->value;
@@ -414,7 +407,6 @@ REBINT PD_String(REBPVS *pvs)
 //
 //  PD_File: C
 //
-
 REBINT PD_File(REBPVS *pvs)
 {
 	REBSER *ser;
@@ -453,7 +445,6 @@ REBINT PD_File(REBPVS *pvs)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(String)
 {
 	REBVAL	*value = D_ARG(1);

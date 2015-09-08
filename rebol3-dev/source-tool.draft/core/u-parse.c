@@ -84,7 +84,6 @@ void Print_Parse_Index(enum Reb_Kind type, const REBVAL *rules, REBSER *series, 
 //  
 //      Change the series and return the new index.
 //
-
 static REBCNT Set_Parse_Series(REBPARSE *parse, const REBVAL *item)
 {
 	parse->series = VAL_SERIES(item);
@@ -115,7 +114,6 @@ static REBCNT Set_Parse_Series(REBPARSE *parse, const REBVAL *item)
 //  
 //      !!! (Review if this can be done a better way.)
 //
-
 static const REBVAL *Get_Parse_Value(REBVAL *safe, const REBVAL *item)
 {
 	if (IS_WORD(item)) {
@@ -140,7 +138,6 @@ static const REBVAL *Get_Parse_Value(REBVAL *safe, const REBVAL *item)
 //      If it matches, return the index just past it.
 //      Otherwise return NOT_FOUND.
 //
-
 static REBCNT Parse_Next_String(REBPARSE *parse, REBCNT index, const REBVAL *item, REBCNT depth)
 {
 	// !!! THIS CODE NEEDS CLEANUP AND REWRITE BASED ON OTHER CHANGES
@@ -233,7 +230,6 @@ static REBCNT Parse_Next_String(REBPARSE *parse, REBCNT index, const REBVAL *ite
 //      Used for parsing blocks to match the next item in the ruleset.
 //      If it matches, return the index just past it. Otherwise, return zero.
 //
-
 static REBCNT Parse_Next_Block(REBPARSE *parse, REBCNT index, const REBVAL *item, REBCNT depth)
 {
 	// !!! THIS CODE NEEDS CLEANUP AND REWRITE BASED ON OTHER CHANGES
@@ -308,7 +304,6 @@ no_result:
 //
 //  To_Thru: C
 //
-
 static REBCNT To_Thru(REBPARSE *parse, REBCNT index, const REBVAL *block, REBFLG is_thru)
 {
 	REBSER *series = parse->series;
@@ -480,7 +475,6 @@ bad_target:
 //          3. value - according to datatype
 //          4. block of values - the first one we hit
 //
-
 static REBCNT Parse_To(REBPARSE *parse, REBCNT index, const REBVAL *item, REBFLG is_thru)
 {
 	REBSER *series = parse->series;
@@ -566,7 +560,6 @@ static REBCNT Parse_To(REBPARSE *parse, REBCNT index, const REBVAL *item, REBFLG
 //  
 //      Problem: cannot write:  set var do datatype!
 //
-
 static REBCNT Do_Eval_Rule(REBPARSE *parse, REBCNT index, const REBVAL **rule)
 {
 	REBVAL value;
@@ -672,7 +665,6 @@ static REBCNT Do_Eval_Rule(REBPARSE *parse, REBCNT index, const REBVAL **rule)
 //
 //  Parse_Rules_Loop: C
 //
-
 static REBCNT Parse_Rules_Loop(REBPARSE *parse, REBCNT index, const REBVAL *rules, REBCNT depth)
 {
 	REBSER *series = parse->series;
@@ -1246,7 +1238,6 @@ bad_end:
 //      /all "(ignored refinement left for Rebol2 transitioning)"
 //  ]
 //
-
 REBNATIVE(parse)
 {
 	REBVAL *input = D_ARG(1);

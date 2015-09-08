@@ -33,7 +33,6 @@
 //
 //  CT_Word: C
 //
-
 REBINT CT_Word(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	REBINT e;
@@ -59,7 +58,6 @@ REBINT CT_Word(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Word)
 {
 	REBVAL *val = D_ARG(1);

@@ -37,7 +37,6 @@
 //      Initialize standard for loops (copy block, make frame, bind).
 //      Spec: WORD or [WORD ...]
 //
-
 static REBSER *Init_Loop(const REBVAL *spec, REBVAL *body_blk, REBSER **fram)
 {
 	REBSER *frame;
@@ -92,7 +91,6 @@ static REBSER *Init_Loop(const REBVAL *spec, REBVAL *body_blk, REBSER **fram)
 //
 //  Loop_Series: C
 //
-
 static void Loop_Series(REBVAL *out, REBVAL *var, REBSER* body, REBVAL *start, REBINT ei, REBINT ii)
 {
 	REBINT si = VAL_INDEX(start);
@@ -123,7 +121,6 @@ static void Loop_Series(REBVAL *out, REBVAL *var, REBSER* body, REBVAL *start, R
 //
 //  Loop_Integer: C
 //
-
 static void Loop_Integer(REBVAL *out, REBVAL *var, REBSER* body, REBI64 start, REBI64 end, REBI64 incr)
 {
 	VAL_SET(var, REB_INTEGER);
@@ -150,7 +147,6 @@ static void Loop_Integer(REBVAL *out, REBVAL *var, REBSER* body, REBI64 start, R
 //
 //  Loop_Number: C
 //
-
 static void Loop_Number(REBVAL *out, REBVAL *var, REBSER* body, REBVAL *start, REBVAL *end, REBVAL *incr)
 {
 	REBDEC s;
@@ -192,7 +188,6 @@ static void Loop_Number(REBVAL *out, REBVAL *var, REBSER* body, REBVAL *start, R
 //      0: forall
 //      1: forskip
 //
-
 static int Loop_All(struct Reb_Call *call_, REBINT mode)
 {
 	REBVAL *var;
@@ -265,7 +260,6 @@ static int Loop_All(struct Reb_Call *call_, REBINT mode)
 //          1: remove-each
 //          2: map
 //
-
 static REB_R Loop_Each(struct Reb_Call *call_, REBINT mode)
 {
 	REBSER *body;
@@ -500,7 +494,6 @@ skip_hidden: ;
 //  
 //      FOR var start end bump [ body ]
 //
-
 REBNATIVE(for)
 {
 	REBSER *body;
@@ -542,7 +535,6 @@ REBNATIVE(for)
 //      body [block!] "Block to evaluate each time"
 //  ]
 //
-
 REBNATIVE(forall)
 {
 	return Loop_All(call_, 0);
@@ -558,7 +550,6 @@ REBNATIVE(forall)
 //      /local orig result
 //  ]
 //
-
 REBNATIVE(forskip)
 {
 	return Loop_All(call_, 1);
@@ -571,7 +562,6 @@ REBNATIVE(forskip)
 //      body [block!] "Block to evaluate each time"
 //  ]
 //
-
 REBNATIVE(forever)
 {
 	do {
@@ -597,7 +587,6 @@ REBNATIVE(forever)
 //      data [series!] {The series to traverse}
 //      body [block!] {Block to evaluate each time}
 //
-
 REBNATIVE(foreach)
 {
 	return Loop_Each(call_, 0);
@@ -616,7 +605,6 @@ REBNATIVE(foreach)
 //      data [series!] {The series to traverse}
 //      body [block!] {Block to evaluate each time}
 //
-
 REBNATIVE(remove_each)
 {
 	return Loop_Each(call_, 1);
@@ -635,7 +623,6 @@ REBNATIVE(remove_each)
 //      data [series!] {The series to traverse}
 //      body [block!] {Block to evaluate each time}
 //
-
 REBNATIVE(map_each)
 {
 	return Loop_Each(call_, 2);
@@ -649,7 +636,6 @@ REBNATIVE(map_each)
 //      block [block!] "Block to evaluate"
 //  ]
 //
-
 REBNATIVE(loop)
 {
 	REBI64 count = Int64(D_ARG(1));
@@ -678,7 +664,6 @@ REBNATIVE(loop)
 //  
 //      REPEAT var 123 [ body ]
 //
-
 REBNATIVE(repeat)
 {
 	REBSER *body;
@@ -717,7 +702,6 @@ REBNATIVE(repeat)
 //      block [block!]
 //  ]
 //
-
 REBNATIVE(until)
 {
 	REBSER *b1 = VAL_SERIES(D_ARG(1));
@@ -744,7 +728,6 @@ utop:
 //      body-block [block!]
 //  ]
 //
-
 REBNATIVE(while)
 {
 	REBSER *b1 = VAL_SERIES(D_ARG(1));

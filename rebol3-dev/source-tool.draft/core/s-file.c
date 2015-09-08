@@ -47,7 +47,6 @@
 //      REBDIFF: No longer appends current dir to volume when no
 //      root slash is provided (that odd MSDOS c:file case).
 //
-
 REBSER *To_REBOL_Path(const void *p, REBCNT len, REBINT uni, REBFLG dir)
 {
 	REBOOL colon = 0;  // have we hit a ':' yet?
@@ -109,7 +108,6 @@ REBSER *To_REBOL_Path(const void *p, REBCNT len, REBINT uni, REBFLG dir)
 //  
 //      Helper to above function.
 //
-
 REBSER *Value_To_REBOL_Path(REBVAL *val, REBOOL dir)
 {
 	assert(ANY_BINSTR(val));
@@ -130,7 +128,6 @@ REBSER *Value_To_REBOL_Path(REBVAL *val, REBOOL dir)
 //  
 //      Expands width for OS's that require it.
 //
-
 REBSER *To_Local_Path(const void *p, REBCNT len, REBOOL uni, REBFLG full)
 {
 	REBUNI c, d;
@@ -249,7 +246,6 @@ REBSER *To_Local_Path(const void *p, REBCNT len, REBOOL uni, REBFLG full)
 //  
 //      Helper to above function.
 //
-
 REBSER *Value_To_Local_Path(REBVAL *val, REBFLG full)
 {
 	assert(ANY_BINSTR(val));
@@ -262,7 +258,6 @@ REBSER *Value_To_Local_Path(REBVAL *val, REBFLG full)
 //  
 //      Helper to above function.
 //
-
 REBSER *Value_To_OS_Path(REBVAL *val, REBFLG full)
 {
 	REBSER *ser; // will be unicode size

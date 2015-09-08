@@ -49,7 +49,6 @@ typedef REBFLG (*MAKE_FUNC)(REBVAL *, REBVAL *, REBCNT);
 //      Note, this function relies on LEX_WORD lex values having a LEX_VALUE
 //      field of zero, except for hex values.
 //
-
 const REBYTE *Scan_Hex(const REBYTE *cp, REBI64 *num, REBCNT minlen, REBCNT maxlen)
 {
 	REBYTE lex;
@@ -82,7 +81,6 @@ const REBYTE *Scan_Hex(const REBYTE *cp, REBI64 *num, REBCNT minlen, REBCNT maxl
 //      We don't allow a %00 in files, urls, email, etc... so
 //      a return of 0 is used to indicate an error.
 //
-
 REBOOL Scan_Hex2(const REBYTE *bp, REBUNI *n, REBFLG uni)
 {
 	REBUNI c1, c2;
@@ -118,7 +116,6 @@ REBOOL Scan_Hex2(const REBYTE *bp, REBUNI *n, REBFLG uni)
 //      Low level conversion of hex chars into binary bytes.
 //      Returns the number of bytes in binary.
 //
-
 REBINT Scan_Hex_Bytes(REBVAL *val, REBCNT maxlen, REBYTE *out)
 {
 	REBYTE b, n = 0;
@@ -152,7 +149,6 @@ REBINT Scan_Hex_Bytes(REBVAL *val, REBCNT maxlen, REBYTE *out)
 //      Result is 32 bits max.
 //      Throw errors.
 //
-
 REBCNT Scan_Hex_Value(const void *p, REBCNT len, REBOOL uni)
 {
 	REBUNI c;
@@ -193,7 +189,6 @@ bad_hex:	Trap_DEAD_END(RE_INVALID_CHARS);
 //  
 //      Scan is valid for 1 1.2 1,2 1'234.5 1x 1.2x 1% 1.2% etc.
 //
-
 const REBYTE *Scan_Dec_Buf(const REBYTE *cp, REBCNT len, REBYTE *buf)
 {
 	REBYTE *bp = buf;
@@ -244,7 +239,6 @@ const REBYTE *Scan_Dec_Buf(const REBYTE *cp, REBCNT len, REBYTE *buf)
 //  
 //      Scan and convert a decimal value.  Return zero if error.
 //
-
 const REBYTE *Scan_Decimal(const REBYTE *cp, REBCNT len, REBVAL *value, REBFLG dec_only)
 {
 	const REBYTE *bp = cp;
@@ -296,7 +290,6 @@ const REBYTE *Scan_Decimal(const REBYTE *cp, REBCNT len, REBVAL *value, REBFLG d
 //      Scan and convert an integer value.  Return zero if error.
 //      Allow preceding + - and any combination of ' marks.
 //
-
 const REBYTE *Scan_Integer(const REBYTE *cp, REBCNT len, REBVAL *value)
 {
 	REBINT num = (REBINT)len;
@@ -353,7 +346,6 @@ const REBYTE *Scan_Integer(const REBYTE *cp, REBCNT len, REBVAL *value)
 //  
 //      Scan and convert money.  Return zero if error.
 //
-
 const REBYTE *Scan_Money(const REBYTE *cp, REBCNT len, REBVAL *value)
 {
 	const REBYTE *end;
@@ -411,7 +403,6 @@ const REBYTE *Scan_Money(const REBYTE *cp, REBCNT len, REBVAL *value)
 //  
 //      Scan and convert a date. Also can include a time and zone.
 //
-
 const REBYTE *Scan_Date(const REBYTE *cp, REBCNT len, REBVAL *value)
 {
 	const REBYTE *ep;
@@ -539,7 +530,6 @@ end_date:
 //  
 //      Scan and convert a file name.
 //
-
 const REBYTE *Scan_File(const REBYTE *cp, REBCNT len, REBVAL *value)
 {
 	REBUNI term = 0;
@@ -599,7 +589,6 @@ const REBYTE *Scan_File(const REBYTE *cp, REBCNT len, REBVAL *value)
 //  
 //      Scan and convert email.
 //
-
 const REBYTE *Scan_Email(const REBYTE *cp, REBCNT len, REBVAL *value)
 {
 	REBYTE *str;
@@ -639,7 +628,6 @@ const REBYTE *Scan_Email(const REBYTE *cp, REBCNT len, REBVAL *value)
 //  
 //      Scan and convert a URL.
 //
-
 const REBYTE *Scan_URL(const REBYTE *cp, REBCNT len, REBVAL *value)
 {
 	REBYTE *str;
@@ -682,7 +670,6 @@ const REBYTE *Scan_URL(const REBYTE *cp, REBCNT len, REBVAL *value)
 //  
 //      Scan and convert a pair
 //
-
 const REBYTE *Scan_Pair(const REBYTE *cp, REBCNT len, REBVAL *value)
 {
 	const REBYTE *ep, *xp;
@@ -711,7 +698,6 @@ const REBYTE *Scan_Pair(const REBYTE *cp, REBCNT len, REBVAL *value)
 //  
 //      Scan and convert a tuple.
 //
-
 const REBYTE *Scan_Tuple(const REBYTE *cp, REBCNT len, REBVAL *value)
 {
 	const REBYTE *ep;
@@ -744,7 +730,6 @@ const REBYTE *Scan_Tuple(const REBYTE *cp, REBCNT len, REBVAL *value)
 //  
 //      Scan and convert binary strings.
 //
-
 const REBYTE *Scan_Binary(const REBYTE *cp, REBCNT len, REBVAL *value)
 {
 	const REBYTE *ep;
@@ -775,7 +760,6 @@ const REBYTE *Scan_Binary(const REBYTE *cp, REBCNT len, REBVAL *value)
 //  
 //      Scan any string that does not require special decoding.
 //
-
 const REBYTE *Scan_Any(const REBYTE *cp, REBCNT len, REBVAL *value, REBYTE type)
 {
 	REBCNT n;
@@ -804,7 +788,6 @@ const REBYTE *Scan_Any(const REBYTE *cp, REBCNT len, REBVAL *value, REBYTE type)
 //  
 //      Add a new string or tag to a markup block, advancing the tail.
 //
-
 static void Append_Markup(REBSER *series, enum Reb_Kind type, const REBYTE *bp, REBINT len)
 {
 	REBVAL *val;
@@ -823,7 +806,6 @@ static void Append_Markup(REBSER *series, enum Reb_Kind type, const REBYTE *bp, 
 //      Scan a string as HTML or XML and convert it to a block
 //      of strings and tags.  Return the block as a series.
 //
-
 REBSER *Load_Markup(const REBYTE *cp, REBINT len)
 {
 	const REBYTE *bp = cp;
@@ -888,7 +870,6 @@ REBSER *Load_Markup(const REBYTE *cp, REBINT len)
 //      Keep in mind that this function is being called as part of the
 //      scanner, so optimal performance is critical.
 //
-
 REBFLG Construct_Value(REBVAL *value, REBSER *spec)
 {
 	REBVAL *val;
@@ -953,7 +934,6 @@ REBFLG Construct_Value(REBVAL *value, REBSER *spec)
 //      Scan an Internet-style header (HTTP, SMTP).
 //      Fields with duplicate words will be merged into a block.
 //
-
 REBSER *Scan_Net_Header(REBSER *blk, REBYTE *str)
 {
 	REBYTE *cp = str;

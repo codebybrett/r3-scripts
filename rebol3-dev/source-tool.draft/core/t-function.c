@@ -42,7 +42,6 @@ static REBOOL Same_Func(REBVAL *val, REBVAL *arg)
 //
 //  CT_Function: C
 //
-
 REBINT CT_Function(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	if (mode >= 0) return Same_Func(a, b);
@@ -53,7 +52,6 @@ REBINT CT_Function(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  As_Typesets: C
 //
-
 REBSER *As_Typesets(REBSER *types)
 {
 	REBVAL *val;
@@ -69,7 +67,6 @@ REBSER *As_Typesets(REBSER *types)
 //
 //  MT_Function: C
 //
-
 REBFLG MT_Function(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	return Make_Function(type, out, data);
@@ -79,7 +76,6 @@ REBFLG MT_Function(REBVAL *out, REBVAL *data, REBCNT type)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Function)
 {
 	REBVAL *value = D_ARG(1);

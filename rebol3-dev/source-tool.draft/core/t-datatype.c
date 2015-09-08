@@ -33,7 +33,6 @@
 //
 //  CT_Datatype: C
 //
-
 REBINT CT_Datatype(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	if (mode >= 0) return (VAL_TYPE_KIND(a) == VAL_TYPE_KIND(b));
@@ -44,7 +43,6 @@ REBINT CT_Datatype(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  MT_Datatype: C
 //
-
 REBFLG MT_Datatype(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	if (!IS_WORD(data)) return FALSE;
@@ -60,7 +58,6 @@ REBFLG MT_Datatype(REBVAL *out, REBVAL *data, REBCNT type)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Datatype)
 {
 	REBVAL *value = D_ARG(1);

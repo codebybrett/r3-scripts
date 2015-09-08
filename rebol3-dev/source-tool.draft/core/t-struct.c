@@ -123,7 +123,6 @@ static REBOOL get_scalar(const REBSTU *stu,
 //
 //  Get_Struct_Var: C
 //
-
 static REBFLG Get_Struct_Var(REBSTU *stu, REBVAL *word, REBVAL *val)
 {
 	struct Struct_Field *field = NULL;
@@ -154,7 +153,6 @@ static REBFLG Get_Struct_Var(REBSTU *stu, REBVAL *word, REBVAL *val)
 //
 //  Set_Struct_Vars: C
 //
-
 static void Set_Struct_Vars(REBSTU *strut, REBVAL *blk)
 {
 }
@@ -166,7 +164,6 @@ static void Set_Struct_Vars(REBSTU *strut, REBVAL *blk)
 //  
 //      Used by MOLD to create a block.
 //
-
 REBSER *Struct_To_Block(const REBSTU *stu)
 {
 	REBSER *ser = Make_Array(10);
@@ -360,7 +357,6 @@ static REBOOL assign_scalar(REBSTU *stu,
 //
 //  Set_Struct_Var: C
 //
-
 static REBFLG Set_Struct_Var(REBSTU *stu, REBVAL *word, REBVAL *elem, REBVAL *val)
 {
 	struct Struct_Field *field = NULL;
@@ -818,7 +814,6 @@ failed:
 //
 //  PD_Struct: C
 //
-
 REBINT PD_Struct(REBPVS *pvs)
 {
 	struct Struct_Field *field = NULL;
@@ -860,7 +855,6 @@ REBINT PD_Struct(REBPVS *pvs)
 //
 //  Cmp_Struct: C
 //
-
 REBINT Cmp_Struct(const REBVAL *s, const REBVAL *t)
 {
 	REBINT n = VAL_STRUCT_FIELDS(s) - VAL_STRUCT_FIELDS(t);
@@ -875,7 +869,6 @@ REBINT Cmp_Struct(const REBVAL *s, const REBVAL *t)
 //
 //  CT_Struct: C
 //
-
 REBINT CT_Struct(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	//printf("comparing struct a (%p) with b (%p), mode: %d\n", a, b, mode);
@@ -901,7 +894,6 @@ REBINT CT_Struct(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  Copy_Struct: C
 //
-
 void Copy_Struct(const REBSTU *src, REBSTU *dst)
 {
 	/* Read only fields */
@@ -918,7 +910,6 @@ void Copy_Struct(const REBSTU *src, REBSTU *dst)
 //
 //  Copy_Struct_Val: C
 //
-
 void Copy_Struct_Val(const REBVAL *src, REBVAL *dst)
 {
 	SET_TYPE(dst, REB_STRUCT);
@@ -1001,7 +992,6 @@ static void init_fields(REBVAL *ret, REBVAL *spec)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Struct)
 {
 	REBVAL *val;

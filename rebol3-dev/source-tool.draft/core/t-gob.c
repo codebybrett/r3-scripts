@@ -51,7 +51,6 @@ const REBCNT Gob_Flag_Words[] = {
 //
 //  CT_Gob: C
 //
-
 REBINT CT_Gob(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	if (mode >= 0)
@@ -64,7 +63,6 @@ REBINT CT_Gob(REBVAL *a, REBVAL *b, REBINT mode)
 //  
 //      Allocate a new GOB.
 //
-
 REBGOB *Make_Gob(void)
 {
 	REBGOB *gob = cast(REBGOB*, Make_Node(GOB_POOL));
@@ -81,7 +79,6 @@ REBGOB *Make_Gob(void)
 //
 //  Cmp_Gob: C
 //
-
 REBINT Cmp_Gob(const REBVAL *g1, const REBVAL *g2)
 {
 	REBINT n;
@@ -97,7 +94,6 @@ REBINT Cmp_Gob(const REBVAL *g1, const REBVAL *g2)
 //
 //  Set_Pair: C
 //
-
 static REBFLG Set_Pair(REBXYF *pair, const REBVAL *val)
 {
 	if (IS_PAIR(val)) {
@@ -123,7 +119,6 @@ static REBFLG Set_Pair(REBXYF *pair, const REBVAL *val)
 //      Find a target GOB within the pane of another gob.
 //      Return the index, or a -1 if not found.
 //
-
 static REBCNT Find_Gob(REBGOB *gob, REBGOB *target)
 {
 	REBCNT len;
@@ -146,7 +141,6 @@ static REBCNT Find_Gob(REBGOB *gob, REBGOB *target)
 //      Remove a gob value from its parent.
 //      Done normally in advance of inserting gobs into new parent.
 //
-
 static void Detach_Gob(REBGOB *gob)
 {
 	REBGOB *par;
@@ -167,7 +161,6 @@ static void Detach_Gob(REBGOB *gob)
 //      If index >= tail, an append occurs. Each gob has its parent
 //      gob field set. (Call Detach_Gobs() before inserting.)
 //
-
 static void Insert_Gobs(REBGOB *gob, const REBVAL *arg, REBCNT index, REBCNT len, REBFLG change)
 {
 	REBGOB **ptr;
@@ -245,7 +238,6 @@ static void Insert_Gobs(REBGOB *gob, const REBVAL *arg, REBCNT index, REBCNT len
 //  
 //      Remove one or more gobs from a pane at the given index.
 //
-
 static void Remove_Gobs(REBGOB *gob, REBCNT index, REBCNT len)
 {
 	REBGOB **ptr;
@@ -265,7 +257,6 @@ static void Remove_Gobs(REBGOB *gob, REBCNT index, REBCNT len)
 //  
 //      Convert pane list of gob pointers to a block of GOB!s.
 //
-
 static REBSER *Pane_To_Block(REBGOB *gob, REBCNT index, REBINT len)
 {
 	REBSER *ser;
@@ -291,7 +282,6 @@ static REBSER *Pane_To_Block(REBGOB *gob, REBCNT index, REBINT len)
 //
 //  Flags_To_Block: C
 //
-
 static REBSER *Flags_To_Block(REBGOB *gob)
 {
 	REBSER *ser;
@@ -314,7 +304,6 @@ static REBSER *Flags_To_Block(REBGOB *gob)
 //
 //  Set_Gob_Flag: C
 //
-
 static void Set_Gob_Flag(REBGOB *gob, const REBVAL *word)
 {
 	REBINT i;
@@ -352,7 +341,6 @@ static void Set_Gob_Flag(REBGOB *gob, const REBVAL *word)
 //
 //  Set_GOB_Var: C
 //
-
 static REBFLG Set_GOB_Var(REBGOB *gob, const REBVAL *word, const REBVAL *val)
 {
 	switch (VAL_WORD_CANON(word)) {
@@ -493,7 +481,6 @@ static REBFLG Set_GOB_Var(REBGOB *gob, const REBVAL *word, const REBVAL *val)
 //
 //  Get_GOB_Var: C
 //
-
 static REBFLG Get_GOB_Var(REBGOB *gob, const REBVAL *word, REBVAL *val)
 {
 	switch (VAL_WORD_CANON(word)) {
@@ -598,7 +585,6 @@ is_none:
 //
 //  Set_GOB_Vars: C
 //
-
 static void Set_GOB_Vars(REBGOB *gob, const REBVAL *blk)
 {
 	const REBVAL *var;
@@ -624,7 +610,6 @@ static void Set_GOB_Vars(REBGOB *gob, const REBVAL *blk)
 //  
 //      Used by MOLD to create a block.
 //
-
 REBSER *Gob_To_Block(REBGOB *gob)
 {
 	REBSER *ser = Make_Array(10);
@@ -680,7 +665,6 @@ REBSER *Gob_To_Block(REBGOB *gob)
 //
 //  MT_Gob: C
 //
-
 REBFLG MT_Gob(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	REBGOB *ngob;
@@ -699,7 +683,6 @@ REBFLG MT_Gob(REBVAL *out, REBVAL *data, REBCNT type)
 //
 //  PD_Gob: C
 //
-
 REBINT PD_Gob(REBPVS *pvs)
 {
 	REBGOB *gob = VAL_GOB(pvs->value);
@@ -742,7 +725,6 @@ REBINT PD_Gob(REBPVS *pvs)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Gob)
 {
 	REBVAL *val = D_ARG(1);

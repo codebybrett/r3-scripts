@@ -285,7 +285,6 @@ static void init_type_map()
 //
 //  CT_Routine: C
 //
-
 REBINT CT_Routine(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	//RL_Print("%s, %d\n", __func__, __LINE__);
@@ -298,7 +297,6 @@ REBINT CT_Routine(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  CT_Callback: C
 //
-
 REBINT CT_Callback(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	//RL_Print("%s, %d\n", __func__, __LINE__);
@@ -709,7 +707,6 @@ static void ffi_to_rebol(REBRIN *rin,
 //
 //  Call_Routine: C
 //
-
 void Call_Routine(const REBVAL *rot, REBSER *args, REBVAL *ret)
 {
 	REBCNT i = 0;
@@ -841,7 +838,6 @@ void Call_Routine(const REBVAL *rot, REBSER *args, REBVAL *ret)
 //
 //  Free_Routine: C
 //
-
 void Free_Routine(REBRIN *rin)
 {
 	REBCNT n = 0;
@@ -1019,7 +1015,6 @@ static void callback_dispatcher(ffi_cif *cif, void *ret, void **args, void *user
 //       abi: word "note"
 //   ] lib "name"]
 //
-
 REBFLG MT_Routine(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	//RL_Print("%s, %d\n", __func__, __LINE__);
@@ -1337,7 +1332,6 @@ REBFLG MT_Routine(REBVAL *out, REBVAL *data, REBCNT type)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Routine)
 {
 	REBVAL *val;
@@ -1386,7 +1380,6 @@ REBTYPE(Routine)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Callback)
 {
 	REBVAL *val;

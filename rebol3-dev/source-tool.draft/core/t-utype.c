@@ -35,7 +35,6 @@
 //
 //  CT_Utype: C
 //
-
 REBINT CT_Utype(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	return FALSE;
@@ -45,7 +44,6 @@ REBINT CT_Utype(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  MT_Utype: C
 //
-
 REBFLG MT_Utype(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	return FALSE;
@@ -55,7 +53,6 @@ REBFLG MT_Utype(REBVAL *out, REBVAL *data, REBCNT type)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Utype)
 {
 	REBVAL *value = D_ARG(1);

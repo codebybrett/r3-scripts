@@ -34,7 +34,6 @@
 //
 //  CT_Money: C
 //
-
 REBINT CT_Money(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	REBFLG e, g;
@@ -58,7 +57,6 @@ REBINT CT_Money(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  Emit_Money: C
 //
-
 REBINT Emit_Money(const REBVAL *value, REBYTE *buf, REBCNT opts)
 {
 	return deci_to_string(buf, VAL_MONEY_AMOUNT(value), '$', '.');
@@ -68,7 +66,6 @@ REBINT Emit_Money(const REBVAL *value, REBYTE *buf, REBCNT opts)
 //
 //  Bin_To_Money: C
 //
-
 REBINT Bin_To_Money(REBVAL *result, REBVAL *val)
 {
 	REBCNT len;
@@ -111,7 +108,6 @@ REBINT Bin_To_Money(REBVAL *result, REBVAL *val)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Money)
 {
 	REBVAL *val = D_ARG(1);

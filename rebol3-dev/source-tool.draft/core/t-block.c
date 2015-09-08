@@ -47,7 +47,6 @@ extern void reb_qsort(void *a, size_t n, size_t es, cmp_t *cmp);
 //      CT_Get_Path(REBVAL *a, REBVAL *b, REBINT mode)
 //      CT_Lit_Path(REBVAL *a, REBVAL *b, REBINT mode)
 //
-
 REBINT CT_Array(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	REBINT num;
@@ -80,7 +79,6 @@ static void No_Nones(REBVAL *arg) {
 //      MT_Get_Path(REBVAL *out, REBVAL *data, REBCNT type)
 //      MT_Lit_Path(REBVAL *out, REBVAL *data, REBCNT type)
 //
-
 REBFLG MT_Array(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	REBCNT i;
@@ -119,7 +117,6 @@ REBFLG MT_Array(REBVAL *out, REBVAL *data, REBCNT type)
 //      match - sequence
 //      SELECT - (value that follows)
 //
-
 REBCNT Find_Block(REBSER *series, REBCNT index, REBCNT end, const REBVAL *target, REBCNT len, REBCNT flags, REBINT skip)
 {
 	REBVAL *value;
@@ -210,7 +207,6 @@ REBCNT Find_Block(REBSER *series, REBCNT index, REBCNT end, const REBVAL *target
 //          2. block (copy it)
 //          3. value (convert to a block)
 //
-
 void Make_Block_Type(REBFLG make, REBVAL *value, REBVAL *arg)
 {
 	enum Reb_Kind type;
@@ -299,7 +295,6 @@ static struct {
 //
 //  Compare_Val: C
 //
-
 static int Compare_Val(const void *v1, const void *v2)
 {
 	// !!!! BE SURE that 64 bit large difference comparisons work
@@ -329,7 +324,6 @@ static int Compare_Val(const void *v1, const void *v2)
 //
 //  Compare_Call: C
 //
-
 static int Compare_Call(const void *v1, const void *v2)
 {
 	REBVAL *args = NULL;
@@ -391,7 +385,6 @@ static int Compare_Call(const void *v1, const void *v2)
 //      /all {Compare all fields}
 //      /reverse {Reverse sort order}
 //
-
 static void Sort_Block(REBVAL *block, REBFLG ccase, REBVAL *skipv, REBVAL *compv, REBVAL *part, REBFLG all, REBFLG rev)
 {
 	REBCNT len;
@@ -434,7 +427,6 @@ static void Sort_Block(REBVAL *block, REBFLG ccase, REBVAL *skipv, REBVAL *compv
 //  
 //      See Trim_String().
 //
-
 static void Trim_Block(REBSER *ser, REBCNT index, REBCNT flags)
 {
 	REBVAL *blk = BLK_HEAD(ser);
@@ -471,7 +463,6 @@ static void Trim_Block(REBSER *ser, REBCNT index, REBCNT flags)
 //
 //  Shuffle_Block: C
 //
-
 void Shuffle_Block(REBVAL *value, REBFLG secure)
 {
 	REBCNT n;
@@ -502,7 +493,6 @@ void Shuffle_Block(REBVAL *value, REBFLG secure)
 //      PD_Set_Path(REBPVS *pvs)
 //      PD_Lit_Path(REBPVS *pvs)
 //
-
 REBINT PD_Array(REBPVS *pvs)
 {
 	REBINT n = 0;
@@ -541,7 +531,6 @@ REBINT PD_Array(REBPVS *pvs)
 //
 //  Pick_Block: C
 //
-
 REBVAL *Pick_Block(REBVAL *block, REBVAL *selector)
 {
 	REBINT n = 0;
@@ -565,7 +554,6 @@ REBVAL *Pick_Block(REBVAL *block, REBVAL *selector)
 //      REBTYPE(Set_Path)
 //      REBTYPE(Lit_Path)
 //
-
 REBTYPE(Array)
 {
 	REBVAL	*value = D_ARG(1);
@@ -848,7 +836,6 @@ is_none:
 //
 //  Assert_Array_Core: C
 //
-
 void Assert_Array_Core(const REBSER *series, REBOOL typed_words)
 {
 	REBCNT len;

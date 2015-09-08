@@ -40,7 +40,6 @@
 //
 //  CT_Logic: C
 //
-
 REBINT CT_Logic(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	if (mode >= 0)  return (VAL_LOGIC(a) == VAL_LOGIC(b));
@@ -51,7 +50,6 @@ REBINT CT_Logic(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  MT_Logic: C
 //
-
 REBFLG MT_Logic(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	if (!IS_INTEGER(data)) return FALSE;
@@ -63,7 +61,6 @@ REBFLG MT_Logic(REBVAL *out, REBVAL *data, REBCNT type)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Logic)
 {
 	REBCNT val1 = VAL_LOGIC(D_ARG(1));

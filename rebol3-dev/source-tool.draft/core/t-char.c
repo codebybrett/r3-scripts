@@ -33,7 +33,6 @@
 //
 //  CT_Char: C
 //
-
 REBINT CT_Char(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	REBINT num;
@@ -55,7 +54,6 @@ REBINT CT_Char(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Char)
 {
 	REBINT	chr = VAL_CHAR(D_ARG(1));

@@ -86,7 +86,6 @@
 //  
 //      Given a size, return a prime number that is larger.
 //
-
 REBINT Get_Hash_Prime(REBCNT size)
 {
 	REBINT n;
@@ -104,7 +103,6 @@ REBINT Get_Hash_Prime(REBCNT size)
 //  
 //      Expand hash series. Clear it but set its tail.
 //
-
 void Expand_Hash(REBSER *ser)
 {
 	REBINT pnum = Get_Hash_Prime(ser->tail + 1);
@@ -125,7 +123,6 @@ void Expand_Hash(REBSER *ser)
 //      the next larger table size and rehashing all the words of
 //      the current table.  Free the old hash array.
 //
-
 static void Expand_Word_Table(void)
 {
 	REBCNT *hashes;
@@ -163,7 +160,6 @@ static void Expand_Word_Table(void)
 //  
 //      Allocates and copies the text string of the word.
 //
-
 static REBCNT Make_Word_Name(const REBYTE *str, REBCNT len)
 {
 	REBCNT pos = SERIES_TAIL(PG_Word_Names);
@@ -181,7 +177,6 @@ static REBCNT Make_Word_Name(const REBYTE *str, REBCNT len)
 //      search for a match, and if not found, add it to the table.
 //      Return the table index for the word (whether found or new).
 //
-
 REBCNT Make_Word(const REBYTE *str, REBCNT len)
 {
 	REBINT	hash;
@@ -273,7 +268,6 @@ make_sym:
 //      Return the number of the last word created.  Used to
 //      mark a range of canon-words (e.g. operators).
 //
-
 REBCNT Last_Word_Num(void)
 {
 	return PG_Word_Table.series->tail - 1;
@@ -285,7 +279,6 @@ REBCNT Last_Word_Num(void)
 //  
 //      Initialize an ANY-WORD! type with a binding to a context.
 //
-
 void Val_Init_Word(REBVAL *value, REBCNT type, REBINT sym, REBSER *frame, REBCNT index)
 {
 	VAL_SET(value, type);
@@ -302,7 +295,6 @@ void Val_Init_Word(REBVAL *value, REBCNT type, REBINT sym, REBSER *frame, REBCNT
 //  
 //      Initialize a value as a word. Set frame as unbound (no context).
 //
-
 void Val_Init_Word_Unbound(REBVAL *value, REBCNT type, REBCNT sym)
 {
 	VAL_SET(value, type);
@@ -332,7 +324,6 @@ void Val_Init_Word_Unbound(REBVAL *value, REBCNT type, REBCNT sym)
 //      with typed words in them must be copied and mutated back to
 //      ordinary words.
 //
-
 void Val_Init_Word_Typed(REBVAL *value, REBCNT type, REBCNT sym, REBU64 typeset)
 {
 	VAL_SET(value, type);
@@ -346,7 +337,6 @@ void Val_Init_Word_Typed(REBVAL *value, REBCNT type, REBCNT sym, REBU64 typeset)
 //
 //  Get_Sym_Name: C
 //
-
 const REBYTE *Get_Sym_Name(REBCNT num)
 {
 	if (num == 0 || num >= PG_Word_Table.series->tail) return cb_cast("???");
@@ -357,7 +347,6 @@ const REBYTE *Get_Sym_Name(REBCNT num)
 //
 //  Get_Word_Name: C
 //
-
 const REBYTE *Get_Word_Name(const REBVAL *value)
 {
 	if (value) return Get_Sym_Name(VAL_WORD_SYM(value));
@@ -368,7 +357,6 @@ const REBYTE *Get_Word_Name(const REBVAL *value)
 //
 //  Get_Type_Name: C
 //
-
 const REBYTE *Get_Type_Name(const REBVAL *value)
 {
 	return Get_Sym_Name(VAL_TYPE(value)+1);
@@ -382,7 +370,6 @@ const REBYTE *Get_Type_Name(const REBVAL *value)
 //      Note that words are kept UTF8 encoded.
 //      Positive result if s > t and negative if s < t.
 //
-
 REBINT Compare_Word(const REBVAL *s, const REBVAL *t, REBFLG is_case)
 {
 	REBYTE *sp = VAL_WORD_NAME(s);
@@ -404,7 +391,6 @@ REBINT Compare_Word(const REBVAL *s, const REBVAL *t, REBFLG is_case)
 //  
 //      Only flags BIND_Table creation only (for threads).
 //
-
 void Init_Words(REBFLG only)
 {
 	REBCNT n = Get_Hash_Prime(WORD_TABLE_SIZE * 4); // extra to reduce rehashing

@@ -68,7 +68,6 @@
 //      we'll just be safe by a percentage of the file size.  This may
 //      be a bit much, though.
 //
-
 REBSER *Compress(REBSER *input, REBINT index, REBINT len, REBFLG use_crc)
 {
 	// NOTE: The use_crc flag is not present in Zlib 1.2.8
@@ -118,7 +117,6 @@ REBSER *Compress(REBSER *input, REBINT index, REBINT len, REBFLG use_crc)
 //      Rebol's compress/decompress functions store an extra length
 //      at the tail of the data, to double-check the zlib result
 //
-
 REBSER *Decompress(const REBYTE *data, REBCNT len, REBCNT limit, REBFLG use_crc)
 {
 	// NOTE: The use_crc flag is not present in Zlib 1.2.8

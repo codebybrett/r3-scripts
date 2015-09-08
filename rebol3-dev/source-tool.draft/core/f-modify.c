@@ -44,7 +44,6 @@
 //  
 //      return: new dst_idx
 //
-
 REBCNT Modify_Array(REBCNT action, REBSER *dst_ser, REBCNT dst_idx, const REBVAL *src_val, REBCNT flags, REBINT dst_len, REBINT dups)
 {
 	REBCNT tail  = SERIES_TAIL(dst_ser);
@@ -128,7 +127,6 @@ REBCNT Modify_Array(REBCNT action, REBSER *dst_ser, REBCNT dst_idx, const REBVAL
 //  
 //      return: new dst_idx
 //
-
 REBCNT Modify_String(REBCNT action, REBSER *dst_ser, REBCNT dst_idx, const REBVAL *src_val, REBCNT flags, REBINT dst_len, REBINT dups)
 {
 	REBSER *src_ser = 0;

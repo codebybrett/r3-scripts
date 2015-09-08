@@ -278,7 +278,6 @@ void Unmap_Bytes(void *srcp, REBYTE **dstp, const char *map) {
 //      Error:  Code in codi->error
 //      Return: Success as TRUE or FALSE
 //
-
 static void Decode_BMP_Image(REBCDI *codi)
 {
 	REBINT				i, j, x, y, c;
@@ -513,7 +512,6 @@ error:
 //      Error:  Code in codi->error
 //      Return: Success as TRUE or FALSE
 //
-
 static void Encode_BMP_Image(REBCDI *codi)
 {
 	REBINT i, y;
@@ -573,7 +571,6 @@ static void Encode_BMP_Image(REBCDI *codi)
 //
 //  Codec_BMP_Image: C
 //
-
 REBINT Codec_BMP_Image(REBCDI *codi)
 {
 	codi->error = 0;
@@ -601,7 +598,6 @@ REBINT Codec_BMP_Image(REBCDI *codi)
 //
 //  Init_BMP_Codec: C
 //
-
 void Init_BMP_Codec(void)
 {
 	Register_Codec(cb_cast("bmp"), Codec_BMP_Image);

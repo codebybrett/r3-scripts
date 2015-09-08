@@ -74,7 +74,6 @@ enum {
 //
 //  Emit: C
 //
-
 REBSER *Emit(REB_MOLD *mold, const char *fmt, ...)
 {
 	va_list args;
@@ -155,7 +154,6 @@ REBSER *Emit(REB_MOLD *mold, const char *fmt, ...)
 //      Creates or expands the series and provides the location to
 //      copy text into.
 //
-
 REBSER *Prep_String(REBSER *series, REBYTE **str, REBCNT len)
 {
 	REBCNT tail;
@@ -177,7 +175,6 @@ REBSER *Prep_String(REBSER *series, REBYTE **str, REBCNT len)
 //
 //  Prep_Uni_Series: C
 //
-
 REBUNI *Prep_Uni_Series(REB_MOLD *mold, REBCNT len)
 {
 	REBCNT tail = SERIES_TAIL(mold->series);
@@ -201,7 +198,6 @@ REBUNI *Prep_Uni_Series(REB_MOLD *mold, REBCNT len)
 //  
 //      Emit the initial datatype function, depending on /ALL option
 //
-
 void Pre_Mold(const REBVAL *value, REB_MOLD *mold)
 {
 	Emit(mold, GET_MOPT(mold, MOPT_MOLD_ALL) ? "#[T " : "make T ", value);
@@ -213,7 +209,6 @@ void Pre_Mold(const REBVAL *value, REB_MOLD *mold)
 //  
 //      Finish the mold, depending on /ALL with close block.
 //
-
 void End_Mold(REB_MOLD *mold)
 {
 	if (GET_MOPT(mold, MOPT_MOLD_ALL)) Append_Codepoint_Raw(mold->series, ']');
@@ -226,7 +221,6 @@ void End_Mold(REB_MOLD *mold)
 //      For series that has an index, add the index for mold/all.
 //      Add closing block.
 //
-
 void Post_Mold(const REBVAL *value, REB_MOLD *mold)
 {
 	if (VAL_INDEX(value)) {
@@ -242,7 +236,6 @@ void Post_Mold(const REBVAL *value, REB_MOLD *mold)
 //  
 //      Create a newline with auto-indent on next line if needed.
 //
-
 void New_Indented_Line(REB_MOLD *mold)
 {
 	REBINT n;
@@ -513,7 +506,6 @@ static void Mold_Tag(const REBVAL *value, REB_MOLD *mold)
 //
 //  Mold_Binary: C
 //
-
 void Mold_Binary(const REBVAL *value, REB_MOLD *mold)
 {
 	REBCNT len = VAL_LEN(value);
@@ -981,7 +973,6 @@ static void Mold_Error(const REBVAL *value, REB_MOLD *mold, REBFLG molded)
 //  
 //      Mold or form any value to string series tail.
 //
-
 void Mold_Value(REB_MOLD *mold, const REBVAL *value, REBFLG molded)
 {
 	REBYTE buf[60];
@@ -1286,7 +1277,6 @@ append:
 //  
 //      Form a value based on the mold opts provided.
 //
-
 REBSER *Copy_Form_Value(const REBVAL *value, REBCNT opts)
 {
 	REB_MOLD mo;
@@ -1304,7 +1294,6 @@ REBSER *Copy_Form_Value(const REBVAL *value, REBCNT opts)
 //  
 //      Form a value based on the mold opts provided.
 //
-
 REBSER *Copy_Mold_Value(const REBVAL *value, REBCNT opts)
 {
 	REB_MOLD mo;
@@ -1323,7 +1312,6 @@ REBSER *Copy_Mold_Value(const REBVAL *value, REBCNT opts)
 //      Reduce a block and then form each value into a string. Return the
 //      string or NULL if an unwind triggered while reducing.
 //
-
 REBSER *Form_Reduce(REBSER *block, REBCNT index)
 {
 	REBINT start = DSP + 1;
@@ -1356,7 +1344,6 @@ return_balanced:
 //
 //  Form_Tight_Block: C
 //
-
 REBSER *Form_Tight_Block(const REBVAL *blk)
 {
 	REBVAL *val;
@@ -1374,7 +1361,6 @@ REBSER *Form_Tight_Block(const REBVAL *blk)
 //
 //  Reset_Mold: C
 //
-
 void Reset_Mold(REB_MOLD *mold)
 {
 	REBSER *buf = BUF_MOLD;
@@ -1415,7 +1401,6 @@ void Reset_Mold(REB_MOLD *mold)
 //      on the mold flag setting.  Can limit string output to a
 //      specified size to prevent long console garbage output.
 //
-
 REBSER *Mold_Print_Value(const REBVAL *value, REBCNT limit, REBFLG mold)
 {
 	REB_MOLD mo;
@@ -1436,7 +1421,6 @@ REBSER *Mold_Print_Value(const REBVAL *value, REBCNT limit, REBFLG mold)
 //
 //  Init_Mold: C
 //
-
 void Init_Mold(REBCNT size)
 {
 	REBYTE *cp;

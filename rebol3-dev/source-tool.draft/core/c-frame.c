@@ -91,7 +91,6 @@
 //
 //  Check_Bind_Table: C
 //
-
 void Check_Bind_Table(void)
 {
 	REBCNT	n;
@@ -111,7 +110,6 @@ void Check_Bind_Table(void)
 //      Create a frame of a given size, allocating space for both
 //      words and values. Normally used for global frames.
 //
-
 REBSER *Make_Frame(REBINT len, REBOOL has_self)
 {
 	REBSER *frame;
@@ -138,7 +136,6 @@ REBSER *Make_Frame(REBINT len, REBOOL has_self)
 //  
 //      Expand a frame. Copy words if flagged.
 //
-
 void Expand_Frame(REBSER *frame, REBCNT delta, REBCNT copy)
 {
 	REBSER *words = FRM_WORD_SERIES(frame);
@@ -169,7 +166,6 @@ void Expand_Frame(REBSER *frame, REBCNT delta, REBCNT copy)
 //      If word is not NULL, use the word sym and bind the word value,
 //      otherwise use sym.
 //
-
 REBVAL *Append_Frame(REBSER *frame, REBVAL *word, REBCNT sym)
 {
 	REBSER *words = FRM_WORD_SERIES(frame);
@@ -206,7 +202,6 @@ REBVAL *Append_Frame(REBSER *frame, REBVAL *word, REBCNT sym)
 //      WARNING: Do not call code that might call BIND or otherwise
 //      make use of the Bind_Table or the Word cache array (BUF_WORDS).
 //
-
 void Collect_Start(REBCNT modes)
 {
 	REBINT *binds = WORDS_HEAD(Bind_Table); // GC safe to do here
@@ -230,7 +225,6 @@ void Collect_Start(REBCNT modes)
 //  
 //      Finish collecting words, and free the Bind_Table for reuse.
 //
-
 REBSER *Collect_End(REBSER *prior)
 {
 	REBVAL *words;
@@ -260,7 +254,6 @@ REBSER *Collect_End(REBSER *prior)
 //  
 //      Collect words from a prior object.
 //
-
 void Collect_Object(REBSER *prior)
 {
 	REBVAL *words = FRM_WORDS(prior);
@@ -285,7 +278,6 @@ void Collect_Object(REBSER *prior)
 //  
 //      The inner recursive loop used for Collect_Frame function below.
 //
-
 static void Collect_Frame_Inner_Loop(REBINT *binds, REBVAL value[], REBCNT modes)
 {
 	for (; NOT_END(value); value++) {
@@ -344,7 +336,6 @@ static void Collect_Frame_Inner_Loop(REBINT *binds, REBVAL value[], REBCNT modes
 //          BIND_GET  - substitute :word with actual word
 //          BIND_NO_SELF - do not add implicit SELF to the frame
 //
-
 REBSER *Collect_Frame(REBSER *prior, REBVAL value[], REBCNT modes)
 {
 	Collect_Start(modes);
@@ -365,7 +356,6 @@ REBSER *Collect_Frame(REBSER *prior, REBVAL value[], REBCNT modes)
 //      Used for Collect_Words() after the binds table has
 //      been set up.
 //
-
 static void Collect_Words_Inner_Loop(REBINT *binds, REBVAL value[], REBCNT modes)
 {
 	for (; NOT_END(value); value++) {
@@ -389,7 +379,6 @@ static void Collect_Words_Inner_Loop(REBINT *binds, REBVAL value[], REBCNT modes
 //  
 //      Collect words from a prior block and new block.
 //
-
 REBSER *Collect_Words(REBVAL value[], REBVAL prior_value[], REBCNT modes)
 {
 	REBSER *series;
@@ -425,7 +414,6 @@ REBSER *Collect_Words(REBVAL value[], REBVAL prior_value[], REBCNT modes)
 //      Create a new frame from a word list.
 //      The values of the frame are initialized to NONE.
 //
-
 REBSER *Create_Frame(REBSER *words, REBSER *spec)
 {
 	REBINT len = SERIES_TAIL(words);
@@ -448,7 +436,6 @@ REBSER *Create_Frame(REBSER *words, REBSER *spec)
 //      Clone old src_frame to new dst_frame knowing
 //      which types of values need to be copied, deep copied, and rebound.
 //
-
 void Rebind_Frame(REBSER *src_frame, REBSER *dst_frame)
 {
 	// Rebind all values:
@@ -462,7 +449,6 @@ void Rebind_Frame(REBSER *src_frame, REBSER *dst_frame)
 //      Create an object from a parent object and a spec block.
 //      The words within the resultant object are not bound.
 //
-
 REBSER *Make_Object(REBSER *parent, REBVAL value[])
 {
 	REBSER *words;
@@ -528,7 +514,6 @@ REBSER *Make_Object(REBSER *parent, REBVAL value[])
 //      Construct an object (partial evaluation of block).
 //      Parent can be null. Values are rebound.
 //
-
 REBSER *Construct_Object(REBSER *parent, REBVAL value[], REBFLG as_is)
 {
 	REBSER *frame = Make_Object(parent, &value[0]);
@@ -554,7 +539,6 @@ REBSER *Construct_Object(REBSER *parent, REBVAL value[], REBFLG as_is)
 //          2 for value
 //          3 for words and values
 //
-
 REBSER *Make_Object_Block(REBSER *frame, REBINT mode)
 {
 	REBVAL *words  = FRM_WORDS(frame);
@@ -592,7 +576,6 @@ REBSER *Make_Object_Block(REBSER *frame, REBINT mode)
 //
 //  Assert_Public_Object: C
 //
-
 void Assert_Public_Object(const REBVAL *value)
 {
 	REBVAL *word  = BLK_HEAD(VAL_OBJ_WORDS(value));
@@ -608,7 +591,6 @@ void Assert_Public_Object(const REBVAL *value)
 //      Create a module from a spec and an init block.
 //      Call the Make_Module function in the system/intrinsic object.
 //
-
 void Make_Module(REBVAL *out, const REBVAL *spec)
 {
 	if (!Do_Sys_Func(out, SYS_CTX_MAKE_MODULE_P, spec, 0)) {
@@ -628,7 +610,6 @@ void Make_Module(REBVAL *out, const REBVAL *spec)
 //      Create a module spec object. Holds module name, version,
 //      exports, locals, and more. See system/standard/module.
 //
-
 REBSER *Make_Module_Spec(REBVAL *spec)
 {
 	// Build standard module header object:
@@ -652,7 +633,6 @@ REBSER *Make_Module_Spec(REBVAL *spec)
 //  
 //      Deep copy and rebind the child.
 //
-
 REBSER *Merge_Frames(REBSER *parent1, REBSER *parent2)
 {
 	REBSER *wrds;
@@ -722,7 +702,6 @@ REBSER *Merge_Frames(REBSER *parent1, REBSER *parent2)
 //      Only_words can be a block of words or an index in the target
 //      (for new words).
 //
-
 void Resolve_Context(REBSER *target, REBSER *source, REBVAL *only_words, REBFLG all, REBFLG expand)
 {
 	REBINT *binds  = WORDS_HEAD(Bind_Table); // GC safe to do here
@@ -841,7 +820,6 @@ void Resolve_Context(REBSER *target, REBSER *source, REBVAL *only_words, REBFLG 
 //      Bind_Values_Core() sets up the binding table and then calls
 //      this recursive routine to do the actual binding.
 //
-
 static void Bind_Values_Inner_Loop(REBINT *binds, REBVAL value[], REBSER *frame, REBCNT mode)
 {
 	REBFLG selfish = !IS_SELFLESS(frame);
@@ -902,7 +880,6 @@ static void Bind_Values_Inner_Loop(REBINT *binds, REBVAL value[], REBSER *frame,
 //      bind prior instances of the word before the set-word. That is
 //      to say that forward references are not allowed.
 //
-
 void Bind_Values_Core(REBVAL value[], REBSER *frame, REBCNT mode)
 {
 	REBVAL *words;
@@ -941,7 +918,6 @@ void Bind_Values_Core(REBVAL value[], REBSER *frame, REBCNT mode)
 //      bound to a particular frame (if frame is NULL, then all
 //      words will be unbound regardless of their VAL_WORD_FRAME).
 //
-
 void Unbind_Values_Core(REBVAL value[], REBSER *frame, REBOOL deep)
 {
 	for (; NOT_END(value); value++) {
@@ -960,7 +936,6 @@ void Unbind_Values_Core(REBVAL value[], REBSER *frame, REBOOL deep)
 //      Binds a word to a frame. If word is not part of the
 //      frame, ignore it.
 //
-
 REBCNT Bind_Word(REBSER *frame, REBVAL *word)
 {
 	REBCNT n;
@@ -982,7 +957,6 @@ REBCNT Bind_Word(REBSER *frame, REBVAL *word)
 //      Note: frame arg points to an identifying series of the function,
 //      not a normal frame. This will be used to verify the word fetch.
 //
-
 static void Bind_Relative_Inner_Loop(REBINT *binds, REBSER *frame, REBSER *block)
 {
 	REBVAL *value = BLK_HEAD(block);
@@ -1014,7 +988,6 @@ static void Bind_Relative_Inner_Loop(REBINT *binds, REBSER *frame, REBSER *block
 //      frame: VAL_FUNC_WORDS(func)
 //      block: block to bind
 //
-
 void Bind_Relative(REBSER *words, REBSER *frame, REBSER *block)
 {
 	REBVAL *args;
@@ -1044,7 +1017,6 @@ void Bind_Relative(REBSER *words, REBSER *frame, REBSER *block)
 //
 //  Bind_Stack_Block: C
 //
-
 void Bind_Stack_Block(REBSER *frame, REBSER *block)
 {
 	Bind_Relative(frame, frame, block);
@@ -1054,7 +1026,6 @@ void Bind_Stack_Block(REBSER *frame, REBSER *block)
 //
 //  Bind_Stack_Word: C
 //
-
 void Bind_Stack_Word(REBSER *frame, REBVAL *word)
 {
 	REBINT index;
@@ -1076,7 +1047,6 @@ void Bind_Stack_Word(REBSER *frame, REBVAL *word)
 //      When frame_src type and frame_dst type differ,
 //      modes must have REBIND_TYPE.
 //
-
 void Rebind_Block(REBSER *src_frame, REBSER *dst_frame, REBVAL *data, REBFLG modes)
 {
 	REBINT *binds = WORDS_HEAD(Bind_Table);
@@ -1099,7 +1069,6 @@ void Rebind_Block(REBSER *src_frame, REBSER *dst_frame, REBVAL *data, REBFLG mod
 //  
 //      Find function arg word in function arg "frame".
 //
-
 REBCNT Find_Arg_Index(REBSER *args, REBCNT sym)
 {
 	REBCNT n;
@@ -1126,7 +1095,6 @@ REBCNT Find_Arg_Index(REBSER *args, REBCNT sym)
 //      Return the frame index for a word. Locate it by matching
 //      the canon word identifiers. Return 0 if not found.
 //
-
 REBCNT Find_Word_Index(REBSER *frame, REBCNT sym, REBFLG always)
 {
 	REBCNT len = SERIES_TAIL(FRM_WORD_SERIES(frame));
@@ -1151,7 +1119,6 @@ REBCNT Find_Word_Index(REBSER *frame, REBCNT sym, REBFLG always)
 //      return the value for the word. Locate it by matching
 //      the canon word identifiers. Return NULL if not found.
 //
-
 REBVAL *Find_Word_Value(REBSER *frame, REBCNT sym)
 {
 	REBINT n;
@@ -1168,7 +1135,6 @@ REBVAL *Find_Word_Value(REBSER *frame, REBCNT sym)
 //  
 //      Find word (of any type) in a block... quickly.
 //
-
 REBCNT Find_Word(REBSER *series, REBCNT index, REBCNT sym)
 {
 	REBVAL *value;
@@ -1192,7 +1158,6 @@ REBCNT Find_Word(REBSER *series, REBCNT index, REBCNT sym)
 //  
 //      Coded assuming most common case is trap=TRUE and writable=FALSE
 //
-
 REBVAL *Get_Var_Core(const REBVAL *word, REBOOL trap, REBOOL writable)
 {
 	REBSER *context = VAL_WORD_FRAME(word);
@@ -1305,7 +1270,6 @@ REBVAL *Get_Var_Core(const REBVAL *word, REBOOL trap, REBOOL writable)
 //  
 //      See comments in Get_Var_Core for what it's actually doing.
 //
-
 void Get_Var_Into_Core(REBVAL *out, const REBVAL *word)
 {
 	REBSER *context = VAL_WORD_FRAME(word);
@@ -1361,7 +1325,6 @@ void Get_Var_Into_Core(REBVAL *out, const REBVAL *word)
 //  
 //      Set the word (variable) value. (Use macro when possible).
 //
-
 void Set_Var(const REBVAL *word, const REBVAL *value)
 {
 	REBINT index = VAL_WORD_INDEX(word);
@@ -1400,7 +1363,6 @@ void Set_Var(const REBVAL *word, const REBVAL *value)
 //  
 //      Return pointer to the nth WORD of an object.
 //
-
 REBVAL *Obj_Word(const REBVAL *value, REBCNT index)
 {
 	REBSER *obj = VAL_OBJ_WORDS(value);
@@ -1414,7 +1376,6 @@ REBVAL *Obj_Word(const REBVAL *value, REBCNT index)
 //      Return pointer to the nth VALUE of an object.
 //      Return zero if the index is not valid.
 //
-
 REBVAL *Obj_Value(REBVAL *value, REBCNT index)
 {
 	REBSER *obj = VAL_OBJ_FRAME(value);
@@ -1427,7 +1388,6 @@ REBVAL *Obj_Value(REBVAL *value, REBCNT index)
 //
 //  Init_Obj_Value: C
 //
-
 void Init_Obj_Value(REBVAL *value, REBSER *frame)
 {
 	assert(frame);
@@ -1439,7 +1399,6 @@ void Init_Obj_Value(REBVAL *value, REBSER *frame)
 //
 //  Init_Frame: C
 //
-
 void Init_Frame(void)
 {
 	// Temporary block used while scanning for frame words:
@@ -1451,7 +1410,6 @@ void Init_Frame(void)
 //
 //  Assert_Frame_Core: C
 //
-
 void Assert_Frame_Core(REBSER *frame)
 {
 	REBINT n;

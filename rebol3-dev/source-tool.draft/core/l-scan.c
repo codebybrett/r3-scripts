@@ -305,7 +305,6 @@
 //      Skip to the specified byte but not past the provided end
 //      pointer of the byte string.  Return NULL if byte is not found.
 //
-
 const REBYTE *Skip_To_Byte(const REBYTE *cp, const REBYTE *ep, REBYTE b)
 {
 	while (cp != ep && *cp != b) cp++;
@@ -325,7 +324,6 @@ const REBYTE *Skip_To_Byte(const REBYTE *cp, const REBYTE *ep, REBYTE b)
 //  
 //      test: to-integer load to-binary mold to-char 1234
 //
-
 static REBINT Scan_Char(const REBYTE **bp)
 {
 	REBINT n;
@@ -418,7 +416,6 @@ static REBINT Scan_Char(const REBYTE **bp)
 //  
 //      The result will be put into the temporary MOLD_BUF unistring.
 //
-
 static const REBYTE *Scan_Quote(const REBYTE *src, SCAN_STATE *scan_state)
 {
     REBINT nest = 0;
@@ -498,7 +495,6 @@ static const REBYTE *Scan_Quote(const REBYTE *src, SCAN_STATE *scan_state)
 //  
 //      Put result into the MOLD_BUF as uni-chars.
 //
-
 const REBYTE *Scan_Item(const REBYTE *src, const REBYTE *end, REBUNI term, const REBYTE *invalid)
 {
 	REBUNI c;
@@ -567,7 +563,6 @@ const REBYTE *Scan_Item(const REBYTE *src, const REBYTE *end, REBUNI term, const
 //      The argument points to the opening '<'.  Zero is returned on
 //      errors.
 //
-
 static const REBYTE *Skip_Tag(const REBYTE *cp)
 {
 	if (*cp == '<') cp++;
@@ -589,7 +584,6 @@ static const REBYTE *Skip_Tag(const REBYTE *cp)
 //  
 //      Scanner error handler
 //
-
 static void Scan_Error(REBCNT errnum, SCAN_STATE *ss, REBCNT tkn, const REBYTE *arg, REBCNT size, REBVAL *relax)
 {
 	REBVAL error;
@@ -656,7 +650,6 @@ static void Scan_Error(REBCNT errnum, SCAN_STATE *ss, REBCNT tkn, const REBYTE *
 //      char, which is not part of the flags).
 //      Both the beginning and ending positions are updated.
 //
-
 static REBCNT Prescan(SCAN_STATE *scan_state)
 {
 	const REBYTE *cp = scan_state->begin; /* char scan pointer */
@@ -707,7 +700,6 @@ static REBCNT Prescan(SCAN_STATE *scan_state)
 //      however, since no further scanning is done, they must be
 //      checked for errors here.  Same is true for delimiters.
 //
-
 static REBINT Scan_Token(SCAN_STATE *scan_state)
 {
     REBCNT flags;
@@ -1062,7 +1054,6 @@ scanword:
 //      Initialize a scanner state structure.  Set the standard
 //      scan pointers and the limit pointer.
 //
-
 static void Init_Scan_State(SCAN_STATE *scan_state, const REBYTE *cp, REBCNT limit)
 {
     scan_state->head_line = scan_state->begin = scan_state->end = cp;
@@ -1092,7 +1083,6 @@ static void Init_Scan_State(SCAN_STATE *scan_state, const REBYTE *cp, REBCNT lim
 //      The scan_state structure is updated to point to the
 //      beginning of the source text.
 //
-
 static REBINT Scan_Head(SCAN_STATE *scan_state)
 {
 	const REBYTE *rp = 0;   /* pts to the REBOL word */
@@ -1147,7 +1137,6 @@ static REBSER *Scan_Full_Block(SCAN_STATE *scan_state, REBYTE mode_char);
 //      Scan a block (or paren) and return it.
 //      Sub scanners may return bad by setting value type to zero.
 //
-
 static REBSER *Scan_Block(SCAN_STATE *scan_state, REBYTE mode_char)
 {
     REBINT token;
@@ -1518,7 +1507,6 @@ exit_block:
 //      Simple variation of scan_block to avoid problem with
 //      construct of aggregate values.
 //
-
 static REBSER *Scan_Full_Block(SCAN_STATE *scan_state, REBYTE mode_char)
 {
 	REBFLG only = GET_FLAG(scan_state->opts, SCAN_ONLY);
@@ -1538,7 +1526,6 @@ static REBSER *Scan_Full_Block(SCAN_STATE *scan_state, REBYTE mode_char)
 //  
 //      Note: Renamed this from Scan_Trap (a bad name, no trap used)
 //
-
 static REBSER *Scan_Code(SCAN_STATE *scan_state, REBYTE mode_char)
 {
 //	REBSER *ser;
@@ -1556,7 +1543,6 @@ static REBSER *Scan_Code(SCAN_STATE *scan_state, REBYTE mode_char)
 //      Scan source code. Scan state initialized. No header required.
 //      If len = 0, then use the C string terminated length.
 //
-
 REBSER *Scan_Source(const REBYTE *src, REBCNT len)
 {
     SCAN_STATE scan_state;
@@ -1572,7 +1558,6 @@ REBSER *Scan_Source(const REBYTE *src, REBCNT len)
 //  
 //      Scan for header, return its offset if found or -1 if not.
 //
-
 REBINT Scan_Header(const REBYTE *src, REBCNT len)
 {
     SCAN_STATE scan_state;
@@ -1598,7 +1583,6 @@ REBINT Scan_Header(const REBYTE *src, REBCNT len)
 //
 //  Init_Scanner: C
 //
-
 void Init_Scanner(void)
 {
 	Set_Root_Series(TASK_BUF_EMIT, Make_Array(511), "emit block");
@@ -1617,7 +1601,6 @@ void Init_Scanner(void)
 //  
 //      Allows BINARY! input only!
 //
-
 REBNATIVE(transcode)
 {
 	REBSER *blk;
@@ -1646,7 +1629,6 @@ REBNATIVE(transcode)
 //      This method gets exactly the same results as scanner.
 //      Returns symbol number, or zero for errors.
 //
-
 REBCNT Scan_Word(const REBYTE *cp, REBCNT len)
 {
     SCAN_STATE scan_state;
@@ -1664,7 +1646,6 @@ REBCNT Scan_Word(const REBYTE *cp, REBCNT len)
 //  
 //      Scan an issue word, allowing special characters.
 //
-
 REBCNT Scan_Issue(const REBYTE *cp, REBCNT len)
 {
 	const REBYTE *bp;

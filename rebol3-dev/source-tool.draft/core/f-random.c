@@ -85,7 +85,6 @@ static REBI64 *ran_arr_ptr=&ran_arr_dummy;	/* the next random number, or -1 */
 //
 //  Set_Random: C
 //
-
 void Set_Random(REBI64 seed)
 {
 	int t,j;
@@ -130,7 +129,6 @@ static REBI64 ran_arr_cycle()
 //  
 //      Return random integer. Secure uses SHA1 for better safety.
 //
-
 REBI64 Random_Int(REBFLG secure)
 {
 	REBI64 tmp;
@@ -152,7 +150,6 @@ REBI64 Random_Int(REBFLG secure)
 //
 //  Random_Range: C
 //
-
 REBI64 Random_Range(REBI64 r, REBFLG secure)
 {
 	REBU64 s, m, u;
@@ -168,7 +165,6 @@ REBI64 Random_Range(REBI64 r, REBFLG secure)
 //
 //  Random_Dec: C
 //
-
 REBDEC Random_Dec(REBDEC r, REBFLG secure)
 {
 	REBDEC t, s;

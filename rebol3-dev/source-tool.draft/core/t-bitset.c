@@ -36,7 +36,6 @@
 //
 //  CT_Bitset: C
 //
-
 REBINT CT_Bitset(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	if (mode == 3) return VAL_SERIES(a) == VAL_SERIES(b);
@@ -56,7 +55,6 @@ REBINT CT_Bitset(REBVAL *a, REBVAL *b, REBINT mode)
 //  
 //      len: the # of bits in the bitset.
 //
-
 REBSER *Make_Bitset(REBCNT len)
 {
 	REBSER *ser;
@@ -74,7 +72,6 @@ REBSER *Make_Bitset(REBCNT len)
 //
 //  Mold_Bitset: C
 //
-
 void Mold_Bitset(const REBVAL *value, REB_MOLD *mold)
 {
 	REBSER *ser = VAL_SERIES(value);
@@ -88,7 +85,6 @@ void Mold_Bitset(const REBVAL *value, REB_MOLD *mold)
 //
 //  MT_Bitset: C
 //
-
 REBFLG MT_Bitset(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	REBFLG is_not = 0;
@@ -116,7 +112,6 @@ REBFLG MT_Bitset(REBVAL *out, REBVAL *data, REBCNT type)
 //      Return integer number for the maximum bit number defined by
 //      the value. Used to determine how much space to allocate.
 //
-
 REBINT Find_Max_Bit(REBVAL *val)
 {
 	REBINT maxi = 0;
@@ -183,7 +178,6 @@ REBINT Find_Max_Bit(REBVAL *val)
 //      Check bit indicated. Returns TRUE if set.
 //      If uncased is TRUE, try to match either upper or lower case.
 //
-
 REBFLG Check_Bit(REBSER *bset, REBCNT c, REBFLG uncased)
 {
 	REBCNT i, n = c;
@@ -217,7 +211,6 @@ retry:
 //  
 //      If uncased is TRUE, try to match either upper or lower case.
 //
-
 REBFLG Check_Bit_Str(REBSER *bset, REBVAL *val, REBFLG uncased)
 {
 	REBCNT n = VAL_INDEX(val);
@@ -241,7 +234,6 @@ REBFLG Check_Bit_Str(REBSER *bset, REBVAL *val, REBFLG uncased)
 //  
 //      Set/clear a single bit. Expand if needed.
 //
-
 void Set_Bit(REBSER *bset, REBCNT n, REBOOL set)
 {
 	REBCNT i = n >> 3;
@@ -266,7 +258,6 @@ void Set_Bit(REBSER *bset, REBCNT n, REBOOL set)
 //
 //  Set_Bit_Str: C
 //
-
 void Set_Bit_Str(REBSER *bset, REBVAL *val, REBOOL set)
 {
 	REBCNT n = VAL_INDEX(val);
@@ -289,7 +280,6 @@ void Set_Bit_Str(REBSER *bset, REBVAL *val, REBOOL set)
 //  
 //      Set/clear bits indicated by strings and chars and ranges.
 //
-
 REBFLG Set_Bits(REBSER *bset, REBVAL *val, REBOOL set)
 {
 	REBCNT n;
@@ -392,7 +382,6 @@ span_bits:
 //      Check bits indicated by strings and chars and ranges.
 //      If uncased is TRUE, try to match either upper or lower case.
 //
-
 REBFLG Check_Bits(REBSER *bset, REBVAL *val, REBFLG uncased)
 {
 	REBCNT n;
@@ -469,7 +458,6 @@ found:
 //
 //  PD_Bitset: C
 //
-
 REBINT PD_Bitset(REBPVS *pvs)
 {
 	REBVAL *data = pvs->value;
@@ -499,7 +487,6 @@ REBINT PD_Bitset(REBPVS *pvs)
 //  
 //      Remove extra zero bytes from end of byte string.
 //
-
 void Trim_Tail_Zeros(REBSER *ser)
 {
 	REBCNT tail = SERIES_TAIL(ser);
@@ -515,7 +502,6 @@ void Trim_Tail_Zeros(REBSER *ser)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Bitset)
 {
 	REBVAL *value = D_ARG(1);

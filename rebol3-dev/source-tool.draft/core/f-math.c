@@ -48,7 +48,6 @@
 //          2. If no integer found, pointer doesn't change position.
 //          3. Integers may contain REBOL tick (') marks.
 //
-
 const REBYTE *Grab_Int(const REBYTE *cp, REBINT *val)
 {
 	REBINT value = 0;
@@ -74,7 +73,6 @@ const REBYTE *Grab_Int(const REBYTE *cp, REBINT *val)
 //      Return integer scaled to the number of digits specified.
 //      Used for the decimal part of numbers (e.g. times).
 //
-
 const REBYTE *Grab_Int_Scale(const REBYTE *cp, REBINT *val, REBCNT scale)
 {
 	REBI64 value = 0;
@@ -110,7 +108,6 @@ const REBYTE *Grab_Int_Scale(const REBYTE *cp, REBINT *val, REBCNT scale)
 //          1. If result is longer than maxl, returns 0 length.
 //          2. Make sure you have room in your buffer!
 //
-
 REBINT Form_Int_Len(REBYTE *buf, REBI64 val, REBINT maxl)
 {
 	REBYTE tmp[MAX_NUM_LEN];
@@ -176,7 +173,6 @@ REBINT Form_Int_Len(REBYTE *buf, REBI64 val, REBINT maxl)
 //      If len = 0 and val = 0, a null string is formed.
 //      Make sure you have room in your buffer before calling this!
 //
-
 REBYTE *Form_Int_Pad(REBYTE *buf, REBI64 val, REBINT max, REBINT len, REBYTE pad)
 {
 	REBYTE tmp[MAX_NUM_LEN];
@@ -210,7 +206,6 @@ REBYTE *Form_Int_Pad(REBYTE *buf, REBI64 val, REBINT max, REBINT len, REBYTE pad
 //      Form 32 bit integer string in the given buffer.
 //      Make sure you have room in your buffer before calling this!
 //
-
 REBYTE *Form_Int(REBYTE *buf, REBINT val)
 {
 	REBINT len = Form_Int_Len(buf, val, MAX_NUM_LEN);
@@ -224,7 +219,6 @@ REBYTE *Form_Int(REBYTE *buf, REBINT val)
 //      Form standard REBOL integer value (32 or 64).
 //      Make sure you have room in your buffer before calling this!
 //
-
 REBYTE *Form_Integer(REBYTE *buf, REBI64 val)
 {
 	INT_TO_STR(val, buf);
@@ -235,7 +229,6 @@ REBYTE *Form_Integer(REBYTE *buf, REBI64 val)
 //
 //  Emit_Integer: C
 //
-
 REBINT Emit_Integer(REBYTE *buf, REBI64 val)
 {
 	INT_TO_STR(val, buf);
@@ -251,7 +244,6 @@ REBINT Emit_Integer(REBYTE *buf, REBI64 val)
 //
 //  Emit_Decimal: C
 //
-
 REBINT Emit_Decimal(REBYTE *cp, REBDEC d, REBFLG trim, REBYTE point, REBINT decimal_digits)
 {
 	REBYTE *start = cp, *sig, *rve;

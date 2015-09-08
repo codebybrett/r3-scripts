@@ -36,7 +36,6 @@
 //  
 //      Returns TRUE if byte string uses upper code page.
 //
-
 REBOOL Is_Not_ASCII(REBYTE *bp, REBCNT len)
 {
 	for (; len > 0; len--, bp++)
@@ -51,7 +50,6 @@ REBOOL Is_Not_ASCII(REBYTE *bp, REBCNT len)
 //  
 //      Returns TRUE if uni string needs 16 bits.
 //
-
 REBOOL Is_Wide(const REBUNI *up, REBCNT len)
 {
 	for (; len > 0; len--, up++)
@@ -156,7 +154,6 @@ REBOOL Is_Wide(const REBUNI *up, REBCNT len)
 //  
 //  Do not recursively use it (because of internal buffer).
 //
-
 REBSER *Prep_Bin_Str(REBVAL *val, REBCNT *index, REBCNT *length)
 {
 	REBCNT idx  = VAL_INDEX(val);
@@ -186,7 +183,6 @@ REBSER *Prep_Bin_Str(REBVAL *val, REBCNT *index, REBCNT *length)
 //  
 //      Only valid for BINARY data.
 //
-
 REBSER *Xandor_Binary(REBCNT action, REBVAL *value, REBVAL *arg)
 {
 		REBSER *series;
@@ -239,7 +235,6 @@ REBSER *Xandor_Binary(REBCNT action, REBVAL *value, REBVAL *arg)
 //  
 //      Only valid for BINARY data.
 //
-
 REBSER *Complement_Binary(REBVAL *value)
 {
 		REBSER *series;
@@ -263,7 +258,6 @@ REBSER *Complement_Binary(REBVAL *value)
 //      Randomize a string. Return a new string series.
 //      Handles both BYTE and UNICODE strings.
 //
-
 void Shuffle_String(REBVAL *value, REBFLG secure)
 {
 	REBCNT n;
@@ -299,7 +293,6 @@ static REBYTE seed_str[SEED_LEN] = {
 //  
 //      The key (kp) is passed as a REBVAL or REBYTE (when klen is !0).
 //
-
 REBOOL Cloak(REBOOL decode, REBYTE *cp, REBCNT dlen, REBYTE *kp, REBCNT klen, REBFLG as_is)
 {
 	REBCNT i, n;
@@ -359,7 +352,6 @@ REBOOL Cloak(REBOOL decode, REBYTE *cp, REBCNT dlen, REBYTE *kp, REBCNT klen, RE
 //  
 //      Used to trim off hanging spaces during FORM and MOLD.
 //
-
 void Trim_Tail(REBSER *src, REBYTE chr)
 {
 	REBOOL is_uni = !BYTE_SIZE(src);
@@ -382,7 +374,6 @@ void Trim_Tail(REBSER *src, REBYTE chr)
 //      LF line endings to the internal REBOL line ending.
 //      The new length of the buffer is returned.
 //
-
 REBCNT Deline_Bytes(REBYTE *buf, REBCNT len)
 {
 	REBYTE	c, *cp, *tp;
@@ -407,7 +398,6 @@ REBCNT Deline_Bytes(REBYTE *buf, REBCNT len)
 //
 //  Deline_Uni: C
 //
-
 REBCNT Deline_Uni(REBUNI *buf, REBCNT len)
 {
 	REBUNI c, *cp, *tp;
@@ -432,7 +422,6 @@ REBCNT Deline_Uni(REBUNI *buf, REBCNT len)
 //
 //  Enline_Bytes: C
 //
-
 void Enline_Bytes(REBSER *ser, REBCNT idx, REBCNT len)
 {
 	REBCNT cnt = 0;
@@ -470,7 +459,6 @@ void Enline_Bytes(REBSER *ser, REBCNT idx, REBCNT len)
 //
 //  Enline_Uni: C
 //
-
 void Enline_Uni(REBSER *ser, REBCNT idx, REBCNT len)
 {
 	REBCNT cnt = 0;
@@ -510,7 +498,6 @@ void Enline_Uni(REBSER *ser, REBCNT idx, REBCNT len)
 //  
 //      Entab a string and return a new series.
 //
-
 REBSER *Entab_Bytes(REBYTE *bp, REBCNT index, REBCNT len, REBINT tabsize)
 {
 	REBINT n = 0;
@@ -557,7 +544,6 @@ REBSER *Entab_Bytes(REBYTE *bp, REBCNT index, REBCNT len, REBINT tabsize)
 //  
 //      Entab a string and return a new series.
 //
-
 REBSER *Entab_Unicode(REBUNI *bp, REBCNT index, REBCNT len, REBINT tabsize)
 {
 	REBINT n = 0;
@@ -604,7 +590,6 @@ REBSER *Entab_Unicode(REBUNI *bp, REBCNT index, REBCNT len, REBINT tabsize)
 //  
 //      Detab a string and return a new series.
 //
-
 REBSER *Detab_Bytes(REBYTE *bp, REBCNT index, REBCNT len, REBINT tabsize)
 {
 	REBCNT cnt = 0;
@@ -645,7 +630,6 @@ REBSER *Detab_Bytes(REBYTE *bp, REBCNT index, REBCNT len, REBINT tabsize)
 //  
 //      Detab a unicode string and return a new series.
 //
-
 REBSER *Detab_Unicode(REBUNI *bp, REBCNT index, REBCNT len, REBINT tabsize)
 {
 	REBCNT cnt = 0;
@@ -686,7 +670,6 @@ REBSER *Detab_Unicode(REBUNI *bp, REBCNT index, REBCNT len, REBINT tabsize)
 //  
 //      Common code for string case handling.
 //
-
 void Change_Case(REBVAL *out, REBVAL *val, REBVAL *part, REBOOL upper)
 {
 	REBCNT len;
@@ -740,7 +723,6 @@ void Change_Case(REBVAL *out, REBVAL *val, REBVAL *part, REBOOL upper)
 //      Given a string series, split lines on CR-LF.
 //      Series can be bytes or Unicode.
 //
-
 REBSER *Split_Lines(REBVAL *val)
 {
 	REBSER *ser = BUF_EMIT; // GC protected (because it is emit buffer)

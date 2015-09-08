@@ -52,7 +52,6 @@ static	BOOT_BLK *Boot_Block;
 //
 //  Assert_Basics: C
 //
-
 static void Assert_Basics(void)
 {
 	REBVAL val;
@@ -134,7 +133,6 @@ static void Assert_Basics(void)
 //
 //  Print_Banner: C
 //
-
 static void Print_Banner(REBARGS *rargs)
 {
 	if (rargs->options & RO_VERS) {
@@ -156,7 +154,6 @@ static void Print_Banner(REBARGS *rargs)
 //  
 //      Expects result to be UNSET!
 //
-
 static void Do_Global_Block(REBSER *block, REBINT rebind)
 {
 	REBVAL result;
@@ -184,7 +181,6 @@ static void Do_Global_Block(REBSER *block, REBINT rebind)
 //      only be called at the correct point because it will
 //      create new symbols.
 //
-
 static void Load_Boot(void)
 {
 	REBSER *boot;
@@ -242,7 +238,6 @@ static void Load_Boot(void)
 //  
 //      Create the datatypes.
 //
-
 static void Init_Datatypes(void)
 {
 	REBVAL *word = VAL_BLK_HEAD(&Boot_Block->types);
@@ -267,7 +262,6 @@ static void Init_Datatypes(void)
 //      Must be done after typesets are initialized, so this cannot
 //      be merged with the above.
 //
-
 static void Init_Datatype_Checks(void)
 {
 	REBVAL *word = VAL_BLK_HEAD(&Boot_Block->types);
@@ -308,7 +302,6 @@ static void Init_Datatype_Checks(void)
 //      WARNING: Do not create direct pointers into the Lib_Context
 //      because it may get expanded and the pointers will be invalid.
 //
-
 static void Init_Constants(void)
 {
 	REBVAL *value;
@@ -334,7 +327,6 @@ static void Init_Constants(void)
 //      Setup to use NATIVE function. If limit == 0, then the
 //      native function table will be zero terminated (N_native).
 //
-
 void Use_Natives(const REBFUN *funcs, REBCNT limit)
 {
 	Native_Count = 0;
@@ -346,7 +338,6 @@ void Use_Natives(const REBFUN *funcs, REBCNT limit)
 //
 //  native: native none
 //
-
 REBNATIVE(native)
 {
 	if ((Native_Limit == 0 && *Native_Functions) || (Native_Count < Native_Limit))
@@ -360,7 +351,6 @@ REBNATIVE(native)
 //
 //  action: native none
 //
-
 REBNATIVE(action)
 {
 	Action_Count++;
@@ -386,7 +376,6 @@ REBNATIVE(action)
 //  
 //      Note: Overlaps MAKE OBJECT! code (REBTYPE(Object)'s A_MAKE)
 //
-
 REBNATIVE(context)
 {
 	REBVAL *spec = D_ARG(1);
@@ -408,7 +397,6 @@ REBNATIVE(context)
 //
 //  Init_Ops: C
 //
-
 static void Init_Ops(void)
 {
 	REBVAL *word;
@@ -429,7 +417,6 @@ static void Init_Ops(void)
 //  
 //      Create native functions.
 //
-
 static void Init_Natives(void)
 {
 	REBVAL *word;
@@ -465,7 +452,6 @@ static void Init_Natives(void)
 //  
 //      Return the word symbol for a given Action number.
 //
-
 REBVAL *Get_Action_Word(REBCNT action)
 {
 	return FRM_WORD(Lib_Context, Action_Marker+action);
@@ -477,7 +463,6 @@ REBVAL *Get_Action_Word(REBCNT action)
 //  
 //      Return the value (function) for a given Action number.
 //
-
 REBVAL *Get_Action_Value(REBCNT action)
 {
 	return FRM_VALUE(Lib_Context, Action_Marker+action);
@@ -489,7 +474,6 @@ REBVAL *Get_Action_Value(REBCNT action)
 //  
 //      Create prototype func object for UTypes.
 //
-
 void Init_UType_Proto(void)
 {
 	REBSER *frm = Make_Frame(A_MAX_ACTION - 1, TRUE);
@@ -522,7 +506,6 @@ void Init_UType_Proto(void)
 //      Note that the Root_Context's word table is unset!
 //      None of its values are exported.
 //
-
 static void Init_Root_Context(void)
 {
 	REBVAL *value;
@@ -571,7 +554,6 @@ static void Init_Root_Context(void)
 //  
 //      Used to set block and string values in the ROOT context.
 //
-
 void Set_Root_Series(REBVAL *value, REBSER *ser, const char *label)
 {
 	KEEP_SERIES(ser, label);
@@ -601,7 +583,6 @@ void Set_Root_Series(REBVAL *value, REBSER *ser, const char *label)
 //  
 //      See above notes (same as root context, except for tasks)
 //
-
 static void Init_Task_Context(void)
 {
 	REBVAL *value;
@@ -639,7 +620,6 @@ static void Init_Task_Context(void)
 //  
 //      The system object is defined in boot.r.
 //
-
 static void Init_System_Object(void)
 {
 	REBSER *frame;
@@ -709,7 +689,6 @@ static void Init_System_Object(void)
 //
 //  Init_Contexts_Object: C
 //
-
 static void Init_Contexts_Object(void)
 {
 	REBVAL *value;
@@ -734,7 +713,6 @@ static void Init_Contexts_Object(void)
 //
 //  Codec_Text: C
 //
-
 REBINT Codec_Text(REBCDI *codi)
 {
 	codi->error = 0;
@@ -848,7 +826,6 @@ REBINT Codec_Text(REBCDI *codi)
 //
 //  Codec_UTF16LE: C
 //
-
 REBINT Codec_UTF16LE(REBCDI *codi)
 {
 	return Codec_UTF16(codi, TRUE);
@@ -857,7 +834,6 @@ REBINT Codec_UTF16LE(REBCDI *codi)
 //
 //  Codec_UTF16BE: C
 //
-
 REBINT Codec_UTF16BE(REBCDI *codi)
 {
 	return Codec_UTF16(codi, FALSE);
@@ -866,7 +842,6 @@ REBINT Codec_UTF16BE(REBCDI *codi)
 //
 //  Codec_Markup: C
 //
-
 REBINT Codec_Markup(REBCDI *codi)
 {
 	codi->error = 0;
@@ -890,7 +865,6 @@ REBINT Codec_Markup(REBCDI *codi)
 //  
 //      Internal function for adding a codec.
 //
-
 void Register_Codec(const REBYTE *name, codo dispatcher)
 {
 	REBVAL *value = Get_System(SYS_CODECS, 0);
@@ -904,7 +878,6 @@ void Register_Codec(const REBYTE *name, codo dispatcher)
 //
 //  Init_Codecs: C
 //
-
 static void Init_Codecs(void)
 {
 	Register_Codec(cb_cast("text"), Codec_Text);
@@ -951,7 +924,6 @@ static REBCNT Set_Option_Word(REBCHR *str, REBCNT field)
 //  
 //      The system object is defined in boot.r.
 //
-
 static void Init_Main_Args(REBARGS *rargs)
 {
 	REBVAL *val;
@@ -1061,7 +1033,6 @@ static void Init_Main_Args(REBARGS *rargs)
 //
 //  Init_Task: C
 //
-
 void Init_Task(void)
 {
 	// Thread locals:
@@ -1092,7 +1063,6 @@ void Init_Task(void)
 //
 //  Init_Year: C
 //
-
 void Init_Year(void)
 {
 	REBOL_DAT dat;
@@ -1108,7 +1078,6 @@ void Init_Year(void)
 //      GC is disabled during all init code, so these functions
 //      need not protect themselves.
 //
-
 void Init_Core(REBARGS *rargs)
 {
 	const REBVAL *error;
@@ -1313,7 +1282,6 @@ void Init_Core(REBARGS *rargs)
 //      !!! Merging soon to a Git branch near you:
 //      !!!    The ability to do clean shutdown, zero leaks.
 //
-
 void Shutdown_Core(void)
 {
 	Shutdown_Stacks();

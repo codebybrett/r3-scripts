@@ -32,7 +32,6 @@
 //
 //  CT_None: C
 //
-
 REBINT CT_None(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	if (mode >= 0) return (VAL_TYPE(a) == VAL_TYPE(b));
@@ -43,7 +42,6 @@ REBINT CT_None(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  MT_None: C
 //
-
 REBFLG MT_None(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	VAL_SET(out, type);
@@ -56,7 +54,6 @@ REBFLG MT_None(REBVAL *out, REBVAL *data, REBCNT type)
 //  
 //      ALSO used for unset!
 //
-
 REBTYPE(None)
 {
 	REBVAL *val = D_ARG(1);

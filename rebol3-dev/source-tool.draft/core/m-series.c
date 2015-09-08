@@ -36,7 +36,6 @@
 //  
 //      Extend a series at its end without affecting its tail index.
 //
-
 void Extend_Series(REBSER *series, REBCNT delta)
 {
 	REBCNT tail = series->tail;	// maintain tail position
@@ -52,7 +51,6 @@ void Extend_Series(REBSER *series, REBCNT delta)
 //      series at the given index.  Expand it if necessary.  Does
 //      not add a terminator to tail.
 //
-
 REBCNT Insert_Series(REBSER *series, REBCNT index, const REBYTE *data, REBCNT len)
 {
 	if (index > series->tail) index = series->tail;
@@ -73,7 +71,6 @@ REBCNT Insert_Series(REBSER *series, REBCNT index, const REBYTE *data, REBCNT le
 //      The new tail position will be returned as the result.
 //      A terminator will be added to the end of the appended data.
 //
-
 void Append_Series(REBSER *series, const REBYTE *data, REBCNT len)
 {
 	REBCNT tail = series->tail;
@@ -94,7 +91,6 @@ void Append_Series(REBSER *series, const REBYTE *data, REBCNT len)
 //      The extra size will be assured in the series, but is not
 //      part of the appended length. (Allows adding additional bytes.)
 //
-
 void Append_Mem_Extra(REBSER *series, const REBYTE *data, REBCNT len, REBCNT extra)
 {
 	REBCNT tail = series->tail;
@@ -129,7 +125,6 @@ void Append_Mem_Extra(REBSER *series, const REBYTE *data, REBCNT len, REBCNT ext
 //      to the importance of stating one's intentions specifically
 //      about semantics when copying an array.
 //
-
 REBSER *Copy_Sequence(REBSER *source)
 {
 	REBCNT len = source->tail + 1;
@@ -152,7 +147,6 @@ REBSER *Copy_Sequence(REBSER *source)
 //      Use Copy_Array routines (which specify Shallow, Deep, etc.) for
 //      greater detail needed when expressing intent for Rebol Arrays.
 //
-
 REBSER *Copy_Sequence_At_Len(REBSER *source, REBCNT index, REBCNT len)
 {
 	REBSER *series = Make_Series(len + 1, SERIES_WIDE(source), MKS_NONE);
@@ -175,7 +169,6 @@ REBSER *Copy_Sequence_At_Len(REBSER *source, REBCNT index, REBCNT len)
 //      Copy a non-array series from its value structure, using the
 //      value's index as the location to start copying the data.
 //
-
 REBSER *Copy_Sequence_At_Position(const REBVAL *position)
 {
 	return Copy_Sequence_At_Len(
@@ -190,7 +183,6 @@ REBSER *Copy_Sequence_At_Position(const REBVAL *position)
 //      Remove a series of values (bytes, longs, reb-vals) from the
 //      series at the given index.
 //
-
 void Remove_Series(REBSER *series, REBCNT index, REBINT len)
 {
 	REBCNT	start;
@@ -265,7 +257,6 @@ void Remove_Series(REBSER *series, REBCNT index, REBINT len)
 //  
 //      Remove last value from a series.
 //
-
 void Remove_Last(REBSER *series)
 {
 	if (series->tail == 0) return;
@@ -279,7 +270,6 @@ void Remove_Last(REBSER *series)
 //  
 //      Reset series bias.
 //
-
 void Reset_Bias(REBSER *series)
 {
 	REBCNT len;
@@ -300,7 +290,6 @@ void Reset_Bias(REBSER *series)
 //      Reset series to empty. Reset bias, tail, and termination.
 //      The tail is reset to zero.
 //
-
 void Reset_Series(REBSER *series)
 {
 	series->tail = 0;
@@ -315,7 +304,6 @@ void Reset_Series(REBSER *series)
 //      Clear an entire series to zero. Resets bias and tail.
 //      The tail is reset to zero.
 //
-
 void Clear_Series(REBSER *series)
 {
 	series->tail = 0;
@@ -330,7 +318,6 @@ void Clear_Series(REBSER *series)
 //      Reset series and expand it to required size.
 //      The tail is reset to zero.
 //
-
 void Resize_Series(REBSER *series, REBCNT size)
 {
 	series->tail = 0;
@@ -346,7 +333,6 @@ void Resize_Series(REBSER *series, REBCNT size)
 //  
 //      Put terminator at tail of the series.
 //
-
 void Terminate_Series(REBSER *series)
 {
 	CLEAR(series->data + SERIES_WIDE(series) * series->tail, SERIES_WIDE(series));
@@ -360,7 +346,6 @@ void Terminate_Series(REBSER *series)
 //  
 //      NOTE:The tail is set to the length position.
 //
-
 REBYTE *Reset_Buffer(REBSER *buf, REBCNT len)
 {
 	if (!buf) Panic_DEAD_END(RP_NO_BUFFER);
@@ -378,7 +363,6 @@ REBYTE *Reset_Buffer(REBSER *buf, REBCNT len)
 //  
 //      Copy a shared buffer. Set tail and termination.
 //
-
 REBSER *Copy_Buffer(REBSER *buf, void *end)
 {
 	REBSER *ser;
@@ -406,7 +390,6 @@ REBSER *Copy_Buffer(REBSER *buf, void *end)
 //
 //  Assert_Series_Term_Core: C
 //
-
 void Assert_Series_Term_Core(REBSER *series)
 {
 	if (Is_Array_Series(series)) {

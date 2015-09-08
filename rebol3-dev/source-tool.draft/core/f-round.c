@@ -56,7 +56,6 @@ enum {
 //      8 /ceiling   "Round in positive direction"
 //      9 /half-ceiling "Halves round in positive direction"
 //
-
 REBCNT Get_Round_Flags(struct Reb_Call *call_)
 {
 	REBCNT flags = 0;
@@ -82,7 +81,6 @@ REBCNT Get_Round_Flags(struct Reb_Call *call_)
 //      Identical to ROUND mezzanine function.
 //      Note: scale arg only valid if RF_TO is set
 //
-
 REBDEC Round_Dec(REBDEC dec, REBCNT flags, REBDEC scale)
 {
 	REBDEC r;
@@ -170,7 +168,6 @@ REBDEC Round_Dec(REBDEC dec, REBCNT flags, REBDEC scale)
 //      Identical to ROUND mezzanine function.
 //      Note: scale arg only valid if RF_TO is set
 //
-
 REBI64 Round_Int(REBI64 num, REBCNT flags, REBI64 scale)
 {
 	/* using safe unsigned arithmetic */
@@ -214,7 +211,6 @@ REBI64 Round_Int(REBI64 num, REBCNT flags, REBI64 scale)
 //      Identical to ROUND mezzanine function.
 //      Note: scale arg only valid if RF_TO is set
 //
-
 deci Round_Deci(deci num, REBCNT flags, deci scale)
 {
 	deci deci_one = {1u, 0u, 0u, 0u, 0};

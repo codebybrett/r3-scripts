@@ -36,7 +36,6 @@
 //
 //  Serial_Actor: C
 //
-
 static REB_R Serial_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
 	REBREQ *req;	// IO request
@@ -242,7 +241,6 @@ static REB_R Serial_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 //
 //  Init_Serial_Scheme: C
 //
-
 void Init_Serial_Scheme(void)
 {
 	Register_Scheme(SYM_SERIAL, 0, Serial_Actor);

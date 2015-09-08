@@ -108,7 +108,6 @@
 //      the blocks of memory used by the pools are still acquired
 //      using ALLOC_ARRAY and FREE_ARRAY.
 //
-
 void *Alloc_Mem(size_t size)
 {
 	// Trap memory usage limit *before* the allocation is performed
@@ -145,7 +144,6 @@ void *Alloc_Mem(size_t size)
 //      wrapper macros to ensure the memory block being freed matches
 //      the appropriate size for the type.
 //
-
 void Free_Mem(void *mem, size_t size)
 {
 #ifdef NDEBUG
@@ -252,7 +250,6 @@ const REBPOOLSPEC Mem_Pool_Spec[MAX_POOLS] =
 //  
 //      Initialize memory pool array.
 //
-
 void Init_Pools(REBINT scale)
 {
 	REBCNT n;
@@ -298,7 +295,6 @@ void Init_Pools(REBINT scale)
 //  
 //      Given a size, tell us what pool it belongs to.
 //
-
 static REBCNT Find_Pool(REBCNT size)
 {
 	if (size <= 8) return 0;  // Note: 0 - 8 (and size change for proper modulus)
@@ -334,7 +330,6 @@ static REBCNT Find_Pool(REBCNT size)
 //      pool header was created.  The nodes of the pool are linked
 //      to the free list.
 //
-
 static void Fill_Pool(REBPOL *pool)
 {
 	REBSEG	*seg;
@@ -384,7 +379,6 @@ static void Fill_Pool(REBPOL *pool)
 //      Allocate a node from a pool.  The node will NOT be cleared.
 //      If the pool has run out of nodes, it will be refilled.
 //
-
 void *Make_Node(REBCNT pool_id)
 {
 	REBNOD *node;
@@ -410,7 +404,6 @@ void *Make_Node(REBCNT pool_id)
 //  
 //      Free a node, returning it to its pool.
 //
-
 void Free_Node(REBCNT pool_id, REBNOD *node)
 {
 	REBPOL *pool = &Mem_Pools[pool_id];
@@ -442,7 +435,6 @@ void Free_Node(REBCNT pool_id, REBNOD *node)
 //      or an operation like expansion.  Currently not exported
 //      from this file.
 //
-
 static REBOOL Series_Data_Alloc(REBSER *series, REBCNT length, REBYTE wide, REBCNT flags)
 {
 	REBCNT size; // size of allocation (possibly bigger than we need)
@@ -554,7 +546,6 @@ static REBOOL Series_Data_Alloc(REBSER *series, REBCNT length, REBYTE wide, REBC
 //      for a "rounded up to power of 2" bit.  (Since there are a
 //      LOT of series created in Rebol, each byte is scrutinized.)
 //
-
 REBCNT Series_Allocated_Size(REBSER *series)
 {
 	REBCNT total = SERIES_TOTAL(series);
@@ -585,7 +576,6 @@ REBCNT Series_Allocated_Size(REBSER *series)
 //      Large series will be allocated from system memory.
 //      A width of zero is not allowed.
 //
-
 REBSER *Make_Series(REBCNT length, REBYTE wide, REBCNT flags)
 {
 	REBSER *series;
@@ -674,7 +664,6 @@ REBSER *Make_Series(REBCNT length, REBYTE wide, REBCNT flags)
 //      ahead to account for unused capacity at the head of the
 //      allocation.  They also must know the total allocation size.
 //
-
 static void Free_Unbiased_Series_Data(REBYTE *unbiased, REBCNT size)
 {
 	REBCNT pool_num = FIND_POOL(size);
@@ -751,7 +740,6 @@ static void Free_Unbiased_Series_Data(REBYTE *unbiased, REBCNT size)
 //      WARNING: never use direct pointers into the series data, as the
 //      series data can be relocated in memory.
 //
-
 void Expand_Series(REBSER *series, REBCNT index, REBCNT delta)
 {
 	REBYTE wide = SERIES_WIDE(series);
@@ -886,7 +874,6 @@ void Expand_Series(REBSER *series, REBCNT index, REBCNT delta)
 //      MKS_PRESERVE is passed in the flags.  The other flags are
 //      handled the same as when passed to Make_Series.
 //
-
 void Remake_Series(REBSER *series, REBCNT units, REBYTE wide, REBCNT flags)
 {
 	REBINT bias_old = SERIES_BIAS(series);
@@ -949,7 +936,6 @@ void Remake_Series(REBSER *series, REBCNT units, REBYTE wide, REBCNT flags)
 //      It frees a series even though it is under GC management,
 //      because the GC has figured out no references exist.
 //
-
 void GC_Kill_Series(REBSER *series)
 {
 	REBCNT n;
@@ -1002,7 +988,6 @@ void GC_Kill_Series(REBSER *series)
 //      Free a series, returning its memory for reuse.  You can only
 //      call this on series that are not managed by the GC.
 //
-
 void Free_Series(REBSER *series)
 {
 	// We can only free a series that is not under management by the
@@ -1036,7 +1021,6 @@ void Free_Series(REBSER *series)
 //  
 //      NOTE: allocates new memory. Cached pointers are invalid.
 //
-
 void Widen_String(REBSER *series, REBOOL preserve)
 {
 	REBINT bias_old = SERIES_BIAS(series);
@@ -1109,7 +1093,6 @@ void Widen_String(REBSER *series, REBOOL preserve)
 //      the release build (and hence, cheap+fast), we do some more
 //      work to ensure coherence in the debug build.
 //
-
 void Manage_Series_Debug(REBSER *series)
 {
 	assert(!SERIES_GET_FLAG(series, SER_MANAGED));
@@ -1133,7 +1116,6 @@ void Manage_Series_Debug(REBSER *series)
 //      specifically.  If you've poked in a wordlist from somewhere
 //      else you might not be able to use this.
 //
-
 void Manage_Frame_Debug(REBSER *frame)
 {
 	if (
@@ -1162,7 +1144,6 @@ void Manage_Frame_Debug(REBSER *frame)
 //      which is used to check for leaks relative to an initial
 //      status of outstanding series.
 //
-
 void Manuals_Leak_Check_Debug(REBSER *manuals, const char *label_str)
 {
 	if (GC_Manuals != manuals) {
@@ -1191,7 +1172,6 @@ void Manuals_Leak_Check_Debug(REBSER *manuals, const char *label_str)
 //      which is used to check for leaks relative to an initial
 //      status of outstanding series.
 //
-
 void Assert_Value_Managed_Debug(const REBVAL *value)
 {
 	if (ANY_OBJECT(value)) {
@@ -1221,7 +1201,6 @@ void Assert_Value_Managed_Debug(const REBVAL *value)
 //  
 //      Free a gob, returning its memory for reuse.
 //
-
 void Free_Gob(REBGOB *gob)
 {
 	FREE_GOB(gob);
@@ -1241,7 +1220,6 @@ void Free_Gob(REBGOB *gob)
 //  
 //      Confirm that the series value is in the series pool.
 //
-
 REBFLG Series_In_Pool(REBSER *series)
 {
 	REBSEG	*seg;
@@ -1267,7 +1245,6 @@ REBFLG Series_In_Pool(REBSER *series)
 //      because a write past the end of a node will destory the pointer
 //      for the next free area.
 //
-
 REBCNT Check_Memory(void)
 {
 	REBCNT pool_num;
@@ -1328,7 +1305,6 @@ crash:
 //  
 //      Dump all series of a given size.
 //
-
 void Dump_All(REBINT size)
 {
 	REBSEG	*seg;
@@ -1355,7 +1331,6 @@ void Dump_All(REBINT size)
 //  
 //      Dump all series in pool @pool_id, UNKNOWN (-1) for all pools
 //
-
 void Dump_Series_In_Pool(REBCNT pool_id)
 {
 	REBSEG	*seg;
@@ -1402,7 +1377,6 @@ void Dump_Series_In_Pool(REBCNT pool_id)
 //  
 //      Print statistics about all memory pools.
 //
-
 static void Dump_Pools(void)
 {
 	REBSEG	*seg;
@@ -1443,7 +1417,6 @@ static void Dump_Pools(void)
 //
 //  Inspect_Series: C
 //
-
 REBU64 Inspect_Series(REBCNT flags)
 {
 	REBSEG	*seg;

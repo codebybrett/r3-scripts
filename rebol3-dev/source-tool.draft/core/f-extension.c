@@ -258,7 +258,6 @@ x*/	REBRXT Do_Callback(REBSER *obj, u32 name, RXIARG *rxis, RXIARG *result)
 //  
 //      object word arg1 arg2
 //
-
 REBNATIVE(do_callback)
 {
 	RXICBI *cbi;
@@ -312,7 +311,6 @@ typedef REBYTE *(INFO_FUNC)(REBINT opts, void *lib);
 //      quit() - cleanup anything needed
 //      call() - dispatch a native
 //
-
 REBNATIVE(load_extension)
 {
 	REBCHR *name;
@@ -395,7 +393,6 @@ REBNATIVE(load_extension)
 //      Assumes prior function has already stored the spec and args
 //      series. This function validates the body.
 //
-
 void Make_Command(REBVAL *value, REBVAL *def)
 {
 	REBVAL *args = BLK_HEAD(VAL_FUNC_WORDS(value));
@@ -446,7 +443,6 @@ void Make_Command(REBVAL *value, REBVAL *def)
 //      spec - same as other funcs
 //      body - [ext-obj func-index]
 //
-
 void Do_Command(const REBVAL *value)
 {
 	REBVAL *val = BLK_HEAD(VAL_FUNC_BODY(value));
@@ -516,7 +512,6 @@ void Do_Command(const REBVAL *value)
 //  
 //      Returns the last evaluated value, if provided.
 //
-
 void Do_Commands(REBVAL *out, REBSER *cmds, void *context)
 {
 	REBVAL *blk;
@@ -657,7 +652,6 @@ void Do_Commands(REBVAL *out, REBSER *cmds, void *context)
 //      commands [block!] "Series of commands and their arguments"
 //  ]
 //
-
 REBNATIVE(do_commands)
 {
 	REBCEC ctx;

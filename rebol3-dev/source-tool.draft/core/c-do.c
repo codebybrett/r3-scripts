@@ -41,7 +41,6 @@ void Do_Rebcode(const REBVAL *v) {;}
 //
 //  Eval_Depth: C
 //
-
 REBINT Eval_Depth(void)
 {
 	REBINT depth = 0;
@@ -55,7 +54,6 @@ REBINT Eval_Depth(void)
 //
 //  Stack_Frame: C
 //
-
 struct Reb_Call *Stack_Frame(REBCNT n)
 {
 	struct Reb_Call *call = DSF;
@@ -76,7 +74,6 @@ struct Reb_Call *Stack_Frame(REBCNT n)
 //      /function "Traces functions only (less output)"
 //  ]
 //
-
 REBNATIVE(trace)
 {
 	REBVAL *arg = D_ARG(1);
@@ -184,7 +181,6 @@ void Trace_Arg(REBINT num, const REBVAL *arg, const REBVAL *path)
 //
 //  Trace_Value: C
 //
-
 void Trace_Value(REBINT n, const REBVAL *value)
 {
 	int depth;
@@ -195,7 +191,6 @@ void Trace_Value(REBINT n, const REBVAL *value)
 //
 //  Trace_String: C
 //
-
 void Trace_String(REBINT n, const REBYTE *str, REBINT limit)
 {
 	static char tracebuf[64];
@@ -211,7 +206,6 @@ void Trace_String(REBINT n, const REBYTE *str, REBINT limit)
 //
 //  Trace_Error: C
 //
-
 void Trace_Error(const REBVAL *value)
 {
 	int depth;
@@ -225,7 +219,6 @@ void Trace_Error(const REBVAL *value)
 //  
 //      Evaluate next part of a path.
 //
-
 void Next_Path(REBPVS *pvs)
 {
 	REBVAL *path;
@@ -302,7 +295,6 @@ void Next_Path(REBPVS *pvs)
 //      Returns value only if result is a function,
 //      otherwise the result is on TOS.
 //
-
 REBVAL *Do_Path(REBVAL *out, const REBVAL **path_val, REBVAL *val)
 {
 	REBPVS pvs;
@@ -370,7 +362,6 @@ REBVAL *Do_Path(REBVAL *out, const REBVAL **path_val, REBVAL *val)
 //      Lightweight version of Do_Path used for A_PICK actions.
 //      Result on TOS.
 //
-
 void Pick_Path(REBVAL *out, REBVAL *value, REBVAL *selector, REBVAL *val)
 {
 	REBPVS pvs;
@@ -418,7 +409,6 @@ void Pick_Path(REBVAL *out, REBVAL *value, REBVAL *selector, REBVAL *val)
 //          block: current evaluation block
 //          index: current evaluation index
 //
-
 static REBINT Do_Args(struct Reb_Call *call, const REBVAL path[], REBSER *block, REBCNT index)
 {
 #if !defined(NDEBUG)
@@ -555,7 +545,6 @@ return_index:
 //      Special events to process during evaluation.
 //      Search for SET_SIGNAL to find them.
 //
-
 void Do_Signals(void)
 {
 	REBCNT sigs;
@@ -607,7 +596,6 @@ void Do_Signals(void)
 //  
 //      Expects call frame to be ready with all arguments fulfilled.
 //
-
 REBOOL Dispatch_Call(struct Reb_Call *call)
 {
 #if !defined(NDEBUG)
@@ -702,7 +690,6 @@ REBOOL Dispatch_Call(struct Reb_Call *call)
 //      Op indicates infix operator is being evaluated (precedence);
 //      The value (or error) is placed on top of the data stack.
 //
-
 REBCNT Do_Core(REBVAL * const out, REBOOL next, REBSER *block, REBCNT index, REBFLG lookahead)
 {
 #if !defined(NDEBUG)
@@ -1055,7 +1042,6 @@ return_index:
 //      Reduce block from the index position specified in the value.
 //      Collect all values from stack and make them a block.
 //
-
 void Reduce_Block(REBVAL *out, REBSER *block, REBCNT index, REBOOL into)
 {
 	REBINT dsp_orig = DSP;
@@ -1083,7 +1069,6 @@ finished:
 //  
 //      Reduce only words and paths not found in word list.
 //
-
 void Reduce_Only(REBVAL *out, REBSER *block, REBCNT index, REBVAL *words, REBOOL into)
 {
 	REBINT dsp_orig = DSP;
@@ -1141,7 +1126,6 @@ void Reduce_Only(REBVAL *out, REBSER *block, REBCNT index, REBVAL *words, REBOOL
 //
 //  Reduce_Block_No_Set: C
 //
-
 void Reduce_Block_No_Set(REBVAL *out, REBSER *block, REBCNT index, REBOOL into)
 {
 	REBINT dsp_orig = DSP;
@@ -1177,7 +1161,6 @@ finished:
 //      Reduce a block of words/paths that are of the specified type.
 //      Return them on the stack. The change in TOS is the length.
 //
-
 void Reduce_Type_Stack(REBSER *block, REBCNT index, REBCNT type)
 {
 	//REBINT start = DSP + 1;
@@ -1210,7 +1193,6 @@ void Reduce_Type_Stack(REBSER *block, REBCNT index, REBCNT type)
 //      Only words in that context are valid (e.g. error object).
 //      All values are left on the stack. No copy is made.
 //
-
 void Reduce_In_Frame(REBSER *frame, REBVAL *values)
 {
 	REBVAL *val;
@@ -1248,7 +1230,6 @@ void Reduce_In_Frame(REBSER *frame, REBVAL *values)
 //  
 //      Writes result value at address pointed to by out.
 //
-
 void Compose_Block(REBVAL *out, REBVAL *block, REBFLG deep, REBFLG only, REBOOL into)
 {
 	REBVAL *value;
@@ -1333,7 +1314,6 @@ finished:
 //  
 //      returns FALSE if out is THROWN()
 //
-
 REBOOL Apply_Block(REBVAL *out, const REBVAL *func, REBSER *block, REBCNT index, REBFLG reduce)
 {
 	struct Reb_Call *call;
@@ -1447,7 +1427,6 @@ REBOOL Apply_Block(REBVAL *out, const REBVAL *func, REBSER *block, REBCNT index,
 //  
 //      returns FALSE if the result is THROWN()
 //
-
 REBOOL Apply_Function(REBVAL *out, const REBVAL *func, va_list *values)
 {
 	struct Reb_Call *call;
@@ -1544,7 +1523,6 @@ REBOOL Apply_Function(REBVAL *out, const REBVAL *func, va_list *values)
 //      Applies function from args provided by C call. Zero terminated.
 //      Return value is on TOS
 //
-
 REBOOL Apply_Func(REBVAL *out, REBVAL *func, ...)
 {
 	REBOOL result;
@@ -1565,7 +1543,6 @@ REBOOL Apply_Func(REBVAL *out, REBVAL *func, ...)
 //  
 //      Evaluates a SYS function and out contains the result.
 //
-
 REBOOL Do_Sys_Func(REBVAL *out, REBCNT inum, ...)
 {
 	REBOOL result;
@@ -1591,7 +1568,6 @@ REBOOL Do_Sys_Func(REBVAL *out, REBCNT inum, ...)
 //  
 //      Handles cascading set words:  word1: word2: value
 //
-
 void Do_Construct(REBVAL value[])
 {
 	REBVAL *temp;
@@ -1658,7 +1634,6 @@ void Do_Construct(REBVAL value[])
 //  
 //      Do no evaluation of the set values.
 //
-
 void Do_Min_Construct(REBVAL value[])
 {
 	REBVAL *temp;
@@ -1698,7 +1673,6 @@ void Do_Min_Construct(REBVAL value[])
 //  
 //      Returns FALSE if result is THROWN()
 //
-
 REBOOL Redo_Func(REBVAL *func_val)
 {
 	REBSER *wsrc;		// words of source func
@@ -1793,7 +1767,6 @@ REBOOL Redo_Func(REBVAL *func_val)
 //  
 //      Does easy lookup, else just returns the value as is.
 //
-
 void Get_Simple_Value_Into(REBVAL *out, const REBVAL *val)
 {
 	if (IS_WORD(val) || IS_GET_WORD(val)) {
@@ -1816,7 +1789,6 @@ void Get_Simple_Value_Into(REBVAL *out, const REBVAL *val)
 //  
 //      Given a path, return a context and index for its terminal.
 //
-
 REBSER *Resolve_Path(REBVAL *path, REBCNT *index)
 {
 	REBVAL *sel; // selector

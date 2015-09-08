@@ -43,7 +43,6 @@ static REBFLG find_in_uni(REBUNI *up, REBINT len, REBUNI c)
 //  
 //      Resulting string is always smaller than it was to start.
 //
-
 static void replace_with(REBSER *ser, REBCNT index, REBCNT tail, REBVAL *with)
 {
 	#define MAX_WITH 32
@@ -104,7 +103,6 @@ static void replace_with(REBSER *ser, REBCNT index, REBCNT tail, REBVAL *with)
 //      BUG!!! If the indentation uses TABS, then it could
 //      fill past the source pointer!
 //
-
 static void trim_auto(REBSER *ser, REBCNT index, REBCNT tail)
 {
 	REBCNT out = index;
@@ -162,7 +160,6 @@ static void trim_auto(REBSER *ser, REBCNT index, REBCNT tail)
 //  
 //      Remove all newlines and extra space.
 //
-
 static void trim_lines(REBSER *ser, REBCNT index, REBCNT tail)
 {
 	REBINT pad = 1; // used to allow a single space
@@ -200,7 +197,6 @@ static void trim_lines(REBSER *ser, REBCNT index, REBCNT tail)
 //      Trim from head and tail of each line, trim any leading or
 //      trailing lines as well, leaving one at the end if present
 //
-
 static void trim_head_tail(REBSER *ser, REBCNT index, REBCNT tail, REBFLG h, REBFLG t)
 {
 	REBCNT out = index;
@@ -274,7 +270,6 @@ static void trim_head_tail(REBSER *ser, REBCNT index, REBCNT tail, REBFLG h, REB
 //
 //  Trim_String: C
 //
-
 void Trim_String(REBSER *ser, REBCNT index, REBCNT len, REBCNT flags, REBVAL *with)
 {
 	REBCNT tail = index + len;

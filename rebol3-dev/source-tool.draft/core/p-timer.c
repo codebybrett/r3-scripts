@@ -44,7 +44,6 @@
 //
 //  Event_Actor: C
 //
-
 static REB_R Event_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
 	REBVAL *spec;
@@ -121,7 +120,6 @@ act_blk:
 //
 //  Init_Timer_Scheme: C
 //
-
 void Init_Timer_Scheme(void)
 {
 	Register_Scheme(SYM_TIMER, 0, Event_Actor);

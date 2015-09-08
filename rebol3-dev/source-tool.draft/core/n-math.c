@@ -56,7 +56,6 @@ enum {SINE, COSINE, TANGENT};
 //  Convert integer arg, if present, to decimal and convert to radians
 //  if necessary.  Clip ranges for correct REBOL behavior.
 //
-
 static REBDEC Trig_Value(const REBVAL *value, REBOOL degrees, REBCNT which)
 {
 	REBDEC dval = AS_DECIMAL(value);
@@ -84,7 +83,6 @@ static REBDEC Trig_Value(const REBVAL *value, REBOOL degrees, REBCNT which)
 //
 //  Arc_Trans: C
 //
-
 static void Arc_Trans(REBVAL *out, const REBVAL *value, REBOOL degrees, REBCNT kind)
 {
 	REBDEC dval = AS_DECIMAL(value);
@@ -107,7 +105,6 @@ static void Arc_Trans(REBVAL *out, const REBVAL *value, REBOOL degrees, REBCNT k
 //      /radians "Value is specified in radians"
 //  ]
 //
-
 REBNATIVE(cosine)
 {
 	REBDEC dval = cos(Trig_Value(D_ARG(1), !D_REF(2), COSINE));
@@ -124,7 +121,6 @@ REBNATIVE(cosine)
 //      /radians "Value is specified in radians"
 //  ]
 //
-
 REBNATIVE(sine)
 {
 	REBDEC dval = sin(Trig_Value(D_ARG(1), !D_REF(2), SINE));
@@ -141,7 +137,6 @@ REBNATIVE(sine)
 //      /radians "Value is specified in radians"
 //  ]
 //
-
 REBNATIVE(tangent)
 {
 	REBDEC dval = Trig_Value(D_ARG(1), !D_REF(2), TANGENT);
@@ -158,7 +153,6 @@ REBNATIVE(tangent)
 //      /radians "Returns result in radians"
 //  ]
 //
-
 REBNATIVE(arccosine)
 {
 	Arc_Trans(D_OUT, D_ARG(1), !D_REF(2), COSINE);
@@ -173,7 +167,6 @@ REBNATIVE(arccosine)
 //      /radians "Returns result in radians"
 //  ]
 //
-
 REBNATIVE(arcsine)
 {
 	Arc_Trans(D_OUT, D_ARG(1), !D_REF(2), SINE);
@@ -188,7 +181,6 @@ REBNATIVE(arcsine)
 //      /radians "Returns result in radians"
 //  ]
 //
-
 REBNATIVE(arctangent)
 {
 	Arc_Trans(D_OUT, D_ARG(1), !D_REF(2), TANGENT);
@@ -202,7 +194,6 @@ REBNATIVE(arctangent)
 //      power [number!]
 //  ]
 //
-
 REBNATIVE(exp)
 {
 	REBDEC	dval = AS_DECIMAL(D_ARG(1));
@@ -221,7 +212,6 @@ REBNATIVE(exp)
 //      value [number!]
 //  ]
 //
-
 REBNATIVE(log_10)
 {
 	REBDEC dval = AS_DECIMAL(D_ARG(1));
@@ -237,7 +227,6 @@ REBNATIVE(log_10)
 //      value [number!]
 //  ]
 //
-
 REBNATIVE(log_2)
 {
 	REBDEC dval = AS_DECIMAL(D_ARG(1));
@@ -253,7 +242,6 @@ REBNATIVE(log_2)
 //      value [number!]
 //  ]
 //
-
 REBNATIVE(log_e)
 {
 	REBDEC dval = AS_DECIMAL(D_ARG(1));
@@ -269,7 +257,6 @@ REBNATIVE(log_e)
 //      value [number!]
 //  ]
 //
-
 REBNATIVE(square_root)
 {
 	REBDEC dval = AS_DECIMAL(D_ARG(1));
@@ -289,7 +276,6 @@ REBNATIVE(square_root)
 //  
 //      shift int bits arithmetic or logical
 //
-
 REBNATIVE(shift)
 {
 	REBI64 b = VAL_INT64(D_ARG(2));
@@ -349,7 +335,6 @@ REBNATIVE(shift)
 //      in native code that can overwrite its argument values without
 //      that being a problem, so it doesn't matter.
 //
-
 REBINT Compare_Modify_Values(REBVAL *a, REBVAL *b, REBINT strictness)
 {
 	REBCNT ta = VAL_TYPE(a);
@@ -438,7 +423,6 @@ compare:
 //      value2 [any-type!]
 //  ]
 //
-
 REBNATIVE(equalq)
 {
 	if (Compare_Modify_Values(D_ARG(1), D_ARG(2), 0)) return R_TRUE;
@@ -452,7 +436,6 @@ REBNATIVE(equalq)
 //      value2 [any-type!]
 //  ]
 //
-
 REBNATIVE(not_equalq)
 {
 	if (Compare_Modify_Values(D_ARG(1), D_ARG(2), 0)) return R_FALSE;
@@ -466,7 +449,6 @@ REBNATIVE(not_equalq)
 //      value2 [any-type!]
 //  ]
 //
-
 REBNATIVE(equivq)
 {
 	if (Compare_Modify_Values(D_ARG(1), D_ARG(2), 1)) return R_TRUE;
@@ -480,7 +462,6 @@ REBNATIVE(equivq)
 //      value2 [any-type!]
 //  ]
 //
-
 REBNATIVE(not_equivq)
 {
 	if (Compare_Modify_Values(D_ARG(1), D_ARG(2), 1)) return R_FALSE;
@@ -494,7 +475,6 @@ REBNATIVE(not_equivq)
 //      value2 [any-type!]
 //  ]
 //
-
 REBNATIVE(strict_equalq)
 {
 	if (Compare_Modify_Values(D_ARG(1), D_ARG(2), 2)) return R_TRUE;
@@ -508,7 +488,6 @@ REBNATIVE(strict_equalq)
 //      value2 [any-type!]
 //  ]
 //
-
 REBNATIVE(strict_not_equalq)
 {
 	if (Compare_Modify_Values(D_ARG(1), D_ARG(2), 2)) return R_FALSE;
@@ -522,7 +501,6 @@ REBNATIVE(strict_not_equalq)
 //      value2 [any-type!]
 //  ]
 //
-
 REBNATIVE(sameq)
 {
 	if (Compare_Modify_Values(D_ARG(1), D_ARG(2), 3)) return R_TRUE;
@@ -535,7 +513,6 @@ REBNATIVE(sameq)
 //      value1 value2
 //  ]
 //
-
 REBNATIVE(lesserq)
 {
 	if (Compare_Modify_Values(D_ARG(1), D_ARG(2), -1)) return R_FALSE;
@@ -548,7 +525,6 @@ REBNATIVE(lesserq)
 //      value1 value2
 //  ]
 //
-
 REBNATIVE(lesser_or_equalq)
 {
 	if (Compare_Modify_Values(D_ARG(1), D_ARG(2), -2)) return R_FALSE;
@@ -561,7 +537,6 @@ REBNATIVE(lesser_or_equalq)
 //      value1 value2
 //  ]
 //
-
 REBNATIVE(greaterq)
 {
 	if (Compare_Modify_Values(D_ARG(1), D_ARG(2), -2)) return R_TRUE;
@@ -574,7 +549,6 @@ REBNATIVE(greaterq)
 //      value1 value2
 //  ]
 //
-
 REBNATIVE(greater_or_equalq)
 {
 	if (Compare_Modify_Values(D_ARG(1), D_ARG(2), -1)) return R_TRUE;
@@ -588,7 +562,6 @@ REBNATIVE(greater_or_equalq)
 //      value2 [scalar! date! series!]
 //  ]
 //
-
 REBNATIVE(maximum)
 {
 	REBVAL a, b;
@@ -611,7 +584,6 @@ REBNATIVE(maximum)
 //      value2 [scalar! date! series!]
 //  ]
 //
-
 REBNATIVE(minimum)
 {
 	REBVAL a, b;
@@ -634,7 +606,6 @@ REBNATIVE(minimum)
 //      number [number! money! time! pair!]
 //  ]
 //
-
 REBNATIVE(negativeq)
 {
 	REBVAL zero;
@@ -651,7 +622,6 @@ REBNATIVE(negativeq)
 //      number [number! money! time! pair!]
 //  ]
 //
-
 REBNATIVE(positiveq)
 {
 	REBVAL zero;
@@ -669,7 +639,6 @@ REBNATIVE(positiveq)
 //      value
 //  ]
 //
-
 REBNATIVE(zeroq)
 {
 	REBCNT type = VAL_TYPE(D_ARG(1));

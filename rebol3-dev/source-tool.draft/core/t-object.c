@@ -204,7 +204,6 @@ static REBSER *Trim_Object(REBSER *obj)
 //
 //  CT_Object: C
 //
-
 REBINT CT_Object(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	if (mode < 0) return -1;
@@ -216,7 +215,6 @@ REBINT CT_Object(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  CT_Frame: C
 //
-
 REBINT CT_Frame(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	if (mode < 0) return -1;
@@ -228,7 +226,6 @@ REBINT CT_Frame(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  MT_Object: C
 //
-
 REBFLG MT_Object(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	if (!IS_BLOCK(data)) return FALSE;
@@ -251,7 +248,6 @@ REBFLG MT_Object(REBVAL *out, REBVAL *data, REBCNT type)
 //
 //  PD_Object: C
 //
-
 REBINT PD_Object(REBPVS *pvs)
 {
 	REBINT n = 0;
@@ -291,7 +287,6 @@ REBINT PD_Object(REBPVS *pvs)
 //  
 //      Handles object! and error! datatypes.
 //
-
 REBTYPE(Object)
 {
 	REBVAL *value = D_ARG(1);
@@ -567,7 +562,6 @@ is_true:
 //  
 //      pvs->value points to the first value in frame (SELF).
 //
-
 REBINT PD_Frame(REBPVS *pvs)
 {
 	REBCNT sym;
@@ -596,7 +590,6 @@ REBINT PD_Frame(REBPVS *pvs)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Frame)
 {
 	switch (action) {

@@ -402,7 +402,6 @@ int MD5_CtxSize(void) {
 //
 //  MD5: C
 //
-
 REBYTE *MD5(REBYTE *d, REBCNT n, REBYTE *md)
 {
 	MD5_CTX c;

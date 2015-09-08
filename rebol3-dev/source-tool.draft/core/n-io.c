@@ -39,7 +39,6 @@
 //      target [file! none! logic!]
 //  ]
 //
-
 REBNATIVE(echo)
 {
 	REBVAL *val = D_ARG(1);
@@ -73,7 +72,6 @@ REBNATIVE(echo)
 //      /all    "Mold in serialized format"
 //      /flat    "No line indentation"
 //
-
 REBNATIVE(form)
 {
 	Val_Init_String(D_OUT, Copy_Form_Value(D_ARG(1), 0));
@@ -96,7 +94,6 @@ REBNATIVE(form)
 //      /all    "Mold in serialized format"
 //      /flat    "No line indentation"
 //
-
 REBNATIVE(mold)
 {
 	REBVAL *val = D_ARG(1);
@@ -123,7 +120,6 @@ REBNATIVE(mold)
 //      value [any-type!] "The value to print"
 //  ]
 //
-
 REBNATIVE(print)
 {
 	REBVAL *value = D_ARG(1);
@@ -144,7 +140,6 @@ REBNATIVE(print)
 //      value [any-type!]
 //  ]
 //
-
 REBNATIVE(prin)
 {
 	REBVAL *value = D_ARG(1);
@@ -169,7 +164,6 @@ REBNATIVE(prin)
 //      size [integer!]
 //  ]
 //
-
 REBNATIVE(new_line)
 {
 	REBVAL *value = D_ARG(1);
@@ -202,7 +196,6 @@ REBNATIVE(new_line)
 //      position [block! paren!] "Position to check marker"
 //  ]
 //
-
 REBNATIVE(new_lineq)
 {
 	if VAL_GET_OPT(VAL_BLK_DATA(D_ARG(1)), OPT_VALUE_LINE) return R_TRUE;
@@ -238,7 +231,6 @@ REBNATIVE(new_lineq)
 //      9  /precise {Higher precision}
 //      10 /utc {Universal time (no zone)}
 //
-
 REBNATIVE(now)
 {
 	REBOL_DAT dat;
@@ -292,7 +284,6 @@ REBNATIVE(now)
 //      /only {only check for ports given in the block to this function}
 //  ]
 //
-
 REBNATIVE(wait)
 {
 	REBVAL *val = D_ARG(1);
@@ -379,7 +370,6 @@ chk_neg:
 //      Calls port update for native actors.
 //      Calls port awake function.
 //
-
 REBNATIVE(wake_up)
 {
 	REBVAL *val = D_ARG(1);
@@ -409,7 +399,6 @@ REBNATIVE(wake_up)
 //      path [file! string!]
 //  ]
 //
-
 REBNATIVE(to_rebol_file)
 {
 	REBVAL *arg = D_ARG(1);
@@ -430,7 +419,6 @@ REBNATIVE(to_rebol_file)
 //      /full {Prepends current dir for full path (for relative paths only)}
 //  ]
 //
-
 REBNATIVE(to_local_file)
 {
 	REBVAL *arg = D_ARG(1);
@@ -447,7 +435,6 @@ REBNATIVE(to_local_file)
 //
 //  what-dir: native ["Returns the current directory path."]
 //
-
 REBNATIVE(what_dir)
 {
 	REBSER *ser;
@@ -470,7 +457,6 @@ REBNATIVE(what_dir)
 //      path [file!]
 //  ]
 //
-
 REBNATIVE(change_dir)
 {
 	REBVAL *arg = D_ARG(1);
@@ -497,7 +483,6 @@ REBNATIVE(change_dir)
 //      url [url! file! none!]
 //  ]
 //
-
 REBNATIVE(browse)
 {
 	REBINT r;
@@ -906,7 +891,6 @@ REBNATIVE(browse)
 //      Convert a series of null terminated strings to
 //      a block of strings separated with '='.
 //
-
 static REBSER *String_List_To_Block(REBCHR *str)
 {
 	REBCNT n;
@@ -944,7 +928,6 @@ static REBSER *String_List_To_Block(REBCHR *str)
 //      a series of null terminated strings, followed
 //      by a final terminating string.
 //
-
 REBSER *Block_To_String_List(REBVAL *blk)
 {
 	REBVAL *value;
@@ -968,7 +951,6 @@ REBSER *Block_To_String_List(REBVAL *blk)
 //  
 //      Convert file directory and file name list to block.
 //
-
 static REBSER *File_List_To_Block(const REBCHR *str)
 {
 	REBCNT n;
@@ -1028,7 +1010,6 @@ static REBSER *File_List_To_Block(const REBCHR *str)
 //      /filter list [block!] "Block of filters (filter-name filter)"
 //  ]
 //
-
 REBNATIVE(request_file)
 {
 	REBSER *ser;
@@ -1095,7 +1076,6 @@ REBNATIVE(request_file)
 //      var [any-string! any-word!]
 //  ]
 //
-
 REBNATIVE(get_env)
 {
 	REBCHR *cmd;
@@ -1131,7 +1111,6 @@ REBNATIVE(get_env)
 //      value [string! none!] "Value to set, or NONE to unset it"
 //  ]
 //
-
 REBNATIVE(set_env)
 {
 	REBCHR *cmd;
@@ -1177,7 +1156,6 @@ REBNATIVE(set_env)
 //      {Returns a map of OS environment variables (for current process).}
 //  ]
 //
-
 REBNATIVE(list_env)
 {
 	REBCHR *result = OS_LIST_ENV();

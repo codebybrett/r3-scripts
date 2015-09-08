@@ -71,7 +71,6 @@ REBREQ *req;		//!!! move this global
 //      so do NOT extend the event queue here. If it does not have
 //      space, return 0. (Should it overwrite or wrap???)
 //
-
 REBVAL *Append_Event(void)
 {
 	REBVAL *port;
@@ -145,7 +144,6 @@ REBVAL *Append_Event(void)
 //  
 //      Internal port handler for events.
 //
-
 static REB_R Event_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
 	REBVAL *spec;
@@ -234,7 +232,6 @@ act_blk:
 //
 //  Init_Event_Scheme: C
 //
-
 void Init_Event_Scheme(void)
 {
 	req = 0; // move to port struct

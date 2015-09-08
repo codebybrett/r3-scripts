@@ -33,7 +33,6 @@ static REBARGS Main_Args;	// Not multi-threaded
 //
 //  Prompt_User: C
 //
-
 char *Prompt_User(void)
 {
 	char *text;
@@ -48,7 +47,6 @@ char *Prompt_User(void)
 //
 //  main: C
 //
-
 int main(int argc, char **argv)
 {
 	char *cmd;

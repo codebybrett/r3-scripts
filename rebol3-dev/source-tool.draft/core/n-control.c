@@ -43,7 +43,6 @@ enum {
 //
 //  Protect_Word: C
 //
-
 static void Protect_Word(REBVAL *value, REBCNT flags)
 {
 	if (GET_FLAG(flags, PROT_WORD)) {
@@ -63,7 +62,6 @@ static void Protect_Word(REBVAL *value, REBCNT flags)
 //  
 //      Anything that calls this must call Unmark() when done.
 //
-
 static void Protect_Value(REBVAL *value, REBCNT flags)
 {
 	if (ANY_SERIES(value) || IS_MAP(value))
@@ -78,7 +76,6 @@ static void Protect_Value(REBVAL *value, REBCNT flags)
 //  
 //      Anything that calls this must call Unmark() when done.
 //
-
 void Protect_Series(REBVAL *val, REBCNT flags)
 {
 	REBSER *series = VAL_SERIES(val);
@@ -105,7 +102,6 @@ void Protect_Series(REBVAL *val, REBCNT flags)
 //  
 //      Anything that calls this must call Unmark() when done.
 //
-
 void Protect_Object(REBVAL *value, REBCNT flags)
 {
 	REBSER *series = VAL_OBJ_FRAME(value);
@@ -132,7 +128,6 @@ void Protect_Object(REBVAL *value, REBCNT flags)
 //
 //  Protect_Word_Value: C
 //
-
 static void Protect_Word_Value(REBVAL *word, REBCNT flags)
 {
 	REBVAL *wrd;
@@ -176,7 +171,6 @@ static void Protect_Word_Value(REBVAL *word, REBCNT flags)
 //  
 //  Protect takes a HIDE parameter as #5.
 //
-
 static int Protect(struct Reb_Call *call_, REBCNT flags)
 {
 	REBVAL *val = D_ARG(1);
@@ -244,7 +238,6 @@ static int Protect(struct Reb_Call *call_, REBCNT flags)
 //      value2 [any-type!]
 //  ]
 //
-
 REBNATIVE(also)
 {
 	return R_ARG1;
@@ -257,7 +250,6 @@ REBNATIVE(also)
 //      block [block!] "Block of expressions"
 //  ]
 //
-
 REBNATIVE(all)
 {
 	REBSER *block = VAL_SERIES(D_ARG(1));
@@ -286,7 +278,6 @@ REBNATIVE(all)
 //      block [block!] "Block of expressions"
 //  ]
 //
-
 REBNATIVE(any)
 {
 	REBSER *block = VAL_SERIES(D_ARG(1));
@@ -318,7 +309,6 @@ REBNATIVE(any)
 //      2: block
 //      3: /only
 //
-
 REBNATIVE(apply)
 {
 	REBVAL * func = D_ARG(1);
@@ -338,7 +328,6 @@ REBNATIVE(apply)
 //      block [block!]
 //  ]
 //
-
 REBNATIVE(attempt)
 {
 	REBOL_STATE state;
@@ -380,7 +369,6 @@ REBNATIVE(attempt)
 //  through the stack, it may not ultimately use the WORD! of BREAK
 //  as its /NAME.
 //
-
 REBNATIVE(break)
 {
 	REBVAL *value = D_REF(1) ? D_ARG(2) : (D_REF(3) ? D_ARG(4) : UNSET_VALUE);
@@ -405,7 +393,6 @@ REBNATIVE(break)
 //  2: /all
 //  3: /only
 //
-
 REBNATIVE(case)
 {
 	// We leave D_ARG(1) alone, it is holding 'block' alive from GC
@@ -555,7 +542,6 @@ REBNATIVE(case)
 //  available it will likely be changed to at least get the native
 //  (e.g. equal to THROW with /NAME :QUIT instead of /NAME 'QUIT)
 //
-
 REBNATIVE(catch)
 {
 	REBVAL * const block = D_ARG(1);
@@ -702,7 +688,6 @@ was_caught:
 //      name-value [word! any-function! object!]
 //  ]
 //
-
 REBNATIVE(throw)
 {
 	REBVAL * const value = D_ARG(1);
@@ -737,7 +722,6 @@ REBNATIVE(throw)
 //      value "A string, block, file, etc."
 //  ]
 //
-
 REBNATIVE(comment)
 {
 	return R_UNSET;
@@ -764,7 +748,6 @@ REBNATIVE(comment)
 //      !!! Should 'compose quote (a (1 + 2) b)' give back '(a 3 b)' ?
 //      !!! What about 'compose quote a/(1 + 2)/b' ?
 //
-
 REBNATIVE(compose)
 {
 	REBVAL *value = D_ARG(1);
@@ -791,7 +774,6 @@ REBNATIVE(compose)
 //  through the stack, it may not ultimately use the WORD! of CONTINUE
 //  as its /NAME.
 //
-
 REBNATIVE(continue)
 {
 	Val_Init_Word_Unbound(D_OUT, REB_WORD, SYM_CONTINUE);
@@ -811,7 +793,6 @@ REBNATIVE(continue)
 //      var [word!] "Variable updated with new block position"
 //  ]
 //
-
 REBNATIVE(do)
 {
 	REBVAL * const value = D_ARG(1);
@@ -924,7 +905,6 @@ REBNATIVE(do)
 //      /only "Suppress evaluation of block args."
 //  ]
 //
-
 REBNATIVE(either)
 {
 	REBCNT argnum = IS_CONDITIONAL_FALSE(D_ARG(1)) ? 3 : 2;
@@ -954,7 +934,6 @@ REBNATIVE(either)
 //  through the stack, it may not ultimately use the WORD! of EXIT
 //  as its /NAME.
 //
-
 REBNATIVE(exit)
 {
 	if (LEGACY(OPTIONS_EXIT_FUNCTIONS_ONLY))
@@ -976,7 +955,6 @@ REBNATIVE(exit)
 //      /only "Return block arg instead of evaluating it."
 //  ]
 //
-
 REBNATIVE(if)
 {
 	if (IS_CONDITIONAL_FALSE(D_ARG(1))) return R_NONE;
@@ -1000,7 +978,6 @@ REBNATIVE(if)
 //      /hide "Hide variables (avoid binding and lookup)"
 //  ]
 //
-
 REBNATIVE(protect)
 {
 	REBCNT flags = FLAGIT(PROT_SET);
@@ -1022,7 +999,6 @@ REBNATIVE(protect)
 //      /values "Process list of values (implied GET)"
 //  ]
 //
-
 REBNATIVE(unprotect)
 {
 	// accesses arguments 1 - 4
@@ -1041,7 +1017,6 @@ REBNATIVE(unprotect)
 //      out [any-array! any-string! binary!]
 //  ]
 //
-
 REBNATIVE(reduce)
 {
 	if (IS_BLOCK(D_ARG(1))) {
@@ -1075,7 +1050,6 @@ REBNATIVE(reduce)
 //  The implementation of RETURN here is a simple THROWN() value and
 //  has no "definitional scoping"--a temporary state of affairs.
 //
-
 REBNATIVE(return)
 {
 	REBVAL *arg = D_ARG(1);
@@ -1102,7 +1076,6 @@ REBNATIVE(return)
 //      case
 //      /all {Check all cases}
 //
-
 REBNATIVE(switch)
 {
 	REBVAL *case_val = VAL_BLK_DATA(D_ARG(2));
@@ -1150,7 +1123,6 @@ REBNATIVE(switch)
 //      2: /with
 //      3: handler
 //
-
 REBNATIVE(trap)
 {
 	REBVAL * const block = D_ARG(1);
@@ -1240,7 +1212,6 @@ REBNATIVE(trap)
 //      /only "Return block arg instead of evaluating it."
 //  ]
 //
-
 REBNATIVE(unless)
 {
 	if (IS_CONDITIONAL_TRUE(D_ARG(1))) return R_NONE;

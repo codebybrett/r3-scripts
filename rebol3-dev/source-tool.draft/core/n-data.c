@@ -66,7 +66,6 @@ static int Check_Char_Range(REBVAL *val, REBINT limit)
 //      value [any-string! char! integer!]
 //  ]
 //
-
 REBNATIVE(asciiq)
 {
 	return Check_Char_Range(D_ARG(1), 0x7f);
@@ -79,7 +78,6 @@ REBNATIVE(asciiq)
 //      value [any-string! char! integer!]
 //  ]
 //
-
 REBNATIVE(latin1q)
 {
 	return Check_Char_Range(D_ARG(1), 0xff);
@@ -92,7 +90,6 @@ REBNATIVE(latin1q)
 //      Types can be: word or block. Each element must be either
 //      a datatype or a typeset.
 //
-
 static REBOOL Is_Of_Type(const REBVAL *value, REBVAL *types)
 {
 	const REBVAL *val;
@@ -134,7 +131,6 @@ static REBOOL Is_Of_Type(const REBVAL *value, REBVAL *types)
 //      /type {Safely check datatypes of variables (words and paths)}
 //  ]
 //
-
 REBNATIVE(assert)
 {
 	REBVAL *value = D_ARG(1);  // block, logic, or none
@@ -195,7 +191,6 @@ REBNATIVE(assert)
 //      y [number!]
 //  ]
 //
-
 REBNATIVE(as_pair)
 {
 	REBVAL *val = D_ARG(1);
@@ -239,7 +234,6 @@ REBNATIVE(as_pair)
 //      5 /new
 //      6 /set
 //
-
 REBNATIVE(bind)
 {
 	REBVAL *arg;
@@ -303,7 +297,6 @@ REBNATIVE(bind)
 //      word [any-word!]
 //  ]
 //
-
 REBNATIVE(boundq)
 {
 	REBVAL *word = D_ARG(1);
@@ -325,7 +318,6 @@ REBNATIVE(boundq)
 //      word | context
 //      /deep
 //
-
 REBNATIVE(unbind)
 {
 	REBVAL *word = D_ARG(1);
@@ -355,7 +347,6 @@ REBNATIVE(unbind)
 //      4 /ignore
 //      5 object | block
 //
-
 REBNATIVE(collect_words)
 {
 	REBSER *words;
@@ -390,7 +381,6 @@ REBNATIVE(collect_words)
 //      /any "Allows word to have no value (allows unset)"
 //  ]
 //
-
 REBNATIVE(get)
 {
 	REBVAL *word = D_ARG(1);
@@ -429,7 +419,6 @@ REBNATIVE(get)
 //      word [any-word! block! paren!] "(modified if series)"
 //  ]
 //
-
 REBNATIVE(in)
 {
 	REBVAL *val  = D_ARG(1); // object, error, port, block
@@ -488,7 +477,6 @@ REBNATIVE(in)
 //      value "(Only FALSE and NONE return TRUE)"
 //  ]
 //
-
 REBNATIVE(not)
 {
 	return IS_CONDITIONAL_FALSE(D_ARG(1)) ? R_TRUE : R_FALSE;
@@ -510,7 +498,6 @@ REBNATIVE(not)
 //      5 /all
 //      6 /expand
 //
-
 REBNATIVE(resolve)
 {
 	REBSER *target = VAL_OBJ_FRAME(D_ARG(1));
@@ -535,7 +522,6 @@ REBNATIVE(resolve)
 //      /any {Allows setting words to any value.}
 //      /pad {For objects, if block is too short, remaining words are set to NONE.}
 //
-
 REBNATIVE(set)
 {
 	const REBVAL *word = D_ARG(1);
@@ -629,7 +615,6 @@ REBNATIVE(set)
 //      /word "Returns the datatype as a word"
 //  ]
 //
-
 REBNATIVE(type_of)
 {
 	REBCNT type = VAL_TYPE(D_ARG(1));
@@ -648,7 +633,6 @@ REBNATIVE(type_of)
 //      word [word! block!] "Word or block of words"
 //  ]
 //
-
 REBNATIVE(unset)
 {
 	REBVAL *word = D_ARG(1);
@@ -677,7 +661,6 @@ REBNATIVE(unset)
 //      value [any-function!]
 //  ]
 //
-
 REBNATIVE(infixq)
 {
 	REBVAL *func = D_ARG(1);
@@ -696,7 +679,6 @@ REBNATIVE(infixq)
 //      value
 //  ]
 //
-
 REBNATIVE(valueq)
 {
 	const REBVAL *value = D_ARG(1);
@@ -717,7 +699,6 @@ REBNATIVE(valueq)
 //      i: ++ int
 //      s: ++ series
 //
-
 REBNATIVE(_add_add)
 {
 	REBVAL *value;
@@ -754,7 +735,6 @@ REBNATIVE(_add_add)
 //      i: -- int
 //      s: -- series
 //
-
 REBNATIVE(__)
 {
 	REBVAL *value;
@@ -785,7 +765,6 @@ REBNATIVE(__)
 //
 //  dump: native ["Temporary debug dump" v]
 //
-
 REBNATIVE(dump)
 {
 #ifdef _DEBUG
@@ -806,7 +785,6 @@ REBNATIVE(dump)
 //      Map a higher level gob coordinate to a lower level.
 //      Returns GOB and sets new offset pair.
 //
-
 static REBGOB *Map_Gob_Inner(REBGOB *gob, REBXYF *offset)
 {
 	REBD32 xo = offset->x;
@@ -850,7 +828,6 @@ static REBGOB *Map_Gob_Inner(REBGOB *gob, REBXYF *offset)
 //      event [event!]
 //  ]
 //
-
 REBNATIVE(map_event)
 {
 	REBVAL *val = D_ARG(1);
@@ -870,7 +847,6 @@ REBNATIVE(map_event)
 //
 //  Return_Gob_Pair: C
 //
-
 static void Return_Gob_Pair(REBVAL *out, REBGOB *gob, REBD32 x, REBD32 y)
 {
 	REBSER *blk;
@@ -895,7 +871,6 @@ static void Return_Gob_Pair(REBVAL *out, REBGOB *gob, REBD32 x, REBD32 y)
 //      /reverse "Translate from deeper gob to top gob."
 //  ]
 //
-
 REBNATIVE(map_gob_offset)
 {
 	REBGOB *gob = VAL_GOB(D_ARG(1));

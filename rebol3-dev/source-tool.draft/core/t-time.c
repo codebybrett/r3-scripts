@@ -32,7 +32,6 @@
 //
 //  Split_Time: C
 //
-
 void Split_Time(REBI64 t, REB_TIMEF *tf)
 {
 	// note: negative sign will be lost.
@@ -62,7 +61,6 @@ void Split_Time(REBI64 t, REB_TIMEF *tf)
 //      issue, as previous code falsely tried to judge the sign
 //      of tf->h, which is always positive.)
 //
-
 REBI64 Join_Time(REB_TIMEF *tf, REBFLG neg)
 {
 	REBI64 t;
@@ -76,7 +74,6 @@ REBI64 Join_Time(REB_TIMEF *tf, REBFLG neg)
 //  
 //      Scan string and convert to time.  Return zero if error.
 //
-
 const REBYTE *Scan_Time(const REBYTE *cp, REBCNT len, REBVAL *value)
 {
 	const REBYTE  *sp;
@@ -141,7 +138,6 @@ const REBYTE *Scan_Time(const REBYTE *cp, REBCNT len, REBVAL *value)
 //
 //  Emit_Time: C
 //
-
 void Emit_Time(REB_MOLD *mold, const REBVAL *value)
 {
 	REB_TIMEF tf;
@@ -164,7 +160,6 @@ void Emit_Time(REB_MOLD *mold, const REBVAL *value)
 //
 //  CT_Time: C
 //
-
 REBINT CT_Time(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	REBINT num = Cmp_Time(a, b);
@@ -179,7 +174,6 @@ REBINT CT_Time(REBVAL *a, REBVAL *b, REBINT mode)
 //  
 //      Returns NO_TIME if error.
 //
-
 REBI64 Make_Time(REBVAL *val)
 {
 	REBI64 secs = 0;
@@ -248,7 +242,6 @@ REBI64 Make_Time(REBVAL *val)
 //
 //  MT_Time: C
 //
-
 REBFLG MT_Time(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	REBI64 secs = Make_Time(data);
@@ -268,7 +261,6 @@ REBFLG MT_Time(REBVAL *out, REBVAL *data, REBCNT type)
 //  
 //  Given two times, compare them.
 //
-
 REBINT Cmp_Time(const REBVAL *v1, const REBVAL *v2)
 {
 	REBI64 t1 = VAL_TIME(v1);
@@ -285,7 +277,6 @@ REBINT Cmp_Time(const REBVAL *v1, const REBVAL *v2)
 //
 //  PD_Time: C
 //
-
 REBINT PD_Time(REBPVS *pvs)
 {
 	REBVAL *val;
@@ -366,7 +357,6 @@ REBINT PD_Time(REBPVS *pvs)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Time)
 {
 	REBI64	secs;

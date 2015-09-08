@@ -33,7 +33,6 @@
 //
 //  CT_Port: C
 //
-
 REBINT CT_Port(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	if (mode < 0) return -1;
@@ -44,7 +43,6 @@ REBINT CT_Port(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  MT_Port: C
 //
-
 REBFLG MT_Port(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	return FALSE;
@@ -54,7 +52,6 @@ REBFLG MT_Port(REBVAL *out, REBVAL *data, REBCNT type)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Port)
 {
 	REBVAL *value = D_ARG(1);

@@ -32,7 +32,6 @@
 //
 //  CT_Library: C
 //
-
 REBINT CT_Library(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	//RL_Print("%s, %d\n", __func__, __LINE__);
@@ -45,7 +44,6 @@ REBINT CT_Library(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Library)
 {
 	REBVAL *val = D_ARG(1);

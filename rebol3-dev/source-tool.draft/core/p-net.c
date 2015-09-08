@@ -42,7 +42,6 @@ enum Transport_Types {
 //
 //  Ret_Query_Net: C
 //
-
 static void Ret_Query_Net(REBSER *port, REBREQ *sock, REBVAL *ret)
 {
 	REBVAL *info = In_Object(port, STD_PORT_SCHEME, STD_SCHEME_INFO, 0);
@@ -74,7 +73,6 @@ static void Ret_Query_Net(REBSER *port, REBREQ *sock, REBVAL *ret)
 //  
 //      Clone a listening port as a new accept port.
 //
-
 static void Accept_New_Port(REBVAL *out, REBSER *port, REBREQ *sock)
 {
 	REBREQ *nsock;
@@ -103,7 +101,6 @@ static void Accept_New_Port(REBVAL *out, REBSER *port, REBREQ *sock)
 //
 //  Transport_Actor: C
 //
-
 static REB_R Transport_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action, enum Transport_Types proto)
 {
 	REBREQ *sock;	// IO request
@@ -315,7 +312,6 @@ static REB_R Transport_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action
 //
 //  TCP_Actor: C
 //
-
 static REB_R TCP_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
 	return Transport_Actor(call_, port, action, TRANSPORT_TCP);
@@ -324,7 +320,6 @@ static REB_R TCP_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 //
 //  UDP_Actor: C
 //
-
 static REB_R UDP_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
 	return Transport_Actor(call_, port, action, TRANSPORT_UDP);
@@ -333,7 +328,6 @@ static REB_R UDP_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 //
 //  Init_TCP_Scheme: C
 //
-
 void Init_TCP_Scheme(void)
 {
 	Register_Scheme(SYM_TCP, 0, TCP_Actor);
@@ -341,7 +335,6 @@ void Init_TCP_Scheme(void)
 //
 //  Init_UDP_Scheme: C
 //
-
 void Init_UDP_Scheme(void)
 {
 	Register_Scheme(SYM_UDP, 0, UDP_Actor);

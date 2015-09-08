@@ -35,7 +35,6 @@
 //      "Stops evaluation and returns to the input prompt."
 //  ]
 //
-
 REBNATIVE(halt)
 {
 	Halt();
@@ -61,7 +60,6 @@ REBNATIVE(halt)
 //  through the stack, it may not ultimately use the WORD! of QUIT
 //  as its /NAME when more specific values are allowed as names.
 //
-
 REBNATIVE(quit)
 {
 	Val_Init_Word_Unbound(D_OUT, REB_WORD, SYM_QUIT);
@@ -96,7 +94,6 @@ REBNATIVE(quit)
 //      /torture "Constant recycle (for internal debugging)"
 //  ]
 //
-
 REBNATIVE(recycle)
 {
 	REBCNT count;
@@ -138,7 +135,6 @@ REBNATIVE(recycle)
 //      /dump-series pool-id [integer!] "Dump all series in pool pool-id, -1 for all pools"
 //  ]
 //
-
 REBNATIVE(stats)
 {
 	REBI64 n;
@@ -222,7 +218,6 @@ const char *evoke_help = "Evoke values:\n"
 //      chant [word! block! integer!] "Single or block of words ('? to list)"
 //  ]
 //
-
 REBNATIVE(evoke)
 {
 	REBVAL *arg = D_ARG(1);
@@ -290,7 +285,6 @@ REBNATIVE(evoke)
 //
 //  in-context: native none
 //
-
 REBNATIVE(in_context)
 {
 	REBVAL *value;
@@ -307,7 +301,6 @@ REBNATIVE(in_context)
 //      limit [number!]
 //  ]
 //
-
 REBNATIVE(limit_usage)
 {
 	REBCNT sym;
@@ -349,7 +342,6 @@ REBNATIVE(limit_usage)
 //      /limit "Stack bounds (auto expanding)"
 //  ]
 //
-
 REBNATIVE(stack)
 {
 	REBINT index = VAL_INT32(D_ARG(1));
@@ -393,7 +385,6 @@ REBNATIVE(stack)
 //
 //  check: native ["Temporary series debug check" val [series!]]
 //
-
 REBNATIVE(check)
 {
 	REBVAL *val;
@@ -425,7 +416,6 @@ err:
 //
 //  ds: native ["Temporary stack debug"]
 //
-
 REBNATIVE(ds)
 {
 	Dump_Stack(0, 0);
@@ -449,7 +439,6 @@ REBNATIVE(ds)
 //      3: data:   binary! image! sound!
 //      4: option: (optional)
 //
-
 REBNATIVE(do_codec)
 {
 	REBCDI codi;
@@ -568,7 +557,6 @@ REBNATIVE(do_codec)
 //      context [any-word! any-object!] "A reference to the target context"
 //  ]
 //
-
 REBNATIVE(selflessq)
 {
 	REBVAL *val = D_ARG(1);

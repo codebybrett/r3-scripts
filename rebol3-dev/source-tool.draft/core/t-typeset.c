@@ -56,7 +56,6 @@
 //
 //  CT_Typeset: C
 //
-
 REBINT CT_Typeset(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	if (mode < 0) return -1;
@@ -71,7 +70,6 @@ REBINT CT_Typeset(REBVAL *a, REBVAL *b, REBINT mode)
 //      For example: NUMBER is both integer and decimal.
 //      Add the new variables to the system context.
 //
-
 void Init_Typesets(void)
 {
 	REBVAL *value;
@@ -95,7 +93,6 @@ void Init_Typesets(void)
 //      block - block of datatypes (datatype words ok too)
 //      value - value to hold result (can be word-spec type too)
 //
-
 REBFLG Make_Typeset(REBVAL *block, REBVAL *value, REBFLG load)
 {
 	const REBVAL *val;
@@ -136,7 +133,6 @@ REBFLG Make_Typeset(REBVAL *block, REBVAL *value, REBFLG load)
 //
 //  MT_Typeset: C
 //
-
 REBFLG MT_Typeset(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	if (!IS_BLOCK(data)) return FALSE;
@@ -151,7 +147,6 @@ REBFLG MT_Typeset(REBVAL *out, REBVAL *data, REBCNT type)
 //
 //  Find_Typeset: C
 //
-
 REBINT Find_Typeset(REBVAL *block)
 {
 	REBVAL value;
@@ -182,7 +177,6 @@ REBINT Find_Typeset(REBVAL *block)
 //      Converts typeset value to a block of datatypes.
 //      No order is specified.
 //
-
 REBSER *Typeset_To_Block(REBVAL *tset)
 {
 	REBSER *block;
@@ -210,7 +204,6 @@ REBSER *Typeset_To_Block(REBVAL *tset)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Typeset)
 {
 	REBVAL *val = D_ARG(1);

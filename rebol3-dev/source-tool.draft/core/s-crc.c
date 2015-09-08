@@ -75,7 +75,6 @@ static REBCNT *CRC_Table;
 //      message by initializing the CRC accumulator to some agreed-upon
 //      nonzero "random-like" value, but this is a bit nonstandard.
 //
-
 static REBCNT Generate_CRC(REBYTE ch, REBCNT poly, REBCNT accum)
 {
 	REBINT i;
@@ -100,7 +99,6 @@ static REBCNT Generate_CRC(REBYTE ch, REBCNT poly, REBCNT accum)
 //      The table is used later by crcupdate function given below.
 //      Only needs to be called once at the dawn of time.
 //
-
 static void Make_CRC_Table(REBCNT poly)
 {
 	REBINT i;
@@ -113,7 +111,6 @@ static void Make_CRC_Table(REBCNT poly)
 //
 //  Compute_CRC: C
 //
-
 REBINT Compute_CRC(REBYTE *str, REBCNT len)
 {
 	REBYTE	n;
@@ -134,7 +131,6 @@ REBINT Compute_CRC(REBYTE *str, REBCNT len)
 //      Return a case insensitive hash value for the string.  The
 //      string does not have to be zero terminated and UTF8 is ok.
 //
-
 REBINT Hash_String(REBYTE *str, REBCNT len)
 {
 	REBYTE	n;
@@ -154,7 +150,6 @@ REBINT Hash_String(REBYTE *str, REBCNT len)
 //  
 //      Return a case insensitive hash value for the string.
 //
-
 REBINT Hash_Word(const REBYTE *str, REBCNT len)
 {
 	REBINT m, n;
@@ -185,7 +180,6 @@ REBINT Hash_Word(const REBYTE *str, REBCNT len)
 //      Result will be > 0 and < hash_size, except if
 //      datatype cannot be hashed, a 0 is returned.
 //
-
 REBINT Hash_Value(REBVAL *val, REBCNT hash_size)
 {
 	REBCNT ret;
@@ -270,7 +264,6 @@ REBINT Hash_Value(REBVAL *val, REBCNT hash_size)
 //
 //  Make_Hash_Sequence: C
 //
-
 REBSER *Make_Hash_Sequence(REBCNT len)
 {
 	REBCNT n;
@@ -295,7 +288,6 @@ REBSER *Make_Hash_Sequence(REBCNT len)
 //      field of the REBSER which needs to be given to memory
 //      management as well.
 //
-
 void Val_Init_Map(REBVAL *out, REBSER *ser)
 {
 	Val_Init_Series(out, REB_MAP, ser);
@@ -312,7 +304,6 @@ void Val_Init_Map(REBVAL *out, REBSER *ser)
 //  
 //      Note: hash array contents (indexes) are 1-based!
 //
-
 REBSER *Hash_Block(REBVAL *block, REBCNT cased)
 {
 	REBCNT n;
@@ -337,7 +328,6 @@ REBSER *Hash_Block(REBVAL *block, REBCNT cased)
 //
 //  Init_CRC: C
 //
-
 void Init_CRC(void)
 {
 	CRC_Table = ALLOC_ARRAY(REBCNT, 256);
@@ -351,7 +341,6 @@ void Init_CRC(void)
 //      Compute an IP checksum given some data and a length.
 //      Used only on BINARY values.
 //
-
 REBINT Compute_IPC(REBYTE *data, REBCNT length)
 {
 	REBCNT	lSum = 0;	// stores the summation
@@ -410,7 +399,6 @@ REBCNT Update_CRC32(u32 crc, REBYTE *buf, int len) {
 //
 //  CRC32: C
 //
-
 REBCNT CRC32(REBYTE *buf, REBCNT len)
 {
 	return Update_CRC32(U32_C(0x00000000), buf, len);

@@ -42,7 +42,6 @@
 //
 //  Console_Actor: C
 //
-
 static REB_R Console_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
 	REBREQ *req;
@@ -139,7 +138,6 @@ static REB_R Console_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 //
 //  Init_Console_Scheme: C
 //
-
 void Init_Console_Scheme(void)
 {
 	Register_Scheme(SYM_CONSOLE, 0, Console_Actor);

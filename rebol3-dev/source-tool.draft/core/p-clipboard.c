@@ -33,7 +33,6 @@
 //
 //  Clipboard_Actor: C
 //
-
 static REB_R Clipboard_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
 	REBREQ *req;
@@ -185,7 +184,6 @@ static REB_R Clipboard_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action
 //
 //  Init_Clipboard_Scheme: C
 //
-
 void Init_Clipboard_Scheme(void)
 {
 	Register_Scheme(SYM_CLIPBOARD, 0, Clipboard_Actor);

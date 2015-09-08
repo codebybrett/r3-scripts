@@ -48,7 +48,6 @@ enum {
 //  
 //      Do set operations on a series.
 //
-
 static REBINT Do_Set_Operation(struct Reb_Call *call_, REBCNT flags)
 {
 	REBVAL *val;
@@ -242,7 +241,6 @@ static REBINT Do_Set_Operation(struct Reb_Call *call_, REBCNT flags)
 //      /skip "treat the series as records of fixed size"
 //      size [integer!]
 //
-
 REBNATIVE(difference)
 {
 	REBVAL *val1, *val2;
@@ -271,7 +269,6 @@ REBNATIVE(difference)
 //      size [integer!]
 //  ]
 //
-
 REBNATIVE(exclude)
 {
 	return Do_Set_Operation(call_, SET_OP_EXCLUDE);
@@ -288,7 +285,6 @@ REBNATIVE(exclude)
 //      size [integer!]
 //  ]
 //
-
 REBNATIVE(intersect)
 {
 	return Do_Set_Operation(call_, SET_OP_INTERSECT);
@@ -305,7 +301,6 @@ REBNATIVE(intersect)
 //      size [integer!]
 //  ]
 //
-
 REBNATIVE(union)
 {
 	return Do_Set_Operation(call_, SET_OP_UNION);
@@ -321,7 +316,6 @@ REBNATIVE(union)
 //      size [integer!]
 //  ]
 //
-
 REBNATIVE(unique)
 {
 	return Do_Set_Operation(call_, SET_OP_UNIQUE);

@@ -33,7 +33,6 @@
 //
 //  REBCNT_To_Bytes: C
 //
-
 void REBCNT_To_Bytes(REBYTE *out, REBCNT in)
 {
 	assert(sizeof(REBCNT) == 4);
@@ -47,7 +46,6 @@ void REBCNT_To_Bytes(REBYTE *out, REBCNT in)
 //
 //  Bytes_To_REBCNT: C
 //
-
 REBCNT Bytes_To_REBCNT(const REBYTE * const in)
 {
 	assert(sizeof(REBCNT) == 4);
@@ -61,7 +59,6 @@ REBCNT Bytes_To_REBCNT(const REBYTE * const in)
 //
 //  Find_Int: C
 //
-
 REBCNT Find_Int(REBINT *array, REBINT num)
 {
 	REBCNT n;
@@ -79,7 +76,6 @@ REBCNT Find_Int(REBINT *array, REBINT num)
 //      Allow multiple types. Throw error if not valid.
 //      Note that the result is one-based.
 //
-
 REBINT Get_Num_Arg(REBVAL *val)
 {
 	REBINT n;
@@ -104,7 +100,6 @@ REBINT Get_Num_Arg(REBVAL *val)
 //
 //  Float_Int16: C
 //
-
 REBINT Float_Int16(REBD32 f)
 {
 	if (fabs(f) > (REBD32)(0x7FFF)) {
@@ -118,7 +113,6 @@ REBINT Float_Int16(REBD32 f)
 //
 //  Int32: C
 //
-
 REBINT Int32(const REBVAL *val)
 {
 	REBINT n = 0;
@@ -146,7 +140,6 @@ REBINT Int32(const REBVAL *val)
 //          1: >  0
 //         -1: <  0
 //
-
 REBINT Int32s(const REBVAL *val, REBINT sign)
 {
 	REBINT n = 0;
@@ -179,7 +172,6 @@ REBINT Int32s(const REBVAL *val, REBINT sign)
 //
 //  Int64: C
 //
-
 REBI64 Int64(const REBVAL *val)
 {
 	if (IS_INTEGER(val)) return VAL_INT64(val);
@@ -193,7 +185,6 @@ REBI64 Int64(const REBVAL *val)
 //
 //  Dec64: C
 //
-
 REBDEC Dec64(const REBVAL *val)
 {
 	if (IS_DECIMAL(val) || IS_PERCENT(val)) return VAL_DECIMAL(val);
@@ -213,7 +204,6 @@ REBDEC Dec64(const REBVAL *val)
 //          1: >  0
 //         -1: <  0
 //
-
 REBI64 Int64s(const REBVAL *val, REBINT sign)
 {
 	REBI64 n;
@@ -242,7 +232,6 @@ REBI64 Int64s(const REBVAL *val, REBINT sign)
 //
 //  Int8u: C
 //
-
 REBINT Int8u(const REBVAL *val)
 {
 	if (VAL_INT64(val) > (i64)255 || VAL_INT64(val) < (i64)0) Trap_Range_DEAD_END(val);
@@ -256,7 +245,6 @@ REBINT Int8u(const REBVAL *val)
 //      Scans the stack for function refinements that have been
 //      specified in the mask (each as a bit) and are being used.
 //
-
 REBCNT Find_Refines(struct Reb_Call *call_, REBCNT mask)
 {
 	REBINT n;
@@ -275,7 +263,6 @@ REBCNT Find_Refines(struct Reb_Call *call_, REBCNT mask)
 //
 //  Set_Datatype: C
 //
-
 void Set_Datatype(REBVAL *value, REBINT n)
 {
 	*value = *BLK_SKIP(Lib_Context, n+1);
@@ -288,7 +275,6 @@ void Set_Datatype(REBVAL *value, REBINT n)
 //      Returns the specified datatype value from the system context.
 //      The datatypes are all at the head of the context.
 //
-
 REBVAL *Get_Type(REBCNT index)
 {
 	assert(index < SERIES_TAIL(Lib_Context));
@@ -302,7 +288,6 @@ REBVAL *Get_Type(REBCNT index)
 //      Returns the datatype value for the given value.
 //      The datatypes are all at the head of the context.
 //
-
 REBVAL *Of_Type(const REBVAL *value)
 {
 	return FRM_VALUES(Lib_Context) + VAL_TYPE(value) + 1;
@@ -314,7 +299,6 @@ REBVAL *Of_Type(const REBVAL *value)
 //  
 //      Returns the datatype word for the given type number.
 //
-
 REBINT Get_Type_Sym(REBCNT type)
 {
 	return FRM_WORD_SYM(Lib_Context, type + 1);
@@ -326,7 +310,6 @@ REBINT Get_Type_Sym(REBCNT type)
 //  
 //      Returns the datatype word for the given type number.
 //
-
 REBVAL *Get_Type_Word(REBCNT type)
 {
 	return FRM_WORD(Lib_Context, type + 1);
@@ -338,7 +321,6 @@ REBVAL *Get_Type_Word(REBCNT type)
 //  
 //      Get the name of a field of an object.
 //
-
 const REBYTE *Get_Field_Name(REBSER *obj, REBCNT index)
 {
 	assert(index < SERIES_TAIL(obj));
@@ -351,7 +333,6 @@ const REBYTE *Get_Field_Name(REBSER *obj, REBCNT index)
 //  
 //      Get an instance variable from an object series.
 //
-
 REBVAL *Get_Field(REBSER *obj, REBCNT index)
 {
 	assert(index < SERIES_TAIL(obj));
@@ -364,7 +345,6 @@ REBVAL *Get_Field(REBSER *obj, REBCNT index)
 //  
 //      Get an instance variable from an object value.
 //
-
 REBVAL *Get_Object(const REBVAL *objval, REBCNT index)
 {
 	REBSER *obj = VAL_OBJ_FRAME(objval);
@@ -380,7 +360,6 @@ REBVAL *Get_Object(const REBVAL *objval, REBCNT index)
 //      Get value from nested list of objects. List is null terminated.
 //      Returns object value, else returns 0 if not found.
 //
-
 REBVAL *In_Object(REBSER *base, ...)
 {
 	REBVAL *obj = 0;
@@ -411,7 +390,6 @@ REBVAL *In_Object(REBSER *base, ...)
 //  
 //      Return a second level object field of the system object.
 //
-
 REBVAL *Get_System(REBCNT i1, REBCNT i2)
 {
 	REBVAL *obj;
@@ -428,7 +406,6 @@ REBVAL *Get_System(REBCNT i1, REBCNT i2)
 //  
 //      Get an integer from system object.
 //
-
 REBINT Get_System_Int(REBCNT i1, REBCNT i2, REBINT default_int)
 {
 	REBVAL *val = Get_System(i1, i2);
@@ -440,7 +417,6 @@ REBINT Get_System_Int(REBCNT i1, REBCNT i2, REBINT default_int)
 //
 //  Make_Std_Object: C
 //
-
 REBSER *Make_Std_Object(REBCNT index)
 {
 	return Copy_Array_Shallow(
@@ -452,7 +428,6 @@ REBSER *Make_Std_Object(REBCNT index)
 //
 //  Set_Object_Values: C
 //
-
 void Set_Object_Values(REBSER *obj, REBVAL *vals)
 {
 	REBVAL *value;
@@ -469,7 +444,6 @@ void Set_Object_Values(REBSER *obj, REBVAL *vals)
 //  
 //      Common function.
 //
-
 void Val_Init_Series_Index_Core(REBVAL *value, enum Reb_Kind type, REBSER *series, REBCNT index)
 {
 	ENSURE_SERIES_MANAGED(series);
@@ -483,7 +457,6 @@ void Val_Init_Series_Index_Core(REBVAL *value, enum Reb_Kind type, REBSER *serie
 //
 //  Set_Tuple: C
 //
-
 void Set_Tuple(REBVAL *value, REBYTE *bytes, REBCNT len)
 {
 	REBYTE *bp;
@@ -498,7 +471,6 @@ void Set_Tuple(REBVAL *value, REBYTE *bytes, REBCNT len)
 //
 //  Val_Init_Object: C
 //
-
 void Val_Init_Object(REBVAL *value, REBSER *series)
 {
 	ENSURE_FRAME_MANAGED(series);
@@ -513,7 +485,6 @@ void Val_Init_Object(REBVAL *value, REBSER *series)
 //  
 //      Get length of series, but avoid negative values.
 //
-
 REBCNT Val_Series_Len(const REBVAL *value)
 {
 	if (VAL_INDEX(value) >= VAL_TAIL(value)) return 0;
@@ -526,7 +497,6 @@ REBCNT Val_Series_Len(const REBVAL *value)
 //  
 //      Get length of series in bytes.
 //
-
 REBCNT Val_Byte_Len(const REBVAL *value)
 {
 	if (VAL_INDEX(value) >= VAL_TAIL(value)) return 0;
@@ -537,7 +507,6 @@ REBCNT Val_Byte_Len(const REBVAL *value)
 //
 //  Get_Logic_Arg: C
 //
-
 REBFLG Get_Logic_Arg(REBVAL *arg)
 {
 	if (IS_NONE(arg)) return 0;
@@ -555,7 +524,6 @@ REBFLG Get_Logic_Arg(REBVAL *arg)
 //      Process the /part (or /skip) and other length modifying
 //      arguments.
 //
-
 REBINT Partial1(REBVAL *sval, REBVAL *lval)
 {
 	REBI64 len;
@@ -612,7 +580,6 @@ REBINT Partial1(REBVAL *sval, REBVAL *lval)
 //      NOTE: Can modify the value's index!
 //      The result can be negative. ???
 //
-
 REBINT Partial(REBVAL *aval, REBVAL *bval, REBVAL *lval, REBFLG flag)
 {
 	REBVAL *val;
@@ -668,7 +635,6 @@ REBINT Partial(REBVAL *aval, REBVAL *bval, REBVAL *lval, REBFLG flag)
 //
 //  Clip_Int: C
 //
-
 int Clip_Int(int val, int mini, int maxi)
 {
 	if (val < mini) val = mini;
@@ -682,7 +648,6 @@ int Clip_Int(int val, int mini, int maxi)
 //      For long integer memory units, not chars. It is assumed that
 //      the len is an exact modulo of long.
 //
-
 void memswapl(void *m1, void *m2, size_t len)
 {
 	long t, *a, *b;
@@ -701,7 +666,6 @@ void memswapl(void *m1, void *m2, size_t len)
 //
 //  Add_Max: C
 //
-
 i64 Add_Max(int type, i64 n, i64 m, i64 maxi)
 {
 	i64 r = n + m;
@@ -716,7 +680,6 @@ i64 Add_Max(int type, i64 n, i64 m, i64 maxi)
 //
 //  Mul_Max: C
 //
-
 int Mul_Max(int type, i64 n, i64 m, i64 maxi)
 {
 	i64 r = n * m;
@@ -728,7 +691,6 @@ int Mul_Max(int type, i64 n, i64 m, i64 maxi)
 //
 //  Make_OS_Error: C
 //
-
 void Make_OS_Error(REBVAL *out, int errnum)
 {
 	REBCHR str[100];
@@ -745,7 +707,6 @@ void Make_OS_Error(REBVAL *out, int errnum)
 //      offset, return a copy of the series from that position.
 //      Useful for functions that do not accept index offsets.
 //
-
 REBSER *At_Head(REBVAL *value)
 {
 	REBCNT len;
@@ -771,7 +732,6 @@ REBSER *At_Head(REBVAL *value)
 //  
 //      Scan a block, collecting all of its SET words as a block.
 //
-
 REBSER *Collect_Set_Words(REBVAL *val)
 {
 	REBCNT cnt = 0;
@@ -797,7 +757,6 @@ REBSER *Collect_Set_Words(REBVAL *val)
 //
 //  What_Reflector: C
 //
-
 REBINT What_Reflector(REBVAL *word)
 {
 	if (IS_WORD(word)) {

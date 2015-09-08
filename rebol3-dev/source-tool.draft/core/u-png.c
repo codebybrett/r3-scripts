@@ -706,7 +706,6 @@ static void emitchunk(unsigned char **cpp,const char *type,const char *data,int 
 //      Output: PNG encoded image (codi->data, len)
 //      Error:  Code in codi->error
 //
-
 void Encode_PNG_Image(REBCDI *codi)
 {
 	REBINT w = codi->w;
@@ -821,7 +820,6 @@ error:
 //      Output: Image bits (codi->extra.bits, w, h)
 //      Error:  Code in codi->error
 //
-
 void Decode_PNG_Image(REBCDI *codi)
 {
 	int w, h;
@@ -840,7 +838,6 @@ void Decode_PNG_Image(REBCDI *codi)
 //
 //  Codec_PNG_Image: C
 //
-
 REBINT Codec_PNG_Image(REBCDI *codi)
 {
 	codi->error = 0;
@@ -875,7 +872,6 @@ REBINT Codec_PNG_Image(REBCDI *codi)
 //
 //  Init_PNG_Codec: C
 //
-
 void Init_PNG_Codec(void)
 {
 	Register_Codec(cb_cast("png"), Codec_PNG_Image);

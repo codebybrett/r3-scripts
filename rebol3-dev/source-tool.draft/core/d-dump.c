@@ -37,7 +37,6 @@
 //
 //  Dump_Series: C
 //
-
 void Dump_Series(REBSER *series, const char *memo)
 {
 	if (!series) return;
@@ -62,7 +61,6 @@ void Dump_Series(REBSER *series, const char *memo)
 //
 //  Dump_Bytes: C
 //
-
 void Dump_Bytes(REBYTE *bp, REBCNT limit)
 {
 	const REBCNT max_lines = 120;
@@ -115,7 +113,6 @@ void Dump_Bytes(REBYTE *bp, REBCNT limit)
 //      Print out values in raw hex; If memory is corrupted
 //      this function still needs to work.
 //
-
 void Dump_Values(REBVAL *vp, REBCNT count)
 {
 	REBYTE buf[2048];
@@ -158,7 +155,6 @@ void Dump_Values(REBVAL *vp, REBCNT count)
 //
 //  Dump_Info: C
 //
-
 void Dump_Info(void)
 {
 	REBINT n;
@@ -188,7 +184,6 @@ void Dump_Info(void)
 //
 //  Dump_Stack: C
 //
-
 void Dump_Stack(struct Reb_Call *call, REBINT dsp)
 {
 	REBINT n;

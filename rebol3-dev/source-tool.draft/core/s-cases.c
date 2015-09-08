@@ -908,7 +908,6 @@ static const REBUNI Char_Cases[] = {
 //      Initialize the Unicode character casing tables.
 //      These tables support simple 1-to-1 casing methods.
 //
-
 void Init_Char_Cases(void)
 {
 	const REBUNI *up;

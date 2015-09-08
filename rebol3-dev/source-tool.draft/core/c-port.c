@@ -39,7 +39,6 @@
 //      Create a new port. This is done by calling the MAKE_PORT
 //      function stored in the system/intrinsic object.
 //
-
 void Make_Port(REBVAL *out, const REBVAL *spec)
 {
 	if (!Do_Sys_Func(out, SYS_CTX_MAKE_PORT_P, spec, 0)) {
@@ -59,7 +58,6 @@ void Make_Port(REBVAL *out, const REBVAL *spec)
 //      Standard method for checking if port is open.
 //      A convention. Not all ports use this method.
 //
-
 REBFLG Is_Port_Open(REBSER *port)
 {
 	REBVAL *state = BLK_SKIP(port, STD_PORT_STATE);
@@ -74,7 +72,6 @@ REBFLG Is_Port_Open(REBSER *port)
 //      Standard method for setting a port open/closed.
 //      A convention. Not all ports use this method.
 //
-
 void Set_Port_Open(REBSER *port, REBFLG flag)
 {
 	REBVAL *state = BLK_SKIP(port, STD_PORT_STATE);
@@ -92,7 +89,6 @@ void Set_Port_Open(REBSER *port, REBFLG flag)
 //      The size is that of a binary structure used by
 //      the port for storing internal information.
 //
-
 void *Use_Port_State(REBSER *port, REBCNT device, REBCNT size)
 {
 	REBVAL *state = BLK_SKIP(port, STD_PORT_STATE);
@@ -121,7 +117,6 @@ void *Use_Port_State(REBSER *port, REBCNT device, REBCNT size)
 //      Return TRUE if port value is pending a signal.
 //      Not valid for all ports - requires request struct!!!
 //
-
 REBFLG Pending_Port(REBVAL *port)
 {
 	REBVAL *state;
@@ -146,7 +141,6 @@ REBFLG Pending_Port(REBVAL *port)
 //       0 for nothing to do
 //       1 for wait is satisifed
 //
-
 REBINT Awake_System(REBSER *ports, REBINT only)
 {
 	REBVAL *port;
@@ -203,7 +197,6 @@ REBINT Awake_System(REBSER *ports, REBINT only)
 //  Returns:
 //      TRUE when port action happened, or FALSE for timeout.
 //
-
 REBINT Wait_Ports(REBSER *ports, REBCNT timeout, REBINT only)
 {
 	REBI64 base = OS_DELTA_TIME(0, 0);
@@ -257,7 +250,6 @@ REBINT Wait_Ports(REBSER *ports, REBCNT timeout, REBINT only)
 //      Remove all ports not found in the WAKE list.
 //      ports could be NULL, in which case the WAKE list is cleared.
 //
-
 void Sieve_Ports(REBSER *ports)
 {
 	REBVAL *port;
@@ -292,7 +284,6 @@ void Sieve_Ports(REBSER *ports)
 //      Given an action number, return the action's index in
 //      the specified object. If not found, a zero is returned.
 //
-
 REBCNT Find_Action(REBVAL *object, REBCNT action)
 {
 	return Find_Word_Index(VAL_OBJ_FRAME(object), VAL_BIND_SYM(Get_Action_Word(action)), FALSE);
@@ -308,7 +299,6 @@ REBCNT Find_Action(REBVAL *object, REBCNT action)
 //      NOTE: stack must already be setup correctly for action, and
 //      the caller must cleanup the stack.
 //
-
 int Do_Port_Action(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
 	REBVAL *actor;
@@ -371,7 +361,6 @@ int Do_Port_Action(struct Reb_Call *call_, REBSER *port, REBCNT action)
 //      name: value that holds the original user spec
 //      path: the local path to compare with
 //
-
 void Secure_Port(REBCNT kind, REBREQ *req, REBVAL *name, REBSER *path)
 {
 	REBYTE *flags;
@@ -393,7 +382,6 @@ void Secure_Port(REBCNT kind, REBREQ *req, REBVAL *name, REBSER *path)
 //      Because port actors are exposed to the user level, we must
 //      prevent them from being called with invalid values.
 //
-
 void Validate_Port(REBSER *port, REBCNT action)
 {
 	if (
@@ -451,7 +439,6 @@ SCHEME_ACTIONS *Scheme_Actions;	// Initial Global (not threaded)
 //      Associate a scheme word (e.g. FILE) with a set of native
 //      scheme actions. This will be used by the Set_Scheme native
 //
-
 void Register_Scheme(REBCNT sym, const PORT_ACTION *map, REBPAF fun)
 {
 	REBINT n;
@@ -471,7 +458,6 @@ void Register_Scheme(REBCNT sym, const PORT_ACTION *map, REBPAF fun)
 //      scheme [object!]
 //  ]
 //
-
 REBNATIVE(set_scheme)
 {
 	REBVAL *scheme;
@@ -556,7 +542,6 @@ REBNATIVE(set_scheme)
 //      Add an Init_*_Scheme() here.
 //      Be sure host-devices.c has the device enabled.
 //
-
 void Init_Ports(void)
 {
 	Scheme_Actions = ALLOC_ARRAY(SCHEME_ACTIONS, MAX_SCHEMES);

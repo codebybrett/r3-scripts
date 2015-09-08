@@ -114,7 +114,6 @@ REBOOL almost_equal(REBDEC a, REBDEC b, REBCNT max_diff) {
 //
 //  MT_Decimal: C
 //
-
 REBFLG MT_Decimal(REBVAL *out, REBVAL *data, REBCNT type)
 {
 	if (!IS_END(data+1)) return FALSE;
@@ -134,7 +133,6 @@ REBFLG MT_Decimal(REBVAL *out, REBVAL *data, REBCNT type)
 //
 //  Eq_Decimal: C
 //
-
 REBFLG Eq_Decimal(REBDEC a, REBDEC b)
 {
 	return almost_equal(a, b, 10);
@@ -152,7 +150,6 @@ REBFLG Eq_Decimal(REBDEC a, REBDEC b)
 //
 //  Eq_Decimal2: C
 //
-
 REBFLG Eq_Decimal2(REBDEC a, REBDEC b)
 {
 	return almost_equal(a, b, 0);
@@ -169,7 +166,6 @@ REBFLG Eq_Decimal2(REBDEC a, REBDEC b)
 //
 //  CT_Decimal: C
 //
-
 REBINT CT_Decimal(REBVAL *a, REBVAL *b, REBINT mode)
 {
 	if (mode >= 0) {
@@ -184,7 +180,6 @@ REBINT CT_Decimal(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  Check_Overflow: C
 //
-
 static void Check_Overflow(REBDEC dval)
 {
 	if (!FINITE(dval)) Trap(RE_OVERFLOW);
@@ -194,7 +189,6 @@ static void Check_Overflow(REBDEC dval)
 //
 //  Binary_To_Decimal: C
 //
-
 static void Binary_To_Decimal(REBVAL *bin, REBVAL *dec)
 {
 	REBI64 n = 0;
@@ -214,7 +208,6 @@ static void Binary_To_Decimal(REBVAL *bin, REBVAL *dec)
 //
 //  REBTYPE: C
 //
-
 REBTYPE(Decimal)
 {
 	REBVAL  *val = D_ARG(1);
