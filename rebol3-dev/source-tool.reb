@@ -225,8 +225,6 @@ source-tool: context [
 
 				parts: collect [
 
-					keep newline
-
 					if def/pre-comment [
 						keep def/pre-comment
 						keep newline
