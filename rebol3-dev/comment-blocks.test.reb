@@ -6,22 +6,22 @@ do %comment-blocks.reb
 
 print mold requirements 'encode-lines [
 
-	[quote {**^/} = encode-lines {**} {  } {}]
-	[quote {**  x^/} = encode-lines {**} {  } {x}]
-	[quote {**  x^/**^/} = encode-lines {**} {  } {x^/}]
-	[quote {**^/**  x^/} = encode-lines {**} {  } {^/x}]
-	[quote {**^/**  x^/**^/} = encode-lines {**} {  } {^/x^/}]
-	[quote {**  x^/**    y^/**      z^/} = encode-lines {**} {  } {x^/  y^/    z}]
+	[quote {**^/} = encode-lines {} {**} {  }]
+	[quote {**  x^/} = encode-lines {x} {**} {  }]
+	[quote {**  x^/**^/} = encode-lines {x^/} {**} {  }]
+	[quote {**^/**  x^/} = encode-lines {^/x} {**} {  }]
+	[quote {**^/**  x^/**^/} = encode-lines {^/x^/} {**} {  }]
+	[quote {**  x^/**    y^/**      z^/} = encode-lines {x^/  y^/    z} {**} {  }]
 ]
 
 print mold requirements 'decode-lines [
 
-	[quote {} = decode-lines {**} {  } {**^/} ]
-	[quote {x} = decode-lines {**} {  } {**  x^/} ]
- 	[quote {x^/} = decode-lines {**} {  } {**  x^/**^/} ]
-	[quote {^/x} = decode-lines {**} {  } {**^/**  x^/} ]
-	[quote {^/x^/} = decode-lines {**} {  } {**^/**  x^/**^/} ]
-	[quote {x^/  y^/    z} = decode-lines {**} {  } {**  x^/**    y^/**      z^/} ]
+	[quote {} = decode-lines {**^/} {**} {  } ]
+	[quote {x} = decode-lines {**  x^/} {**} {  } ]
+ 	[quote {x^/} = decode-lines {**  x^/**^/} {**} {  } ]
+	[quote {^/x} = decode-lines {**^/**  x^/} {**} {  } ]
+	[quote {^/x^/} = decode-lines {**^/**  x^/**^/} {**} {  } ]
+	[quote {x^/  y^/    z} = decode-lines {**  x^/**    y^/**      z^/} {**} {  } ]
 ]
 
 print mold requirements 'load-until-blank [

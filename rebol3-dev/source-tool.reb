@@ -165,7 +165,7 @@ source-tool: context [
 
 				slashed: func [text] [
 
-					encode-lines {//} {  } text
+					encode-lines copy text {//} {  }
 				]
 
 				starred: funct [text] [
@@ -174,7 +174,7 @@ source-tool: context [
 
 					rejoin [
 						{/*} line* width newline
-						encode-lines {**} {  } text
+						encode-lines copy text {**} {  }
 						line* width {*/} newline
 					]
 				]
@@ -205,7 +205,7 @@ source-tool: context [
 				]
 
 				if lines [
-					lines: decode-lines prefix {  } lines
+					lines: decode-lines lines prefix {  }
 					load-until-blank lines
 				]
 			]

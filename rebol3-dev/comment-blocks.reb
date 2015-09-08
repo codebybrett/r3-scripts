@@ -26,16 +26,15 @@ either system/version > 2.100.0 [; Rebol3
 
 decode-lines: funct [
 	{Decode string from prefixed lines (e.g. comments).}
+	string [string!]
 	line-prefix [string!] {Usually "**" or "//".}
 	indent [string!] {Usually "  ".}
-	string [string!]
 ] [
 	if not parse/all string [any [line-prefix thru newline]][
 		do make error! reform [{decode-lines expects each line to begin with} mold line-prefix { and finish with a newline.}]
 	]
-	string: copy string
 	insert string newline
-	replace/all string {^/**} newline
+	replace/all string join newline line-prefix newline
 	if not empty? indent [
 		replace/all string join newline indent newline
 	]
@@ -46,9 +45,9 @@ decode-lines: funct [
 
 encode-lines: func [
 	{Encode block into prefixed lines (e.g. comments).}
+	string [string!]
 	line-prefix [string!] {Usually "**" or "//".}
 	indent [string!] {Usually "  ".}
-	string [string!]
 	/local text bol pos
 ] [
 
