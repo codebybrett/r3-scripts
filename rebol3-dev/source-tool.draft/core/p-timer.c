@@ -41,14 +41,9 @@
 #include "sys-core.h"
 
 
-/*******************************************************************************
-**
-**  Name: "Event_Actor"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Event_Actor: C
+//
 
 static REB_R Event_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
@@ -123,14 +118,9 @@ act_blk:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Timer_Scheme"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Timer_Scheme: C
+//
 
 void Init_Timer_Scheme(void)
 {

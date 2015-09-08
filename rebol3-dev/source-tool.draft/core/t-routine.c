@@ -282,14 +282,9 @@ static void init_type_map()
 	struct_type_to_ffi[STRUCT_TYPE_POINTER] = &ffi_type_pointer;
 }
 
-/*******************************************************************************
-**
-**  Name: "CT_Routine"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Routine: C
+//
 
 REBINT CT_Routine(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -300,14 +295,9 @@ REBINT CT_Routine(REBVAL *a, REBVAL *b, REBINT mode)
 	return -1;
 }
 
-/*******************************************************************************
-**
-**  Name: "CT_Callback"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Callback: C
+//
 
 REBINT CT_Callback(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -716,14 +706,9 @@ static void ffi_to_rebol(REBRIN *rin,
 	}
 }
 
-/*******************************************************************************
-**
-**  Name: "Call_Routine"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Call_Routine: C
+//
 
 void Call_Routine(const REBVAL *rot, REBSER *args, REBVAL *ret)
 {
@@ -853,14 +838,9 @@ void Call_Routine(const REBVAL *rot, REBSER *args, REBVAL *ret)
 	GC_Protect->tail = GC_Protect_tail;
 }
 
-/*******************************************************************************
-**
-**  Name: "Free_Routine"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Free_Routine: C
+//
 
 void Free_Routine(REBRIN *rin)
 {
@@ -1025,24 +1005,20 @@ static void callback_dispatcher(ffi_cif *cif, void *ret, void **args, void *user
 	UNSAVE_SERIES(ser);
 }
 
-/*******************************************************************************
-**
-**  Name: "MT_Routine"
-**  Summary: none
-**  Details: {
-**   format:
-**   make routine! [[
-**   "document"
-**   arg1 [type1 type2] "note"
-**   arg2 [type3] "note"
-**   ...
-**   argn [typen] "note"
-**   return: [type] "note"
-**   abi: word "note"
-**   ] lib "name"]}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_Routine: C
+//  
+//   format:
+//   make routine! [[
+//       "document"
+//       arg1 [type1 type2] "note"
+//       arg2 [type3] "note"
+//       ...
+//       argn [typen] "note"
+//       return: [type] "note"
+//       abi: word "note"
+//   ] lib "name"]
+//
 
 REBFLG MT_Routine(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -1358,14 +1334,9 @@ REBFLG MT_Routine(REBVAL *out, REBVAL *data, REBCNT type)
 	return ret;
 }
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Routine)
 {
@@ -1412,14 +1383,9 @@ REBTYPE(Routine)
 	return R_OUT;
 }
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Callback)
 {

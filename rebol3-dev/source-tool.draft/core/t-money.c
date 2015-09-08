@@ -31,14 +31,9 @@
 #include "sys-deci-funcs.h"
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Money"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Money: C
+//
 
 REBINT CT_Money(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -60,14 +55,9 @@ REBINT CT_Money(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Emit_Money"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Emit_Money: C
+//
 
 REBINT Emit_Money(const REBVAL *value, REBYTE *buf, REBCNT opts)
 {
@@ -75,14 +65,9 @@ REBINT Emit_Money(const REBVAL *value, REBYTE *buf, REBCNT opts)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Bin_To_Money"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Bin_To_Money: C
+//
 
 REBINT Bin_To_Money(REBVAL *result, REBVAL *val)
 {
@@ -123,14 +108,9 @@ REBINT Bin_To_Money(REBVAL *result, REBVAL *val)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Money)
 {

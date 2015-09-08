@@ -33,16 +33,12 @@
 /** Helper Functions **************************************************/
 
 
-/*******************************************************************************
-**
-**  Name: "echo"
-**  Summary: "Copies console output to a file."
-**  Details: none
-**  Spec: [
-**      <1> target
-**  ]
-**
-*******************************************************************************/
+//
+//  echo: native [
+//      "Copies console output to a file."
+//      target [file! none! logic!]
+//  ]
+//
 
 REBNATIVE(echo)
 {
@@ -65,21 +61,18 @@ REBNATIVE(echo)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "form"
-**  Summary: "Converts a value to a human-readable string."
-**  Details: {
-**      Converts a value to a REBOL readable string.
-**      value    "The value to mold"
-**      /only   "For a block value, give only contents, no outer [ ]"
-**      /all    "Mold in serialized format"
-**      /flat    "No line indentation"}
-**  Spec: [
-**      <1> value
-**  ]
-**
-*******************************************************************************/
+//
+//  form: native [
+//      "Converts a value to a human-readable string."
+//      value [any-type!] "The value to form"
+//  ]
+//  
+//      Converts a value to a REBOL readable string.
+//      value    "The value to mold"
+//      /only   "For a block value, give only contents, no outer [ ]"
+//      /all    "Mold in serialized format"
+//      /flat    "No line indentation"
+//
 
 REBNATIVE(form)
 {
@@ -88,24 +81,21 @@ REBNATIVE(form)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "mold"
-**  Summary: "Converts a value to a REBOL-readable string."
-**  Details: {
-**      Converts a value to a REBOL readable string.
-**      value    "The value to mold"
-**      /only   "For a block value, give only contents, no outer [ ]"
-**      /all    "Mold in serialized format"
-**      /flat    "No line indentation"}
-**  Spec: [
-**      <1> value
-**      <2> /only
-**      <3> /all
-**      <4> /flat
-**  ]
-**
-*******************************************************************************/
+//
+//  mold: native [
+//      "Converts a value to a REBOL-readable string."
+//      value [any-type!] "The value to mold"
+//      /only {For a block value, mold only its contents, no outer []}
+//      /all "Use construction syntax"
+//      /flat "No indentation"
+//  ]
+//  
+//      Converts a value to a REBOL readable string.
+//      value    "The value to mold"
+//      /only   "For a block value, give only contents, no outer [ ]"
+//      /all    "Mold in serialized format"
+//      /flat    "No line indentation"
+//
 
 REBNATIVE(mold)
 {
@@ -127,16 +117,12 @@ REBNATIVE(mold)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "print"
-**  Summary: "Outputs a value followed by a line break."
-**  Details: none
-**  Spec: [
-**      <1> value
-**  ]
-**
-*******************************************************************************/
+//
+//  print: native [
+//      "Outputs a value followed by a line break."
+//      value [any-type!] "The value to print"
+//  ]
+//
 
 REBNATIVE(print)
 {
@@ -152,16 +138,12 @@ REBNATIVE(print)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "prin"
-**  Summary: "Outputs a value with no line break."
-**  Details: none
-**  Spec: [
-**      <1> value
-**  ]
-**
-*******************************************************************************/
+//
+//  prin: native [
+//      "Outputs a value with no line break."
+//      value [any-type!]
+//  ]
+//
 
 REBNATIVE(prin)
 {
@@ -177,20 +159,16 @@ REBNATIVE(prin)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "new_line"
-**  Summary: {Sets or clears the new-line marker within a block or paren.}
-**  Details: none
-**  Spec: [
-**      <1> position
-**      <2> value
-**      <3> /all
-**      <4> /skip
-**      <5> size
-**  ]
-**
-*******************************************************************************/
+//
+//  new-line: native [
+//      {Sets or clears the new-line marker within a block or paren.}
+//      position [block! paren!] "Position to change marker (modified)"
+//      value "Set TRUE for newline"
+//      /all "Set/clear marker to end of series"
+//      /skip {Set/clear marker periodically to the end of the series}
+//      size [integer!]
+//  ]
+//
 
 REBNATIVE(new_line)
 {
@@ -218,16 +196,12 @@ REBNATIVE(new_line)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "new_lineq"
-**  Summary: {Returns the state of the new-line marker within a block or paren.}
-**  Details: none
-**  Spec: [
-**      <1> position
-**  ]
-**
-*******************************************************************************/
+//
+//  new-line?: native [
+//      {Returns the state of the new-line marker within a block or paren.}
+//      position [block! paren!] "Position to check marker"
+//  ]
+//
 
 REBNATIVE(new_lineq)
 {
@@ -236,37 +210,34 @@ REBNATIVE(new_lineq)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "now"
-**  Summary: "Returns date and time."
-**  Details: {
-**    Return the current date and time with timezone adjustment.
-**  
-**      1  /year {Returns year only.}
-**      2  /month {Returns month only.}
-**      3  /day {Returns day of the month only.}
-**      4  /time {Returns time only.}
-**      5  /zone {Returns time zone offset from GMT only.}
-**      6  /date {Returns date only.}
-**      7  /weekday {Returns day of the week as integer (Monday is day 1).}
-**      8  /yearday {Returns day of the year (Julian)}
-**      9  /precise {Higher precision}
-**      10 /utc {Universal time (no zone)}}
-**  Spec: [
-**      <1> /year
-**      <2> /month
-**      <3> /day
-**      <4> /time
-**      <5> /zone
-**      <6> /date
-**      <7> /weekday
-**      <8> /yearday
-**      <9> /precise
-**      <10> /utc
-**  ]
-**
-*******************************************************************************/
+//
+//  now: native [
+//      "Returns date and time."
+//      /year "Returns year only"
+//      /month "Returns month only"
+//      /day "Returns day of the month only"
+//      /time "Returns time only"
+//      /zone "Returns time zone offset from UCT (GMT) only"
+//      /date "Returns date only"
+//      /weekday {Returns day of the week as integer (Monday is day 1)}
+//      /yearday "Returns day of the year (Julian)"
+//      /precise "High precision time"
+//      /utc "Universal time (no zone)"
+//  ]
+//  
+//  Return the current date and time with timezone adjustment.
+//  
+//      1  /year {Returns year only.}
+//      2  /month {Returns month only.}
+//      3  /day {Returns day of the month only.}
+//      4  /time {Returns time only.}
+//      5  /zone {Returns time zone offset from GMT only.}
+//      6  /date {Returns date only.}
+//      7  /weekday {Returns day of the week as integer (Monday is day 1).}
+//      8  /yearday {Returns day of the year (Julian)}
+//      9  /precise {Higher precision}
+//      10 /utc {Universal time (no zone)}
+//
 
 REBNATIVE(now)
 {
@@ -313,18 +284,14 @@ REBNATIVE(now)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "wait"
-**  Summary: "Waits for a duration, port, or both."
-**  Details: none
-**  Spec: [
-**      <1> value
-**      <2> /all
-**      <3> /only
-**  ]
-**
-*******************************************************************************/
+//
+//  wait: native [
+//      "Waits for a duration, port, or both."
+//      value [number! time! port! block! none!]
+//      /all "Returns all in a block"
+//      /only {only check for ports given in the block to this function}
+//  ]
+//
 
 REBNATIVE(wait)
 {
@@ -402,19 +369,16 @@ chk_neg:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "wake_up"
-**  Summary: "Awake and update a port with event."
-**  Details: {
-**      Calls port update for native actors.
-**      Calls port awake function.}
-**  Spec: [
-**      <1> port
-**      <2> event
-**  ]
-**
-*******************************************************************************/
+//
+//  wake-up: native [
+//      "Awake and update a port with event."
+//      port [port!]
+//      event [event!]
+//  ]
+//  
+//      Calls port update for native actors.
+//      Calls port awake function.
+//
 
 REBNATIVE(wake_up)
 {
@@ -439,16 +403,12 @@ REBNATIVE(wake_up)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "to_rebol_file"
-**  Summary: {Converts a local system file path to a REBOL file path.}
-**  Details: none
-**  Spec: [
-**      <1> path
-**  ]
-**
-*******************************************************************************/
+//
+//  to-rebol-file: native [
+//      {Converts a local system file path to a REBOL file path.}
+//      path [file! string!]
+//  ]
+//
 
 REBNATIVE(to_rebol_file)
 {
@@ -463,17 +423,13 @@ REBNATIVE(to_rebol_file)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "to_local_file"
-**  Summary: {Converts a REBOL file path to the local system file path.}
-**  Details: none
-**  Spec: [
-**      <1> path
-**      <2> /full
-**  ]
-**
-*******************************************************************************/
+//
+//  to-local-file: native [
+//      {Converts a REBOL file path to the local system file path.}
+//      path [file! string!]
+//      /full {Prepends current dir for full path (for relative paths only)}
+//  ]
+//
 
 REBNATIVE(to_local_file)
 {
@@ -488,14 +444,9 @@ REBNATIVE(to_local_file)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "what_dir"
-**  Summary: "Returns the current directory path."
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  what-dir: native ["Returns the current directory path."]
+//
 
 REBNATIVE(what_dir)
 {
@@ -513,16 +464,12 @@ REBNATIVE(what_dir)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "change_dir"
-**  Summary: "Changes the current directory path."
-**  Details: none
-**  Spec: [
-**      <1> path
-**  ]
-**
-*******************************************************************************/
+//
+//  change-dir: native [
+//      "Changes the current directory path."
+//      path [file!]
+//  ]
+//
 
 REBNATIVE(change_dir)
 {
@@ -544,16 +491,12 @@ REBNATIVE(change_dir)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "browse"
-**  Summary: "Open web browser to a URL or local file."
-**  Details: none
-**  Spec: [
-**      <1> url
-**  ]
-**
-*******************************************************************************/
+//
+//  browse: native [
+//      "Open web browser to a URL or local file."
+//      url [url! file! none!]
+//  ]
+//
 
 REBNATIVE(browse)
 {
@@ -957,14 +900,14 @@ REBNATIVE(browse)
 }
 
 
-/***********************************************************************
-**
-*/	static REBSER *String_List_To_Block(REBCHR *str)
-/*
-**		Convert a series of null terminated strings to
-**		a block of strings separated with '='.
-**
-***********************************************************************/
+//
+//  String_List_To_Block: C
+//  
+//      Convert a series of null terminated strings to
+//      a block of strings separated with '='.
+//
+
+static REBSER *String_List_To_Block(REBCHR *str)
 {
 	REBCNT n;
 	REBCNT len = 0;
@@ -994,15 +937,15 @@ REBNATIVE(browse)
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Block_To_String_List(REBVAL *blk)
-/*
-**		Convert block of values to a string that holds
-**		a series of null terminated strings, followed
-**		by a final terminating string.
-**
-***********************************************************************/
+//
+//  Block_To_String_List: C
+//  
+//      Convert block of values to a string that holds
+//      a series of null terminated strings, followed
+//      by a final terminating string.
+//
+
+REBSER *Block_To_String_List(REBVAL *blk)
 {
 	REBVAL *value;
 
@@ -1020,13 +963,13 @@ REBNATIVE(browse)
 }
 
 
-/***********************************************************************
-**
-*/	static REBSER *File_List_To_Block(const REBCHR *str)
-/*
-**		Convert file directory and file name list to block.
-**
-***********************************************************************/
+//
+//  File_List_To_Block: C
+//  
+//      Convert file directory and file name list to block.
+//
+
+static REBSER *File_List_To_Block(const REBCHR *str)
 {
 	REBCNT n;
 	REBCNT len = 0;
@@ -1075,23 +1018,16 @@ REBNATIVE(browse)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "request_file"
-**  Summary: {Asks user to select a file and returns full file path (or block of paths).}
-**  Details: none
-**  Spec: [
-**      <1> /save
-**      <2> /multi
-**      <3> /file
-**      <4> name
-**      <5> /title
-**      <6> text
-**      <7> /filter
-**      <8> list
-**  ]
-**
-*******************************************************************************/
+//
+//  request-file: native [
+//      {Asks user to select a file and returns full file path (or block of paths).}
+//      /save "File save mode"
+//      /multi {Allows multiple file selection, returned as a block}
+//      /file name [file!] "Default file name or directory"
+//      /title text [string!] "Window title"
+//      /filter list [block!] "Block of filters (filter-name filter)"
+//  ]
+//
 
 REBNATIVE(request_file)
 {
@@ -1153,16 +1089,12 @@ REBNATIVE(request_file)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "get_env"
-**  Summary: {Returns the value of an OS environment variable (for current process).}
-**  Details: none
-**  Spec: [
-**      <1> var
-**  ]
-**
-*******************************************************************************/
+//
+//  get-env: native [
+//      {Returns the value of an OS environment variable (for current process).}
+//      var [any-string! any-word!]
+//  ]
+//
 
 REBNATIVE(get_env)
 {
@@ -1192,17 +1124,13 @@ REBNATIVE(get_env)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "set_env"
-**  Summary: {Sets the value of an operating system environment variable (for current process).}
-**  Details: none
-**  Spec: [
-**      <1> var
-**      <2> value
-**  ]
-**
-*******************************************************************************/
+//
+//  set-env: native [
+//      {Sets the value of an operating system environment variable (for current process).}
+//      var [any-string! any-word!] "Variable to set"
+//      value [string! none!] "Value to set, or NONE to unset it"
+//  ]
+//
 
 REBNATIVE(set_env)
 {
@@ -1244,14 +1172,11 @@ REBNATIVE(set_env)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "list_env"
-**  Summary: {Returns a map of OS environment variables (for current process).}
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  list-env: native [
+//      {Returns a map of OS environment variables (for current process).}
+//  ]
+//
 
 REBNATIVE(list_env)
 {

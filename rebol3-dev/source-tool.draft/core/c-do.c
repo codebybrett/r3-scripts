@@ -38,14 +38,9 @@ void Do_Rebcode(const REBVAL *v) {;}
 #include "tmp-evaltypes.h"
 
 
-/*******************************************************************************
-**
-**  Name: "Eval_Depth"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Eval_Depth: C
+//
 
 REBINT Eval_Depth(void)
 {
@@ -57,11 +52,11 @@ REBINT Eval_Depth(void)
 }
 
 
-/***********************************************************************
-**
-*/	struct Reb_Call *Stack_Frame(REBCNT n)
-/*
-***********************************************************************/
+//
+//  Stack_Frame: C
+//
+
+struct Reb_Call *Stack_Frame(REBCNT n)
 {
 	struct Reb_Call *call = DSF;
 
@@ -73,18 +68,14 @@ REBINT Eval_Depth(void)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "trace"
-**  Summary: {Enables and disables evaluation tracing and backtrace.}
-**  Details: none
-**  Spec: [
-**      <1> mode
-**      <2> /back
-**      <3> /function
-**  ]
-**
-*******************************************************************************/
+//
+//  trace: native [
+//      {Enables and disables evaluation tracing and backtrace.}
+//      mode [integer! logic!]
+//      /back {Set mode ON to enable or integer for lines to display}
+//      /function "Traces functions only (less output)"
+//  ]
+//
 
 REBNATIVE(trace)
 {
@@ -190,14 +181,9 @@ void Trace_Arg(REBINT num, const REBVAL *arg, const REBVAL *path)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Trace_Value"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Trace_Value: C
+//
 
 void Trace_Value(REBINT n, const REBVAL *value)
 {
@@ -206,14 +192,9 @@ void Trace_Value(REBINT n, const REBVAL *value)
 	Debug_Fmt(cs_cast(BOOT_STR(RS_TRACE,n)), value);
 }
 
-/*******************************************************************************
-**
-**  Name: "Trace_String"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Trace_String: C
+//
 
 void Trace_String(REBINT n, const REBYTE *str, REBINT limit)
 {
@@ -227,14 +208,9 @@ void Trace_String(REBINT n, const REBYTE *str, REBINT limit)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Trace_Error"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Trace_Error: C
+//
 
 void Trace_Error(const REBVAL *value)
 {
@@ -244,14 +220,11 @@ void Trace_Error(const REBVAL *value)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Next_Path"
-**  Summary: none
-**  Details: "^/        Evaluate next part of a path."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Next_Path: C
+//  
+//      Evaluate next part of a path.
+//
 
 void Next_Path(REBPVS *pvs)
 {
@@ -320,17 +293,17 @@ void Next_Path(REBPVS *pvs)
 }
 
 
-/***********************************************************************
-**
-*/	REBVAL *Do_Path(REBVAL *out, const REBVAL **path_val, REBVAL *val)
-/*
-**		Evaluate a path value. Path_val is updated so
-**		result can be used for function refinements.
-**		If val is not zero, then this is a SET-PATH.
-**		Returns value only if result is a function,
-**		otherwise the result is on TOS.
-**
-***********************************************************************/
+//
+//  Do_Path: C
+//  
+//      Evaluate a path value. Path_val is updated so
+//      result can be used for function refinements.
+//      If val is not zero, then this is a SET-PATH.
+//      Returns value only if result is a function,
+//      otherwise the result is on TOS.
+//
+
+REBVAL *Do_Path(REBVAL *out, const REBVAL **path_val, REBVAL *val)
 {
 	REBPVS pvs;
 
@@ -391,16 +364,12 @@ void Next_Path(REBPVS *pvs)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Pick_Path"
-**  Summary: none
-**  Details: {
-**      Lightweight version of Do_Path used for A_PICK actions.
-**      Result on TOS.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Pick_Path: C
+//  
+//      Lightweight version of Do_Path used for A_PICK actions.
+//      Result on TOS.
+//
 
 void Pick_Path(REBVAL *out, REBVAL *value, REBVAL *selector, REBVAL *val)
 {
@@ -437,22 +406,18 @@ void Pick_Path(REBVAL *out, REBVAL *value, REBVAL *selector, REBVAL *val)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Do_Args"
-**  Summary: none
-**  Details: {
-**      Evaluate code block according to the function arg spec.
-**      Args are pushed onto the data stack in the same order
-**      as the function frame.
-**  
-**          dsf: index of function call frame
-**          path:  refinements or object/function path
-**          block: current evaluation block
-**          index: current evaluation index}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Do_Args: C
+//  
+//      Evaluate code block according to the function arg spec.
+//      Args are pushed onto the data stack in the same order
+//      as the function frame.
+//  
+//          dsf: index of function call frame
+//          path:  refinements or object/function path
+//          block: current evaluation block
+//          index: current evaluation index
+//
 
 static REBINT Do_Args(struct Reb_Call *call, const REBVAL path[], REBSER *block, REBCNT index)
 {
@@ -584,16 +549,12 @@ return_index:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Do_Signals"
-**  Summary: none
-**  Details: {
-**      Special events to process during evaluation.
-**      Search for SET_SIGNAL to find them.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Do_Signals: C
+//  
+//      Special events to process during evaluation.
+//      Search for SET_SIGNAL to find them.
+//
 
 void Do_Signals(void)
 {
@@ -641,15 +602,11 @@ void Do_Signals(void)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Dispatch_Call"
-**  Summary: none
-**  Details: {
-**      Expects call frame to be ready with all arguments fulfilled.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Dispatch_Call: C
+//  
+//      Expects call frame to be ready with all arguments fulfilled.
+//
 
 REBOOL Dispatch_Call(struct Reb_Call *call)
 {
@@ -733,22 +690,18 @@ REBOOL Dispatch_Call(struct Reb_Call *call)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Do_Core"
-**  Summary: none
-**  Details: {
-**      Evaluate the code block until we have:
-**          1. An irreducible value (return next index)
-**          2. Reached the end of the block (return END_FLAG)
-**          3. Encountered an error
-**  
-**      Index is a zero-based index into the block.
-**      Op indicates infix operator is being evaluated (precedence);
-**      The value (or error) is placed on top of the data stack.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Do_Core: C
+//  
+//      Evaluate the code block until we have:
+//          1. An irreducible value (return next index)
+//          2. Reached the end of the block (return END_FLAG)
+//          3. Encountered an error
+//  
+//      Index is a zero-based index into the block.
+//      Op indicates infix operator is being evaluated (precedence);
+//      The value (or error) is placed on top of the data stack.
+//
 
 REBCNT Do_Core(REBVAL * const out, REBOOL next, REBSER *block, REBCNT index, REBFLG lookahead)
 {
@@ -1096,16 +1049,12 @@ return_index:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Reduce_Block"
-**  Summary: none
-**  Details: {
-**      Reduce block from the index position specified in the value.
-**      Collect all values from stack and make them a block.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Reduce_Block: C
+//  
+//      Reduce block from the index position specified in the value.
+//      Collect all values from stack and make them a block.
+//
 
 void Reduce_Block(REBVAL *out, REBSER *block, REBCNT index, REBOOL into)
 {
@@ -1129,15 +1078,11 @@ finished:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Reduce_Only"
-**  Summary: none
-**  Details: {
-**      Reduce only words and paths not found in word list.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Reduce_Only: C
+//  
+//      Reduce only words and paths not found in word list.
+//
 
 void Reduce_Only(REBVAL *out, REBSER *block, REBCNT index, REBVAL *words, REBOOL into)
 {
@@ -1193,14 +1138,9 @@ void Reduce_Only(REBVAL *out, REBSER *block, REBCNT index, REBVAL *words, REBOOL
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Reduce_Block_No_Set"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Reduce_Block_No_Set: C
+//
 
 void Reduce_Block_No_Set(REBVAL *out, REBSER *block, REBCNT index, REBOOL into)
 {
@@ -1231,16 +1171,12 @@ finished:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Reduce_Type_Stack"
-**  Summary: none
-**  Details: {
-**      Reduce a block of words/paths that are of the specified type.
-**      Return them on the stack. The change in TOS is the length.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Reduce_Type_Stack: C
+//  
+//      Reduce a block of words/paths that are of the specified type.
+//      Return them on the stack. The change in TOS is the length.
+//
 
 void Reduce_Type_Stack(REBSER *block, REBCNT index, REBCNT type)
 {
@@ -1267,17 +1203,13 @@ void Reduce_Type_Stack(REBSER *block, REBCNT index, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Reduce_In_Frame"
-**  Summary: none
-**  Details: {
-**      Reduce a block with simple lookup in the context.
-**      Only words in that context are valid (e.g. error object).
-**      All values are left on the stack. No copy is made.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Reduce_In_Frame: C
+//  
+//      Reduce a block with simple lookup in the context.
+//      Only words in that context are valid (e.g. error object).
+//      All values are left on the stack. No copy is made.
+//
 
 void Reduce_In_Frame(REBSER *frame, REBVAL *values)
 {
@@ -1303,23 +1235,19 @@ void Reduce_In_Frame(REBSER *frame, REBVAL *values)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Compose_Block"
-**  Summary: none
-**  Details: {
-**      Compose a block from a block of un-evaluated values and
-**      paren blocks that are evaluated.  Performs evaluations, so
-**      if 'into' is provided, then its series must be protected from
-**      garbage collection.
-**  
-**          deep - recurse into sub-blocks
-**          only - parens that return blocks are kept as blocks
-**  
-**      Writes result value at address pointed to by out.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Compose_Block: C
+//  
+//      Compose a block from a block of un-evaluated values and
+//      paren blocks that are evaluated.  Performs evaluations, so
+//      if 'into' is provided, then its series must be protected from
+//      garbage collection.
+//  
+//          deep - recurse into sub-blocks
+//          only - parens that return blocks are kept as blocks
+//  
+//      Writes result value at address pointed to by out.
+//
 
 void Compose_Block(REBVAL *out, REBVAL *block, REBFLG deep, REBFLG only, REBOOL into)
 {
@@ -1382,33 +1310,29 @@ finished:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Apply_Block"
-**  Summary: none
-**  Details: {
-**      Use a block at a certain index as the source of parameters to
-**      a function invocation.  If 'reduce' then the block will be
-**      evaluated in steps via Do_Next_May_Throw and the results passed as
-**      the arguments, otherwise it will be taken as literal values.
-**  
-**      Refinements are passed according to their positions relative
-**      to the order in which they were defined in the spec.  (Brittle,
-**      but that's how it's been done.)  Any conditionally true
-**      value in a refinement position means the refinement will be
-**      passed as TRUE, while conditional falsehood means NONE.
-**      Arguments to an unused refinement will still be evaluated if
-**      'reduce' is set, will be passed as NONE.
-**  
-**      The block will be effectively padded with NONE to the number
-**      of arguments if it is shorter than the total needed.  If
-**      there are more values in the block than arguments, that
-**      will be an error.
-**  
-**      returns FALSE if out is THROWN()}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Apply_Block: C
+//  
+//      Use a block at a certain index as the source of parameters to
+//      a function invocation.  If 'reduce' then the block will be
+//      evaluated in steps via Do_Next_May_Throw and the results passed as
+//      the arguments, otherwise it will be taken as literal values.
+//  
+//      Refinements are passed according to their positions relative
+//      to the order in which they were defined in the spec.  (Brittle,
+//      but that's how it's been done.)  Any conditionally true
+//      value in a refinement position means the refinement will be
+//      passed as TRUE, while conditional falsehood means NONE.
+//      Arguments to an unused refinement will still be evaluated if
+//      'reduce' is set, will be passed as NONE.
+//  
+//      The block will be effectively padded with NONE to the number
+//      of arguments if it is shorter than the total needed.  If
+//      there are more values in the block than arguments, that
+//      will be an error.
+//  
+//      returns FALSE if out is THROWN()
+//
 
 REBOOL Apply_Block(REBVAL *out, const REBVAL *func, REBSER *block, REBCNT index, REBFLG reduce)
 {
@@ -1506,27 +1430,23 @@ REBOOL Apply_Block(REBVAL *out, const REBVAL *func, REBSER *block, REBCNT index,
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Apply_Function"
-**  Summary: none
-**  Details: {
-**      (va_list by pointer: http://stackoverflow.com/a/3369762/211160)
-**  
-**      Applies function from args provided by C call. Zero terminated.
-**      Does not type check in release build; assumes the system is
-**      calling correctly (Debug build does check)
-**  
-**      out    - result value
-**      func - function to call
-**      values - values to pass as function args (null terminated)
-**  
-**      !!! OPs are allowed, treated as normal functions.  Good idea?
-**  
-**      returns FALSE if the result is THROWN()}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Apply_Function: C
+//  
+//      (va_list by pointer: http://stackoverflow.com/a/3369762/211160)
+//  
+//      Applies function from args provided by C call. Zero terminated.
+//      Does not type check in release build; assumes the system is
+//      calling correctly (Debug build does check)
+//  
+//      out    - result value
+//      func - function to call
+//      values - values to pass as function args (null terminated)
+//  
+//      !!! OPs are allowed, treated as normal functions.  Good idea?
+//  
+//      returns FALSE if the result is THROWN()
+//
 
 REBOOL Apply_Function(REBVAL *out, const REBVAL *func, va_list *values)
 {
@@ -1618,16 +1538,12 @@ REBOOL Apply_Function(REBVAL *out, const REBVAL *func, va_list *values)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Apply_Func"
-**  Summary: none
-**  Details: {
-**      Applies function from args provided by C call. Zero terminated.
-**      Return value is on TOS}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Apply_Func: C
+//  
+//      Applies function from args provided by C call. Zero terminated.
+//      Return value is on TOS
+//
 
 REBOOL Apply_Func(REBVAL *out, REBVAL *func, ...)
 {
@@ -1644,15 +1560,11 @@ REBOOL Apply_Func(REBVAL *out, REBVAL *func, ...)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Do_Sys_Func"
-**  Summary: none
-**  Details: {
-**      Evaluates a SYS function and out contains the result.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Do_Sys_Func: C
+//  
+//      Evaluates a SYS function and out contains the result.
+//
 
 REBOOL Do_Sys_Func(REBVAL *out, REBCNT inum, ...)
 {
@@ -1670,19 +1582,15 @@ REBOOL Do_Sys_Func(REBVAL *out, REBCNT inum, ...)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Do_Construct"
-**  Summary: none
-**  Details: {
-**      Do a block with minimal evaluation and no evaluation of
-**      functions. Used for things like script headers where security
-**      is important.
-**  
-**      Handles cascading set words:  word1: word2: value}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Do_Construct: C
+//  
+//      Do a block with minimal evaluation and no evaluation of
+//      functions. Used for things like script headers where security
+//      is important.
+//  
+//      Handles cascading set words:  word1: word2: value
+//
 
 void Do_Construct(REBVAL value[])
 {
@@ -1745,14 +1653,11 @@ void Do_Construct(REBVAL value[])
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Do_Min_Construct"
-**  Summary: none
-**  Details: "^/        Do no evaluation of the set values."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Do_Min_Construct: C
+//  
+//      Do no evaluation of the set values.
+//
 
 void Do_Min_Construct(REBVAL value[])
 {
@@ -1782,21 +1687,17 @@ void Do_Min_Construct(REBVAL value[])
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Redo_Func"
-**  Summary: none
-**  Details: {
-**      Trampoline a function, restacking arguments as needed.
-**  
-**  Setup:
-**      The source for arguments is the existing stack frame,
-**      or a prior stack frame. (Prep_Func + Args)
-**  
-**      Returns FALSE if result is THROWN()}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Redo_Func: C
+//  
+//      Trampoline a function, restacking arguments as needed.
+//  
+//  Setup:
+//      The source for arguments is the existing stack frame,
+//      or a prior stack frame. (Prep_Func + Args)
+//  
+//      Returns FALSE if result is THROWN()
+//
 
 REBOOL Redo_Func(REBVAL *func_val)
 {
@@ -1887,15 +1788,11 @@ REBOOL Redo_Func(REBVAL *func_val)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Get_Simple_Value_Into"
-**  Summary: none
-**  Details: {
-**      Does easy lookup, else just returns the value as is.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Get_Simple_Value_Into: C
+//  
+//      Does easy lookup, else just returns the value as is.
+//
 
 void Get_Simple_Value_Into(REBVAL *out, const REBVAL *val)
 {
@@ -1914,13 +1811,13 @@ void Get_Simple_Value_Into(REBVAL *out, const REBVAL *val)
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Resolve_Path(REBVAL *path, REBCNT *index)
-/*
-**		Given a path, return a context and index for its terminal.
-**
-***********************************************************************/
+//
+//  Resolve_Path: C
+//  
+//      Given a path, return a context and index for its terminal.
+//
+
+REBSER *Resolve_Path(REBVAL *path, REBCNT *index)
 {
 	REBVAL *sel; // selector
 	const REBVAL *val;

@@ -37,14 +37,9 @@
 #include "sys-deci-funcs.h"
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Logic"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Logic: C
+//
 
 REBINT CT_Logic(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -53,14 +48,9 @@ REBINT CT_Logic(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "MT_Logic"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_Logic: C
+//
 
 REBFLG MT_Logic(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -70,14 +60,9 @@ REBFLG MT_Logic(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Logic)
 {

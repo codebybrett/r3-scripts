@@ -88,14 +88,9 @@
 
 #define CHECK_BIND_TABLE
 
-/*******************************************************************************
-**
-**  Name: "Check_Bind_Table"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Check_Bind_Table: C
+//
 
 void Check_Bind_Table(void)
 {
@@ -110,14 +105,14 @@ void Check_Bind_Table(void)
 	}
 }
 
-/***********************************************************************
-**
-*/  REBSER *Make_Frame(REBINT len, REBOOL has_self)
-/*
-**      Create a frame of a given size, allocating space for both
-**		words and values. Normally used for global frames.
-**
-***********************************************************************/
+//
+//  Make_Frame: C
+//  
+//      Create a frame of a given size, allocating space for both
+//      words and values. Normally used for global frames.
+//
+
+REBSER *Make_Frame(REBINT len, REBOOL has_self)
 {
 	REBSER *frame;
 	REBSER *words;
@@ -138,14 +133,11 @@ void Check_Bind_Table(void)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Expand_Frame"
-**  Summary: none
-**  Details: "^/      Expand a frame. Copy words if flagged."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Expand_Frame: C
+//  
+//      Expand a frame. Copy words if flagged.
+//
 
 void Expand_Frame(REBSER *frame, REBCNT delta, REBCNT copy)
 {
@@ -167,18 +159,18 @@ void Expand_Frame(REBSER *frame, REBCNT delta, REBCNT copy)
 }
 
 
-/***********************************************************************
-**
-*/  REBVAL *Append_Frame(REBSER *frame, REBVAL *word, REBCNT sym)
-/*
-**      Append a word to the frame word list. Expands the list
-**      if necessary. Returns the value cell for the word. (Set to
-**      UNSET by default to avoid GC corruption.)
-**
-**      If word is not NULL, use the word sym and bind the word value,
-**      otherwise use sym.
-**
-***********************************************************************/
+//
+//  Append_Frame: C
+//  
+//      Append a word to the frame word list. Expands the list
+//      if necessary. Returns the value cell for the word. (Set to
+//      UNSET by default to avoid GC corruption.)
+//  
+//      If word is not NULL, use the word sym and bind the word value,
+//      otherwise use sym.
+//
+
+REBVAL *Append_Frame(REBSER *frame, REBVAL *word, REBCNT sym)
 {
 	REBSER *words = FRM_WORD_SERIES(frame);
 	REBVAL *value;
@@ -205,19 +197,15 @@ void Expand_Frame(REBSER *frame, REBCNT delta, REBCNT copy)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Collect_Start"
-**  Summary: none
-**  Details: {
-**      Use the Bind_Table to start collecting new words for
-**      a frame. Use Collect_End() when done.
-**  
-**      WARNING: Do not call code that might call BIND or otherwise
-**      make use of the Bind_Table or the Word cache array (BUF_WORDS).}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Collect_Start: C
+//  
+//      Use the Bind_Table to start collecting new words for
+//      a frame. Use Collect_End() when done.
+//  
+//      WARNING: Do not call code that might call BIND or otherwise
+//      make use of the Bind_Table or the Word cache array (BUF_WORDS).
+//
 
 void Collect_Start(REBCNT modes)
 {
@@ -237,13 +225,13 @@ void Collect_Start(REBCNT modes)
 }
 
 
-/***********************************************************************
-**
-*/  REBSER *Collect_End(REBSER *prior)
-/*
-**		Finish collecting words, and free the Bind_Table for reuse.
-**
-***********************************************************************/
+//
+//  Collect_End: C
+//  
+//      Finish collecting words, and free the Bind_Table for reuse.
+//
+
+REBSER *Collect_End(REBSER *prior)
 {
 	REBVAL *words;
 	REBINT *binds = WORDS_HEAD(Bind_Table); // GC safe to do here
@@ -267,14 +255,11 @@ void Collect_Start(REBCNT modes)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Collect_Object"
-**  Summary: none
-**  Details: "^/        Collect words from a prior object."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Collect_Object: C
+//  
+//      Collect words from a prior object.
+//
 
 void Collect_Object(REBSER *prior)
 {
@@ -295,15 +280,11 @@ void Collect_Object(REBSER *prior)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Collect_Frame_Inner_Loop"
-**  Summary: none
-**  Details: {
-**      The inner recursive loop used for Collect_Frame function below.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Collect_Frame_Inner_Loop: C
+//  
+//      The inner recursive loop used for Collect_Frame function below.
+//
 
 static void Collect_Frame_Inner_Loop(REBINT *binds, REBVAL value[], REBCNT modes)
 {
@@ -346,25 +327,25 @@ static void Collect_Frame_Inner_Loop(REBINT *binds, REBVAL value[], REBCNT modes
 }
 
 
-/***********************************************************************
-**
-*/  REBSER *Collect_Frame(REBSER *prior, REBVAL value[], REBCNT modes)
-/*
-**		Scans a block for words to use in the frame. The list of
-**		words can then be used to create a frame. The Bind_Table is
-**		used to quickly determine duplicate entries.
-**
-**		Returns:
-**			A block of words that can be used for a frame word list.
-**			If no new words, the prior list is returned.
-**
-**		Modes:
-**			BIND_ALL  - scan all words, or just set words
-**			BIND_DEEP - scan sub-blocks too
-**			BIND_GET  - substitute :word with actual word
-**			BIND_NO_SELF - do not add implicit SELF to the frame
-**
-***********************************************************************/
+//
+//  Collect_Frame: C
+//  
+//      Scans a block for words to use in the frame. The list of
+//      words can then be used to create a frame. The Bind_Table is
+//      used to quickly determine duplicate entries.
+//  
+//      Returns:
+//          A block of words that can be used for a frame word list.
+//          If no new words, the prior list is returned.
+//  
+//      Modes:
+//          BIND_ALL  - scan all words, or just set words
+//          BIND_DEEP - scan sub-blocks too
+//          BIND_GET  - substitute :word with actual word
+//          BIND_NO_SELF - do not add implicit SELF to the frame
+//
+
+REBSER *Collect_Frame(REBSER *prior, REBVAL value[], REBCNT modes)
 {
 	Collect_Start(modes);
 
@@ -378,16 +359,12 @@ static void Collect_Frame_Inner_Loop(REBINT *binds, REBVAL value[], REBCNT modes
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Collect_Words_Inner_Loop"
-**  Summary: none
-**  Details: {
-**      Used for Collect_Words() after the binds table has
-**      been set up.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Collect_Words_Inner_Loop: C
+//  
+//      Used for Collect_Words() after the binds table has
+//      been set up.
+//
 
 static void Collect_Words_Inner_Loop(REBINT *binds, REBVAL value[], REBCNT modes)
 {
@@ -407,13 +384,13 @@ static void Collect_Words_Inner_Loop(REBINT *binds, REBVAL value[], REBCNT modes
 }
 
 
-/***********************************************************************
-**
-*/  REBSER *Collect_Words(REBVAL value[], REBVAL prior_value[], REBCNT modes)
-/*
-**		Collect words from a prior block and new block.
-**
-***********************************************************************/
+//
+//  Collect_Words: C
+//  
+//      Collect words from a prior block and new block.
+//
+
+REBSER *Collect_Words(REBVAL value[], REBVAL prior_value[], REBCNT modes)
 {
 	REBSER *series;
 	REBCNT start;
@@ -442,14 +419,14 @@ static void Collect_Words_Inner_Loop(REBINT *binds, REBVAL value[], REBCNT modes
 }
 
 
-/***********************************************************************
-**
-*/  REBSER *Create_Frame(REBSER *words, REBSER *spec)
-/*
-**      Create a new frame from a word list.
-**      The values of the frame are initialized to NONE.
-**
-***********************************************************************/
+//
+//  Create_Frame: C
+//  
+//      Create a new frame from a word list.
+//      The values of the frame are initialized to NONE.
+//
+
+REBSER *Create_Frame(REBSER *words, REBSER *spec)
 {
 	REBINT len = SERIES_TAIL(words);
 	REBSER *frame = Make_Array(len);
@@ -465,16 +442,12 @@ static void Collect_Words_Inner_Loop(REBINT *binds, REBVAL value[], REBCNT modes
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Rebind_Frame"
-**  Summary: none
-**  Details: {
-**    Clone old src_frame to new dst_frame knowing
-**      which types of values need to be copied, deep copied, and rebound.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Rebind_Frame: C
+//  
+//      Clone old src_frame to new dst_frame knowing
+//      which types of values need to be copied, deep copied, and rebound.
+//
 
 void Rebind_Frame(REBSER *src_frame, REBSER *dst_frame)
 {
@@ -483,14 +456,14 @@ void Rebind_Frame(REBSER *src_frame, REBSER *dst_frame)
 }
 
 
-/***********************************************************************
-**
-*/  REBSER *Make_Object(REBSER *parent, REBVAL value[])
-/*
-**      Create an object from a parent object and a spec block.
-**		The words within the resultant object are not bound.
-**
-***********************************************************************/
+//
+//  Make_Object: C
+//  
+//      Create an object from a parent object and a spec block.
+//      The words within the resultant object are not bound.
+//
+
+REBSER *Make_Object(REBSER *parent, REBVAL value[])
 {
 	REBSER *words;
 	REBSER *object;
@@ -549,14 +522,14 @@ void Rebind_Frame(REBSER *src_frame, REBSER *dst_frame)
 }
 
 
-/***********************************************************************
-**
-*/  REBSER *Construct_Object(REBSER *parent, REBVAL value[], REBFLG as_is)
-/*
-**		Construct an object (partial evaluation of block).
-**		Parent can be null. Values are rebound.
-**
-***********************************************************************/
+//
+//  Construct_Object: C
+//  
+//      Construct an object (partial evaluation of block).
+//      Parent can be null. Values are rebound.
+//
+
+REBSER *Construct_Object(REBSER *parent, REBVAL value[], REBFLG as_is)
 {
 	REBSER *frame = Make_Object(parent, &value[0]);
 
@@ -569,20 +542,20 @@ void Rebind_Frame(REBSER *src_frame, REBSER *dst_frame)
 }
 
 
-/***********************************************************************
-**
-*/  REBSER *Make_Object_Block(REBSER *frame, REBINT mode)
-/*
-**      Return a block containing words, values, or set-word: value
-**      pairs for the given object. Note: words are bound to original
-**      object.
-**
-**      Modes:
-**          1 for word
-**          2 for value
-**          3 for words and values
-**
-***********************************************************************/
+//
+//  Make_Object_Block: C
+//  
+//      Return a block containing words, values, or set-word: value
+//      pairs for the given object. Note: words are bound to original
+//      object.
+//  
+//      Modes:
+//          1 for word
+//          2 for value
+//          3 for words and values
+//
+
+REBSER *Make_Object_Block(REBSER *frame, REBINT mode)
 {
 	REBVAL *words  = FRM_WORDS(frame);
 	REBVAL *values = FRM_VALUES(frame);
@@ -616,14 +589,9 @@ void Rebind_Frame(REBSER *src_frame, REBSER *dst_frame)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Assert_Public_Object"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Assert_Public_Object: C
+//
 
 void Assert_Public_Object(const REBVAL *value)
 {
@@ -634,16 +602,12 @@ void Assert_Public_Object(const REBVAL *value)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Make_Module"
-**  Summary: none
-**  Details: {
-**    Create a module from a spec and an init block.
-**      Call the Make_Module function in the system/intrinsic object.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Make_Module: C
+//  
+//      Create a module from a spec and an init block.
+//      Call the Make_Module function in the system/intrinsic object.
+//
 
 void Make_Module(REBVAL *out, const REBVAL *spec)
 {
@@ -658,14 +622,14 @@ void Make_Module(REBVAL *out, const REBVAL *spec)
 }
 
 
-/***********************************************************************
-**
-*/  REBSER *Make_Module_Spec(REBVAL *spec)
-/*
-**		Create a module spec object. Holds module name, version,
-**		exports, locals, and more. See system/standard/module.
-**
-***********************************************************************/
+//
+//  Make_Module_Spec: C
+//  
+//      Create a module spec object. Holds module name, version,
+//      exports, locals, and more. See system/standard/module.
+//
+
+REBSER *Make_Module_Spec(REBVAL *spec)
 {
 	// Build standard module header object:
 	REBSER *obj = VAL_OBJ_FRAME(Get_System(SYS_STANDARD, STD_SCRIPT));
@@ -680,16 +644,16 @@ void Make_Module(REBVAL *out, const REBVAL *spec)
 }
 
 
-/***********************************************************************
-**
-*/  REBSER *Merge_Frames(REBSER *parent1, REBSER *parent2)
-/*
-**      Create a child frame from two parent frames. Merge common fields.
-**      Values from the second parent take precedence.
-**
-**		Deep copy and rebind the child.
-**
-***********************************************************************/
+//
+//  Merge_Frames: C
+//  
+//      Create a child frame from two parent frames. Merge common fields.
+//      Values from the second parent take precedence.
+//  
+//      Deep copy and rebind the child.
+//
+
+REBSER *Merge_Frames(REBSER *parent1, REBSER *parent2)
 {
 	REBSER *wrds;
 	REBSER *child;
@@ -752,16 +716,12 @@ void Make_Module(REBVAL *out, const REBVAL *spec)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Resolve_Context"
-**  Summary: none
-**  Details: {
-**      Only_words can be a block of words or an index in the target
-**      (for new words).}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Resolve_Context: C
+//  
+//      Only_words can be a block of words or an index in the target
+//      (for new words).
+//
 
 void Resolve_Context(REBSER *target, REBSER *source, REBVAL *only_words, REBFLG all, REBFLG expand)
 {
@@ -875,16 +835,12 @@ void Resolve_Context(REBSER *target, REBSER *source, REBVAL *only_words, REBFLG 
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Bind_Values_Inner_Loop"
-**  Summary: none
-**  Details: {
-**      Bind_Values_Core() sets up the binding table and then calls
-**      this recursive routine to do the actual binding.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Bind_Values_Inner_Loop: C
+//  
+//      Bind_Values_Core() sets up the binding table and then calls
+//      this recursive routine to do the actual binding.
+//
 
 static void Bind_Values_Inner_Loop(REBINT *binds, REBVAL value[], REBSER *frame, REBCNT mode)
 {
@@ -927,29 +883,25 @@ static void Bind_Values_Inner_Loop(REBINT *binds, REBVAL value[], REBSER *frame,
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Bind_Values_Core"
-**  Summary: none
-**  Details: {
-**      Bind words in an array of values terminated with REB_END
-**      to a specified frame.  See warnings on the functions like
-**      Bind_Values_Deep() about not passing just a singular REBVAL.
-**  
-**      Different modes may be applied:
-**  
-**        BIND_ONLY - Only bind words found in the frame.
-**        BIND_ALL  - Add words to the frame during the bind.
-**        BIND_SET  - Add set-words to the frame during the bind.
-**                    (note: word must not occur before the SET)
-**        BIND_DEEP - Recurse into sub-blocks.
-**  
-**      NOTE: BIND_SET must be used carefully, because it does not
-**      bind prior instances of the word before the set-word. That is
-**      to say that forward references are not allowed.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Bind_Values_Core: C
+//  
+//      Bind words in an array of values terminated with REB_END
+//      to a specified frame.  See warnings on the functions like
+//      Bind_Values_Deep() about not passing just a singular REBVAL.
+//  
+//      Different modes may be applied:
+//  
+//          BIND_ONLY - Only bind words found in the frame.
+//          BIND_ALL  - Add words to the frame during the bind.
+//          BIND_SET  - Add set-words to the frame during the bind.
+//                      (note: word must not occur before the SET)
+//          BIND_DEEP - Recurse into sub-blocks.
+//  
+//      NOTE: BIND_SET must be used carefully, because it does not
+//      bind prior instances of the word before the set-word. That is
+//      to say that forward references are not allowed.
+//
 
 void Bind_Values_Core(REBVAL value[], REBSER *frame, REBCNT mode)
 {
@@ -982,17 +934,13 @@ void Bind_Values_Core(REBVAL value[], REBSER *frame, REBCNT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Unbind_Values_Core"
-**  Summary: none
-**  Details: {
-**      Unbind words in a block, optionally unbinding those which are
-**      bound to a particular frame (if frame is NULL, then all
-**      words will be unbound regardless of their VAL_WORD_FRAME).}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Unbind_Values_Core: C
+//  
+//      Unbind words in a block, optionally unbinding those which are
+//      bound to a particular frame (if frame is NULL, then all
+//      words will be unbound regardless of their VAL_WORD_FRAME).
+//
 
 void Unbind_Values_Core(REBVAL value[], REBSER *frame, REBOOL deep)
 {
@@ -1006,16 +954,12 @@ void Unbind_Values_Core(REBVAL value[], REBSER *frame, REBOOL deep)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Bind_Word"
-**  Summary: none
-**  Details: {
-**      Binds a word to a frame. If word is not part of the
-**      frame, ignore it.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Bind_Word: C
+//  
+//      Binds a word to a frame. If word is not part of the
+//      frame, ignore it.
+//
 
 REBCNT Bind_Word(REBSER *frame, REBVAL *word)
 {
@@ -1030,18 +974,14 @@ REBCNT Bind_Word(REBSER *frame, REBVAL *word)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Bind_Relative_Inner_Loop"
-**  Summary: none
-**  Details: {
-**    Recursive function for relative function word binding.
-**  
-**    Note: frame arg points to an identifying series of the function,
-**    not a normal frame. This will be used to verify the word fetch.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Bind_Relative_Inner_Loop: C
+//  
+//      Recursive function for relative function word binding.
+//  
+//      Note: frame arg points to an identifying series of the function,
+//      not a normal frame. This will be used to verify the word fetch.
+//
 
 static void Bind_Relative_Inner_Loop(REBINT *binds, REBSER *frame, REBSER *block)
 {
@@ -1063,21 +1003,17 @@ static void Bind_Relative_Inner_Loop(REBINT *binds, REBSER *frame, REBSER *block
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Bind_Relative"
-**  Summary: none
-**  Details: {
-**    Bind the words of a function block to a stack frame.
-**    To indicate the relative nature of the index, it is set to
-**      a negative offset.
-**  
-**      words: VAL_FUNC_WORDS(func)
-**      frame: VAL_FUNC_WORDS(func)
-**      block: block to bind}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Bind_Relative: C
+//  
+//      Bind the words of a function block to a stack frame.
+//      To indicate the relative nature of the index, it is set to
+//      a negative offset.
+//  
+//      words: VAL_FUNC_WORDS(func)
+//      frame: VAL_FUNC_WORDS(func)
+//      block: block to bind
+//
 
 void Bind_Relative(REBSER *words, REBSER *frame, REBSER *block)
 {
@@ -1105,14 +1041,9 @@ void Bind_Relative(REBSER *words, REBSER *frame, REBSER *block)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Bind_Stack_Block"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Bind_Stack_Block: C
+//
 
 void Bind_Stack_Block(REBSER *frame, REBSER *block)
 {
@@ -1120,14 +1051,9 @@ void Bind_Stack_Block(REBSER *frame, REBSER *block)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Bind_Stack_Word"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Bind_Stack_Word: C
+//
 
 void Bind_Stack_Word(REBSER *frame, REBVAL *word)
 {
@@ -1140,20 +1066,16 @@ void Bind_Stack_Word(REBSER *frame, REBVAL *word)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Rebind_Block"
-**  Summary: none
-**  Details: {
-**    Rebind all words that reference src frame to dst frame.
-**    Rebind is always deep.
-**  
-**      There are two types of frames: relative frames and normal frames.
-**      When frame_src type and frame_dst type differ,
-**      modes must have REBIND_TYPE.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Rebind_Block: C
+//  
+//      Rebind all words that reference src frame to dst frame.
+//      Rebind is always deep.
+//  
+//      There are two types of frames: relative frames and normal frames.
+//      When frame_src type and frame_dst type differ,
+//      modes must have REBIND_TYPE.
+//
 
 void Rebind_Block(REBSER *src_frame, REBSER *dst_frame, REBVAL *data, REBFLG modes)
 {
@@ -1172,15 +1094,11 @@ void Rebind_Block(REBSER *src_frame, REBSER *dst_frame, REBVAL *data, REBFLG mod
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Find_Arg_Index"
-**  Summary: none
-**  Details: {
-**      Find function arg word in function arg "frame".}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Find_Arg_Index: C
+//  
+//      Find function arg word in function arg "frame".
+//
 
 REBCNT Find_Arg_Index(REBSER *args, REBCNT sym)
 {
@@ -1201,17 +1119,13 @@ REBCNT Find_Arg_Index(REBSER *args, REBCNT sym)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Find_Word_Index"
-**  Summary: none
-**  Details: {
-**    Search a frame looking for the given word symbol.
-**    Return the frame index for a word. Locate it by matching
-**    the canon word identifiers. Return 0 if not found.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Find_Word_Index: C
+//  
+//      Search a frame looking for the given word symbol.
+//      Return the frame index for a word. Locate it by matching
+//      the canon word identifiers. Return 0 if not found.
+//
 
 REBCNT Find_Word_Index(REBSER *frame, REBCNT sym, REBFLG always)
 {
@@ -1230,15 +1144,15 @@ REBCNT Find_Word_Index(REBSER *frame, REBCNT sym, REBFLG always)
 }
 
 
-/***********************************************************************
-**
-*/  REBVAL *Find_Word_Value(REBSER *frame, REBCNT sym)
-/*
-**      Search a frame looking for the given word symbol and
-**      return the value for the word. Locate it by matching
-**      the canon word identifiers. Return NULL if not found.
-**
-***********************************************************************/
+//
+//  Find_Word_Value: C
+//  
+//      Search a frame looking for the given word symbol and
+//      return the value for the word. Locate it by matching
+//      the canon word identifiers. Return NULL if not found.
+//
+
+REBVAL *Find_Word_Value(REBSER *frame, REBCNT sym)
 {
 	REBINT n;
 
@@ -1249,15 +1163,11 @@ REBCNT Find_Word_Index(REBSER *frame, REBCNT sym, REBFLG always)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Find_Word"
-**  Summary: none
-**  Details: {
-**      Find word (of any type) in a block... quickly.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Find_Word: C
+//  
+//      Find word (of any type) in a block... quickly.
+//
 
 REBCNT Find_Word(REBSER *series, REBCNT index, REBCNT sym)
 {
@@ -1273,17 +1183,17 @@ REBCNT Find_Word(REBSER *series, REBCNT index, REBCNT sym)
 }
 
 
-/***********************************************************************
-**
-*/  REBVAL *Get_Var_Core(const REBVAL *word, REBOOL trap, REBOOL writable)
-/*
-**      Get the word--variable--value. (Generally, use the macros like
-**      GET_VAR or GET_MUTABLE_VAR instead of this).  This routine is
-**		called quite a lot and so attention to performance is important.
-**
-**      Coded assuming most common case is trap=TRUE and writable=FALSE
-**
-***********************************************************************/
+//
+//  Get_Var_Core: C
+//  
+//      Get the word--variable--value. (Generally, use the macros like
+//      GET_VAR or GET_MUTABLE_VAR instead of this).  This routine is
+//      called quite a lot and so attention to performance is important.
+//  
+//      Coded assuming most common case is trap=TRUE and writable=FALSE
+//
+
+REBVAL *Get_Var_Core(const REBVAL *word, REBOOL trap, REBOOL writable)
 {
 	REBSER *context = VAL_WORD_FRAME(word);
 
@@ -1385,20 +1295,16 @@ REBCNT Find_Word(REBSER *series, REBCNT index, REBCNT sym)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Get_Var_Into_Core"
-**  Summary: none
-**  Details: {
-**    Variant of Get_Var_Core that always traps and never returns a
-**    direct pointer into a frame.  It is thus able to give back
-**    `self` lookups, and doesn't have to check the word's protection
-**    status before returning.
-**  
-**    See comments in Get_Var_Core for what it's actually doing.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Get_Var_Into_Core: C
+//  
+//      Variant of Get_Var_Core that always traps and never returns a
+//      direct pointer into a frame.  It is thus able to give back
+//      `self` lookups, and doesn't have to check the word's protection
+//      status before returning.
+//  
+//      See comments in Get_Var_Core for what it's actually doing.
+//
 
 void Get_Var_Into_Core(REBVAL *out, const REBVAL *word)
 {
@@ -1450,15 +1356,11 @@ void Get_Var_Into_Core(REBVAL *out, const REBVAL *word)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Set_Var"
-**  Summary: none
-**  Details: {
-**    Set the word (variable) value. (Use macro when possible).}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_Var: C
+//  
+//      Set the word (variable) value. (Use macro when possible).
+//
 
 void Set_Var(const REBVAL *word, const REBVAL *value)
 {
@@ -1493,27 +1395,27 @@ void Set_Var(const REBVAL *word, const REBVAL *value)
 }
 
 
-/***********************************************************************
-**
-*/	REBVAL *Obj_Word(const REBVAL *value, REBCNT index)
-/*
-**		Return pointer to the nth WORD of an object.
-**
-***********************************************************************/
+//
+//  Obj_Word: C
+//  
+//      Return pointer to the nth WORD of an object.
+//
+
+REBVAL *Obj_Word(const REBVAL *value, REBCNT index)
 {
 	REBSER *obj = VAL_OBJ_WORDS(value);
 	return BLK_SKIP(obj, index);
 }
 
 
-/***********************************************************************
-**
-*/	REBVAL *Obj_Value(REBVAL *value, REBCNT index)
-/*
-**		Return pointer to the nth VALUE of an object.
-**		Return zero if the index is not valid.
-**
-***********************************************************************/
+//
+//  Obj_Value: C
+//  
+//      Return pointer to the nth VALUE of an object.
+//      Return zero if the index is not valid.
+//
+
+REBVAL *Obj_Value(REBVAL *value, REBCNT index)
 {
 	REBSER *obj = VAL_OBJ_FRAME(value);
 
@@ -1522,14 +1424,9 @@ void Set_Var(const REBVAL *word, const REBVAL *value)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Obj_Value"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Obj_Value: C
+//
 
 void Init_Obj_Value(REBVAL *value, REBSER *frame)
 {
@@ -1539,14 +1436,9 @@ void Init_Obj_Value(REBVAL *value, REBSER *frame)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Frame"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Frame: C
+//
 
 void Init_Frame(void)
 {
@@ -1556,14 +1448,9 @@ void Init_Frame(void)
 
 
 #ifndef NDEBUG
-/*******************************************************************************
-**
-**  Name: "Assert_Frame_Core"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Assert_Frame_Core: C
+//
 
 void Assert_Frame_Core(REBSER *frame)
 {

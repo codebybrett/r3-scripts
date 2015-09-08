@@ -30,24 +30,20 @@
 #include "sys-core.h"
 
 
-/*******************************************************************************
-**
-**  Name: "Modify_Array"
-**  Summary: none
-**  Details: {
-**      action: INSERT, APPEND, CHANGE
-**  
-**      dst_ser:    target
-**      dst_idx:    position
-**      src_val:    source
-**      flags:        AN_ONLY, AN_PART
-**      dst_len:    length to remove
-**      dups:        dup count
-**  
-**      return: new dst_idx}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Modify_Array: C
+//  
+//      action: INSERT, APPEND, CHANGE
+//  
+//      dst_ser:    target
+//      dst_idx:    position
+//      src_val:    source
+//      flags:        AN_ONLY, AN_PART
+//      dst_len:    length to remove
+//      dups:        dup count
+//  
+//      return: new dst_idx
+//
 
 REBCNT Modify_Array(REBCNT action, REBSER *dst_ser, REBCNT dst_idx, const REBVAL *src_val, REBCNT flags, REBINT dst_len, REBINT dups)
 {
@@ -118,24 +114,20 @@ REBCNT Modify_Array(REBCNT action, REBSER *dst_ser, REBCNT dst_idx, const REBVAL
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Modify_String"
-**  Summary: none
-**  Details: {
-**      action: INSERT, APPEND, CHANGE
-**  
-**      dst_ser:    target
-**      dst_idx:    position
-**      src_val:    source
-**      flags:        AN_PART
-**      dst_len:    length to remove
-**      dups:        dup count
-**  
-**      return: new dst_idx}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Modify_String: C
+//  
+//      action: INSERT, APPEND, CHANGE
+//  
+//      dst_ser:    target
+//      dst_idx:    position
+//      src_val:    source
+//      flags:        AN_PART
+//      dst_len:    length to remove
+//      dups:        dup count
+//  
+//      return: new dst_idx
+//
 
 REBCNT Modify_String(REBCNT action, REBSER *dst_ser, REBCNT dst_idx, const REBVAL *src_val, REBCNT flags, REBINT dst_len, REBINT dups)
 {

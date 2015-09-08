@@ -36,15 +36,11 @@
 #define MAX_READ_MASK 0x7FFFFFFF // max size per chunk
 
 
-/*******************************************************************************
-**
-**  Name: "Setup_File"
-**  Summary: none
-**  Details: {
-**      Convert native action refinements to file modes.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Setup_File: C
+//  
+//      Convert native action refinements to file modes.
+//
 
 static void Setup_File(REBREQ *file, REBCNT args, REBVAL *path)
 {
@@ -80,14 +76,9 @@ static void Setup_File(REBREQ *file, REBCNT args, REBVAL *path)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Cleanup_File"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Cleanup_File: C
+//
 
 static void Cleanup_File(REBREQ *file)
 {
@@ -100,14 +91,11 @@ static void Cleanup_File(REBREQ *file)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Set_File_Date"
-**  Summary: none
-**  Details: "^/        Set a value with the UTC date of a file."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_File_Date: C
+//  
+//      Set a value with the UTC date of a file.
+//
 
 static void Set_File_Date(REBREQ *file, REBVAL *val)
 {
@@ -118,15 +106,11 @@ static void Set_File_Date(REBREQ *file, REBVAL *val)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Ret_Query_File"
-**  Summary: none
-**  Details: {
-**      Query file and set RET value to resulting STD_FILE_INFO object.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Ret_Query_File: C
+//  
+//      Query file and set RET value to resulting STD_FILE_INFO object.
+//
 
 void Ret_Query_File(REBSER *port, REBREQ *file, REBVAL *ret)
 {
@@ -154,14 +138,11 @@ void Ret_Query_File(REBSER *port, REBREQ *file, REBVAL *ret)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Open_File_Port"
-**  Summary: none
-**  Details: "^/        Open a file port."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Open_File_Port: C
+//  
+//      Open a file port.
+//
 
 static void Open_File_Port(REBSER *port, REBREQ *file, REBVAL *path)
 {
@@ -188,14 +169,9 @@ REBINT Mode_Syms[] = {
 };
 
 
-/*******************************************************************************
-**
-**  Name: "Get_Mode_Id"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Get_Mode_Id: C
+//
 
 static REBCNT Get_Mode_Id(REBVAL *word)
 {
@@ -208,14 +184,9 @@ static REBCNT Get_Mode_Id(REBVAL *word)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Set_Mode_Value"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_Mode_Value: C
+//
 
 static REBCNT Set_Mode_Value(REBREQ *file, REBCNT mode, REBVAL *val)
 {
@@ -223,14 +194,11 @@ static REBCNT Set_Mode_Value(REBREQ *file, REBCNT mode, REBVAL *val)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Read_File_Port"
-**  Summary: none
-**  Details: "^/        Read from a file port."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Read_File_Port: C
+//  
+//      Read from a file port.
+//
 
 static void Read_File_Port(REBVAL *out, REBSER *port, REBREQ *file, REBVAL *path, REBCNT args, REBCNT len)
 {
@@ -261,14 +229,9 @@ static void Read_File_Port(REBVAL *out, REBSER *port, REBREQ *file, REBVAL *path
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Write_File_Port"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Write_File_Port: C
+//
 
 static void Write_File_Port(REBREQ *file, REBVAL *data, REBCNT len, REBCNT args)
 {
@@ -304,17 +267,13 @@ static void Write_File_Port(REBREQ *file, REBVAL *data, REBCNT len, REBCNT args)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Set_Length"
-**  Summary: none
-**  Details: {
-**      Note: converts 64bit number to 32bit. The requested size
-**      can never be greater than 4GB.  If limit isn't negative it
-**      constrains the size of the requested read.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_Length: C
+//  
+//      Note: converts 64bit number to 32bit. The requested size
+//      can never be greater than 4GB.  If limit isn't negative it
+//      constrains the size of the requested read.
+//
 
 static REBCNT Set_Length(const REBREQ *file, REBI64 limit)
 {
@@ -335,15 +294,11 @@ static REBCNT Set_Length(const REBREQ *file, REBI64 limit)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Set_Seek"
-**  Summary: none
-**  Details: {
-**      Computes the number of bytes that should be skipped.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_Seek: C
+//  
+//      Computes the number of bytes that should be skipped.
+//
 
 static void Set_Seek(REBREQ *file, REBVAL *arg)
 {
@@ -359,14 +314,11 @@ static void Set_Seek(REBREQ *file, REBVAL *arg)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "File_Actor"
-**  Summary: none
-**  Details: "^/        Internal port handler for files."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  File_Actor: C
+//  
+//      Internal port handler for files.
+//
 
 static REB_R File_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
@@ -624,17 +576,13 @@ is_false:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_File_Scheme"
-**  Summary: none
-**  Details: {
-**      Associate the FILE:// scheme with the above native
-**      actions. This will later be used by SET-SCHEME when
-**      the scheme is initialized.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_File_Scheme: C
+//  
+//      Associate the FILE:// scheme with the above native
+//      actions. This will later be used by SET-SCHEME when
+//      the scheme is initialized.
+//
 
 void Init_File_Scheme(void)
 {

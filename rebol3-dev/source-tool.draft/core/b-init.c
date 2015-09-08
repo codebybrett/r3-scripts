@@ -49,14 +49,9 @@ static	BOOT_BLK *Boot_Block;
 #endif
 
 
-/*******************************************************************************
-**
-**  Name: "Assert_Basics"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Assert_Basics: C
+//
 
 static void Assert_Basics(void)
 {
@@ -136,14 +131,9 @@ static void Assert_Basics(void)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Print_Banner"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Print_Banner: C
+//
 
 static void Print_Banner(REBARGS *rargs)
 {
@@ -154,22 +144,18 @@ static void Print_Banner(REBARGS *rargs)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Do_Global_Block"
-**  Summary: none
-**  Details: {
-**      Bind and evaluate a global block.
-**      Rebind:
-**          0: bind set into sys or lib
-**         -1: bind shallow into sys (for NATIVE and ACTION)
-**          1: add new words to LIB, bind/deep to LIB
-**          2: add new words to SYS, bind/deep to LIB
-**  
-**      Expects result to be UNSET!}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Do_Global_Block: C
+//  
+//      Bind and evaluate a global block.
+//      Rebind:
+//          0: bind set into sys or lib
+//         -1: bind shallow into sys (for NATIVE and ACTION)
+//          1: add new words to LIB, bind/deep to LIB
+//          2: add new words to SYS, bind/deep to LIB
+//  
+//      Expects result to be UNSET!
+//
 
 static void Do_Global_Block(REBSER *block, REBINT rebind)
 {
@@ -191,17 +177,13 @@ static void Do_Global_Block(REBSER *block, REBINT rebind)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Load_Boot"
-**  Summary: none
-**  Details: {
-**      Decompress and scan in the boot block structure.  Can
-**      only be called at the correct point because it will
-**      create new symbols.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Load_Boot: C
+//  
+//      Decompress and scan in the boot block structure.  Can
+//      only be called at the correct point because it will
+//      create new symbols.
+//
 
 static void Load_Boot(void)
 {
@@ -255,14 +237,11 @@ static void Load_Boot(void)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Datatypes"
-**  Summary: none
-**  Details: "^/        Create the datatypes."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Datatypes: C
+//  
+//      Create the datatypes.
+//
 
 static void Init_Datatypes(void)
 {
@@ -281,17 +260,13 @@ static void Init_Datatypes(void)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Datatype_Checks"
-**  Summary: none
-**  Details: {
-**      Create datatype test functions (e.g. integer?, time?, etc)
-**      Must be done after typesets are initialized, so this cannot
-**      be merged with the above.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Datatype_Checks: C
+//  
+//      Create datatype test functions (e.g. integer?, time?, etc)
+//      Must be done after typesets are initialized, so this cannot
+//      be merged with the above.
+//
 
 static void Init_Datatype_Checks(void)
 {
@@ -325,18 +300,14 @@ static void Init_Datatype_Checks(void)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Constants"
-**  Summary: none
-**  Details: {
-**      Init constant words.
-**  
-**      WARNING: Do not create direct pointers into the Lib_Context
-**      because it may get expanded and the pointers will be invalid.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Constants: C
+//  
+//      Init constant words.
+//  
+//      WARNING: Do not create direct pointers into the Lib_Context
+//      because it may get expanded and the pointers will be invalid.
+//
 
 static void Init_Constants(void)
 {
@@ -357,16 +328,12 @@ static void Init_Constants(void)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Use_Natives"
-**  Summary: none
-**  Details: {
-**      Setup to use NATIVE function. If limit == 0, then the
-**      native function table will be zero terminated (N_native).}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Use_Natives: C
+//  
+//      Setup to use NATIVE function. If limit == 0, then the
+//      native function table will be zero terminated (N_native).
+//
 
 void Use_Natives(const REBFUN *funcs, REBCNT limit)
 {
@@ -376,14 +343,9 @@ void Use_Natives(const REBFUN *funcs, REBCNT limit)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "native"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  native: native none
+//
 
 REBNATIVE(native)
 {
@@ -395,14 +357,9 @@ REBNATIVE(native)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "action"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  action: native none
+//
 
 REBNATIVE(action)
 {
@@ -418,20 +375,17 @@ REBNATIVE(action)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "context"
-**  Summary: "Defines a unique object."
-**  Details: {
-**      The spec block has already been bound to Lib_Context, to
-**      allow any embedded values and functions to evaluate.
-**  
-**      Note: Overlaps MAKE OBJECT! code (REBTYPE(Object)'s A_MAKE)}
-**  Spec: [
-**      <1> spec
-**  ]
-**
-*******************************************************************************/
+//
+//  context: native [
+//      "Defines a unique object."
+//      spec [block!] "Object words and values (modified)"
+//  ]
+//  
+//      The spec block has already been bound to Lib_Context, to
+//      allow any embedded values and functions to evaluate.
+//  
+//      Note: Overlaps MAKE OBJECT! code (REBTYPE(Object)'s A_MAKE)
+//
 
 REBNATIVE(context)
 {
@@ -451,14 +405,9 @@ REBNATIVE(context)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Ops"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Ops: C
+//
 
 static void Init_Ops(void)
 {
@@ -475,14 +424,11 @@ static void Init_Ops(void)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Natives"
-**  Summary: none
-**  Details: "^/        Create native functions."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Natives: C
+//  
+//      Create native functions.
+//
 
 static void Init_Natives(void)
 {
@@ -514,38 +460,35 @@ static void Init_Natives(void)
 }
 
 
-/***********************************************************************
-**
-*/	REBVAL *Get_Action_Word(REBCNT action)
-/*
-**		Return the word symbol for a given Action number.
-**
-***********************************************************************/
+//
+//  Get_Action_Word: C
+//  
+//      Return the word symbol for a given Action number.
+//
+
+REBVAL *Get_Action_Word(REBCNT action)
 {
 	return FRM_WORD(Lib_Context, Action_Marker+action);
 }
 
 
-/***********************************************************************
-**
-*/	REBVAL *Get_Action_Value(REBCNT action)
-/*
-**		Return the value (function) for a given Action number.
-**
-***********************************************************************/
+//
+//  Get_Action_Value: C
+//  
+//      Return the value (function) for a given Action number.
+//
+
+REBVAL *Get_Action_Value(REBCNT action)
 {
 	return FRM_VALUE(Lib_Context, Action_Marker+action);
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_UType_Proto"
-**  Summary: none
-**  Details: "^/        Create prototype func object for UTypes."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_UType_Proto: C
+//  
+//      Create prototype func object for UTypes.
+//
 
 void Init_UType_Proto(void)
 {
@@ -569,20 +512,16 @@ void Init_UType_Proto(void)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Root_Context"
-**  Summary: none
-**  Details: {
-**      Hand-build the root context where special REBOL values are
-**      stored. Called early, so it cannot depend on any other
-**      system structures or values.
-**  
-**      Note that the Root_Context's word table is unset!
-**      None of its values are exported.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Root_Context: C
+//  
+//      Hand-build the root context where special REBOL values are
+//      stored. Called early, so it cannot depend on any other
+//      system structures or values.
+//  
+//      Note that the Root_Context's word table is unset!
+//      None of its values are exported.
+//
 
 static void Init_Root_Context(void)
 {
@@ -627,15 +566,11 @@ static void Init_Root_Context(void)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Set_Root_Series"
-**  Summary: none
-**  Details: {
-**      Used to set block and string values in the ROOT context.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_Root_Series: C
+//  
+//      Used to set block and string values in the ROOT context.
+//
 
 void Set_Root_Series(REBVAL *value, REBSER *ser, const char *label)
 {
@@ -661,15 +596,11 @@ void Set_Root_Series(REBVAL *value, REBSER *ser, const char *label)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Task_Context"
-**  Summary: none
-**  Details: {
-**      See above notes (same as root context, except for tasks)}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Task_Context: C
+//  
+//      See above notes (same as root context, except for tasks)
+//
 
 static void Init_Task_Context(void)
 {
@@ -703,14 +634,11 @@ static void Init_Task_Context(void)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_System_Object"
-**  Summary: none
-**  Details: "^/        The system object is defined in boot.r."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_System_Object: C
+//  
+//      The system object is defined in boot.r.
+//
 
 static void Init_System_Object(void)
 {
@@ -778,14 +706,9 @@ static void Init_System_Object(void)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Contexts_Object"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Contexts_Object: C
+//
 
 static void Init_Contexts_Object(void)
 {
@@ -808,14 +731,9 @@ static void Init_Contexts_Object(void)
 //	Val_Init_Object(value, frame);
 }
 
-/*******************************************************************************
-**
-**  Name: "Codec_Text"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Codec_Text: C
+//
 
 REBINT Codec_Text(REBCDI *codi)
 {
@@ -927,42 +845,27 @@ REBINT Codec_Text(REBCDI *codi)
 	return CODI_ERROR;
 }
 
-/*******************************************************************************
-**
-**  Name: "Codec_UTF16LE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Codec_UTF16LE: C
+//
 
 REBINT Codec_UTF16LE(REBCDI *codi)
 {
 	return Codec_UTF16(codi, TRUE);
 }
 
-/*******************************************************************************
-**
-**  Name: "Codec_UTF16BE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Codec_UTF16BE: C
+//
 
 REBINT Codec_UTF16BE(REBCDI *codi)
 {
 	return Codec_UTF16(codi, FALSE);
 }
 
-/*******************************************************************************
-**
-**  Name: "Codec_Markup"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Codec_Markup: C
+//
 
 REBINT Codec_Markup(REBCDI *codi)
 {
@@ -982,14 +885,11 @@ REBINT Codec_Markup(REBCDI *codi)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Register_Codec"
-**  Summary: none
-**  Details: "^/        Internal function for adding a codec."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Register_Codec: C
+//  
+//      Internal function for adding a codec.
+//
 
 void Register_Codec(const REBYTE *name, codo dispatcher)
 {
@@ -1001,14 +901,9 @@ void Register_Codec(const REBYTE *name, codo dispatcher)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Codecs"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Codecs: C
+//
 
 static void Init_Codecs(void)
 {
@@ -1051,14 +946,11 @@ static REBCNT Set_Option_Word(REBCHR *str, REBCNT field)
 	return n;
 }
 
-/*******************************************************************************
-**
-**  Name: "Init_Main_Args"
-**  Summary: none
-**  Details: "^/        The system object is defined in boot.r."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Main_Args: C
+//  
+//      The system object is defined in boot.r.
+//
 
 static void Init_Main_Args(REBARGS *rargs)
 {
@@ -1166,14 +1058,9 @@ static void Init_Main_Args(REBARGS *rargs)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Task"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Task: C
+//
 
 void Init_Task(void)
 {
@@ -1202,14 +1089,9 @@ void Init_Task(void)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Year"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Year: C
+//
 
 void Init_Year(void)
 {
@@ -1220,16 +1102,12 @@ void Init_Year(void)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Core"
-**  Summary: none
-**  Details: {
-**      GC is disabled during all init code, so these functions
-**      need not protect themselves.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Core: C
+//  
+//      GC is disabled during all init code, so these functions
+//      need not protect themselves.
+//
 
 void Init_Core(REBARGS *rargs)
 {
@@ -1429,16 +1307,12 @@ void Init_Core(REBARGS *rargs)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Shutdown_Core"
-**  Summary: none
-**  Details: {
-**      !!! Merging soon to a Git branch near you:
-**      !!!    The ability to do clean shutdown, zero leaks.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Shutdown_Core: C
+//  
+//      !!! Merging soon to a Git branch near you:
+//      !!!    The ability to do clean shutdown, zero leaks.
+//
 
 void Shutdown_Core(void)
 {

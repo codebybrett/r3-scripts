@@ -33,16 +33,12 @@
 
 #define MAX_WAIT_MS 64 // Maximum millsec to sleep
 
-/*******************************************************************************
-**
-**  Name: "Make_Port"
-**  Summary: none
-**  Details: {
-**      Create a new port. This is done by calling the MAKE_PORT
-**      function stored in the system/intrinsic object.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Make_Port: C
+//  
+//      Create a new port. This is done by calling the MAKE_PORT
+//      function stored in the system/intrinsic object.
+//
 
 void Make_Port(REBVAL *out, const REBVAL *spec)
 {
@@ -57,16 +53,12 @@ void Make_Port(REBVAL *out, const REBVAL *spec)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Is_Port_Open"
-**  Summary: none
-**  Details: {
-**      Standard method for checking if port is open.
-**      A convention. Not all ports use this method.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Is_Port_Open: C
+//  
+//      Standard method for checking if port is open.
+//      A convention. Not all ports use this method.
+//
 
 REBFLG Is_Port_Open(REBSER *port)
 {
@@ -76,16 +68,12 @@ REBFLG Is_Port_Open(REBSER *port)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Set_Port_Open"
-**  Summary: none
-**  Details: {
-**      Standard method for setting a port open/closed.
-**      A convention. Not all ports use this method.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_Port_Open: C
+//  
+//      Standard method for setting a port open/closed.
+//      A convention. Not all ports use this method.
+//
 
 void Set_Port_Open(REBSER *port, REBFLG flag)
 {
@@ -97,15 +85,15 @@ void Set_Port_Open(REBSER *port, REBFLG flag)
 }
 
 
-/***********************************************************************
-**
-*/	void *Use_Port_State(REBSER *port, REBCNT device, REBCNT size)
-/*
-**		Use private state area in a port. Create if necessary.
-**		The size is that of a binary structure used by
-**		the port for storing internal information.
-**
-***********************************************************************/
+//
+//  Use_Port_State: C
+//  
+//      Use private state area in a port. Create if necessary.
+//      The size is that of a binary structure used by
+//      the port for storing internal information.
+//
+
+void *Use_Port_State(REBSER *port, REBCNT device, REBCNT size)
 {
 	REBVAL *state = BLK_SKIP(port, STD_PORT_STATE);
 
@@ -127,16 +115,12 @@ void Set_Port_Open(REBSER *port, REBFLG flag)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Pending_Port"
-**  Summary: none
-**  Details: {
-**      Return TRUE if port value is pending a signal.
-**      Not valid for all ports - requires request struct!!!}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Pending_Port: C
+//  
+//      Return TRUE if port value is pending a signal.
+//      Not valid for all ports - requires request struct!!!
+//
 
 REBFLG Pending_Port(REBVAL *port)
 {
@@ -154,18 +138,14 @@ REBFLG Pending_Port(REBVAL *port)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Awake_System"
-**  Summary: none
-**  Details: {
-**  Returns:
-**      -1 for errors
-**       0 for nothing to do
-**       1 for wait is satisifed}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Awake_System: C
+//  
+//  Returns:
+//      -1 for errors
+//       0 for nothing to do
+//       1 for wait is satisifed
+//
 
 REBINT Awake_System(REBSER *ports, REBINT only)
 {
@@ -213,20 +193,16 @@ REBINT Awake_System(REBSER *ports, REBINT only)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Wait_Ports"
-**  Summary: none
-**  Details: {
-**  Inputs:
-**      Ports: a block of ports or zero (on stack to avoid GC).
-**      Timeout: milliseconds to wait
-**  
-**  Returns:
-**      TRUE when port action happened, or FALSE for timeout.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Wait_Ports: C
+//  
+//  Inputs:
+//      Ports: a block of ports or zero (on stack to avoid GC).
+//      Timeout: milliseconds to wait
+//  
+//  Returns:
+//      TRUE when port action happened, or FALSE for timeout.
+//
 
 REBINT Wait_Ports(REBSER *ports, REBCNT timeout, REBINT only)
 {
@@ -275,16 +251,12 @@ REBINT Wait_Ports(REBSER *ports, REBCNT timeout, REBINT only)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Sieve_Ports"
-**  Summary: none
-**  Details: {
-**      Remove all ports not found in the WAKE list.
-**      ports could be NULL, in which case the WAKE list is cleared.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Sieve_Ports: C
+//  
+//      Remove all ports not found in the WAKE list.
+//      ports could be NULL, in which case the WAKE list is cleared.
+//
 
 void Sieve_Ports(REBSER *ports)
 {
@@ -314,16 +286,12 @@ void Sieve_Ports(REBSER *ports)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Find_Action"
-**  Summary: none
-**  Details: {
-**      Given an action number, return the action's index in
-**      the specified object. If not found, a zero is returned.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Find_Action: C
+//  
+//      Given an action number, return the action's index in
+//      the specified object. If not found, a zero is returned.
+//
 
 REBCNT Find_Action(REBVAL *object, REBCNT action)
 {
@@ -331,19 +299,15 @@ REBCNT Find_Action(REBVAL *object, REBCNT action)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Do_Port_Action"
-**  Summary: none
-**  Details: {
-**      Call a PORT actor (action) value. Search PORT actor
-**      first. If not found, search the PORT scheme actor.
-**  
-**      NOTE: stack must already be setup correctly for action, and
-**      the caller must cleanup the stack.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Do_Port_Action: C
+//  
+//      Call a PORT actor (action) value. Search PORT actor
+//      first. If not found, search the PORT scheme actor.
+//  
+//      NOTE: stack must already be setup correctly for action, and
+//      the caller must cleanup the stack.
+//
 
 int Do_Port_Action(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
@@ -399,18 +363,14 @@ int Do_Port_Action(struct Reb_Call *call_, REBSER *port, REBCNT action)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Secure_Port"
-**  Summary: none
-**  Details: {
-**      kind: word that represents the type (e.g. 'file)
-**      req:  I/O request
-**      name: value that holds the original user spec
-**      path: the local path to compare with}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Secure_Port: C
+//  
+//      kind: word that represents the type (e.g. 'file)
+//      req:  I/O request
+//      name: value that holds the original user spec
+//      path: the local path to compare with
+//
 
 void Secure_Port(REBCNT kind, REBREQ *req, REBVAL *name, REBSER *path)
 {
@@ -427,16 +387,12 @@ void Secure_Port(REBCNT kind, REBREQ *req, REBVAL *name, REBSER *path)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Validate_Port"
-**  Summary: none
-**  Details: {
-**      Because port actors are exposed to the user level, we must
-**      prevent them from being called with invalid values.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Validate_Port: C
+//  
+//      Because port actors are exposed to the user level, we must
+//      prevent them from being called with invalid values.
+//
 
 void Validate_Port(REBSER *port, REBCNT action)
 {
@@ -489,16 +445,12 @@ typedef struct rebol_scheme_actions {
 SCHEME_ACTIONS *Scheme_Actions;	// Initial Global (not threaded)
 
 
-/*******************************************************************************
-**
-**  Name: "Register_Scheme"
-**  Summary: none
-**  Details: {
-**      Associate a scheme word (e.g. FILE) with a set of native
-**      scheme actions. This will be used by the Set_Scheme native}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Register_Scheme: C
+//  
+//      Associate a scheme word (e.g. FILE) with a set of native
+//      scheme actions. This will be used by the Set_Scheme native
+//
 
 void Register_Scheme(REBCNT sym, const PORT_ACTION *map, REBPAF fun)
 {
@@ -513,16 +465,12 @@ void Register_Scheme(REBCNT sym, const PORT_ACTION *map, REBPAF fun)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "set_scheme"
-**  Summary: "Low-level port scheme actor initialization."
-**  Details: none
-**  Spec: [
-**      <1> scheme
-**  ]
-**
-*******************************************************************************/
+//
+//  set-scheme: native [
+//      "Low-level port scheme actor initialization."
+//      scheme [object!]
+//  ]
+//
 
 REBNATIVE(set_scheme)
 {
@@ -597,21 +545,17 @@ REBNATIVE(set_scheme)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Ports"
-**  Summary: none
-**  Details: {
-**      Initialize port scheme related subsystems.
-**  
-**  In order to add a port scheme:
-**  
-**      In mezz-ports.r add a make-scheme.
-**      Add an Init_*_Scheme() here.
-**      Be sure host-devices.c has the device enabled.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Ports: C
+//  
+//      Initialize port scheme related subsystems.
+//  
+//  In order to add a port scheme:
+//  
+//      In mezz-ports.r add a make-scheme.
+//      Add an Init_*_Scheme() here.
+//      Be sure host-devices.c has the device enabled.
+//
 
 void Init_Ports(void)
 {

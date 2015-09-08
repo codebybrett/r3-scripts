@@ -30,14 +30,9 @@
 #include "sys-core.h"
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Datatype"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Datatype: C
+//
 
 REBINT CT_Datatype(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -46,14 +41,9 @@ REBINT CT_Datatype(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "MT_Datatype"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_Datatype: C
+//
 
 REBFLG MT_Datatype(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -67,14 +57,9 @@ REBFLG MT_Datatype(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Datatype)
 {

@@ -35,22 +35,18 @@ typedef int cmp_t(const void *, const void *);
 extern void reb_qsort(void *a, size_t n, size_t es, cmp_t *cmp);
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Array"
-**  Summary: none
-**  Details: {
-**  "Compare Type" dispatcher for the following types:
-**  
-**      CT_Block(REBVAL *a, REBVAL *b, REBINT mode)
-**      CT_Paren(REBVAL *a, REBVAL *b, REBINT mode)
-**      CT_Path(REBVAL *a, REBVAL *b, REBINT mode)
-**      CT_Set_Path(REBVAL *a, REBVAL *b, REBINT mode)
-**      CT_Get_Path(REBVAL *a, REBVAL *b, REBINT mode)
-**      CT_Lit_Path(REBVAL *a, REBVAL *b, REBINT mode)}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Array: C
+//  
+//  "Compare Type" dispatcher for the following types:
+//  
+//      CT_Block(REBVAL *a, REBVAL *b, REBINT mode)
+//      CT_Paren(REBVAL *a, REBVAL *b, REBINT mode)
+//      CT_Path(REBVAL *a, REBVAL *b, REBINT mode)
+//      CT_Set_Path(REBVAL *a, REBVAL *b, REBINT mode)
+//      CT_Get_Path(REBVAL *a, REBVAL *b, REBINT mode)
+//      CT_Lit_Path(REBVAL *a, REBVAL *b, REBINT mode)
+//
 
 REBINT CT_Array(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -72,22 +68,18 @@ static void No_Nones(REBVAL *arg) {
 	}
 }
 
-/*******************************************************************************
-**
-**  Name: "MT_Array"
-**  Summary: none
-**  Details: {
-**  "Make Type" dispatcher for the following subtypes:
-**  
-**      MT_Block(REBVAL *out, REBVAL *data, REBCNT type)
-**      MT_Paren(REBVAL *out, REBVAL *data, REBCNT type)
-**      MT_Path(REBVAL *out, REBVAL *data, REBCNT type)
-**      MT_Set_Path(REBVAL *out, REBVAL *data, REBCNT type)
-**      MT_Get_Path(REBVAL *out, REBVAL *data, REBCNT type)
-**      MT_Lit_Path(REBVAL *out, REBVAL *data, REBCNT type)}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_Array: C
+//  
+//  "Make Type" dispatcher for the following subtypes:
+//  
+//      MT_Block(REBVAL *out, REBVAL *data, REBCNT type)
+//      MT_Paren(REBVAL *out, REBVAL *data, REBCNT type)
+//      MT_Path(REBVAL *out, REBVAL *data, REBCNT type)
+//      MT_Set_Path(REBVAL *out, REBVAL *data, REBCNT type)
+//      MT_Get_Path(REBVAL *out, REBVAL *data, REBCNT type)
+//      MT_Lit_Path(REBVAL *out, REBVAL *data, REBCNT type)
+//
 
 REBFLG MT_Array(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -106,31 +98,27 @@ REBFLG MT_Array(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Find_Block"
-**  Summary: none
-**  Details: {
-**      Flags are set according to: ALL_FIND_REFS
-**  
-**  Main Parameters:
-**      start - index to start search
-**      end   - ending position
-**      len   - length of target
-**      skip  - skip factor
-**      dir   - direction
-**  
-**  Comparison Parameters:
-**      case  - case sensitivity
-**      wild  - wild cards/keys
-**  
-**  Final Parmameters:
-**      tail  - tail position
-**      match - sequence
-**      SELECT - (value that follows)}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Find_Block: C
+//  
+//      Flags are set according to: ALL_FIND_REFS
+//  
+//  Main Parameters:
+//      start - index to start search
+//      end   - ending position
+//      len   - length of target
+//      skip  - skip factor
+//      dir   - direction
+//  
+//  Comparison Parameters:
+//      case  - case sensitivity
+//      wild  - wild cards/keys
+//  
+//  Final Parmameters:
+//      tail  - tail position
+//      match - sequence
+//      SELECT - (value that follows)
+//
 
 REBCNT Find_Block(REBSER *series, REBCNT index, REBCNT end, const REBVAL *target, REBCNT len, REBCNT flags, REBINT skip)
 {
@@ -210,22 +198,18 @@ REBCNT Find_Block(REBSER *series, REBCNT index, REBCNT end, const REBVAL *target
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Make_Block_Type"
-**  Summary: none
-**  Details: {
-**      Value can be:
-**          1. a datatype (e.g. BLOCK!)
-**          2. a value (e.g. [...])
-**  
-**      Arg can be:
-**          1. integer (length of block)
-**          2. block (copy it)
-**          3. value (convert to a block)}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Make_Block_Type: C
+//  
+//      Value can be:
+//          1. a datatype (e.g. BLOCK!)
+//          2. a value (e.g. [...])
+//  
+//      Arg can be:
+//          1. integer (length of block)
+//          2. block (copy it)
+//          3. value (convert to a block)
+//
 
 void Make_Block_Type(REBFLG make, REBVAL *value, REBVAL *arg)
 {
@@ -312,14 +296,9 @@ static struct {
 	REBVAL *compare;
 } sort_flags;
 
-/*******************************************************************************
-**
-**  Name: "Compare_Val"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Compare_Val: C
+//
 
 static int Compare_Val(const void *v1, const void *v2)
 {
@@ -347,14 +326,9 @@ static int Compare_Val(const void *v1, const void *v2)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Compare_Call"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Compare_Call: C
+//
 
 static int Compare_Call(const void *v1, const void *v2)
 {
@@ -403,24 +377,20 @@ static int Compare_Call(const void *v1, const void *v2)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Sort_Block"
-**  Summary: none
-**  Details: {
-**      series [series!]
-**      /case {Case sensitive sort}
-**      /skip {Treat the series as records of fixed size}
-**      size [integer!] {Size of each record}
-**      /compare  {Comparator offset, block or function}
-**      comparator [integer! block! function!]
-**      /part {Sort only part of a series}
-**      limit [number! series!] {Length of series to sort}
-**      /all {Compare all fields}
-**      /reverse {Reverse sort order}}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Sort_Block: C
+//  
+//      series [series!]
+//      /case {Case sensitive sort}
+//      /skip {Treat the series as records of fixed size}
+//      size [integer!] {Size of each record}
+//      /compare  {Comparator offset, block or function}
+//      comparator [integer! block! function!]
+//      /part {Sort only part of a series}
+//      limit [number! series!] {Length of series to sort}
+//      /all {Compare all fields}
+//      /reverse {Reverse sort order}
+//
 
 static void Sort_Block(REBVAL *block, REBFLG ccase, REBVAL *skipv, REBVAL *compv, REBVAL *part, REBFLG all, REBFLG rev)
 {
@@ -459,14 +429,11 @@ static void Sort_Block(REBVAL *block, REBFLG ccase, REBVAL *skipv, REBVAL *compv
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Trim_Block"
-**  Summary: none
-**  Details: "^/        See Trim_String()."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Trim_Block: C
+//  
+//      See Trim_String().
+//
 
 static void Trim_Block(REBSER *ser, REBCNT index, REBCNT flags)
 {
@@ -501,14 +468,9 @@ static void Trim_Block(REBSER *ser, REBCNT index, REBCNT flags)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Shuffle_Block"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Shuffle_Block: C
+//
 
 void Shuffle_Block(REBVAL *value, REBFLG secure)
 {
@@ -528,22 +490,18 @@ void Shuffle_Block(REBVAL *value, REBFLG secure)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "PD_Array"
-**  Summary: none
-**  Details: {
-**  Path dispatch for the following types:
-**  
-**      PD_Block(REBPVS *pvs)
-**      PD_Paren(REBPVS *pvs)
-**      PD_Path(REBPVS *pvs)
-**      PD_Get_Path(REBPVS *pvs)
-**      PD_Set_Path(REBPVS *pvs)
-**      PD_Lit_Path(REBPVS *pvs)}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  PD_Array: C
+//  
+//  Path dispatch for the following types:
+//  
+//      PD_Block(REBPVS *pvs)
+//      PD_Paren(REBPVS *pvs)
+//      PD_Path(REBPVS *pvs)
+//      PD_Get_Path(REBPVS *pvs)
+//      PD_Set_Path(REBPVS *pvs)
+//      PD_Lit_Path(REBPVS *pvs)
+//
 
 REBINT PD_Array(REBPVS *pvs)
 {
@@ -580,11 +538,11 @@ REBINT PD_Array(REBPVS *pvs)
 }
 
 
-/***********************************************************************
-**
-*/	REBVAL *Pick_Block(REBVAL *block, REBVAL *selector)
-/*
-***********************************************************************/
+//
+//  Pick_Block: C
+//
+
+REBVAL *Pick_Block(REBVAL *block, REBVAL *selector)
 {
 	REBINT n = 0;
 
@@ -595,22 +553,18 @@ REBINT PD_Array(REBPVS *pvs)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: {
-**  Implementation of type dispatch of the following:
-**  
-**      REBTYPE(Block)
-**      REBTYPE(Paren)
-**      REBTYPE(Path)
-**      REBTYPE(Get_Path)
-**      REBTYPE(Set_Path)
-**      REBTYPE(Lit_Path)}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//  
+//  Implementation of type dispatch of the following:
+//  
+//      REBTYPE(Block)
+//      REBTYPE(Paren)
+//      REBTYPE(Path)
+//      REBTYPE(Get_Path)
+//      REBTYPE(Set_Path)
+//      REBTYPE(Lit_Path)
+//
 
 REBTYPE(Array)
 {
@@ -891,14 +845,9 @@ is_none:
 
 
 #if !defined(NDEBUG)
-/*******************************************************************************
-**
-**  Name: "Assert_Array_Core"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Assert_Array_Core: C
+//
 
 void Assert_Array_Core(const REBSER *series, REBOOL typed_words)
 {

@@ -201,14 +201,9 @@ static REBSER *Trim_Object(REBSER *obj)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Object"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Object: C
+//
 
 REBINT CT_Object(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -218,14 +213,9 @@ REBINT CT_Object(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Frame"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Frame: C
+//
 
 REBINT CT_Frame(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -235,14 +225,9 @@ REBINT CT_Frame(REBVAL *a, REBVAL *b, REBINT mode)
 
 
 
-/*******************************************************************************
-**
-**  Name: "MT_Object"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_Object: C
+//
 
 REBFLG MT_Object(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -263,14 +248,9 @@ REBFLG MT_Object(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "PD_Object"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  PD_Object: C
+//
 
 REBINT PD_Object(REBPVS *pvs)
 {
@@ -306,14 +286,11 @@ REBINT PD_Object(REBPVS *pvs)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: "^/        Handles object! and error! datatypes."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//  
+//      Handles object! and error! datatypes.
+//
 
 REBTYPE(Object)
 {
@@ -585,15 +562,11 @@ is_true:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "PD_Frame"
-**  Summary: none
-**  Details: {
-**      pvs->value points to the first value in frame (SELF).}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  PD_Frame: C
+//  
+//      pvs->value points to the first value in frame (SELF).
+//
 
 REBINT PD_Frame(REBPVS *pvs)
 {
@@ -620,14 +593,9 @@ REBINT PD_Frame(REBPVS *pvs)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Frame)
 {

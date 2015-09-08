@@ -10798,14 +10798,9 @@ extern void Init_JPEG_Codec(void);
 #endif
 
 
-/*******************************************************************************
-**
-**  Name: "Codec_JPEG_Image"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Codec_JPEG_Image: C
+//
 
 REBINT Codec_JPEG_Image(REBCDI *codi)
 {
@@ -10839,14 +10834,9 @@ REBINT Codec_JPEG_Image(REBCDI *codi)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_JPEG_Codec"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_JPEG_Codec: C
+//
 
 void Init_JPEG_Codec(void)
 {

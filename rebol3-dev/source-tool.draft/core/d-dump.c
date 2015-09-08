@@ -34,14 +34,9 @@
 #define snprintf _snprintf
 #endif
 
-/*******************************************************************************
-**
-**  Name: "Dump_Series"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Dump_Series: C
+//
 
 void Dump_Series(REBSER *series, const char *memo)
 {
@@ -64,14 +59,9 @@ void Dump_Series(REBSER *series, const char *memo)
 		Dump_Bytes(series->data, (SERIES_TAIL(series)+1) * SERIES_WIDE(series));
 }
 
-/*******************************************************************************
-**
-**  Name: "Dump_Bytes"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Dump_Bytes: C
+//
 
 void Dump_Bytes(REBYTE *bp, REBCNT limit)
 {
@@ -119,16 +109,12 @@ void Dump_Bytes(REBYTE *bp, REBCNT limit)
 	}
 }
 
-/*******************************************************************************
-**
-**  Name: "Dump_Values"
-**  Summary: none
-**  Details: {
-**      Print out values in raw hex; If memory is corrupted
-**      this function still needs to work.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Dump_Values: C
+//  
+//      Print out values in raw hex; If memory is corrupted
+//      this function still needs to work.
+//
 
 void Dump_Values(REBVAL *vp, REBCNT count)
 {
@@ -169,14 +155,9 @@ void Dump_Values(REBVAL *vp, REBCNT count)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Dump_Info"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Dump_Info: C
+//
 
 void Dump_Info(void)
 {
@@ -204,14 +185,9 @@ void Dump_Info(void)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Dump_Stack"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Dump_Stack: C
+//
 
 void Dump_Stack(struct Reb_Call *call, REBINT dsp)
 {

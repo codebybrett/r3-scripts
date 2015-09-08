@@ -82,14 +82,9 @@ static REBI64 *ran_arr_ptr=&ran_arr_dummy;	/* the next random number, or -1 */
 #define TT	70		/* guaranteed separation between streams */
 #define is_odd(x)	((x)&1)			/* units bit of x */
 
-/*******************************************************************************
-**
-**  Name: "Set_Random"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_Random: C
+//
 
 void Set_Random(REBI64 seed)
 {
@@ -130,15 +125,11 @@ static REBI64 ran_arr_cycle()
 	return ran_arr_buf[0];
 }
 
-/*******************************************************************************
-**
-**  Name: "Random_Int"
-**  Summary: none
-**  Details: {
-**      Return random integer. Secure uses SHA1 for better safety.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Random_Int: C
+//  
+//      Return random integer. Secure uses SHA1 for better safety.
+//
 
 REBI64 Random_Int(REBFLG secure)
 {
@@ -158,14 +149,9 @@ REBI64 Random_Int(REBFLG secure)
 	return tmp;
 }
 
-/*******************************************************************************
-**
-**  Name: "Random_Range"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Random_Range: C
+//
 
 REBI64 Random_Range(REBI64 r, REBFLG secure)
 {
@@ -179,14 +165,9 @@ REBI64 Random_Range(REBI64 r, REBFLG secure)
 	return (r > 0) ? cast(REBI64, u) : -cast(REBI64, u);
 }
 
-/*******************************************************************************
-**
-**  Name: "Random_Dec"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Random_Dec: C
+//
 
 REBDEC Random_Dec(REBDEC r, REBFLG secure)
 {

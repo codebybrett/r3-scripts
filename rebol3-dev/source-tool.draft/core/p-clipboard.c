@@ -30,14 +30,9 @@
 #include "sys-core.h"
 
 
-/*******************************************************************************
-**
-**  Name: "Clipboard_Actor"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Clipboard_Actor: C
+//
 
 static REB_R Clipboard_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
@@ -187,14 +182,9 @@ static REB_R Clipboard_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Clipboard_Scheme"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Clipboard_Scheme: C
+//
 
 void Init_Clipboard_Scheme(void)
 {

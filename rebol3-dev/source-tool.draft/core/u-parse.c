@@ -79,15 +79,11 @@ void Print_Parse_Index(enum Reb_Kind type, const REBVAL *rules, REBSER *series, 
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Set_Parse_Series"
-**  Summary: none
-**  Details: {
-**      Change the series and return the new index.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_Parse_Series: C
+//  
+//      Change the series and return the new index.
+//
 
 static REBCNT Set_Parse_Series(REBPARSE *parse, const REBVAL *item)
 {
@@ -99,28 +95,28 @@ static REBCNT Set_Parse_Series(REBPARSE *parse, const REBVAL *item)
 }
 
 
-/***********************************************************************
-**
-*/	static const REBVAL *Get_Parse_Value(REBVAL *safe, const REBVAL *item)
-/*
-**		Get the value of a word (when not a command) or path.
-**		Returns all other values as-is.
-**
-**		!!! Because path evaluation does not necessarily wind up
-**		pointing to a variable that exists in memory, a derived
-**		value may be created during that process.  Previously
-**		this derived value was kept on the stack, but that
-**		meant every path evaluation PUSH'd without a known time
-**		at which a corresponding DROP would be performed.  To
-**		avoid the stack overflow, this requires you to pass in
-**		a "safe" storage value location that will be good for
-**		as long as the returned pointer is needed.  It *may*
-**		not be used in the case of a word fetch, so pay attention
-**		to the return value and not the contents of that variable.
-**
-**		!!! (Review if this can be done a better way.)
-**
-***********************************************************************/
+//
+//  Get_Parse_Value: C
+//  
+//      Get the value of a word (when not a command) or path.
+//      Returns all other values as-is.
+//  
+//      !!! Because path evaluation does not necessarily wind up
+//      pointing to a variable that exists in memory, a derived
+//      value may be created during that process.  Previously
+//      this derived value was kept on the stack, but that
+//      meant every path evaluation PUSH'd without a known time
+//      at which a corresponding DROP would be performed.  To
+//      avoid the stack overflow, this requires you to pass in
+//      a "safe" storage value location that will be good for
+//      as long as the returned pointer is needed.  It *may*
+//      not be used in the case of a word fetch, so pay attention
+//      to the return value and not the contents of that variable.
+//  
+//      !!! (Review if this can be done a better way.)
+//
+
+static const REBVAL *Get_Parse_Value(REBVAL *safe, const REBVAL *item)
 {
 	if (IS_WORD(item)) {
 		// !!! Should this be getting mutable variables?  If not, how
@@ -136,18 +132,14 @@ static REBCNT Set_Parse_Series(REBPARSE *parse, const REBVAL *item)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Parse_Next_String"
-**  Summary: none
-**  Details: {
-**      Match the next item in the string ruleset.
-**  
-**      If it matches, return the index just past it.
-**      Otherwise return NOT_FOUND.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Parse_Next_String: C
+//  
+//      Match the next item in the string ruleset.
+//  
+//      If it matches, return the index just past it.
+//      Otherwise return NOT_FOUND.
+//
 
 static REBCNT Parse_Next_String(REBPARSE *parse, REBCNT index, const REBVAL *item, REBCNT depth)
 {
@@ -235,16 +227,12 @@ static REBCNT Parse_Next_String(REBPARSE *parse, REBCNT index, const REBVAL *ite
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Parse_Next_Block"
-**  Summary: none
-**  Details: {
-**      Used for parsing blocks to match the next item in the ruleset.
-**      If it matches, return the index just past it. Otherwise, return zero.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Parse_Next_Block: C
+//  
+//      Used for parsing blocks to match the next item in the ruleset.
+//      If it matches, return the index just past it. Otherwise, return zero.
+//
 
 static REBCNT Parse_Next_Block(REBPARSE *parse, REBCNT index, const REBVAL *item, REBCNT depth)
 {
@@ -317,14 +305,9 @@ no_result:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "To_Thru"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  To_Thru: C
+//
 
 static REBCNT To_Thru(REBPARSE *parse, REBCNT index, const REBVAL *block, REBFLG is_thru)
 {
@@ -488,19 +471,15 @@ bad_target:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Parse_To"
-**  Summary: none
-**  Details: {
-**      Parse TO a specific:
-**          1. integer - index position
-**          2. END - end of input
-**          3. value - according to datatype
-**          4. block of values - the first one we hit}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Parse_To: C
+//  
+//      Parse TO a specific:
+//          1. integer - index position
+//          2. END - end of input
+//          3. value - according to datatype
+//          4. block of values - the first one we hit
+//
 
 static REBCNT Parse_To(REBPARSE *parse, REBCNT index, const REBVAL *item, REBFLG is_thru)
 {
@@ -568,29 +547,25 @@ static REBCNT Parse_To(REBPARSE *parse, REBCNT index, const REBVAL *item, REBFLG
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Do_Eval_Rule"
-**  Summary: none
-**  Details: {
-**      Evaluate the input as a code block. Advance input if
-**      rule succeeds. Return new index or failure.
-**  
-**      Examples:
-**          do skip
-**          do end
-**          do "abc"
-**          do 'abc
-**          do [...]
-**          do variable
-**          do datatype!
-**          do quote 123
-**          do into [...]
-**  
-**      Problem: cannot write:  set var do datatype!}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Do_Eval_Rule: C
+//  
+//      Evaluate the input as a code block. Advance input if
+//      rule succeeds. Return new index or failure.
+//  
+//      Examples:
+//          do skip
+//          do end
+//          do "abc"
+//          do 'abc
+//          do [...]
+//          do variable
+//          do datatype!
+//          do quote 123
+//          do into [...]
+//  
+//      Problem: cannot write:  set var do datatype!
+//
 
 static REBCNT Do_Eval_Rule(REBPARSE *parse, REBCNT index, const REBVAL **rule)
 {
@@ -694,14 +669,9 @@ static REBCNT Do_Eval_Rule(REBPARSE *parse, REBCNT index, const REBVAL **rule)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Parse_Rules_Loop"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Parse_Rules_Loop: C
+//
 
 static REBCNT Parse_Rules_Loop(REBPARSE *parse, REBCNT index, const REBVAL *rules, REBCNT depth)
 {
@@ -1267,19 +1237,15 @@ bad_end:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "parse"
-**  Summary: {Parses a string or block series according to grammar rules.}
-**  Details: none
-**  Spec: [
-**      <1> input
-**      <2> rules
-**      <3> /case
-**      <4> /all
-**  ]
-**
-*******************************************************************************/
+//
+//  parse: native [
+//      {Parses a string or block series according to grammar rules.}
+//      input [series!] "Input series to parse"
+//      rules [block!] "Rules to parse by"
+//      /case "Uses case-sensitive comparison"
+//      /all "(ignored refinement left for Rebol2 transitioning)"
+//  ]
+//
 
 REBNATIVE(parse)
 {

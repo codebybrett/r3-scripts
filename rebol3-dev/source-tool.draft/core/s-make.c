@@ -31,14 +31,14 @@
 #include "sys-scan.h"
 
 
-/***********************************************************************
-**
-*/	REBSER *Make_Binary(REBCNT length)
-/*
-**		Make a binary string series. For byte, C, and UTF8 strings.
-**		Add 1 extra for terminator.
-**
-***********************************************************************/
+//
+//  Make_Binary: C
+//  
+//      Make a binary string series. For byte, C, and UTF8 strings.
+//      Add 1 extra for terminator.
+//
+
+REBSER *Make_Binary(REBCNT length)
 {
 	REBSER *series = Make_Series(length + 1, sizeof(REBYTE), MKS_NONE);
 	LABEL_SERIES(series, "make binary");
@@ -47,14 +47,14 @@
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Make_Unicode(REBCNT length)
-/*
-**		Make a unicode string series. Used for internal strings.
-**		Add 1 extra for terminator.
-**
-***********************************************************************/
+//
+//  Make_Unicode: C
+//  
+//      Make a unicode string series. Used for internal strings.
+//      Add 1 extra for terminator.
+//
+
+REBSER *Make_Unicode(REBCNT length)
 {
 	REBSER *series = Make_Series(length + 1, sizeof(REBUNI), MKS_NONE);
 	LABEL_SERIES(series, "make unicode");
@@ -63,14 +63,14 @@
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Copy_Bytes(const REBYTE *src, REBINT len)
-/*
-**		Create a string series from the given bytes.
-**		Source is always latin-1 valid. Result is always 8bit.
-**
-***********************************************************************/
+//
+//  Copy_Bytes: C
+//  
+//      Create a string series from the given bytes.
+//      Source is always latin-1 valid. Result is always 8bit.
+//
+
+REBSER *Copy_Bytes(const REBYTE *src, REBINT len)
 {
 	REBSER *dst;
 
@@ -85,14 +85,14 @@
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Copy_Bytes_To_Unicode(REBYTE *src, REBINT len)
-/*
-**		Convert a byte string to a unicode string. This can
-**		be used for ASCII or LATIN-8 strings.
-**
-***********************************************************************/
+//
+//  Copy_Bytes_To_Unicode: C
+//  
+//      Convert a byte string to a unicode string. This can
+//      be used for ASCII or LATIN-8 strings.
+//
+
+REBSER *Copy_Bytes_To_Unicode(REBYTE *src, REBINT len)
 {
 	REBSER *series;
 	REBUNI *dst;
@@ -111,13 +111,14 @@
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Copy_Wide_Str(void *src, REBINT len)
-/*
-**		Create a REBOL string series from a wide char string.
-**		Minimize to bytes if possible
-*/
+//
+//  Copy_Wide_Str: C
+//  
+//      Create a REBOL string series from a wide char string.
+//      Minimize to bytes if possible
+//
+
+REBSER *Copy_Wide_Str(void *src, REBINT len)
 {
 	REBSER *dst;
 	REBUNI *str = (REBUNI*)src;
@@ -140,19 +141,19 @@
 	return dst;
 }
 
-/***********************************************************************
-**
-*/	REBSER *Copy_OS_Str(void *src, REBINT len)
-/*
-**		Create a REBOL string series from an OS native string.
-**
-**		For example, in Win32 with the wide char interface, we must
-**		convert wide char strings, minimizing to bytes if possible.
-**
-**		For Linux the char string could be UTF-8, so that must be
-**		converted to REBOL Unicode or Latin byte strings.
-**
-***********************************************************************/
+//
+//  Copy_OS_Str: C
+//  
+//      Create a REBOL string series from an OS native string.
+//  
+//      For example, in Win32 with the wide char interface, we must
+//      convert wide char strings, minimizing to bytes if possible.
+//  
+//      For Linux the char string could be UTF-8, so that must be
+//      converted to REBOL Unicode or Latin byte strings.
+//
+
+REBSER *Copy_OS_Str(void *src, REBINT len)
 {
 #ifdef OS_WIDE_CHAR
 	return Copy_Wide_Str(src, len);
@@ -162,15 +163,11 @@
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Insert_Char"
-**  Summary: none
-**  Details: {
-**      Insert a Char (byte or unicode) into a string.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Insert_Char: C
+//  
+//      Insert a Char (byte or unicode) into a string.
+//
 
 void Insert_Char(REBSER *dst, REBCNT index, REBCNT chr)
 {
@@ -181,17 +178,13 @@ void Insert_Char(REBSER *dst, REBCNT index, REBCNT chr)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Insert_String"
-**  Summary: none
-**  Details: {
-**      Insert a non-encoded string into a series at given index.
-**      Source and/or destination can be 1 or 2 bytes wide.
-**      If destination is not wide enough, it will be widened.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Insert_String: C
+//  
+//      Insert a non-encoded string into a series at given index.
+//      Source and/or destination can be 1 or 2 bytes wide.
+//      If destination is not wide enough, it will be widened.
+//
 
 void Insert_String(REBSER *dst, REBCNT idx, const REBSER *src, REBCNT pos, REBCNT len, REBFLG no_expand)
 {
@@ -238,16 +231,16 @@ cp_same:
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Copy_String(REBSER *src, REBCNT index, REBINT length)
-/*
-**		Copies a portion of any string (byte or unicode).
-**		Will slim the string, if needed.
-**
-**		The index + length must be in range unsigned int 32.
-**
-***********************************************************************/
+//
+//  Copy_String: C
+//  
+//      Copies a portion of any string (byte or unicode).
+//      Will slim the string, if needed.
+//  
+//      The index + length must be in range unsigned int 32.
+//
+
+REBSER *Copy_String(REBSER *src, REBCNT index, REBINT length)
 {
 	REBUNI *up;
 	REBYTE wide = 1;
@@ -273,27 +266,27 @@ cp_same:
 }
 
 
-/***********************************************************************
-**
-*/	REBCHR *Val_Str_To_OS_Managed(REBSER **out, REBVAL *val)
-/*
-**		This is used to pass a REBOL value string to an OS API.
-**
-**		The REBOL (input) string can be byte or wide sized.
-**		The OS (output) string is in the native OS format.
-**		On Windows, its a wide-char, but on Linux, its UTF-8.
-**
-**		If we know that the string can be used directly as-is,
-**		(because it's in the OS size format), we can used it
-**		like that.
-**
-**		!!! The series is created but just let up to the garbage
-**		collector to free.  This is a "leaky" approach.  You may
-**		optionally request to have the series returned if it is
-**		important for you to protect it from GC, but you cannot
-**		currently get a "freeable" series out of this.
-**
-***********************************************************************/
+//
+//  Val_Str_To_OS_Managed: C
+//  
+//      This is used to pass a REBOL value string to an OS API.
+//  
+//      The REBOL (input) string can be byte or wide sized.
+//      The OS (output) string is in the native OS format.
+//      On Windows, its a wide-char, but on Linux, its UTF-8.
+//  
+//      If we know that the string can be used directly as-is,
+//      (because it's in the OS size format), we can used it
+//      like that.
+//  
+//      !!! The series is created but just let up to the garbage
+//      collector to free.  This is a "leaky" approach.  You may
+//      optionally request to have the series returned if it is
+//      important for you to protect it from GC, but you cannot
+//      currently get a "freeable" series out of this.
+//
+
+REBCHR *Val_Str_To_OS_Managed(REBSER **out, REBVAL *val)
 {
 #ifdef OS_WIDE_CHAR
 	if (VAL_BYTE_SIZE(val)) {
@@ -343,17 +336,17 @@ cp_same:
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Append_Unencoded_Len(REBSER *dst, const char *src, REBCNT len)
-/*
-**		Optimized function to append a non-encoded byte string.
-**
-**		If dst is null, it will be created and returned.
-**		Such src strings normally come from C code or tables.
-**		Destination can be 1 or 2 bytes wide.
-**
-***********************************************************************/
+//
+//  Append_Unencoded_Len: C
+//  
+//      Optimized function to append a non-encoded byte string.
+//  
+//      If dst is null, it will be created and returned.
+//      Such src strings normally come from C code or tables.
+//      Destination can be 1 or 2 bytes wide.
+//
+
+REBSER *Append_Unencoded_Len(REBSER *dst, const char *src, REBCNT len)
 {
 	REBUNI *up;
 	REBCNT tail;
@@ -380,29 +373,29 @@ cp_same:
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Append_Unencoded(REBSER *dst, const char *src)
-/*
-**		Optimized function to append a non-encoded byte string.
-**		If dst is null, it will be created and returned.
-**		Such src strings normally come from C code or tables.
-**		Destination can be 1 or 2 bytes wide.
-**
-***********************************************************************/
+//
+//  Append_Unencoded: C
+//  
+//      Optimized function to append a non-encoded byte string.
+//      If dst is null, it will be created and returned.
+//      Such src strings normally come from C code or tables.
+//      Destination can be 1 or 2 bytes wide.
+//
+
+REBSER *Append_Unencoded(REBSER *dst, const char *src)
 {
 	return Append_Unencoded_Len(dst, src, strlen(src));
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Append_Codepoint_Raw(REBSER *dst, REBCNT codepoint)
-/*
-**		Optimized function to append a non-encoded character.
-**		Destination can be 1 or 2 bytes wide, but DOES NOT WIDEN.
-**
-***********************************************************************/
+//
+//  Append_Codepoint_Raw: C
+//  
+//      Optimized function to append a non-encoded character.
+//      Destination can be 1 or 2 bytes wide, but DOES NOT WIDEN.
+//
+
+REBSER *Append_Codepoint_Raw(REBSER *dst, REBCNT codepoint)
 {
 	REBCNT tail = SERIES_TAIL(dst);
 
@@ -423,18 +416,18 @@ cp_same:
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Make_Series_Codepoint(REBCNT codepoint)
-/*
-**		Create a series that holds a single codepoint.  If the
-**		codepoint will fit into a byte, then it will be a byte
-**		series.  If two bytes, it will be a REBUNI series.
-**
-**		(Codepoints greater than the size of REBUNI are not
-**		currently supported in Rebol3.)
-**
-***********************************************************************/
+//
+//  Make_Series_Codepoint: C
+//  
+//      Create a series that holds a single codepoint.  If the
+//      codepoint will fit into a byte, then it will be a byte
+//      series.  If two bytes, it will be a REBUNI series.
+//  
+//      (Codepoints greater than the size of REBUNI are not
+//      currently supported in Rebol3.)
+//
+
+REBSER *Make_Series_Codepoint(REBCNT codepoint)
 {
 	REBSER *out;
 
@@ -449,15 +442,11 @@ cp_same:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Append_Uni_Bytes"
-**  Summary: none
-**  Details: {
-**      Append a unicode string to a byte string. OPTIMZED.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Append_Uni_Bytes: C
+//  
+//      Append a unicode string to a byte string. OPTIMZED.
+//
 
 void Append_Uni_Bytes(REBSER *dst, const REBUNI *src, REBCNT len)
 {
@@ -475,15 +464,11 @@ void Append_Uni_Bytes(REBSER *dst, const REBUNI *src, REBCNT len)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Append_Uni_Uni"
-**  Summary: none
-**  Details: {
-**      Append a unicode string to a unicode string. OPTIMZED.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Append_Uni_Uni: C
+//  
+//      Append a unicode string to a unicode string. OPTIMZED.
+//
 
 void Append_Uni_Uni(REBSER *dst, const REBUNI *src, REBCNT len)
 {
@@ -501,15 +486,11 @@ void Append_Uni_Uni(REBSER *dst, const REBUNI *src, REBCNT len)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Append_String"
-**  Summary: none
-**  Details: {
-**      Append a byte or unicode string to a unicode string.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Append_String: C
+//  
+//      Append a byte or unicode string to a unicode string.
+//
 
 void Append_String(REBSER *dst, const REBSER *src, REBCNT i, REBCNT len)
 {
@@ -517,14 +498,9 @@ void Append_String(REBSER *dst, const REBSER *src, REBCNT i, REBCNT len)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Append_Boot_Str"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Append_Boot_Str: C
+//
 
 void Append_Boot_Str(REBSER *dst, REBINT num)
 {
@@ -532,14 +508,11 @@ void Append_Boot_Str(REBSER *dst, REBINT num)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Append_Int"
-**  Summary: none
-**  Details: "^/        Append an integer string."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Append_Int: C
+//  
+//      Append an integer string.
+//
 
 void Append_Int(REBSER *dst, REBINT num)
 {
@@ -550,14 +523,11 @@ void Append_Int(REBSER *dst, REBINT num)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Append_Int_Pad"
-**  Summary: none
-**  Details: "^/        Append an integer string."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Append_Int_Pad: C
+//  
+//      Append an integer string.
+//
 
 void Append_Int_Pad(REBSER *dst, REBINT num, REBINT digs)
 {
@@ -572,17 +542,17 @@ void Append_Int_Pad(REBSER *dst, REBINT num, REBINT digs)
 
 
 
-/***********************************************************************
-**
-*/	REBSER *Append_UTF8(REBSER *dst, const REBYTE *src, REBINT len)
-/*
-**		Append (or create) decoded UTF8 to a string. OPTIMIZED.
-**
-**		Result can be 8 bits (latin-1 optimized) or 16 bits wide.
-**
-**		dst = null means make a new string.
-**
-***********************************************************************/
+//
+//  Append_UTF8: C
+//  
+//      Append (or create) decoded UTF8 to a string. OPTIMIZED.
+//  
+//      Result can be 8 bits (latin-1 optimized) or 16 bits wide.
+//  
+//      dst = null means make a new string.
+//
+
+REBSER *Append_UTF8(REBSER *dst, const REBYTE *src, REBINT len)
 {
 	REBSER *ser = BUF_UTF8;	// buffer is Unicode width
 
@@ -609,16 +579,16 @@ void Append_Int_Pad(REBSER *dst, REBINT num, REBINT digs)
 }
 
 
-/***********************************************************************
-**
-*/  REBSER *Join_Binary(const REBVAL *blk)
-/*
-**		Join a binary from component values for use in standard
-**		actions like make, insert, or append.
-**
-**		WARNING: returns BUF_FORM, not a copy!
-**
-***********************************************************************/
+//
+//  Join_Binary: C
+//  
+//      Join a binary from component values for use in standard
+//      actions like make, insert, or append.
+//  
+//      WARNING: returns BUF_FORM, not a copy!
+//
+
+REBSER *Join_Binary(const REBVAL *blk)
 {
 	REBSER *series = BUF_FORM;
 	REBVAL *val;

@@ -40,14 +40,9 @@ enum {
 };
 
 
-/*******************************************************************************
-**
-**  Name: "Protect_Word"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Protect_Word: C
+//
 
 static void Protect_Word(REBVAL *value, REBCNT flags)
 {
@@ -63,15 +58,11 @@ static void Protect_Word(REBVAL *value, REBCNT flags)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Protect_Value"
-**  Summary: none
-**  Details: {
-**      Anything that calls this must call Unmark() when done.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Protect_Value: C
+//  
+//      Anything that calls this must call Unmark() when done.
+//
 
 static void Protect_Value(REBVAL *value, REBCNT flags)
 {
@@ -82,15 +73,11 @@ static void Protect_Value(REBVAL *value, REBCNT flags)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Protect_Series"
-**  Summary: none
-**  Details: {
-**      Anything that calls this must call Unmark() when done.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Protect_Series: C
+//  
+//      Anything that calls this must call Unmark() when done.
+//
 
 void Protect_Series(REBVAL *val, REBCNT flags)
 {
@@ -113,15 +100,11 @@ void Protect_Series(REBVAL *val, REBCNT flags)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Protect_Object"
-**  Summary: none
-**  Details: {
-**      Anything that calls this must call Unmark() when done.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Protect_Object: C
+//  
+//      Anything that calls this must call Unmark() when done.
+//
 
 void Protect_Object(REBVAL *value, REBCNT flags)
 {
@@ -146,14 +129,9 @@ void Protect_Object(REBVAL *value, REBCNT flags)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Protect_Word_Value"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Protect_Word_Value: C
+//
 
 static void Protect_Word_Value(REBVAL *word, REBCNT flags)
 {
@@ -186,22 +164,18 @@ static void Protect_Word_Value(REBVAL *word, REBCNT flags)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Protect"
-**  Summary: none
-**  Details: {
-**  Common arguments between protect and unprotect:
-**  
-**      1: value
-**      2: /deep  - recursive
-**      3: /words  - list of words
-**      4: /values - list of values
-**  
-**  Protect takes a HIDE parameter as #5.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Protect: C
+//  
+//  Common arguments between protect and unprotect:
+//  
+//      1: value
+//      2: /deep  - recursive
+//      3: /words  - list of words
+//      4: /values - list of values
+//  
+//  Protect takes a HIDE parameter as #5.
+//
 
 static int Protect(struct Reb_Call *call_, REBCNT flags)
 {
@@ -263,17 +237,13 @@ static int Protect(struct Reb_Call *call_, REBCNT flags)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "also"
-**  Summary: {Returns the first value, but also evaluates the second.}
-**  Details: none
-**  Spec: [
-**      <1> value1
-**      <2> value2
-**  ]
-**
-*******************************************************************************/
+//
+//  also: native [
+//      {Returns the first value, but also evaluates the second.}
+//      value1 [any-type!]
+//      value2 [any-type!]
+//  ]
+//
 
 REBNATIVE(also)
 {
@@ -281,16 +251,12 @@ REBNATIVE(also)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "all"
-**  Summary: {Shortcut AND. Evaluates and returns at the first FALSE or NONE.}
-**  Details: none
-**  Spec: [
-**      <1> block
-**  ]
-**
-*******************************************************************************/
+//
+//  all: native [
+//      {Shortcut AND. Evaluates and returns at the first FALSE or NONE.}
+//      block [block!] "Block of expressions"
+//  ]
+//
 
 REBNATIVE(all)
 {
@@ -314,16 +280,12 @@ REBNATIVE(all)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "any"
-**  Summary: {Shortcut OR. Evaluates and returns the first value that is not FALSE or NONE.}
-**  Details: none
-**  Spec: [
-**      <1> block
-**  ]
-**
-*******************************************************************************/
+//
+//  any: native [
+//      {Shortcut OR. Evaluates and returns the first value that is not FALSE or NONE.}
+//      block [block!] "Block of expressions"
+//  ]
+//
 
 REBNATIVE(any)
 {
@@ -344,21 +306,18 @@ REBNATIVE(any)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "apply"
-**  Summary: "Apply a function to a reduced block of arguments."
-**  Details: {
-**      1: func
-**      2: block
-**      3: /only}
-**  Spec: [
-**      <1> func
-**      <2> block
-**      <3> /only
-**  ]
-**
-*******************************************************************************/
+//
+//  apply: native [
+//      "Apply a function to a reduced block of arguments."
+//      func [any-function!] "Function value to apply"
+//      block [block!] "Block of args, reduced first (unless /only)"
+//      /only "Use arg values as-is, do not reduce the block"
+//  ]
+//  
+//      1: func
+//      2: block
+//      3: /only
+//
 
 REBNATIVE(apply)
 {
@@ -373,16 +332,12 @@ REBNATIVE(apply)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "attempt"
-**  Summary: {Tries to evaluate a block and returns result or NONE on error.}
-**  Details: none
-**  Spec: [
-**      <1> block
-**  ]
-**
-*******************************************************************************/
+//
+//  attempt: native [
+//      {Tries to evaluate a block and returns result or NONE on error.}
+//      block [block!]
+//  ]
+//
 
 REBNATIVE(attempt)
 {
@@ -407,27 +362,24 @@ REBNATIVE(attempt)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "break"
-**  Summary: {Breaks out of a loop, while, until, repeat, foreach, etc.}
-**  Details: {
-**      1: /with
-**      2: value
-**      3: /return (deprecated)
-**      4: return-value
-**  
-**  While BREAK is implemented via a THROWN() value that bubbles up
-**  through the stack, it may not ultimately use the WORD! of BREAK
-**  as its /NAME.}
-**  Spec: [
-**      <1> /with
-**      <2> value
-**      <3> /return
-**      <4> return-value
-**  ]
-**
-*******************************************************************************/
+//
+//  break: native [
+//      {Breaks out of a loop, while, until, repeat, foreach, etc.}
+//      /with "Forces the loop function to return a value"
+//      value [any-type!]
+//      /return "(deprecated synonym for /WITH)"
+//      return-value [any-type!]
+//  ]
+//  
+//      1: /with
+//      2: value
+//      3: /return (deprecated)
+//      4: return-value
+//  
+//  While BREAK is implemented via a THROWN() value that bubbles up
+//  through the stack, it may not ultimately use the WORD! of BREAK
+//  as its /NAME.
+//
 
 REBNATIVE(break)
 {
@@ -441,21 +393,18 @@ REBNATIVE(break)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "case"
-**  Summary: {Evaluates each condition, and when true, evaluates what follows it.}
-**  Details: {
-**  1: block
-**  2: /all
-**  3: /only}
-**  Spec: [
-**      <1> block
-**      <2> /all
-**      <3> /only
-**  ]
-**
-*******************************************************************************/
+//
+//  case: native [
+//      {Evaluates each condition, and when true, evaluates what follows it.}
+//      block [block!] "Block of cases (conditions followed by values)"
+//      /all {Evaluate all cases (do not stop at first TRUE? case)}
+//      /only "Return block values instead of evaluating them."
+//  ]
+//  
+//  1: block
+//  2: /all
+//  3: /only
+//
 
 REBNATIVE(case)
 {
@@ -580,35 +529,32 @@ REBNATIVE(case)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "catch"
-**  Summary: {Catches a throw from a block and returns its value.}
-**  Details: {
-**  1 block
-**  2 /name
-**  3 name-list
-**  4 /quit
-**  5 /any
-**  6 /with
-**  7 handler
-**  
-**  There's a refinement for catching quits, and CATCH/ANY will not
-**  alone catch it (you have to CATCH/ANY/QUIT).  The use of the
-**  WORD! QUIT is pending review, and when full label values are
-**  available it will likely be changed to at least get the native
-**  (e.g. equal to THROW with /NAME :QUIT instead of /NAME 'QUIT)}
-**  Spec: [
-**      <1> block
-**      <2> /name
-**      <3> name-list
-**      <4> /quit
-**      <5> /any
-**      <6> /with
-**      <7> handler
-**  ]
-**
-*******************************************************************************/
+//
+//  catch: native [
+//      {Catches a throw from a block and returns its value.}
+//      block [block!] "Block to evaluate"
+//      /name "Catches a named throw"
+//      name-list [block! word! any-function! object!] "Names to catch (single name if not block)"
+//      /quit "Special catch for QUIT native"
+//      /any {Catch all throws except QUIT (can be used with /QUIT)}
+//      /with "Handle thrown case with code"
+//      handler [block! any-function!] "If FUNCTION!, spec matches [value name]"
+//  ]
+//  
+//  1 block
+//  2 /name
+//  3 name-list
+//  4 /quit
+//  5 /any
+//  6 /with
+//  7 handler
+//  
+//  There's a refinement for catching quits, and CATCH/ANY will not
+//  alone catch it (you have to CATCH/ANY/QUIT).  The use of the
+//  WORD! QUIT is pending review, and when full label values are
+//  available it will likely be changed to at least get the native
+//  (e.g. equal to THROW with /NAME :QUIT instead of /NAME 'QUIT)
+//
 
 REBNATIVE(catch)
 {
@@ -748,18 +694,14 @@ was_caught:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "throw"
-**  Summary: "Throws control back to a previous catch."
-**  Details: none
-**  Spec: [
-**      <1> value
-**      <2> /name
-**      <3> name-value
-**  ]
-**
-*******************************************************************************/
+//
+//  throw: native [
+//      "Throws control back to a previous catch."
+//      value [any-type!] "Value returned from catch"
+//      /name "Throws to a named catch"
+//      name-value [word! any-function! object!]
+//  ]
+//
 
 REBNATIVE(throw)
 {
@@ -789,16 +731,12 @@ REBNATIVE(throw)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "comment"
-**  Summary: "Ignores the argument value and returns nothing."
-**  Details: none
-**  Spec: [
-**      <1> value
-**  ]
-**
-*******************************************************************************/
+//
+//  comment: native [
+//      "Ignores the argument value and returns nothing."
+//      value "A string, block, file, etc."
+//  ]
+//
 
 REBNATIVE(comment)
 {
@@ -806,29 +744,26 @@ REBNATIVE(comment)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "compose"
-**  Summary: {Evaluates a block of expressions, only evaluating parens, and returns a block.}
-**  Details: {
-**      {Evaluates a block of expressions, only evaluating parens, and returns a block.}
-**      1: value "Block to compose"
-**      2: /deep "Compose nested blocks"
-**      3: /only "Inserts a block value as a block"
-**      4: /into "Output results into a block with no intermediate storage"
-**      5: target
-**  
-**      !!! Should 'compose quote (a (1 + 2) b)' give back '(a 3 b)' ?
-**      !!! What about 'compose quote a/(1 + 2)/b' ?}
-**  Spec: [
-**      <1> value
-**      <2> /deep
-**      <3> /only
-**      <4> /into
-**      <5> out
-**  ]
-**
-*******************************************************************************/
+//
+//  compose: native [
+//      {Evaluates a block of expressions, only evaluating parens, and returns a block.}
+//      value "Block to compose"
+//      /deep "Compose nested blocks"
+//      /only {Insert a block as a single value (not the contents of the block)}
+//      /into {Output results into a series with no intermediate storage}
+//      out [any-array! any-string! binary!]
+//  ]
+//  
+//      {Evaluates a block of expressions, only evaluating parens, and returns a block.}
+//      1: value "Block to compose"
+//      2: /deep "Compose nested blocks"
+//      3: /only "Inserts a block value as a block"
+//      4: /into "Output results into a block with no intermediate storage"
+//      5: target
+//  
+//      !!! Should 'compose quote (a (1 + 2) b)' give back '(a 3 b)' ?
+//      !!! What about 'compose quote a/(1 + 2)/b' ?
+//
 
 REBNATIVE(compose)
 {
@@ -847,17 +782,15 @@ REBNATIVE(compose)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "continue"
-**  Summary: "Throws control back to top of loop."
-**  Details: {
-**  While CONTINUE is implemented via a THROWN() value that bubbles up
-**  through the stack, it may not ultimately use the WORD! of CONTINUE
-**  as its /NAME.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  continue: native [
+//      "Throws control back to top of loop."
+//  ]
+//  
+//  While CONTINUE is implemented via a THROWN() value that bubbles up
+//  through the stack, it may not ultimately use the WORD! of CONTINUE
+//  as its /NAME.
+//
 
 REBNATIVE(continue)
 {
@@ -868,20 +801,16 @@ REBNATIVE(continue)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "do"
-**  Summary: {Evaluates a block, file, URL, function, word, or any other value.}
-**  Details: none
-**  Spec: [
-**      <1> value
-**      <2> /args
-**      <3> arg
-**      <4> /next
-**      <5> var
-**  ]
-**
-*******************************************************************************/
+//
+//  do: native [
+//      {Evaluates a block, file, URL, function, word, or any other value.}
+//      value [any-type!] "Normally a file name, URL, or block"
+//      /args {If value is a script, this will set its system/script/args}
+//      arg "Args passed to a script (normally a string)"
+//      /next {Do next expression only, return it, update block variable}
+//      var [word!] "Variable updated with new block position"
+//  ]
+//
 
 REBNATIVE(do)
 {
@@ -986,19 +915,15 @@ REBNATIVE(do)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "either"
-**  Summary: {If TRUE condition return first arg, else second; evaluate blocks by default.}
-**  Details: none
-**  Spec: [
-**      <1> condition
-**      <2> true-branch
-**      <3> false-branch
-**      <4> /only
-**  ]
-**
-*******************************************************************************/
+//
+//  either: native [
+//      {If TRUE condition return first arg, else second; evaluate blocks by default.}
+//      condition
+//      true-branch [any-type!]
+//      false-branch [any-type!]
+//      /only "Suppress evaluation of block args."
+//  ]
+//
 
 REBNATIVE(either)
 {
@@ -1015,23 +940,20 @@ REBNATIVE(either)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "exit"
-**  Summary: {Leave whatever enclosing Rebol state EXIT's block *actually* runs in.}
-**  Details: {
-**  1: /with
-**  2: value
-**  
-**  While EXIT is implemented via a THROWN() value that bubbles up
-**  through the stack, it may not ultimately use the WORD! of EXIT
-**  as its /NAME.}
-**  Spec: [
-**      <1> /with
-**      <2> value
-**  ]
-**
-*******************************************************************************/
+//
+//  exit: native [
+//      {Leave whatever enclosing Rebol state EXIT's block *actually* runs in.}
+//      /with "Result for enclosing state (default is UNSET!)"
+//      value [any-type!]
+//  ]
+//  
+//  1: /with
+//  2: value
+//  
+//  While EXIT is implemented via a THROWN() value that bubbles up
+//  through the stack, it may not ultimately use the WORD! of EXIT
+//  as its /NAME.
+//
 
 REBNATIVE(exit)
 {
@@ -1046,18 +968,14 @@ REBNATIVE(exit)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "if"
-**  Summary: {If TRUE condition, return arg; evaluate blocks by default.}
-**  Details: none
-**  Spec: [
-**      <1> condition
-**      <2> true-branch
-**      <3> /only
-**  ]
-**
-*******************************************************************************/
+//
+//  if: native [
+//      {If TRUE condition, return arg; evaluate blocks by default.}
+//      condition
+//      true-branch [any-type!]
+//      /only "Return block arg instead of evaluating it."
+//  ]
+//
 
 REBNATIVE(if)
 {
@@ -1072,20 +990,16 @@ REBNATIVE(if)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "protect"
-**  Summary: {Protect a series or a variable from being modified.}
-**  Details: none
-**  Spec: [
-**      <1> value
-**      <2> /deep
-**      <3> /words
-**      <4> /values
-**      <5> /hide
-**  ]
-**
-*******************************************************************************/
+//
+//  protect: native [
+//      {Protect a series or a variable from being modified.}
+//      value [word! series! bitset! map! object! module!]
+//      /deep "Protect all sub-series/objects as well"
+//      /words "Process list as words (and path words)"
+//      /values "Process list of values (implied GET)"
+//      /hide "Hide variables (avoid binding and lookup)"
+//  ]
+//
 
 REBNATIVE(protect)
 {
@@ -1099,19 +1013,15 @@ REBNATIVE(protect)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "unprotect"
-**  Summary: {Unprotect a series or a variable (it can again be modified).}
-**  Details: none
-**  Spec: [
-**      <1> value
-**      <2> /deep
-**      <3> /words
-**      <4> /values
-**  ]
-**
-*******************************************************************************/
+//
+//  unprotect: native [
+//      {Unprotect a series or a variable (it can again be modified).}
+//      value [word! series! bitset! map! object! module!]
+//      /deep "Protect all sub-series as well"
+//      /words "Block is a list of words"
+//      /values "Process list of values (implied GET)"
+//  ]
+//
 
 REBNATIVE(unprotect)
 {
@@ -1120,21 +1030,17 @@ REBNATIVE(unprotect)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "reduce"
-**  Summary: {Evaluates expressions and returns multiple results.}
-**  Details: none
-**  Spec: [
-**      <1> value
-**      <2> /no-set
-**      <3> /only
-**      <4> words
-**      <5> /into
-**      <6> out
-**  ]
-**
-*******************************************************************************/
+//
+//  reduce: native [
+//      {Evaluates expressions and returns multiple results.}
+//      value
+//      /no-set "Keep set-words as-is. Do not set them."
+//      /only "Only evaluate words and paths, not functions"
+//      words [block! none!] "Optional words that are not evaluated (keywords)"
+//      /into {Output results into a series with no intermediate storage}
+//      out [any-array! any-string! binary!]
+//  ]
+//
 
 REBNATIVE(reduce)
 {
@@ -1160,18 +1066,15 @@ REBNATIVE(reduce)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "return"
-**  Summary: "Returns a value from a function."
-**  Details: {
-**  The implementation of RETURN here is a simple THROWN() value and
-**  has no "definitional scoping"--a temporary state of affairs.}
-**  Spec: [
-**      <1> value
-**  ]
-**
-*******************************************************************************/
+//
+//  return: native [
+//      "Returns a value from a function."
+//      value [any-type!]
+//  ]
+//  
+//  The implementation of RETURN here is a simple THROWN() value and
+//  has no "definitional scoping"--a temporary state of affairs.
+//
 
 REBNATIVE(return)
 {
@@ -1184,25 +1087,21 @@ REBNATIVE(return)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "switch"
-**  Summary: {Selects a choice and evaluates the block that follows it.}
-**  Details: {
-**      value
-**      cases [block!]
-**      /default
-**      case
-**    /all {Check all cases}}
-**  Spec: [
-**      <1> value
-**      <2> cases
-**      <3> /default
-**      <4> case
-**      <5> /all
-**  ]
-**
-*******************************************************************************/
+//
+//  switch: native [
+//      {Selects a choice and evaluates the block that follows it.}
+//      value "Target value"
+//      cases [block!] "Block of cases to check"
+//      /default case "Default case if no others found"
+//      /all "Evaluate all matches (not just first one)"
+//  ]
+//  
+//      value
+//      cases [block!]
+//      /default
+//      case
+//      /all {Check all cases}
+//
 
 REBNATIVE(switch)
 {
@@ -1239,21 +1138,18 @@ REBNATIVE(switch)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "trap"
-**  Summary: {Tries to DO a block, trapping error as return value (if one is raised).}
-**  Details: {
-**      1: block
-**      2: /with
-**      3: handler}
-**  Spec: [
-**      <1> block
-**      <2> /with
-**      <3> handler
-**  ]
-**
-*******************************************************************************/
+//
+//  trap: native [
+//      {Tries to DO a block, trapping error as return value (if one is raised).}
+//      block [block!]
+//      /with "Handle error case with code"
+//      handler [block! any-function!] "If FUNCTION!, spec allows [error [error!]]"
+//  ]
+//  
+//      1: block
+//      2: /with
+//      3: handler
+//
 
 REBNATIVE(trap)
 {
@@ -1336,18 +1232,14 @@ REBNATIVE(trap)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "unless"
-**  Summary: {If FALSE condition, return arg; evaluate blocks by default.}
-**  Details: none
-**  Spec: [
-**      <1> condition
-**      <2> false-branch
-**      <3> /only
-**  ]
-**
-*******************************************************************************/
+//
+//  unless: native [
+//      {If FALSE condition, return arg; evaluate blocks by default.}
+//      condition
+//      false-branch [any-type!]
+//      /only "Return block arg instead of evaluating it."
+//  ]
+//
 
 REBNATIVE(unless)
 {

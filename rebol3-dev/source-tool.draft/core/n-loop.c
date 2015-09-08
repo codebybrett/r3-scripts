@@ -31,14 +31,14 @@
 #include "sys-int-funcs.h" //REB_I64_ADD_OF
 
 
-/***********************************************************************
-**
-*/	static REBSER *Init_Loop(const REBVAL *spec, REBVAL *body_blk, REBSER **fram)
-/*
-**		Initialize standard for loops (copy block, make frame, bind).
-**		Spec: WORD or [WORD ...]
-**
-***********************************************************************/
+//
+//  Init_Loop: C
+//  
+//      Initialize standard for loops (copy block, make frame, bind).
+//      Spec: WORD or [WORD ...]
+//
+
+static REBSER *Init_Loop(const REBVAL *spec, REBVAL *body_blk, REBSER **fram)
 {
 	REBSER *frame;
 	REBINT len;
@@ -89,14 +89,9 @@
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Loop_Series"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Loop_Series: C
+//
 
 static void Loop_Series(REBVAL *out, REBVAL *var, REBSER* body, REBVAL *start, REBINT ei, REBINT ii)
 {
@@ -125,14 +120,9 @@ static void Loop_Series(REBVAL *out, REBVAL *var, REBSER* body, REBVAL *start, R
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Loop_Integer"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Loop_Integer: C
+//
 
 static void Loop_Integer(REBVAL *out, REBVAL *var, REBSER* body, REBI64 start, REBI64 end, REBI64 incr)
 {
@@ -157,14 +147,9 @@ static void Loop_Integer(REBVAL *out, REBVAL *var, REBSER* body, REBI64 start, R
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Loop_Number"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Loop_Number: C
+//
 
 static void Loop_Number(REBVAL *out, REBVAL *var, REBSER* body, REBVAL *start, REBVAL *end, REBVAL *incr)
 {
@@ -201,14 +186,12 @@ static void Loop_Number(REBVAL *out, REBVAL *var, REBSER* body, REBVAL *start, R
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Loop_All"
-**  Summary: none
-**  Details: "^/        0: forall^/        1: forskip"
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Loop_All: C
+//  
+//      0: forall
+//      1: forskip
+//
 
 static int Loop_All(struct Reb_Call *call_, REBINT mode)
 {
@@ -274,18 +257,14 @@ static int Loop_All(struct Reb_Call *call_, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Loop_Each"
-**  Summary: none
-**  Details: {
-**      Supports these natives (modes):
-**          0: foreach
-**          1: remove-each
-**          2: map}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Loop_Each: C
+//  
+//      Supports these natives (modes):
+//          0: foreach
+//          1: remove-each
+//          2: map
+//
 
 static REB_R Loop_Each(struct Reb_Call *call_, REBINT mode)
 {
@@ -509,20 +488,18 @@ skip_hidden: ;
 }
 
 
-/*******************************************************************************
-**
-**  Name: "for"
-**  Summary: {Evaluate a block over a range of values. (See also: REPEAT)}
-**  Details: "^/        FOR var start end bump [ body ]"
-**  Spec: [
-**      <1> 'word
-**      <2> start
-**      <3> end
-**      <4> bump
-**      <5> body
-**  ]
-**
-*******************************************************************************/
+//
+//  for: native [
+//      {Evaluate a block over a range of values. (See also: REPEAT)}
+//      'word [word!] "Variable to hold current value"
+//      start [series! number!] "Starting value"
+//      end [series! number!] "Ending value"
+//      bump [number!] "Amount to skip each time"
+//      body [block!] "Block to evaluate"
+//  ]
+//  
+//      FOR var start end bump [ body ]
+//
 
 REBNATIVE(for)
 {
@@ -558,17 +535,13 @@ REBNATIVE(for)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "forall"
-**  Summary: "Evaluates a block for every value in a series."
-**  Details: none
-**  Spec: [
-**      <1> 'word
-**      <2> body
-**  ]
-**
-*******************************************************************************/
+//
+//  forall: native [
+//      "Evaluates a block for every value in a series."
+//      'word [word!] {Word that refers to the series, set to each position in series}
+//      body [block!] "Block to evaluate each time"
+//  ]
+//
 
 REBNATIVE(forall)
 {
@@ -576,21 +549,15 @@ REBNATIVE(forall)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "forskip"
-**  Summary: "Evaluates a block for periodic values in a series."
-**  Details: none
-**  Spec: [
-**      <1> 'word
-**      <2> size
-**      <3> body
-**      <4> /local
-**      <5> orig
-**      <6> result
-**  ]
-**
-*******************************************************************************/
+//
+//  forskip: native [
+//      "Evaluates a block for periodic values in a series."
+//      'word [word!] {Word that refers to the series, set to each position in series}
+//      size [integer! decimal!] "Number of positions to skip each time"
+//      body [block!] "Block to evaluate each time"
+//      /local orig result
+//  ]
+//
 
 REBNATIVE(forskip)
 {
@@ -598,16 +565,12 @@ REBNATIVE(forskip)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "forever"
-**  Summary: "Evaluates a block endlessly."
-**  Details: none
-**  Spec: [
-**      <1> body
-**  ]
-**
-*******************************************************************************/
+//
+//  forever: native [
+//      "Evaluates a block endlessly."
+//      body [block!] "Block to evaluate each time"
+//  ]
+//
 
 REBNATIVE(forever)
 {
@@ -621,22 +584,19 @@ REBNATIVE(forever)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "foreach"
-**  Summary: "Evaluates a block for each value(s) in a series."
-**  Details: {
-**      {Evaluates a block for each value(s) in a series.}
-**      'word [get-word! word! block!] {Word or block of words}
-**      data [series!] {The series to traverse}
-**      body [block!] {Block to evaluate each time}}
-**  Spec: [
-**      <1> 'word
-**      <2> data
-**      <3> body
-**  ]
-**
-*******************************************************************************/
+//
+//  foreach: native [
+//      "Evaluates a block for each value(s) in a series."
+//      'word [word! block!] "Word or block of words to set each time (local)"
+//      data [series! any-object! map! none!] "The series to traverse"
+//      body [block!] "Block to evaluate each time"
+//  ]
+//  
+//      {Evaluates a block for each value(s) in a series.}
+//      'word [get-word! word! block!] {Word or block of words}
+//      data [series!] {The series to traverse}
+//      body [block!] {Block to evaluate each time}
+//
 
 REBNATIVE(foreach)
 {
@@ -644,21 +604,18 @@ REBNATIVE(foreach)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "remove_each"
-**  Summary: {Removes values for each block that returns true; returns removal count.}
-**  Details: {
-**      'word [get-word! word! block!] {Word or block of words}
-**      data [series!] {The series to traverse}
-**      body [block!] {Block to evaluate each time}}
-**  Spec: [
-**      <1> 'word
-**      <2> data
-**      <3> body
-**  ]
-**
-*******************************************************************************/
+//
+//  remove-each: native [
+//      {Removes values for each block that returns true; returns removal count.}
+//      'word [word! block!] "Word or block of words to set each time (local)"
+//      data [series!] "The series to traverse (modified)"
+//      body [block!] "Block to evaluate (return TRUE to remove)"
+//  ]
+//  
+//      'word [get-word! word! block!] {Word or block of words}
+//      data [series!] {The series to traverse}
+//      body [block!] {Block to evaluate each time}
+//
 
 REBNATIVE(remove_each)
 {
@@ -666,21 +623,18 @@ REBNATIVE(remove_each)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "map_each"
-**  Summary: {Evaluates a block for each value(s) in a series and returns them as a block.}
-**  Details: {
-**      'word [get-word! word! block!] {Word or block of words}
-**      data [series!] {The series to traverse}
-**      body [block!] {Block to evaluate each time}}
-**  Spec: [
-**      <1> 'word
-**      <2> data
-**      <3> body
-**  ]
-**
-*******************************************************************************/
+//
+//  map-each: native [
+//      {Evaluates a block for each value(s) in a series and returns them as a block.}
+//      'word [word! block!] "Word or block of words to set each time (local)"
+//      data [block! vector!] "The series to traverse"
+//      body [block!] "Block to evaluate each time"
+//  ]
+//  
+//      'word [get-word! word! block!] {Word or block of words}
+//      data [series!] {The series to traverse}
+//      body [block!] {Block to evaluate each time}
+//
 
 REBNATIVE(map_each)
 {
@@ -688,17 +642,13 @@ REBNATIVE(map_each)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "loop"
-**  Summary: "Evaluates a block a specified number of times."
-**  Details: none
-**  Spec: [
-**      <1> count
-**      <2> block
-**  ]
-**
-*******************************************************************************/
+//
+//  loop: native [
+//      "Evaluates a block a specified number of times."
+//      count [number!] "Number of repetitions"
+//      block [block!] "Block to evaluate"
+//  ]
+//
 
 REBNATIVE(loop)
 {
@@ -718,18 +668,16 @@ REBNATIVE(loop)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "repeat"
-**  Summary: {Evaluates a block a number of times or over a series.}
-**  Details: "^/        REPEAT var 123 [ body ]"
-**  Spec: [
-**      <1> 'word
-**      <2> value
-**      <3> body
-**  ]
-**
-*******************************************************************************/
+//
+//  repeat: native [
+//      {Evaluates a block a number of times or over a series.}
+//      'word [word!] "Word to set each time"
+//      value [number! series! none!] "Maximum number or series to traverse"
+//      body [block!] "Block to evaluate each time"
+//  ]
+//  
+//      REPEAT var 123 [ body ]
+//
 
 REBNATIVE(repeat)
 {
@@ -763,16 +711,12 @@ REBNATIVE(repeat)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "until"
-**  Summary: "Evaluates a block until it is TRUE. "
-**  Details: none
-**  Spec: [
-**      <1> block
-**  ]
-**
-*******************************************************************************/
+//
+//  until: native [
+//      "Evaluates a block until it is TRUE. "
+//      block [block!]
+//  ]
+//
 
 REBNATIVE(until)
 {
@@ -793,17 +737,13 @@ utop:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "while"
-**  Summary: {While a condition block is TRUE, evaluates another block.}
-**  Details: none
-**  Spec: [
-**      <1> cond-block
-**      <2> body-block
-**  ]
-**
-*******************************************************************************/
+//
+//  while: native [
+//      {While a condition block is TRUE, evaluates another block.}
+//      cond-block [block!]
+//      body-block [block!]
+//  ]
+//
 
 REBNATIVE(while)
 {

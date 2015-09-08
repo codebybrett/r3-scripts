@@ -48,14 +48,9 @@ const REBCNT Gob_Flag_Words[] = {
 };
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Gob"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Gob: C
+//
 
 REBINT CT_Gob(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -64,13 +59,13 @@ REBINT CT_Gob(REBVAL *a, REBVAL *b, REBINT mode)
 	return -1;
 }
 
-/***********************************************************************
-**
-*/  REBGOB *Make_Gob(void)
-/*
-**      Allocate a new GOB.
-**
-***********************************************************************/
+//
+//  Make_Gob: C
+//  
+//      Allocate a new GOB.
+//
+
+REBGOB *Make_Gob(void)
 {
 	REBGOB *gob = cast(REBGOB*, Make_Node(GOB_POOL));
 	CLEAR(gob, sizeof(REBGOB));
@@ -83,14 +78,9 @@ REBINT CT_Gob(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Cmp_Gob"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Cmp_Gob: C
+//
 
 REBINT Cmp_Gob(const REBVAL *g1, const REBVAL *g2)
 {
@@ -104,14 +94,9 @@ REBINT Cmp_Gob(const REBVAL *g1, const REBVAL *g2)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Set_Pair"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_Pair: C
+//
 
 static REBFLG Set_Pair(REBXYF *pair, const REBVAL *val)
 {
@@ -132,16 +117,12 @@ static REBFLG Set_Pair(REBXYF *pair, const REBVAL *val)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Find_Gob"
-**  Summary: none
-**  Details: {
-**      Find a target GOB within the pane of another gob.
-**      Return the index, or a -1 if not found.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Find_Gob: C
+//  
+//      Find a target GOB within the pane of another gob.
+//      Return the index, or a -1 if not found.
+//
 
 static REBCNT Find_Gob(REBGOB *gob, REBGOB *target)
 {
@@ -159,16 +140,12 @@ static REBCNT Find_Gob(REBGOB *gob, REBGOB *target)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Detach_Gob"
-**  Summary: none
-**  Details: {
-**      Remove a gob value from its parent.
-**      Done normally in advance of inserting gobs into new parent.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Detach_Gob: C
+//  
+//      Remove a gob value from its parent.
+//      Done normally in advance of inserting gobs into new parent.
+//
 
 static void Detach_Gob(REBGOB *gob)
 {
@@ -183,17 +160,13 @@ static void Detach_Gob(REBGOB *gob)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Insert_Gobs"
-**  Summary: none
-**  Details: {
-**      Insert one or more gobs into a pane at the given index.
-**      If index >= tail, an append occurs. Each gob has its parent
-**      gob field set. (Call Detach_Gobs() before inserting.)}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Insert_Gobs: C
+//  
+//      Insert one or more gobs into a pane at the given index.
+//      If index >= tail, an append occurs. Each gob has its parent
+//      gob field set. (Call Detach_Gobs() before inserting.)
+//
 
 static void Insert_Gobs(REBGOB *gob, const REBVAL *arg, REBCNT index, REBCNT len, REBFLG change)
 {
@@ -267,15 +240,11 @@ static void Insert_Gobs(REBGOB *gob, const REBVAL *arg, REBCNT index, REBCNT len
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Remove_Gobs"
-**  Summary: none
-**  Details: {
-**      Remove one or more gobs from a pane at the given index.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Remove_Gobs: C
+//  
+//      Remove one or more gobs from a pane at the given index.
+//
 
 static void Remove_Gobs(REBGOB *gob, REBCNT index, REBCNT len)
 {
@@ -291,13 +260,13 @@ static void Remove_Gobs(REBGOB *gob, REBCNT index, REBCNT len)
 }
 
 
-/***********************************************************************
-**
-*/	static REBSER *Pane_To_Block(REBGOB *gob, REBCNT index, REBINT len)
-/*
-**		Convert pane list of gob pointers to a block of GOB!s.
-**
-***********************************************************************/
+//
+//  Pane_To_Block: C
+//  
+//      Convert pane list of gob pointers to a block of GOB!s.
+//
+
+static REBSER *Pane_To_Block(REBGOB *gob, REBCNT index, REBINT len)
 {
 	REBSER *ser;
 	REBGOB **gp;
@@ -319,11 +288,11 @@ static void Remove_Gobs(REBGOB *gob, REBCNT index, REBCNT len)
 }
 
 
-/***********************************************************************
-**
-*/	static REBSER *Flags_To_Block(REBGOB *gob)
-/*
-***********************************************************************/
+//
+//  Flags_To_Block: C
+//
+
+static REBSER *Flags_To_Block(REBGOB *gob)
 {
 	REBSER *ser;
 	REBVAL *val;
@@ -342,14 +311,9 @@ static void Remove_Gobs(REBGOB *gob, REBCNT index, REBCNT len)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Set_Gob_Flag"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_Gob_Flag: C
+//
 
 static void Set_Gob_Flag(REBGOB *gob, const REBVAL *word)
 {
@@ -385,14 +349,9 @@ static void Set_Gob_Flag(REBGOB *gob, const REBVAL *word)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Set_GOB_Var"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_GOB_Var: C
+//
 
 static REBFLG Set_GOB_Var(REBGOB *gob, const REBVAL *word, const REBVAL *val)
 {
@@ -531,14 +490,9 @@ static REBFLG Set_GOB_Var(REBGOB *gob, const REBVAL *word, const REBVAL *val)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Get_GOB_Var"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Get_GOB_Var: C
+//
 
 static REBFLG Get_GOB_Var(REBGOB *gob, const REBVAL *word, REBVAL *val)
 {
@@ -641,14 +595,9 @@ is_none:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Set_GOB_Vars"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_GOB_Vars: C
+//
 
 static void Set_GOB_Vars(REBGOB *gob, const REBVAL *blk)
 {
@@ -670,13 +619,13 @@ static void Set_GOB_Vars(REBGOB *gob, const REBVAL *blk)
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Gob_To_Block(REBGOB *gob)
-/*
-**		Used by MOLD to create a block.
-**
-***********************************************************************/
+//
+//  Gob_To_Block: C
+//  
+//      Used by MOLD to create a block.
+//
+
+REBSER *Gob_To_Block(REBGOB *gob)
 {
 	REBSER *ser = Make_Array(10);
 	REBVAL *val;
@@ -728,14 +677,9 @@ static void Set_GOB_Vars(REBGOB *gob, const REBVAL *blk)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "MT_Gob"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_Gob: C
+//
 
 REBFLG MT_Gob(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -752,14 +696,9 @@ REBFLG MT_Gob(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "PD_Gob"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  PD_Gob: C
+//
 
 REBINT PD_Gob(REBPVS *pvs)
 {
@@ -800,14 +739,9 @@ REBINT PD_Gob(REBPVS *pvs)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Gob)
 {

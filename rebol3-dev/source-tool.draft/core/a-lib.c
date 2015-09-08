@@ -55,24 +55,20 @@ extern void RXI_To_Block(RXIFRM *frm, REBVAL *out); // f-extension.c
 extern int Do_Callback(REBSER *obj, u32 name, RXIARG *args, RXIARG *result);
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Version"
-**  Summary: none
-**  Details: {
-**  Obtain current REBOL interpreter version information.
-**  
-**  Returns:
-**      A byte array containing version, revision, update, and more.
-**  Arguments:
-**      vers - a byte array to hold the version info. First byte is length,
-**          followed by version, revision, update, system, variation.
-**  Notes:
-**      This function can be called before any other initialization
-**      to determine version compatiblity with the caller.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Version: C
+//  
+//  Obtain current REBOL interpreter version information.
+//  
+//  Returns:
+//      A byte array containing version, revision, update, and more.
+//  Arguments:
+//      vers - a byte array to hold the version info. First byte is length,
+//          followed by version, revision, update, system, variation.
+//  Notes:
+//      This function can be called before any other initialization
+//      to determine version compatiblity with the caller.
+//
 
 RL_API void RL_Version(REBYTE vers[])
 {
@@ -85,28 +81,24 @@ RL_API void RL_Version(REBYTE vers[])
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Init"
-**  Summary: none
-**  Details: {
-**  Initialize the REBOL interpreter.
-**  
-**  Returns:
-**      Zero on success, otherwise an error indicating that the
-**      host library is not compatible with this release.
-**  Arguments:
-**      rargs - REBOL command line args and options structure.
-**          See the host-args.c module for details.
-**      lib - the host lib (OS_ functions) to be used by REBOL.
-**          See host-lib.c for details.
-**  Notes:
-**      This function will allocate and initialize all memory
-**      structures used by the REBOL interpreter. This is an
-**      extensive process that takes time.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Init: C
+//  
+//  Initialize the REBOL interpreter.
+//  
+//  Returns:
+//      Zero on success, otherwise an error indicating that the
+//      host library is not compatible with this release.
+//  Arguments:
+//      rargs - REBOL command line args and options structure.
+//          See the host-args.c module for details.
+//      lib - the host lib (OS_ functions) to be used by REBOL.
+//          See host-lib.c for details.
+//  Notes:
+//      This function will allocate and initialize all memory
+//      structures used by the REBOL interpreter. This is an
+//      extensive process that takes time.
+//
 
 RL_API int RL_Init(REBARGS *rargs, void *lib)
 {
@@ -160,25 +152,21 @@ RL_API int RL_Init(REBARGS *rargs, void *lib)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Start"
-**  Summary: none
-**  Details: {
-**  Evaluate the default boot function.
-**  
-**  Returns:
-**      Zero on success, otherwise indicates an error occurred.
-**  Arguments:
-**      bin - optional startup code (compressed), can be null
-**      len - length of above bin
-**      flags - special flags
-**  Notes:
-**      This function completes the startup sequence by calling
-**      the sys/start function.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Start: C
+//  
+//  Evaluate the default boot function.
+//  
+//  Returns:
+//      Zero on success, otherwise indicates an error occurred.
+//  Arguments:
+//      bin - optional startup code (compressed), can be null
+//      len - length of above bin
+//      flags - special flags
+//  Notes:
+//      This function completes the startup sequence by calling
+//      the sys/start function.
+//
 
 RL_API int RL_Start(REBYTE *bin, REBINT len, REBYTE *script, REBINT script_len, REBCNT flags)
 {
@@ -291,22 +279,18 @@ RL_API int RL_Start(REBYTE *bin, REBINT len, REBYTE *script, REBINT script_len, 
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Reset"
-**  Summary: none
-**  Details: {
-**  Reset REBOL (not implemented)
-**  
-**  Returns:
-**      nothing
-**  Arguments:
-**      none
-**  Notes:
-**      Intended to reset the REBOL interpreter.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Reset: C
+//  
+//  Reset REBOL (not implemented)
+//  
+//  Returns:
+//      nothing
+//  Arguments:
+//      none
+//  Notes:
+//      Intended to reset the REBOL interpreter.
+//
 
 RL_API void RL_Reset(void)
 {
@@ -314,27 +298,27 @@ RL_API void RL_Reset(void)
 }
 
 
-/***********************************************************************
-**
-*/	RL_API void *RL_Extend(const REBYTE *source, RXICAL call)
-/*
-**	Appends embedded extension to system/catalog/boot-exts.
-**
-**	Returns:
-**		A pointer to the REBOL library (see reb-lib.h).
-**	Arguments:
-**		source - A pointer to a UTF-8 (or ASCII) string that provides
-**			extension module header, function definitions, and other
-**			related functions and data.
-**		call - A pointer to the extension's command dispatcher.
-**	Notes:
-**		This function simply adds the embedded extension to the
-**		boot-exts list. All other processing and initialization
-**		happens later during startup. Each embedded extension is
-**		queried and init using LOAD-EXTENSION system native.
-**		See c:extensions-embedded
-**
-***********************************************************************/
+//
+//  RL_Extend: C
+//  
+//  Appends embedded extension to system/catalog/boot-exts.
+//  
+//  Returns:
+//      A pointer to the REBOL library (see reb-lib.h).
+//  Arguments:
+//      source - A pointer to a UTF-8 (or ASCII) string that provides
+//          extension module header, function definitions, and other
+//          related functions and data.
+//      call - A pointer to the extension's command dispatcher.
+//  Notes:
+//      This function simply adds the embedded extension to the
+//      boot-exts list. All other processing and initialization
+//      happens later during startup. Each embedded extension is
+//      queried and init using LOAD-EXTENSION system native.
+//      See c:extensions-embedded
+//
+
+RL_API void *RL_Extend(const REBYTE *source, RXICAL call)
 {
 	REBVAL *value;
 	REBSER *ser;
@@ -354,25 +338,21 @@ RL_API void RL_Reset(void)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Escape"
-**  Summary: none
-**  Details: {
-**  Signal that code evaluation needs to be interrupted.
-**  
-**  Returns:
-**      nothing
-**  Arguments:
-**      reserved - must be set to zero.
-**  Notes:
-**      This function set's a signal that is checked during evaluation
-**      and will cause the interpreter to begin processing an escape
-**      trap. Note that control must be passed back to REBOL for the
-**      signal to be recognized and handled.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Escape: C
+//  
+//  Signal that code evaluation needs to be interrupted.
+//  
+//  Returns:
+//      nothing
+//  Arguments:
+//      reserved - must be set to zero.
+//  Notes:
+//      This function set's a signal that is checked during evaluation
+//      and will cause the interpreter to begin processing an escape
+//      trap. Note that control must be passed back to REBOL for the
+//      signal to be recognized and handled.
+//
 
 RL_API void RL_Escape(REBINT reserved)
 {
@@ -380,23 +360,19 @@ RL_API void RL_Escape(REBINT reserved)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Do_String"
-**  Summary: none
-**  Details: {
-**  Load a string and evaluate the resulting block.
-**  
-**  Returns:
-**      The datatype of the result.
-**  Arguments:
-**      text - A null terminated UTF-8 (or ASCII) string to transcode
-**          into a block and evaluate.
-**      flags - set to zero for now
-**      result - value returned from evaluation.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Do_String: C
+//  
+//  Load a string and evaluate the resulting block.
+//  
+//  Returns:
+//      The datatype of the result.
+//  Arguments:
+//      text - A null terminated UTF-8 (or ASCII) string to transcode
+//          into a block and evaluate.
+//      flags - set to zero for now
+//      result - value returned from evaluation.
+//
 
 RL_API int RL_Do_String(const REBYTE *text, REBCNT flags, RXIARG *result)
 {
@@ -523,27 +499,23 @@ RL_API int RL_Do_String(const REBYTE *text, REBCNT flags, RXIARG *result)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Do_Binary"
-**  Summary: none
-**  Details: {
-**  Evaluate an encoded binary script such as compressed text.
-**  
-**  Returns:
-**      The datatype of the result or zero if error in the encoding.
-**  Arguments:
-**      bin - by default, a REBOL compressed UTF-8 (or ASCII) script.
-**      length - the length of the data.
-**      flags - special flags (set to zero at this time).
-**      key - encoding, encryption, or signature key.
-**      result - value returned from evaluation.
-**  Notes:
-**      As of A104, only compressed scripts are supported, however,
-**      rebin, cloaked, signed, and encrypted formats will be supported.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Do_Binary: C
+//  
+//  Evaluate an encoded binary script such as compressed text.
+//  
+//  Returns:
+//      The datatype of the result or zero if error in the encoding.
+//  Arguments:
+//      bin - by default, a REBOL compressed UTF-8 (or ASCII) script.
+//      length - the length of the data.
+//      flags - special flags (set to zero at this time).
+//      key - encoding, encryption, or signature key.
+//      result - value returned from evaluation.
+//  Notes:
+//      As of A104, only compressed scripts are supported, however,
+//      rebin, cloaked, signed, and encrypted formats will be supported.
+//
 
 RL_API int RL_Do_Binary(const REBYTE *bin, REBINT length, REBCNT flags, REBCNT key, RXIARG *result)
 {
@@ -572,25 +544,21 @@ RL_API int RL_Do_Binary(const REBYTE *bin, REBINT length, REBCNT flags, REBCNT k
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Do_Block"
-**  Summary: none
-**  Details: {
-**  Evaluate a block. (not implemented)
-**  
-**  Returns:
-**      The datatype of the result or zero if error in the encoding.
-**  Arguments:
-**      blk - A pointer to the block series
-**      flags - set to zero for now
-**      result - value returned from evaluation
-**  Notes:
-**      Not implemented. Contact Carl on R3 Chat if you think you
-**      could use it for something.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Do_Block: C
+//  
+//  Evaluate a block. (not implemented)
+//  
+//  Returns:
+//      The datatype of the result or zero if error in the encoding.
+//  Arguments:
+//      blk - A pointer to the block series
+//      flags - set to zero for now
+//      result - value returned from evaluation
+//  Notes:
+//      Not implemented. Contact Carl on R3 Chat if you think you
+//      could use it for something.
+//
 
 RL_API int RL_Do_Block(REBSER *blk, REBCNT flags, RXIARG *result)
 {
@@ -598,27 +566,23 @@ RL_API int RL_Do_Block(REBSER *blk, REBCNT flags, RXIARG *result)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Do_Commands"
-**  Summary: none
-**  Details: {
-**  Evaluate a block of extension commands at high speed.
-**  
-**  Returns:
-**      Nothing
-**  Arguments:
-**      blk - a pointer to the block series
-**      flags - set to zero for now
-**      context - command evaluation context struct or zero if not used.
-**  Notes:
-**      For command blocks only, not for other blocks.
-**      The context allows passing to each command a struct that is
-**      used for back-referencing your environment data or for tracking
-**      the evaluation block and its index.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Do_Commands: C
+//  
+//  Evaluate a block of extension commands at high speed.
+//  
+//  Returns:
+//      Nothing
+//  Arguments:
+//      blk - a pointer to the block series
+//      flags - set to zero for now
+//      context - command evaluation context struct or zero if not used.
+//  Notes:
+//      For command blocks only, not for other blocks.
+//      The context allows passing to each command a struct that is
+//      used for back-referencing your environment data or for tracking
+//      the evaluation block and its index.
+//
 
 RL_API void RL_Do_Commands(REBSER *blk, REBCNT flags, REBCEC *context)
 {
@@ -627,25 +591,21 @@ RL_API void RL_Do_Commands(REBSER *blk, REBCNT flags, REBCEC *context)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Print"
-**  Summary: none
-**  Details: {
-**  Low level print of formatted data to the console.
-**  
-**  Returns:
-**      nothing
-**  Arguments:
-**      fmt - A format string similar but not identical to printf.
-**          Special options are available.
-**      ... - Values to be formatted.
-**  Notes:
-**      This function is low level and handles only a few C datatypes
-**      at this time.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Print: C
+//  
+//  Low level print of formatted data to the console.
+//  
+//  Returns:
+//      nothing
+//  Arguments:
+//      fmt - A format string similar but not identical to printf.
+//          Special options are available.
+//      ... - Values to be formatted.
+//  Notes:
+//      This function is low level and handles only a few C datatypes
+//      at this time.
+//
 
 RL_API void RL_Print(const REBYTE *fmt, ...)
 {
@@ -656,30 +616,26 @@ RL_API void RL_Print(const REBYTE *fmt, ...)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Print_TOS"
-**  Summary: none
-**  Details: {
-**  Print top REBOL stack value to the console and drop it.
-**  
-**  Returns:
-**      Nothing
-**  Arguments:
-**      flags - special flags (set to zero at this time).
-**      marker - placed at beginning of line to indicate output.
-**  Notes:
-**      This function is used for the main console evaluation
-**      input loop to print the results of evaluation from stack.
-**      The REBOL data stack is an abstract structure that can
-**      change between releases. This function allows the host
-**      to print the result of processed functions.
-**      Marker is usually "==" to show output.
-**      The system/options/result-types determine which values
-**      are automatically printed.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Print_TOS: C
+//  
+//  Print top REBOL stack value to the console and drop it.
+//  
+//  Returns:
+//      Nothing
+//  Arguments:
+//      flags - special flags (set to zero at this time).
+//      marker - placed at beginning of line to indicate output.
+//  Notes:
+//      This function is used for the main console evaluation
+//      input loop to print the results of evaluation from stack.
+//      The REBOL data stack is an abstract structure that can
+//      change between releases. This function allows the host
+//      to print the result of processed functions.
+//      Marker is usually "==" to show output.
+//      The system/options/result-types determine which values
+//      are automatically printed.
+//
 
 RL_API void RL_Print_TOS(REBCNT flags, const REBYTE *marker)
 {
@@ -698,26 +654,22 @@ RL_API void RL_Print_TOS(REBCNT flags, const REBYTE *marker)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Event"
-**  Summary: none
-**  Details: {
-**  Appends an application event (e.g. GUI) to the event port.
-**  
-**  Returns:
-**      Returns TRUE if queued, or FALSE if event queue is full.
-**  Arguments:
-**      evt - A properly initialized event structure. The
-**          contents of this structure are copied as part of
-**          the function, allowing use of locals.
-**  Notes:
-**      Sets a signal to get REBOL attention for WAIT and awake.
-**      To avoid environment problems, this function only appends
-**      to the event queue (no auto-expand). So if the queue is full}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Event: C
+//  
+//  Appends an application event (e.g. GUI) to the event port.
+//  
+//  Returns:
+//      Returns TRUE if queued, or FALSE if event queue is full.
+//  Arguments:
+//      evt - A properly initialized event structure. The
+//          contents of this structure are copied as part of
+//          the function, allowing use of locals.
+//  Notes:
+//      Sets a signal to get REBOL attention for WAIT and awake.
+//      To avoid environment problems, this function only appends
+//      to the event queue (no auto-expand). So if the queue is full
+//
 
 RL_API int RL_Event(REBEVT *evt)
 {
@@ -733,23 +685,19 @@ RL_API int RL_Event(REBEVT *evt)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Update_Event"
-**  Summary: none
-**  Details: {
-**  Updates an application event (e.g. GUI) to the event port.
-**  
-**  Returns:
-**      Returns 1 if updated, or 0 if event appended, and -1 if full.
-**  Arguments:
-**      evt - A properly initialized event structure. The
-**           model and type of the event are used to address
-**         the unhandled event in the queue, when it is found,
-**         it will be replaced with this one}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Update_Event: C
+//  
+//  Updates an application event (e.g. GUI) to the event port.
+//  
+//  Returns:
+//      Returns 1 if updated, or 0 if event appended, and -1 if full.
+//  Arguments:
+//      evt - A properly initialized event structure. The
+//           model and type of the event are used to address
+//           the unhandled event in the queue, when it is found,
+//           it will be replaced with this one
+//
 
 RL_API int RL_Update_Event(REBEVT *evt)
 {
@@ -786,54 +734,54 @@ RL_API int RL_Update_Event(REBEVT *evt)
 }
 
 
-/***********************************************************************
-**
-*/ RL_API void *RL_Make_Block(u32 size)
-/*
-**	Allocate a series suitable for storing Rebol values.  This series
-**	can be used as a backing store for a BLOCK!, but also for any
-**	other Rebol Array type (PAREN!, PATH!, GET-PATH!, SET-PATH!, or
-**	LIT-PATH!).
-**
-**	Returns:
-**		A pointer to a block series.
-**	Arguments:
-**		size - the length of the block. The system will add one extra
-**			for the end-of-block marker.
-**	Notes:
-**		Blocks are allocated with REBOL's internal memory manager.
-**		Internal structures may change, so NO assumptions should be made!
-**		Blocks are automatically garbage collected if there are
-**		no references to them from REBOL code (C code does nothing.)
-**		However, you can lock blocks to prevent deallocation. (?? default)
-**
-***********************************************************************/
+//
+//  RL_Make_Block: C
+//  
+//  Allocate a series suitable for storing Rebol values.  This series
+//  can be used as a backing store for a BLOCK!, but also for any
+//  other Rebol Array type (PAREN!, PATH!, GET-PATH!, SET-PATH!, or
+//  LIT-PATH!).
+//  
+//  Returns:
+//      A pointer to a block series.
+//  Arguments:
+//      size - the length of the block. The system will add one extra
+//          for the end-of-block marker.
+//  Notes:
+//      Blocks are allocated with REBOL's internal memory manager.
+//      Internal structures may change, so NO assumptions should be made!
+//      Blocks are automatically garbage collected if there are
+//      no references to them from REBOL code (C code does nothing.)
+//      However, you can lock blocks to prevent deallocation. (?? default)
+//
+
+RL_API void *RL_Make_Block(u32 size)
 {
 	return Make_Array(size);
 }
 
 
-/***********************************************************************
-**
-*/ RL_API void *RL_Make_String(u32 size, int unicode)
-/*
-**	Allocate a new string or binary series.
-**
-**	Returns:
-**		A pointer to a string or binary series.
-**	Arguments:
-**		size - the length of the string. The system will add one extra
-**			for a null terminator (not strictly required, but good for C.)
-**		unicode - set FALSE for ASCII/Latin1 strings, set TRUE for Unicode.
-**	Notes:
-**		Strings can be REBYTE or REBCHR sized (depends on R3 config.)
-**		Strings are allocated with REBOL's internal memory manager.
-**		Internal structures may change, so NO assumptions should be made!
-**		Strings are automatically garbage collected if there are
-**		no references to them from REBOL code (C code does nothing.)
-**		However, you can lock strings to prevent deallocation. (?? default)
-**
-***********************************************************************/
+//
+//  RL_Make_String: C
+//  
+//  Allocate a new string or binary series.
+//  
+//  Returns:
+//      A pointer to a string or binary series.
+//  Arguments:
+//      size - the length of the string. The system will add one extra
+//          for a null terminator (not strictly required, but good for C.)
+//      unicode - set FALSE for ASCII/Latin1 strings, set TRUE for Unicode.
+//  Notes:
+//      Strings can be REBYTE or REBCHR sized (depends on R3 config.)
+//      Strings are allocated with REBOL's internal memory manager.
+//      Internal structures may change, so NO assumptions should be made!
+//      Strings are automatically garbage collected if there are
+//      no references to them from REBOL code (C code does nothing.)
+//      However, you can lock strings to prevent deallocation. (?? default)
+//
+
+RL_API void *RL_Make_String(u32 size, int unicode)
 {
 	REBSER *result = unicode ? Make_Unicode(size) : Make_Binary(size);
 
@@ -845,51 +793,47 @@ RL_API int RL_Update_Event(REBEVT *evt)
 }
 
 
-/***********************************************************************
-**
-*/ RL_API void *RL_Make_Image(u32 width, u32 height)
-/*
-**	Allocate a new image of the given size.
-**
-**	Returns:
-**		A pointer to an image series, or zero if size is too large.
-**	Arguments:
-**		width - the width of the image in pixels
-**		height - the height of the image in lines
-**	Notes:
-**		Images are allocated with REBOL's internal memory manager.
-**		Image are automatically garbage collected if there are
-**		no references to them from REBOL code (C code does nothing.)
-**
-***********************************************************************/
+//
+//  RL_Make_Image: C
+//  
+//  Allocate a new image of the given size.
+//  
+//  Returns:
+//      A pointer to an image series, or zero if size is too large.
+//  Arguments:
+//      width - the width of the image in pixels
+//      height - the height of the image in lines
+//  Notes:
+//      Images are allocated with REBOL's internal memory manager.
+//      Image are automatically garbage collected if there are
+//      no references to them from REBOL code (C code does nothing.)
+//
+
+RL_API void *RL_Make_Image(u32 width, u32 height)
 {
 	return Make_Image(width, height, FALSE);
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Protect_GC"
-**  Summary: none
-**  Details: {
-**  Protect memory from garbage collection.
-**  
-**  Returns:
-**      nothing
-**  Arguments:
-**      series - a series to protect (block, string, image, ...)
-**      flags - set to 1 to protect, 0 to unprotect
-**  Notes:
-**      You should only use this function when absolutely necessary,
-**      because it bypasses garbage collection for the specified series.
-**      Meaning: if you protect a series, it will never be freed.
-**      Also, you only need this function if you allocate several series
-**      such as strings, blocks, images, etc. within the same command
-**      and you don't store those references somewhere where the GC can
-**      find them, such as in an existing block or object (variable).}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Protect_GC: C
+//  
+//  Protect memory from garbage collection.
+//  
+//  Returns:
+//      nothing
+//  Arguments:
+//      series - a series to protect (block, string, image, ...)
+//      flags - set to 1 to protect, 0 to unprotect
+//  Notes:
+//      You should only use this function when absolutely necessary,
+//      because it bypasses garbage collection for the specified series.
+//      Meaning: if you protect a series, it will never be freed.
+//      Also, you only need this function if you allocate several series
+//      such as strings, blocks, images, etc. within the same command
+//      and you don't store those references somewhere where the GC can
+//      find them, such as in an existing block or object (variable).
+//
 
 RL_API void RL_Protect_GC(REBSER *series, u32 flags)
 {
@@ -897,28 +841,24 @@ RL_API void RL_Protect_GC(REBSER *series, u32 flags)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Get_String"
-**  Summary: none
-**  Details: {
-**  Obtain a pointer into a string (bytes or unicode).
-**  
-**  Returns:
-**      The length and type of string. When len > 0, string is unicode.
-**      When len < 0, string is bytes.
-**    Arguments:
-**      series - string series pointer
-**      index - index from beginning (zero-based)
-**      str   - pointer to first character
-**  Notes:
-**      If the len is less than zero, then the string is optimized to
-**      codepoints (chars) 255 or less for ASCII and LATIN-1 charsets.
-**      Strings are allowed to move in memory. Therefore, you will want
-**      to make a copy of the string if needed.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Get_String: C
+//  
+//  Obtain a pointer into a string (bytes or unicode).
+//  
+//  Returns:
+//      The length and type of string. When len > 0, string is unicode.
+//      When len < 0, string is bytes.
+//  Arguments:
+//      series - string series pointer
+//      index - index from beginning (zero-based)
+//      str   - pointer to first character
+//  Notes:
+//      If the len is less than zero, then the string is optimized to
+//      codepoints (chars) 255 or less for ASCII and LATIN-1 charsets.
+//      Strings are allowed to move in memory. Therefore, you will want
+//      to make a copy of the string if needed.
+//
 
 RL_API int RL_Get_String(REBSER *series, u32 index, void **str)
 {	// ret: len or -len
@@ -936,24 +876,20 @@ RL_API int RL_Get_String(REBSER *series, u32 index, void **str)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Map_Word"
-**  Summary: none
-**  Details: {
-**  Given a word as a string, return its global word identifier.
-**  
-**  Returns:
-**      The word identifier that matches the string.
-**  Arguments:
-**      string - a valid word as a UTF-8 encoded string.
-**  Notes:
-**      Word identifiers are persistent, and you can use them anytime.
-**      If the word is new (not found in master symbol table)
-**      it will be added and the new word identifier is returned.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Map_Word: C
+//  
+//  Given a word as a string, return its global word identifier.
+//  
+//  Returns:
+//      The word identifier that matches the string.
+//  Arguments:
+//      string - a valid word as a UTF-8 encoded string.
+//  Notes:
+//      Word identifiers are persistent, and you can use them anytime.
+//      If the word is new (not found in master symbol table)
+//      it will be added and the new word identifier is returned.
+//
 
 RL_API u32 RL_Map_Word(REBYTE *string)
 {
@@ -961,23 +897,23 @@ RL_API u32 RL_Map_Word(REBYTE *string)
 }
 
 
-/***********************************************************************
-**
-*/ RL_API u32 *RL_Map_Words(REBSER *series)
-/*
-**	Given a block of word values, return an array of word ids.
-**
-**	Returns:
-**		An array of global word identifiers (integers). The [0] value is the size.
-**	Arguments:
-**		series - block of words as values (from REBOL blocks, not strings.)
-**	Notes:
-**		Word identifiers are persistent, and you can use them anytime.
-**		The block can include any kind of word, including set-words, lit-words, etc.
-**		If the input block contains non-words, they will be skipped.
-**		The array is allocated with OS_ALLOC and you can OS_FREE it any time.
-**
-***********************************************************************/
+//
+//  RL_Map_Words: C
+//  
+//  Given a block of word values, return an array of word ids.
+//  
+//  Returns:
+//      An array of global word identifiers (integers). The [0] value is the size.
+//  Arguments:
+//      series - block of words as values (from REBOL blocks, not strings.)
+//  Notes:
+//      Word identifiers are persistent, and you can use them anytime.
+//      The block can include any kind of word, including set-words, lit-words, etc.
+//      If the input block contains non-words, they will be skipped.
+//      The array is allocated with OS_ALLOC and you can OS_FREE it any time.
+//
+
+RL_API u32 *RL_Map_Words(REBSER *series)
 {
 	REBCNT i = 1;
 	u32 *words;
@@ -996,24 +932,24 @@ RL_API u32 RL_Map_Word(REBYTE *string)
 }
 
 
-/***********************************************************************
-**
-*/ RL_API REBYTE *RL_Word_String(u32 word)
-/*
-**	Return a string related to a given global word identifier.
-**
-**	Returns:
-**		A copy of the word string, null terminated.
-**	Arguments:
-**		word - a global word identifier
-**	Notes:
-**		The result is a null terminated copy of the name for your own use.
-**		The string is always UTF-8 encoded (chars > 127 are encoded.)
-**		In this API, word identifiers are always canonical. Therefore,
-**		the returned string may have different spelling/casing than expected.
-**		The string is allocated with OS_ALLOC and you can OS_FREE it any time.
-**
-***********************************************************************/
+//
+//  RL_Word_String: C
+//  
+//  Return a string related to a given global word identifier.
+//  
+//  Returns:
+//      A copy of the word string, null terminated.
+//  Arguments:
+//      word - a global word identifier
+//  Notes:
+//      The result is a null terminated copy of the name for your own use.
+//      The string is always UTF-8 encoded (chars > 127 are encoded.)
+//      In this API, word identifiers are always canonical. Therefore,
+//      the returned string may have different spelling/casing than expected.
+//      The string is allocated with OS_ALLOC and you can OS_FREE it any time.
+//
+
+RL_API REBYTE *RL_Word_String(u32 word)
 {
 	REBYTE *s1, *s2;
 	// !!This code should use a function from c-words.c (but nothing perfect yet.)
@@ -1025,23 +961,19 @@ RL_API u32 RL_Map_Word(REBYTE *string)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Find_Word"
-**  Summary: none
-**  Details: {
-**  Given an array of word ids, return the index of the given word.
-**  
-**  Returns:
-**      The index of the given word or zero.
-**  Arguments:
-**      words - a word array like that returned from MAP_WORDS (first element is size)
-**      word - a word id
-**  Notes:
-**      The first element of the word array is the length of the array.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Find_Word: C
+//  
+//  Given an array of word ids, return the index of the given word.
+//  
+//  Returns:
+//      The index of the given word or zero.
+//  Arguments:
+//      words - a word array like that returned from MAP_WORDS (first element is size)
+//      word - a word id
+//  Notes:
+//      The first element of the word array is the length of the array.
+//
 
 RL_API u32 RL_Find_Word(u32 *words, u32 word)
 {
@@ -1056,23 +988,19 @@ RL_API u32 RL_Find_Word(u32 *words, u32 word)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Series"
-**  Summary: none
-**  Details: {
-**  Get series information.
-**  
-**  Returns:
-**      Returns information related to a series.
-**  Arguments:
-**      series - any series pointer (string or block)
-**      what - indicates what information to return (see RXI_SER enum)
-**  Notes:
-**      Invalid what arg nums will return zero.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Series: C
+//  
+//  Get series information.
+//  
+//  Returns:
+//      Returns information related to a series.
+//  Arguments:
+//      series - any series pointer (string or block)
+//      what - indicates what information to return (see RXI_SER enum)
+//  Notes:
+//      Invalid what arg nums will return zero.
+//
 
 RL_API REBUPT RL_Series(REBSER *series, REBCNT what)
 {
@@ -1087,26 +1015,22 @@ RL_API REBUPT RL_Series(REBSER *series, REBCNT what)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Get_Char"
-**  Summary: none
-**  Details: {
-**  Get a character from byte or unicode string.
-**  
-**  Returns:
-**      A Unicode character point from string. If index is
-**      at or past the tail, a -1 is returned.
-**  Arguments:
-**      series - string series pointer
-**      index - zero based index of character
-**  Notes:
-**      This function works for byte and unicoded strings.
-**      The maximum size of a Unicode char is determined by
-**      R3 build options. The default is 16 bits.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Get_Char: C
+//  
+//  Get a character from byte or unicode string.
+//  
+//  Returns:
+//      A Unicode character point from string. If index is
+//      at or past the tail, a -1 is returned.
+//  Arguments:
+//      series - string series pointer
+//      index - zero based index of character
+//  Notes:
+//      This function works for byte and unicoded strings.
+//      The maximum size of a Unicode char is determined by
+//      R3 build options. The default is 16 bits.
+//
 
 RL_API int RL_Get_Char(REBSER *series, u32 index)
 {
@@ -1115,23 +1039,19 @@ RL_API int RL_Get_Char(REBSER *series, u32 index)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Set_Char"
-**  Summary: none
-**  Details: {
-**  Set a character into a byte or unicode string.
-**  
-**  Returns:
-**      The index passed as an argument.
-**  Arguments:
-**      series - string series pointer
-**      index - where to store the character. If past the tail,
-**          the string will be auto-expanded by one and the char
-**          will be appended.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Set_Char: C
+//  
+//  Set a character into a byte or unicode string.
+//  
+//  Returns:
+//      The index passed as an argument.
+//  Arguments:
+//      series - string series pointer
+//      index - where to store the character. If past the tail,
+//          the string will be auto-expanded by one and the char
+//          will be appended.
+//
 
 RL_API u32 RL_Set_Char(REBSER *series, u32 index, u32 chr)
 {
@@ -1144,22 +1064,18 @@ RL_API u32 RL_Set_Char(REBSER *series, u32 index, u32 chr)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Get_Value"
-**  Summary: none
-**  Details: {
-**  Get a value from a block.
-**  
-**  Returns:
-**      Datatype of value or zero if index is past tail.
-**  Arguments:
-**      series - block series pointer
-**      index - index of the value in the block (zero based)
-**      result - set to the value of the field}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Get_Value: C
+//  
+//  Get a value from a block.
+//  
+//  Returns:
+//      Datatype of value or zero if index is past tail.
+//  Arguments:
+//      series - block series pointer
+//      index - index of the value in the block (zero based)
+//      result - set to the value of the field
+//
 
 RL_API int RL_Get_Value(REBSER *series, u32 index, RXIARG *result)
 {
@@ -1171,23 +1087,19 @@ RL_API int RL_Get_Value(REBSER *series, u32 index, RXIARG *result)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Set_Value"
-**  Summary: none
-**  Details: {
-**  Set a value in a block.
-**  
-**  Returns:
-**      TRUE if index past end and value was appended to tail of block.
-**  Arguments:
-**      series - block series pointer
-**      index - index of the value in the block (zero based)
-**      val  - new value for field
-**      type - datatype of value}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Set_Value: C
+//  
+//  Set a value in a block.
+//  
+//  Returns:
+//      TRUE if index past end and value was appended to tail of block.
+//  Arguments:
+//      series - block series pointer
+//      index - index of the value in the block (zero based)
+//      val  - new value for field
+//      type - datatype of value
+//
 
 RL_API int RL_Set_Value(REBSER *series, u32 index, RXIARG val, int type)
 {
@@ -1203,21 +1115,21 @@ RL_API int RL_Set_Value(REBSER *series, u32 index, RXIARG val, int type)
 }
 
 
-/***********************************************************************
-**
-*/ RL_API u32 *RL_Words_Of_Object(REBSER *obj)
-/*
-**	Returns information about the object.
-**
-**	Returns:
-**		Returns an array of words used as fields of the object.
-**	Arguments:
-**		obj  - object pointer (e.g. from RXA_OBJECT)
-**	Notes:
-**		Returns a word array similar to MAP_WORDS().
-**		The array is allocated with OS_ALLOC. You can OS_FREE it any time.
-**
-***********************************************************************/
+//
+//  RL_Words_Of_Object: C
+//  
+//  Returns information about the object.
+//  
+//  Returns:
+//      Returns an array of words used as fields of the object.
+//  Arguments:
+//      obj  - object pointer (e.g. from RXA_OBJECT)
+//  Notes:
+//      Returns a word array similar to MAP_WORDS().
+//      The array is allocated with OS_ALLOC. You can OS_FREE it any time.
+//
+
+RL_API u32 *RL_Words_Of_Object(REBSER *obj)
 {
 	REBCNT index;
 	u32 *words;
@@ -1234,22 +1146,18 @@ RL_API int RL_Set_Value(REBSER *series, u32 index, RXIARG val, int type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Get_Field"
-**  Summary: none
-**  Details: {
-**  Get a field value (context variable) of an object.
-**  
-**  Returns:
-**      Datatype of value or zero if word is not found in the object.
-**  Arguments:
-**      obj  - object pointer (e.g. from RXA_OBJECT)
-**      word - global word identifier (integer)
-**      result - gets set to the value of the field}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Get_Field: C
+//  
+//  Get a field value (context variable) of an object.
+//  
+//  Returns:
+//      Datatype of value or zero if word is not found in the object.
+//  Arguments:
+//      obj  - object pointer (e.g. from RXA_OBJECT)
+//      word - global word identifier (integer)
+//      result - gets set to the value of the field
+//
 
 RL_API int RL_Get_Field(REBSER *obj, u32 word, RXIARG *result)
 {
@@ -1261,23 +1169,19 @@ RL_API int RL_Get_Field(REBSER *obj, u32 word, RXIARG *result)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Set_Field"
-**  Summary: none
-**  Details: {
-**  Set a field (context variable) of an object.
-**  
-**  Returns:
-**      The type arg, or zero if word not found in object or if field is protected.
-**  Arguments:
-**      obj  - object pointer (e.g. from RXA_OBJECT)
-**      word - global word identifier (integer)
-**      val  - new value for field
-**      type - datatype of value}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Set_Field: C
+//  
+//  Set a field (context variable) of an object.
+//  
+//  Returns:
+//      The type arg, or zero if word not found in object or if field is protected.
+//  Arguments:
+//      obj  - object pointer (e.g. from RXA_OBJECT)
+//      word - global word identifier (integer)
+//      val  - new value for field
+//      type - datatype of value
+//
 
 RL_API int RL_Set_Field(REBSER *obj, u32 word, RXIARG val, int type)
 {
@@ -1290,34 +1194,30 @@ RL_API int RL_Set_Field(REBSER *obj, u32 word, RXIARG val, int type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Callback"
-**  Summary: none
-**  Details: {
-**  Evaluate a REBOL callback function, either synchronous or asynchronous.
-**  
-**  Returns:
-**      Sync callback: type of the result; async callback: true if queued
-**  Arguments:
-**      cbi - callback information including special option flags,
-**          object pointer (where function is located), function name
-**          as global word identifier (within above object), argument list
-**          passed to callback (see notes below), and result value.
-**  Notes:
-**      The flag value will determine the type of callback. It can be either
-**      synchronous, where the code will re-enter the interpreter environment
-**      and call the specified function, or asynchronous where an EVT_CALLBACK
-**      event is queued, and the callback will be evaluated later when events
-**      are processed within the interpreter's environment.
-**      For asynchronous callbacks, the cbi and the args array must be managed
-**      because the data isn't processed until the callback event is
-**      handled. Therefore, these cannot be allocated locally on
-**      the C stack; they should be dynamic (or global if so desired.)
-**      See c:extensions-callbacks}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Callback: C
+//  
+//  Evaluate a REBOL callback function, either synchronous or asynchronous.
+//  
+//  Returns:
+//      Sync callback: type of the result; async callback: true if queued
+//  Arguments:
+//      cbi - callback information including special option flags,
+//          object pointer (where function is located), function name
+//          as global word identifier (within above object), argument list
+//          passed to callback (see notes below), and result value.
+//  Notes:
+//      The flag value will determine the type of callback. It can be either
+//      synchronous, where the code will re-enter the interpreter environment
+//      and call the specified function, or asynchronous where an EVT_CALLBACK
+//      event is queued, and the callback will be evaluated later when events
+//      are processed within the interpreter's environment.
+//      For asynchronous callbacks, the cbi and the args array must be managed
+//      because the data isn't processed until the callback event is
+//      handled. Therefore, these cannot be allocated locally on
+//      the C stack; they should be dynamic (or global if so desired.)
+//      See c:extensions-callbacks
+//
 
 RL_API int RL_Callback(RXICBI *cbi)
 {
@@ -1338,29 +1238,25 @@ RL_API int RL_Callback(RXICBI *cbi)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Length_As_UTF8"
-**  Summary: none
-**  Details: {
-**      Calculate the UTF8 length of an array of unicode codepoints
-**  
-**  Returns:
-**      How long the UTF8 encoded string would be
-**  
-**  Arguments:
-**      p - pointer to array of bytes or wide characters
-**      len - length of src in codepoints (not including terminator)
-**      uni - true if src is in wide character format
-**      ccr - convert linefeeds into linefeed + carraige-return
-**  
-**      !!! Host code is not supposed to call any Rebol routines except
-**      for those in the RL_Api.  This exposes Rebol's internal UTF8
-**      length routine, as it was being used by host code.  It should
-**      be reviewed along with the rest of the RL_Api.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Length_As_UTF8: C
+//  
+//      Calculate the UTF8 length of an array of unicode codepoints
+//  
+//  Returns:
+//      How long the UTF8 encoded string would be
+//  
+//  Arguments:
+//      p - pointer to array of bytes or wide characters
+//      len - length of src in codepoints (not including terminator)
+//      uni - true if src is in wide character format
+//      ccr - convert linefeeds into linefeed + carraige-return
+//  
+//      !!! Host code is not supposed to call any Rebol routines except
+//      for those in the RL_Api.  This exposes Rebol's internal UTF8
+//      length routine, as it was being used by host code.  It should
+//      be reviewed along with the rest of the RL_Api.
+//
 
 RL_API REBCNT RL_Length_As_UTF8(const void *p, REBCNT len, REBOOL uni, REBOOL ccr)
 {
@@ -1368,34 +1264,30 @@ RL_API REBCNT RL_Length_As_UTF8(const void *p, REBCNT len, REBOOL uni, REBOOL cc
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RL_Encode_UTF8"
-**  Summary: none
-**  Details: {
-**      Encode the unicode into UTF8 byte string.
-**  
-**  Returns:
-**      Number of source chars used.
-**  
-**  Arguments:
-**      dst - destination for encoded UTF8 bytes
-**      max - maximum size of the result in bytes
-**      src - source array of bytes or wide characters
-**      len - input is source length, updated to reflect dst bytes used
-**      uni - true if src is in wide character format
-**      ccr - convert linefeed + carriage-return into just linefeed
-**  
-**  Notes:
-**      Does not add a terminator.
-**  
-**      !!! Host code is not supposed to call any Rebol routines except
-**      for those in the RL_Api.  This exposes Rebol's internal UTF8
-**      length routine, as it was being used by the Linux host code by
-**      Atronix.  Should be reviewed along with the rest of the RL_Api.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RL_Encode_UTF8: C
+//  
+//      Encode the unicode into UTF8 byte string.
+//  
+//  Returns:
+//      Number of source chars used.
+//  
+//  Arguments:
+//      dst - destination for encoded UTF8 bytes
+//      max - maximum size of the result in bytes
+//      src - source array of bytes or wide characters
+//      len - input is source length, updated to reflect dst bytes used
+//      uni - true if src is in wide character format
+//      ccr - convert linefeed + carriage-return into just linefeed
+//  
+//  Notes:
+//      Does not add a terminator.
+//  
+//      !!! Host code is not supposed to call any Rebol routines except
+//      for those in the RL_Api.  This exposes Rebol's internal UTF8
+//      length routine, as it was being used by the Linux host code by
+//      Atronix.  Should be reviewed along with the rest of the RL_Api.
+//
 
 RL_API REBCNT RL_Encode_UTF8(REBYTE *dst, REBINT max, const void *src, REBCNT *len, REBFLG uni, REBFLG ccr)
 {
@@ -1405,11 +1297,11 @@ RL_API REBCNT RL_Encode_UTF8(REBYTE *dst, REBINT max, const void *src, REBCNT *l
 
 #include "reb-lib-lib.h"
 
-/***********************************************************************
-**
-*/	void *Extension_Lib(void)
-/*
-***********************************************************************/
+//
+//  Extension_Lib: C
+//
+
+void *Extension_Lib(void)
 {
 	return &Ext_Lib;
 }

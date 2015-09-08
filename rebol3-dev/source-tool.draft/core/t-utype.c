@@ -32,14 +32,9 @@
 #define	SET_UTYPE(v,f) VAL_UTYPE_FUNC(v) = (f), VAL_UTYPE_DATA(v) = 0, VAL_SET(v, REB_UTYPE)
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Utype"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Utype: C
+//
 
 REBINT CT_Utype(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -47,14 +42,9 @@ REBINT CT_Utype(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "MT_Utype"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_Utype: C
+//
 
 REBFLG MT_Utype(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -62,14 +52,9 @@ REBFLG MT_Utype(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Utype)
 {

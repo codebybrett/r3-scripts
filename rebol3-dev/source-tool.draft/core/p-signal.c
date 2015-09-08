@@ -140,14 +140,9 @@ static int sig_word_num(REBVAL *word)
 	}
 }
 
-/*******************************************************************************
-**
-**  Name: "Signal_Actor"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Signal_Actor: C
+//
 
 static REB_R Signal_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
@@ -269,14 +264,9 @@ static REB_R Signal_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Signal_Scheme"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Signal_Scheme: C
+//
 
 void Init_Signal_Scheme(void)
 {

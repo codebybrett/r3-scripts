@@ -30,14 +30,9 @@
 #include "sys-core.h"
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Tuple"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Tuple: C
+//
 
 REBINT CT_Tuple(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -49,14 +44,9 @@ REBINT CT_Tuple(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "MT_Tuple"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_Tuple: C
+//
 
 REBFLG MT_Tuple(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -87,14 +77,11 @@ REBFLG MT_Tuple(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Cmp_Tuple"
-**  Summary: none
-**  Details: "^/    Given two tuples, compare them."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Cmp_Tuple: C
+//  
+//  Given two tuples, compare them.
+//
 
 REBINT Cmp_Tuple(const REBVAL *t1, const REBVAL *t2)
 {
@@ -115,16 +102,12 @@ REBINT Cmp_Tuple(const REBVAL *t1, const REBVAL *t2)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "PD_Tuple"
-**  Summary: none
-**  Details: {
-**      Implements PATH and SET_PATH for tuple.
-**      Sets DS_TOP if found. Always returns 0.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  PD_Tuple: C
+//  
+//      Implements PATH and SET_PATH for tuple.
+//      Sets DS_TOP if found. Always returns 0.
+//
 
 REBINT PD_Tuple(REBPVS *pvs)
 {
@@ -164,16 +147,12 @@ REBINT PD_Tuple(REBPVS *pvs)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Emit_Tuple"
-**  Summary: none
-**  Details: {
-**      The out array must be large enough to hold longest tuple.
-**      Longest is: (3 digits + '.') * 11 nums + 1 term => 45}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Emit_Tuple: C
+//  
+//      The out array must be large enough to hold longest tuple.
+//      Longest is: (3 digits + '.') * 11 nums + 1 term => 45
+//
 
 REBINT Emit_Tuple(const REBVAL *value, REBYTE *out)
 {
@@ -197,14 +176,9 @@ REBINT Emit_Tuple(const REBVAL *value, REBYTE *out)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Tuple)
 {

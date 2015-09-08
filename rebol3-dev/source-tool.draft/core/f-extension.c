@@ -250,16 +250,14 @@ x*/	REBRXT Do_Callback(REBSER *obj, u32 name, RXIARG *rxis, RXIARG *result)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "do_callback"
-**  Summary: "Internal function to process callback events."
-**  Details: "^/        object word arg1 arg2"
-**  Spec: [
-**      <1> event
-**  ]
-**
-*******************************************************************************/
+//
+//  do-callback: native [
+//      "Internal function to process callback events."
+//      event [event!] "Callback event"
+//  ]
+//  
+//      object word arg1 arg2
+//
 
 REBNATIVE(do_callback)
 {
@@ -287,36 +285,33 @@ REBNATIVE(do_callback)
 typedef REBYTE *(INFO_FUNC)(REBINT opts, void *lib);
 
 
-/*******************************************************************************
-**
-**  Name: "load_extension"
-**  Summary: "Low level extension module loader (for DLLs)."
-**  Details: {
-**      arg 1: filename | body binary string (UTF-8)
-**      arg 2: dispatch
-**      arg 3: function handle
-**  
-**  Low level extension loader:
-**  
-**      1. Opens the DLL for the extension
-**      2. Calls its Info() command to get its definition header (REBOL)
-**      3. Inits an extension structure (dll, Call() function)
-**      4. Creates a extension object and returns it
-**      5. REBOL code then uses that object to define the extension module
-**         including commands, functions, data, exports, etc.
-**  
-**  Each extension is defined as DLL with:
-**  
-**      init() - init anything needed
-**      quit() - cleanup anything needed
-**      call() - dispatch a native}
-**  Spec: [
-**      <1> name
-**      <2> /dispatch
-**      <3> function
-**  ]
-**
-*******************************************************************************/
+//
+//  load-extension: native [
+//      "Low level extension module loader (for DLLs)."
+//      name [file! binary!] "DLL file or UTF-8 source"
+//      /dispatch {Specify native command dispatch (from hosted extensions)}
+//      function [handle!] "Command dispatcher (native)"
+//  ]
+//  
+//      arg 1: filename | body binary string (UTF-8)
+//      arg 2: dispatch
+//      arg 3: function handle
+//  
+//  Low level extension loader:
+//  
+//      1. Opens the DLL for the extension
+//      2. Calls its Info() command to get its definition header (REBOL)
+//      3. Inits an extension structure (dll, Call() function)
+//      4. Creates a extension object and returns it
+//      5. REBOL code then uses that object to define the extension module
+//         including commands, functions, data, exports, etc.
+//  
+//  Each extension is defined as DLL with:
+//  
+//      init() - init anything needed
+//      quit() - cleanup anything needed
+//      call() - dispatch a native
+//
 
 REBNATIVE(load_extension)
 {
@@ -394,16 +389,12 @@ REBNATIVE(load_extension)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Make_Command"
-**  Summary: none
-**  Details: {
-**      Assumes prior function has already stored the spec and args
-**      series. This function validates the body.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Make_Command: C
+//  
+//      Assumes prior function has already stored the spec and args
+//      series. This function validates the body.
+//
 
 void Make_Command(REBVAL *value, REBVAL *def)
 {
@@ -444,21 +435,17 @@ void Make_Command(REBVAL *value, REBVAL *def)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Do_Command"
-**  Summary: none
-**  Details: {
-**  Evaluates the arguments for a command function and creates
-**  a resulting stack frame (struct or object) for command processing.
-**  
-**  A command value consists of:
-**      args - same as other funcs
-**      spec - same as other funcs
-**      body - [ext-obj func-index]}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Do_Command: C
+//  
+//  Evaluates the arguments for a command function and creates
+//  a resulting stack frame (struct or object) for command processing.
+//  
+//  A command value consists of:
+//      args - same as other funcs
+//      spec - same as other funcs
+//      body - [ext-obj func-index]
+//
 
 void Do_Command(const REBVAL *value)
 {
@@ -520,19 +507,15 @@ void Do_Command(const REBVAL *value)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Do_Commands"
-**  Summary: none
-**  Details: {
-**      Evaluate a block of commands as efficiently as possible.
-**      The arguments to each command must already be reduced or
-**      use only variable lookup.
-**  
-**      Returns the last evaluated value, if provided.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Do_Commands: C
+//  
+//      Evaluate a block of commands as efficiently as possible.
+//      The arguments to each command must already be reduced or
+//      use only variable lookup.
+//  
+//      Returns the last evaluated value, if provided.
+//
 
 void Do_Commands(REBVAL *out, REBSER *cmds, void *context)
 {
@@ -668,16 +651,12 @@ void Do_Commands(REBVAL *out, REBSER *cmds, void *context)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "do_commands"
-**  Summary: {Evaluate a block of extension module command functions (special evaluation rules.)}
-**  Details: none
-**  Spec: [
-**      <1> commands
-**  ]
-**
-*******************************************************************************/
+//
+//  do-commands: native [
+//      {Evaluate a block of extension module command functions (special evaluation rules.)}
+//      commands [block!] "Series of commands and their arguments"
+//  ]
+//
 
 REBNATIVE(do_commands)
 {

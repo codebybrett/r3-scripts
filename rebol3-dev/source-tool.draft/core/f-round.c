@@ -43,23 +43,19 @@ enum {
 
 #define RB_DFC (1 << RF_DOWN | 1 << RF_FLOOR | 1 << RF_CEILING)
 
-/*******************************************************************************
-**
-**  Name: "Get_Round_Flags"
-**  Summary: none
-**  Details: {
-**      1 n [number! money! time!] "The value to round"
-**      2 /to "Return the nearest multiple of the scale parameter"
-**      3    scale [number! money! time!] "Must be a non-zero value"
-**      4 /even      "Halves round toward even results"
-**      5 /down      "Round toward zero, ignoring discarded digits. (truncate)"
-**      6 /half-down "Halves round toward zero"
-**      7 /floor     "Round in negative direction"
-**      8 /ceiling   "Round in positive direction"
-**      9 /half-ceiling "Halves round in positive direction"}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Get_Round_Flags: C
+//  
+//      1 n [number! money! time!] "The value to round"
+//      2 /to "Return the nearest multiple of the scale parameter"
+//      3    scale [number! money! time!] "Must be a non-zero value"
+//      4 /even      "Halves round toward even results"
+//      5 /down      "Round toward zero, ignoring discarded digits. (truncate)"
+//      6 /half-down "Halves round toward zero"
+//      7 /floor     "Round in negative direction"
+//      8 /ceiling   "Round in positive direction"
+//      9 /half-ceiling "Halves round in positive direction"
+//
 
 REBCNT Get_Round_Flags(struct Reb_Call *call_)
 {
@@ -80,16 +76,12 @@ REBCNT Get_Round_Flags(struct Reb_Call *call_)
 #define Dec_Trunc(x) (((x) < 0.0) ? -1.0 : 1.0) * floor(fabs(x))
 #define Dec_Away(x) (((x) < 0.0) ? -1.0 : 1.0) * ceil(fabs(x))
 
-/*******************************************************************************
-**
-**  Name: "Round_Dec"
-**  Summary: none
-**  Details: {
-**      Identical to ROUND mezzanine function.
-**      Note: scale arg only valid if RF_TO is set}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Round_Dec: C
+//  
+//      Identical to ROUND mezzanine function.
+//      Note: scale arg only valid if RF_TO is set
+//
 
 REBDEC Round_Dec(REBDEC dec, REBCNT flags, REBDEC scale)
 {
@@ -172,16 +164,12 @@ REBDEC Round_Dec(REBDEC dec, REBCNT flags, REBDEC scale)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Round_Int"
-**  Summary: none
-**  Details: {
-**      Identical to ROUND mezzanine function.
-**      Note: scale arg only valid if RF_TO is set}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Round_Int: C
+//  
+//      Identical to ROUND mezzanine function.
+//      Note: scale arg only valid if RF_TO is set
+//
 
 REBI64 Round_Int(REBI64 num, REBCNT flags, REBI64 scale)
 {
@@ -220,16 +208,12 @@ REBI64 Round_Int(REBI64 num, REBCNT flags, REBI64 scale)
 	Int_Away; return num; /* this is round_half_away */
 }
 
-/*******************************************************************************
-**
-**  Name: "Round_Deci"
-**  Summary: none
-**  Details: {
-**      Identical to ROUND mezzanine function.
-**      Note: scale arg only valid if RF_TO is set}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Round_Deci: C
+//  
+//      Identical to ROUND mezzanine function.
+//      Note: scale arg only valid if RF_TO is set
+//
 
 deci Round_Deci(deci num, REBCNT flags, deci scale)
 {

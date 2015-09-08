@@ -270,18 +270,14 @@ void Unmap_Bytes(void *srcp, REBYTE **dstp, const char *map) {
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Decode_BMP_Image"
-**  Summary: none
-**  Details: {
-**      Input:  BMP encoded image (codi->data, len)
-**      Output: Image bits (codi->extra.bits, w, h)
-**      Error:  Code in codi->error
-**      Return: Success as TRUE or FALSE}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Decode_BMP_Image: C
+//  
+//      Input:  BMP encoded image (codi->data, len)
+//      Output: Image bits (codi->extra.bits, w, h)
+//      Error:  Code in codi->error
+//      Return: Success as TRUE or FALSE
+//
 
 static void Decode_BMP_Image(REBCDI *codi)
 {
@@ -509,18 +505,14 @@ error:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Encode_BMP_Image"
-**  Summary: none
-**  Details: {
-**      Input:  Image bits (codi->extra.bits, w, h)
-**      Output: BMP encoded image (codi->data, len)
-**      Error:  Code in codi->error
-**      Return: Success as TRUE or FALSE}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Encode_BMP_Image: C
+//  
+//      Input:  Image bits (codi->extra.bits, w, h)
+//      Output: BMP encoded image (codi->data, len)
+//      Error:  Code in codi->error
+//      Return: Success as TRUE or FALSE
+//
 
 static void Encode_BMP_Image(REBCDI *codi)
 {
@@ -578,14 +570,9 @@ static void Encode_BMP_Image(REBCDI *codi)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Codec_BMP_Image"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Codec_BMP_Image: C
+//
 
 REBINT Codec_BMP_Image(REBCDI *codi)
 {
@@ -611,14 +598,9 @@ REBINT Codec_BMP_Image(REBCDI *codi)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_BMP_Codec"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_BMP_Codec: C
+//
 
 void Init_BMP_Codec(void)
 {

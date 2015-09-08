@@ -51,14 +51,14 @@
 
 #include "sys-core.h"
 
-/***********************************************************************
-**
-*/	REBSER *List_Func_Words(const REBVAL *func)
-/*
-**		Return a block of function words, unbound.
-**		Note: skips 0th entry.
-**
-***********************************************************************/
+//
+//  List_Func_Words: C
+//  
+//      Return a block of function words, unbound.
+//      Note: skips 0th entry.
+//
+
+REBSER *List_Func_Words(const REBVAL *func)
 {
 	REBSER *block;
 	REBSER *words = VAL_FUNC_WORDS(func);
@@ -80,14 +80,14 @@
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *List_Func_Types(REBVAL *func)
-/*
-**		Return a block of function arg types.
-**		Note: skips 0th entry.
-**
-***********************************************************************/
+//
+//  List_Func_Types: C
+//  
+//      Return a block of function arg types.
+//      Note: skips 0th entry.
+//
+
+REBSER *List_Func_Types(REBVAL *func)
 {
 	REBSER *block;
 	REBSER *words = VAL_FUNC_WORDS(func);
@@ -109,17 +109,17 @@
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Check_Func_Spec(REBSER *block, REBYTE *exts)
-/*
-**		Check function spec of the form:
-**
-**		["description" arg "notes" [type! type2! ...] /ref ...]
-**
-**		Throw an error for invalid values.
-**
-***********************************************************************/
+//
+//  Check_Func_Spec: C
+//  
+//      Check function spec of the form:
+//  
+//      ["description" arg "notes" [type! type2! ...] /ref ...]
+//  
+//      Throw an error for invalid values.
+//
+
+REBSER *Check_Func_Spec(REBSER *block, REBYTE *exts)
 {
 	REBVAL *blk;
 	REBSER *words;
@@ -201,14 +201,9 @@
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Make_Native"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Make_Native: C
+//
 
 void Make_Native(REBVAL *value, REBSER *spec, REBFUN func, REBINT type)
 {
@@ -226,14 +221,9 @@ void Make_Native(REBVAL *value, REBSER *spec, REBFUN func, REBINT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Make_Function"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Make_Function: C
+//
 
 REBFLG Make_Function(REBCNT type, REBVAL *value, REBVAL *def)
 {
@@ -270,14 +260,9 @@ REBFLG Make_Function(REBCNT type, REBVAL *value, REBVAL *def)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Copy_Function"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Copy_Function: C
+//
 
 REBFLG Copy_Function(REBVAL *value, REBVAL *args)
 {
@@ -327,14 +312,9 @@ REBFLG Copy_Function(REBVAL *value, REBVAL *args)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Do_Native"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Do_Native: C
+//
 
 void Do_Native(const REBVAL *func)
 {
@@ -375,14 +355,9 @@ void Do_Native(const REBVAL *func)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Do_Action"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Do_Action: C
+//
 
 void Do_Action(const REBVAL *func)
 {
@@ -436,14 +411,9 @@ void Do_Action(const REBVAL *func)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Do_Function"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Do_Function: C
+//
 
 void Do_Function(const REBVAL *func)
 {
@@ -463,16 +433,12 @@ void Do_Function(const REBVAL *func)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Do_Closure"
-**  Summary: none
-**  Details: {
-**      Do a closure by cloning its body and rebinding it to
-**      a new frame of words/values.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Do_Closure: C
+//  
+//      Do a closure by cloning its body and rebinding it to
+//      a new frame of words/values.
+//
 
 void Do_Closure(const REBVAL *func)
 {
@@ -541,14 +507,9 @@ void Do_Closure(const REBVAL *func)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Do_Routine"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Do_Routine: C
+//
 
 void Do_Routine(const REBVAL *routine)
 {

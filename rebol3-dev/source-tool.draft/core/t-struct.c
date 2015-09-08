@@ -120,14 +120,9 @@ static REBOOL get_scalar(const REBSTU *stu,
 	return TRUE;
 }
 
-/*******************************************************************************
-**
-**  Name: "Get_Struct_Var"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Get_Struct_Var: C
+//
 
 static REBFLG Get_Struct_Var(REBSTU *stu, REBVAL *word, REBVAL *val)
 {
@@ -156,14 +151,9 @@ static REBFLG Get_Struct_Var(REBSTU *stu, REBVAL *word, REBVAL *val)
 
 
 #ifdef NEED_SET_STRUCT_VARS
-/*******************************************************************************
-**
-**  Name: "Set_Struct_Vars"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_Struct_Vars: C
+//
 
 static void Set_Struct_Vars(REBSTU *strut, REBVAL *blk)
 {
@@ -171,13 +161,13 @@ static void Set_Struct_Vars(REBSTU *strut, REBVAL *blk)
 #endif
 
 
-/***********************************************************************
-**
-*/	REBSER *Struct_To_Block(const REBSTU *stu)
-/*
-**		Used by MOLD to create a block.
-**
-***********************************************************************/
+//
+//  Struct_To_Block: C
+//  
+//      Used by MOLD to create a block.
+//
+
+REBSER *Struct_To_Block(const REBSTU *stu)
 {
 	REBSER *ser = Make_Array(10);
 	struct Struct_Field *field = (struct Struct_Field*) SERIES_DATA(stu->fields);
@@ -367,14 +357,9 @@ static REBOOL assign_scalar(REBSTU *stu,
 	return TRUE;
 }
 
-/*******************************************************************************
-**
-**  Name: "Set_Struct_Var"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_Struct_Var: C
+//
 
 static REBFLG Set_Struct_Var(REBSTU *stu, REBVAL *word, REBVAL *elem, REBVAL *val)
 {
@@ -830,14 +815,9 @@ failed:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "PD_Struct"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  PD_Struct: C
+//
 
 REBINT PD_Struct(REBPVS *pvs)
 {
@@ -877,14 +857,9 @@ REBINT PD_Struct(REBPVS *pvs)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Cmp_Struct"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Cmp_Struct: C
+//
 
 REBINT Cmp_Struct(const REBVAL *s, const REBVAL *t)
 {
@@ -897,14 +872,9 @@ REBINT Cmp_Struct(const REBVAL *s, const REBVAL *t)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Struct"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Struct: C
+//
 
 REBINT CT_Struct(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -928,14 +898,9 @@ REBINT CT_Struct(REBVAL *a, REBVAL *b, REBINT mode)
 	return -1;
 }
 
-/*******************************************************************************
-**
-**  Name: "Copy_Struct"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Copy_Struct: C
+//
 
 void Copy_Struct(const REBSTU *src, REBSTU *dst)
 {
@@ -950,14 +915,9 @@ void Copy_Struct(const REBSTU *src, REBSTU *dst)
 	MANAGE_SERIES(STRUCT_DATA_BIN(dst));
 }
 
-/*******************************************************************************
-**
-**  Name: "Copy_Struct_Val"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Copy_Struct_Val: C
+//
 
 void Copy_Struct_Val(const REBVAL *src, REBVAL *dst)
 {
@@ -1038,14 +998,9 @@ static void init_fields(REBVAL *ret, REBVAL *spec)
 	}
 }
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Struct)
 {
