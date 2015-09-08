@@ -70,10 +70,10 @@ source-tool: context [
 
 	timing: funct [code /local result] [
 		started: now/precise
-		log [started (started) (code)]
+		log [started (code)]
 		set/any 'result do code
 		finished: now/precise
-		log [finished (difference finished started) (code)]
+		log [finished (code) (difference finished started)]
 		get/any 'result
 	]
 
@@ -125,9 +125,9 @@ source-tool: context [
 
 		all: func [] [
 
-			init
-			code
-			files
+			timing [init]
+			timing [code]
+			timing [files]
 
 			log [stats (body-of stats)]
 
