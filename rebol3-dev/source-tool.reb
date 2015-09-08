@@ -611,7 +611,7 @@ source-tool: context [
 						decode-lines post-notes {**} {  }
 						replace/all post-notes tab {    }
 
-						trim/tail post-notes
+						trim/auto post-notes
 					]
 
 					compose/only [
@@ -689,7 +689,7 @@ source-tool: context [
 						decode-lines post-notes {**} {  }
 						replace/all post-notes tab {    }
 
-						trim/tail post-notes
+						trim/auto post-notes
 					]
 
 					compose/only [
