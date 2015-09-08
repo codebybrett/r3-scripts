@@ -29,14 +29,9 @@
 
 #include "sys-core.h"
 
-/*******************************************************************************
-**
-**  Name: "Split_Time"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Split_Time: C
+//
 
 void Split_Time(REBI64 t, REB_TIMEF *tf)
 {
@@ -58,19 +53,15 @@ void Split_Time(REBI64 t, REB_TIMEF *tf)
 	tf->n = (REBCNT)n;
 }
 
-/*******************************************************************************
-**
-**  Name: "Join_Time"
-**  Summary: none
-**  Details: {
-**      !! A REB_TIMEF has lost the sign bit available on the REBI64
-**      used for times.  If you want to make it negative, you need
-**      pass in a flag here.  (Flag added to help document the
-**      issue, as previous code falsely tried to judge the sign
-**      of tf->h, which is always positive.)}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Join_Time: C
+//  
+//      !! A REB_TIMEF has lost the sign bit available on the REBI64
+//      used for times.  If you want to make it negative, you need
+//      pass in a flag here.  (Flag added to help document the
+//      issue, as previous code falsely tried to judge the sign
+//      of tf->h, which is always positive.)
+//
 
 REBI64 Join_Time(REB_TIMEF *tf, REBFLG neg)
 {
@@ -80,13 +71,13 @@ REBI64 Join_Time(REB_TIMEF *tf, REBFLG neg)
 	return neg ? -t : t;
 }
 
-/***********************************************************************
-**
-*/	const REBYTE *Scan_Time(const REBYTE *cp, REBCNT len, REBVAL *value)
-/*
-**		Scan string and convert to time.  Return zero if error.
-**
-***********************************************************************/
+//
+//  Scan_Time: C
+//  
+//      Scan string and convert to time.  Return zero if error.
+//
+
+const REBYTE *Scan_Time(const REBYTE *cp, REBCNT len, REBVAL *value)
 {
 	const REBYTE  *sp;
 	REBYTE	merid = FALSE;
@@ -147,14 +138,9 @@ REBI64 Join_Time(REB_TIMEF *tf, REBFLG neg)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Emit_Time"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Emit_Time: C
+//
 
 void Emit_Time(REB_MOLD *mold, const REBVAL *value)
 {
@@ -175,14 +161,9 @@ void Emit_Time(REB_MOLD *mold, const REBVAL *value)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Time"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Time: C
+//
 
 REBINT CT_Time(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -193,14 +174,11 @@ REBINT CT_Time(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Make_Time"
-**  Summary: none
-**  Details: "^/        Returns NO_TIME if error."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Make_Time: C
+//  
+//      Returns NO_TIME if error.
+//
 
 REBI64 Make_Time(REBVAL *val)
 {
@@ -267,14 +245,9 @@ REBI64 Make_Time(REBVAL *val)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "MT_Time"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_Time: C
+//
 
 REBFLG MT_Time(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -290,14 +263,11 @@ REBFLG MT_Time(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Cmp_Time"
-**  Summary: none
-**  Details: "^/    Given two times, compare them."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Cmp_Time: C
+//  
+//  Given two times, compare them.
+//
 
 REBINT Cmp_Time(const REBVAL *v1, const REBVAL *v2)
 {
@@ -312,14 +282,9 @@ REBINT Cmp_Time(const REBVAL *v1, const REBVAL *v2)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "PD_Time"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  PD_Time: C
+//
 
 REBINT PD_Time(REBPVS *pvs)
 {
@@ -398,14 +363,9 @@ REBINT PD_Time(REBPVS *pvs)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Time)
 {

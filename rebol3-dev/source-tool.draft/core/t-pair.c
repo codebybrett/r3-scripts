@@ -30,14 +30,9 @@
 #include "sys-core.h"
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Pair"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Pair: C
+//
 
 REBINT CT_Pair(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -51,14 +46,9 @@ REBINT CT_Pair(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "MT_Pair"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_Pair: C
+//
 
 REBFLG MT_Pair(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -90,14 +80,11 @@ REBFLG MT_Pair(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Cmp_Pair"
-**  Summary: none
-**  Details: "^/    Given two pairs, compare them."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Cmp_Pair: C
+//  
+//  Given two pairs, compare them.
+//
 
 REBINT Cmp_Pair(const REBVAL *t1, const REBVAL *t2)
 {
@@ -109,14 +96,9 @@ REBINT Cmp_Pair(const REBVAL *t1, const REBVAL *t2)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Min_Max_Pair"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Min_Max_Pair: C
+//
 
 void Min_Max_Pair(REBVAL *out, const REBVAL *a, const REBVAL *b, REBFLG maxed)
 {
@@ -145,14 +127,9 @@ void Min_Max_Pair(REBVAL *out, const REBVAL *a, const REBVAL *b, REBFLG maxed)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "PD_Pair"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  PD_Pair: C
+//
 
 REBINT PD_Pair(REBPVS *pvs)
 {
@@ -188,14 +165,9 @@ REBINT PD_Pair(REBPVS *pvs)
 	return PE_OK;
 }
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Pair)
 {

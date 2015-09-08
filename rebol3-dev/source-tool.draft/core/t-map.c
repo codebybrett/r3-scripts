@@ -56,14 +56,9 @@
 #define MIN_DICT 8 // size to switch to hashing
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Map"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Map: C
+//
 
 REBINT CT_Map(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -73,15 +68,15 @@ REBINT CT_Map(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/***********************************************************************
-**
-*/	static REBSER *Make_Map(REBINT size)
-/*
-**		Makes a MAP block (that holds both keys and values).
-**		Size is the number of key-value pairs.
-**		If size >= MIN_DICT, then a hash series is also created.
-**
-***********************************************************************/
+//
+//  Make_Map: C
+//  
+//      Makes a MAP block (that holds both keys and values).
+//      Size is the number of key-value pairs.
+//      If size >= MIN_DICT, then a hash series is also created.
+//
+
+static REBSER *Make_Map(REBINT size)
 {
 	REBSER *blk = Make_Array(size * 2);
 	REBSER *ser = 0;
@@ -94,23 +89,19 @@ REBINT CT_Map(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Find_Key"
-**  Summary: none
-**  Details: {
-**      Returns hash index (either the match or the new one).
-**      A return of zero is valid (as a hash index);
-**  
-**      Wide: width of record (normally 2, a key and a value).
-**  
-**      Modes:
-**          0 - search, return hash if found or not
-**          1 - search, return hash, else return -1 if not
-**          2 - search, return hash, else append value and return -1}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Find_Key: C
+//  
+//      Returns hash index (either the match or the new one).
+//      A return of zero is valid (as a hash index);
+//  
+//      Wide: width of record (normally 2, a key and a value).
+//  
+//      Modes:
+//          0 - search, return hash if found or not
+//          1 - search, return hash, else return -1 if not
+//          2 - search, return hash, else append value and return -1
+//
 
 REBINT Find_Key(REBSER *series, REBSER *hser, REBVAL *key, REBINT wide, REBCNT cased, REBYTE mode)
 {
@@ -176,15 +167,11 @@ REBINT Find_Key(REBSER *series, REBSER *hser, REBVAL *key, REBINT wide, REBCNT c
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Rehash_Hash"
-**  Summary: none
-**  Details: {
-**      Recompute the entire hash table. Table must be large enough.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Rehash_Hash: C
+//  
+//      Recompute the entire hash table. Table must be large enough.
+//
 
 static void Rehash_Hash(REBSER *series)
 {
@@ -205,19 +192,15 @@ static void Rehash_Hash(REBSER *series)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Find_Entry"
-**  Summary: none
-**  Details: {
-**      Try to find the entry in the map. If not found
-**      and val is SET, create the entry and store the key and
-**      val.
-**  
-**      RETURNS: the index to the VALUE or zero if there is none.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Find_Entry: C
+//  
+//      Try to find the entry in the map. If not found
+//      and val is SET, create the entry and store the key and
+//      val.
+//  
+//      RETURNS: the index to the VALUE or zero if there is none.
+//
 
 static REBCNT Find_Entry(REBSER *series, REBVAL *key, REBVAL *val)
 {
@@ -310,14 +293,9 @@ static REBCNT Find_Entry(REBSER *series, REBVAL *key, REBVAL *val)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Length_Map"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Length_Map: C
+//
 
 REBINT Length_Map(REBSER *series)
 {
@@ -332,14 +310,9 @@ REBINT Length_Map(REBSER *series)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "PD_Map"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  PD_Map: C
+//
 
 REBINT PD_Map(REBPVS *pvs)
 {
@@ -364,14 +337,9 @@ REBINT PD_Map(REBPVS *pvs)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Append_Map"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Append_Map: C
+//
 
 static void Append_Map(REBSER *ser, REBVAL *arg, REBCNT len)
 {
@@ -385,14 +353,9 @@ static void Append_Map(REBSER *ser, REBVAL *arg, REBCNT len)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "MT_Map"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_Map: C
+//
 
 REBFLG MT_Map(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -416,14 +379,14 @@ REBFLG MT_Map(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Map_To_Block(REBSER *mapser, REBINT what)
-/*
-**		mapser = series of the map
-**		what: -1 - words, +1 - values, 0 -both
-**
-***********************************************************************/
+//
+//  Map_To_Block: C
+//  
+//      mapser = series of the map
+//      what: -1 - words, +1 - values, 0 -both
+//
+
+REBSER *Map_To_Block(REBSER *mapser, REBINT what)
 {
 	REBVAL *val;
 	REBCNT cnt = 0;
@@ -451,14 +414,11 @@ REBFLG MT_Map(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Block_As_Map"
-**  Summary: none
-**  Details: "^/        Convert existing block to a map."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Block_As_Map: C
+//  
+//      Convert existing block to a map.
+//
 
 void Block_As_Map(REBSER *blk)
 {
@@ -471,11 +431,11 @@ void Block_As_Map(REBSER *blk)
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Map_To_Object(REBSER *mapser)
-/*
-***********************************************************************/
+//
+//  Map_To_Object: C
+//
+
+REBSER *Map_To_Object(REBSER *mapser)
 {
 	REBVAL *val;
 	REBCNT cnt = 0;
@@ -515,14 +475,9 @@ void Block_As_Map(REBSER *blk)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Map)
 {

@@ -1,66 +1,103 @@
 REBOL [
-	purpose: {Encode and Decode comment encoded Rebol blocks.}
+	purpose: {Encode and Decode comments encoded with Rebol blocks.}
 ]
 
-;
-; Note: Newline are encoded with {^/**  }
-;
 
+either system/version > 2.100.0 [; Rebol3
 
-grammar: context [
-	p1: p2: text: init-nl: none
+	load-next: funct [
+		{Load the next value. Return block with value and new position.}
+		string [string!]
+	] [
+		out: transcode/next to binary! string
+		out/2: skip string subtract length? string length? to string! out/2
+		out
+	] ; by @rgchris.
 
-	emit: [p2: (append text copy/part p1 p2)]
-	wsp: compose ["  "]
-	clean-line: [{**} opt wsp newline]
-	line: [{**} wsp p1: thru newline emit]
-	rule: [ (init-nl: false)
-		opt [clean-line (init-nl: true)]
-		any line
-		opt clean-line
+] [; Rebol2
+
+	load-next: funct [
+		{Load the next value. Return block with value and new position.}
+		string [string!]
+	] [
+		load/next string
 	]
 ]
 
-load-comment: func [
-	{Load next block from comment lines.}
+decode-lines: funct [
+	{Decode string from prefixed lines (e.g. comments).}
 	string [string!]
-	/local p1 p2 text clean-line emit wsp block
+	line-prefix [string!] {Usually "**" or "//".}
+	indent [string!] {Usually "  ".}
 ] [
-
-	grammar/text: clear copy string
-
-	if parse/all string grammar/rule [
-		block: load/all grammar/text
-		if grammar/init-nl [new-line block true]
-		block
+	if not parse/all string [any [line-prefix thru newline]][
+		do make error! reform [{decode-lines expects each line to begin with} mold line-prefix { and finish with a newline.}]
 	]
+	insert string newline
+	replace/all string join newline line-prefix newline
+	if not empty? indent [
+		replace/all string join newline indent newline
+	]
+	remove string
+	remove back tail string
+	string
 ]
 
-mold-comment: func [
-	{Mold block into comment lines.}
-	block [block!]
+encode-lines: func [
+	{Encode block into prefixed lines (e.g. comments).}
+	string [string!]
+	line-prefix [string!] {Usually "**" or "//".}
+	indent [string!] {Usually "  ".}
 	/local text bol pos
 ] [
 
 	; Note: Preserves newline formatting of the block.
 
-	bol: {**} indent: {  }
+	; Encode newlines.
+	replace/all string newline rejoin [newline line-prefix indent]
 
-	string: mold-contents block
-
-	replace/all string newline rejoin [newline bol indent]
-
-	pos: insert string bol
+	; Indent head if original string did not start with a newline.
+	pos: insert string line-prefix
 	if not equal? newline pos/1 [insert pos indent]
 
+	; Clear indent from tail if present.
 	if indent = pos: skip tail string 0 - length? indent [clear pos]
 	append string newline
 
 	string
 ]
 
+load-until-blank: funct [
+	{Load rebol values from string until double newline.}
+	string [string!]
+	/next {Return values and next position.}
+][
+
+	wsp: compose [some (charset { ^-})]
+
+	rebol-value: parsing-at x [
+		res: any [attempt [load-next x] []]
+		if not empty? res [second res]
+	]
+
+	terminator: [opt wsp newline opt wsp newline]
+
+	not-terminator: parsing-unless terminator
+	; Could be replaced with Not in Rebol 3 parse.
+
+	rule: [
+		some [not-terminator rebol-value]
+		opt newline position: to end
+	]
+
+	if parse/all string rule [
+		values: load copy/part string position
+		reduce [values position]
+	]
+]
+
 mold-contents: func [
-	{Mold block without the outer brakets (a little different to MOLD/ONLY).}
+	{Mold block without the outer brackets (a little different to MOLD/ONLY).}
 	block [block! paren!]
 	/local string bol
 ][

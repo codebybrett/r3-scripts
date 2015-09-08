@@ -30,14 +30,9 @@
 #include "sys-core.h"
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Port"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Port: C
+//
 
 REBINT CT_Port(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -46,14 +41,9 @@ REBINT CT_Port(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "MT_Port"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_Port: C
+//
 
 REBFLG MT_Port(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -61,14 +51,9 @@ REBFLG MT_Port(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Port)
 {

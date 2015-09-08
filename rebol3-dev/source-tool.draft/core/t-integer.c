@@ -32,14 +32,9 @@
 #include "sys-int-funcs.h"
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Integer"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Integer: C
+//
 
 REBINT CT_Integer(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -49,14 +44,9 @@ REBINT CT_Integer(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Integer)
 {

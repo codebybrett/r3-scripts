@@ -118,16 +118,12 @@ static struct digest {
 };
 
 
-/*******************************************************************************
-**
-**  Name: "ajoin"
-**  Summary: {Reduces and joins a block of values into a new string.}
-**  Details: none
-**  Spec: [
-**      <1> block
-**  ]
-**
-*******************************************************************************/
+//
+//  ajoin: native [
+//      {Reduces and joins a block of values into a new string.}
+//      block [block!]
+//  ]
+//
 
 REBNATIVE(ajoin)
 {
@@ -151,42 +147,38 @@ REBNATIVE(ajoin)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "checksum"
-**  Summary: "Computes a checksum, CRC, or hash."
-**  Details: {
-**      Computes checksum or hash value.
-**  
-**      Note: Currently BINARY only.
-**  
-**  Args:
-**  
-**      data [any-string!] {Data to checksum}
-**      /part limit
-**      /tcp {Returns an Internet TCP 16-bit checksum.}
-**      /secure {Returns a cryptographically secure checksum.}
-**      /hash {Returns a hash value}
-**      size [integer!] {Size of the hash table}
-**      /method {Method to use}
-**      word [word!] {Method: SHA1 MD5}
-**      /key {Returns keyed HMAC value}
-**      key-value [any-string!] {Key to use}}
-**  Spec: [
-**      <1> data
-**      <2> /part
-**      <3> limit
-**      <4> /tcp
-**      <5> /secure
-**      <6> /hash
-**      <7> size
-**      <8> /method
-**      <9> word
-**      <10> /key
-**      <11> key-value
-**  ]
-**
-*******************************************************************************/
+//
+//  checksum: native [
+//      "Computes a checksum, CRC, or hash."
+//      data [binary!] "Bytes to checksum"
+//      /part limit "Length of data"
+//      /tcp "Returns an Internet TCP 16-bit checksum"
+//      /secure "Returns a cryptographically secure checksum"
+//      /hash "Returns a hash value"
+//      size [integer!] "Size of the hash table"
+//      /method "Method to use"
+//      word [word!] "Methods: SHA1 MD5 CRC32"
+//      /key "Returns keyed HMAC value"
+//      key-value [any-string!] "Key to use"
+//  ]
+//  
+//      Computes checksum or hash value.
+//  
+//      Note: Currently BINARY only.
+//  
+//  Args:
+//  
+//      data [any-string!] {Data to checksum}
+//      /part limit
+//      /tcp {Returns an Internet TCP 16-bit checksum.}
+//      /secure {Returns a cryptographically secure checksum.}
+//      /hash {Returns a hash value}
+//      size [integer!] {Size of the hash table}
+//      /method {Method to use}
+//      word [word!] {Method: SHA1 MD5}
+//      /key {Returns keyed HMAC value}
+//      key-value [any-string!] {Key to use}
+//
 
 REBNATIVE(checksum)
 {
@@ -306,19 +298,16 @@ REBNATIVE(checksum)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "compress"
-**  Summary: "Compresses a string series and returns it."
-**  Details: "^/        Binary and string (gets UTF8 converted)."
-**  Spec: [
-**      <1> data
-**      <2> /part
-**      <3> limit
-**      <4> /gzip
-**  ]
-**
-*******************************************************************************/
+//
+//  compress: native [
+//      "Compresses a string series and returns it."
+//      data [binary! string!] "If string, it will be UTF8 encoded"
+//      /part limit "Length of data (elements)"
+//      /gzip "Use GZIP checksum"
+//  ]
+//  
+//      Binary and string (gets UTF8 converted).
+//
 
 REBNATIVE(compress)
 {
@@ -336,21 +325,17 @@ REBNATIVE(compress)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "decompress"
-**  Summary: "Decompresses data. Result is binary."
-**  Details: "^/        Binary only."
-**  Spec: [
-**      <1> data
-**      <2> /part
-**      <3> lim
-**      <4> /gzip
-**      <5> /limit
-**      <6> size
-**  ]
-**
-*******************************************************************************/
+//
+//  decompress: native [
+//      "Decompresses data. Result is binary."
+//      data [binary!] "Data to decompress"
+//      /part lim "Length of compressed data (must match end marker)"
+//      /gzip "Use GZIP checksum"
+//      /limit size "Error out if result is larger than this"
+//  ]
+//  
+//      Binary only.
+//
 
 REBNATIVE(decompress)
 {
@@ -378,19 +363,14 @@ REBNATIVE(decompress)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "construct"
-**  Summary: "Creates an object with scant (safe) evaluation."
-**  Details: none
-**  Spec: [
-**      <1> block
-**      <2> /with
-**      <3> object
-**      <4> /only
-**  ]
-**
-*******************************************************************************/
+//
+//  construct: native [
+//      "Creates an object with scant (safe) evaluation."
+//      block [block! string! binary!] "Specification (modified)"
+//      /with "Default object" object [object!]
+//      /only "Values are kept as-is"
+//  ]
+//
 
 REBNATIVE(construct)
 {
@@ -422,21 +402,18 @@ REBNATIVE(construct)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "debase"
-**  Summary: {Decodes binary-coded string (BASE-64 default) to binary value.}
-**  Details: {
-**      Converts a binary base representation string to binary.
-**      Input is a STRING, but BINARY is also accepted.
-**      BINARY is returned. We don't know the encoding.}
-**  Spec: [
-**      <1> value
-**      <2> /base
-**      <3> base-value
-**  ]
-**
-*******************************************************************************/
+//
+//  debase: native [
+//      {Decodes binary-coded string (BASE-64 default) to binary value.}
+//      value [binary! string!] "The string to decode"
+//      /base "Binary base to use"
+//      base-value [integer!] "The base to convert from: 64, 16, or 2"
+//  ]
+//  
+//      Converts a binary base representation string to binary.
+//      Input is a STRING, but BINARY is also accepted.
+//      BINARY is returned. We don't know the encoding.
+//
 
 REBNATIVE(debase)
 {
@@ -456,20 +433,17 @@ REBNATIVE(debase)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "enbase"
-**  Summary: {Encodes a string into a binary-coded string (BASE-64 default).}
-**  Details: {
-**      Converts a binary to a binary base representation STRING.
-**      Input is BINARY or STRING (UTF8 encoded).}
-**  Spec: [
-**      <1> value
-**      <2> /base
-**      <3> base-value
-**  ]
-**
-*******************************************************************************/
+//
+//  enbase: native [
+//      {Encodes a string into a binary-coded string (BASE-64 default).}
+//      value [binary! string!] "If string, will be UTF8 encoded"
+//      /base "Binary base to use"
+//      base-value [integer!] "The base to convert to: 64, 16, or 2"
+//  ]
+//  
+//      Converts a binary to a binary base representation STRING.
+//      Input is BINARY or STRING (UTF8 encoded).
+//
 
 REBNATIVE(enbase)
 {
@@ -503,18 +477,16 @@ REBNATIVE(enbase)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "decloak"
-**  Summary: {Decodes a binary string scrambled previously by encloak.}
-**  Details: "^/        Input is BINARY only. Modifies input."
-**  Spec: [
-**      <1> data
-**      <2> key
-**      <3> /with
-**  ]
-**
-*******************************************************************************/
+//
+//  decloak: native [
+//      {Decodes a binary string scrambled previously by encloak.}
+//      data [binary!] "Binary series to descramble (modified)"
+//      key [string! binary! integer!] "Encryption key or pass phrase"
+//      /with "Use a string! key as-is (do not generate hash)"
+//  ]
+//  
+//      Input is BINARY only. Modifies input.
+//
 
 REBNATIVE(decloak)
 {
@@ -528,18 +500,16 @@ REBNATIVE(decloak)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "encloak"
-**  Summary: "Scrambles a binary string based on a key."
-**  Details: "^/        Input is BINARY only. Modifies input."
-**  Spec: [
-**      <1> data
-**      <2> key
-**      <3> /with
-**  ]
-**
-*******************************************************************************/
+//
+//  encloak: native [
+//      "Scrambles a binary string based on a key."
+//      data [binary!] "Binary series to scramble (modified)"
+//      key [string! binary! integer!] "Encryption key or pass phrase"
+//      /with "Use a string! key as-is (do not generate hash)"
+//  ]
+//  
+//      Input is BINARY only. Modifies input.
+//
 
 REBNATIVE(encloak)
 {
@@ -553,16 +523,14 @@ REBNATIVE(encloak)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "dehex"
-**  Summary: "Converts URL-style hex encoded (%xx) strings."
-**  Details: "^/        Works for any string."
-**  Spec: [
-**      <1> value
-**  ]
-**
-*******************************************************************************/
+//
+//  dehex: native [
+//      "Converts URL-style hex encoded (%xx) strings."
+//      value [any-string!] "The string to dehex"
+//  ]
+//  
+//      Works for any string.
+//
 
 REBNATIVE(dehex)
 {
@@ -610,18 +578,15 @@ REBNATIVE(dehex)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "deline"
-**  Summary: {Converts string terminators to standard format, e.g. CRLF to LF.}
-**  Details: {
-**      Convert CR or CRLF strings to just LF strings.}
-**  Spec: [
-**      <1> string
-**      <2> /lines
-**  ]
-**
-*******************************************************************************/
+//
+//  deline: native [
+//      {Converts string terminators to standard format, e.g. CRLF to LF.}
+//      string [any-string!] "(modified)"
+//      /lines {Return block of lines (works for LF, CR, CR-LF endings) (no modify)}
+//  ]
+//  
+//      Convert CR or CRLF strings to just LF strings.
+//
 
 REBNATIVE(deline)
 {
@@ -648,16 +613,14 @@ REBNATIVE(deline)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "enline"
-**  Summary: {Converts string terminators to native OS format, e.g. LF to CRLF.}
-**  Details: "^/        Convert LF to CRLF or native format."
-**  Spec: [
-**      <1> series
-**  ]
-**
-*******************************************************************************/
+//
+//  enline: native [
+//      {Converts string terminators to native OS format, e.g. LF to CRLF.}
+//      series [any-string! block!] "(modified)"
+//  ]
+//  
+//      Convert LF to CRLF or native format.
+//
 
 REBNATIVE(enline)
 {
@@ -675,18 +638,16 @@ REBNATIVE(enline)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "entab"
-**  Summary: "Converts spaces to tabs (default tab size is 4)."
-**  Details: "^/        Modifies input."
-**  Spec: [
-**      <1> string
-**      <2> /size
-**      <3> number
-**  ]
-**
-*******************************************************************************/
+//
+//  entab: native [
+//      "Converts spaces to tabs (default tab size is 4)."
+//      string [any-string!] "(modified)"
+//      /size "Specifies the number of spaces per tab"
+//      number [integer!]
+//  ]
+//  
+//      Modifies input.
+//
 
 REBNATIVE(entab)
 {
@@ -709,18 +670,14 @@ REBNATIVE(entab)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "detab"
-**  Summary: "Converts tabs to spaces (default tab size is 4)."
-**  Details: none
-**  Spec: [
-**      <1> string
-**      <2> /size
-**      <3> number
-**  ]
-**
-*******************************************************************************/
+//
+//  detab: native [
+//      "Converts tabs to spaces (default tab size is 4)."
+//      string [any-string!] "(modified)"
+//      /size "Specifies the number of spaces per tab"
+//      number [integer!]
+//  ]
+//
 
 REBNATIVE(detab)
 {
@@ -743,18 +700,14 @@ REBNATIVE(detab)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "lowercase"
-**  Summary: "Converts string of characters to lowercase."
-**  Details: none
-**  Spec: [
-**      <1> string
-**      <2> /part
-**      <3> limit
-**  ]
-**
-*******************************************************************************/
+//
+//  lowercase: native [
+//      "Converts string of characters to lowercase."
+//      string [any-string! char!] "(modified if series)"
+//      /part "Limits to a given length or position"
+//      limit [number! any-string!]
+//  ]
+//
 
 REBNATIVE(lowercase)
 {
@@ -763,18 +716,14 @@ REBNATIVE(lowercase)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "uppercase"
-**  Summary: "Converts string of characters to uppercase."
-**  Details: none
-**  Spec: [
-**      <1> string
-**      <2> /part
-**      <3> limit
-**  ]
-**
-*******************************************************************************/
+//
+//  uppercase: native [
+//      "Converts string of characters to uppercase."
+//      string [any-string! char!] "(modified if series)"
+//      /part "Limits to a given length or position"
+//      limit [number! any-string!]
+//  ]
+//
 
 REBNATIVE(uppercase)
 {
@@ -783,18 +732,14 @@ REBNATIVE(uppercase)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "to_hex"
-**  Summary: {Converts numeric value to a hex issue! datatype (with leading # and 0's).}
-**  Details: none
-**  Spec: [
-**      <1> value
-**      <2> /size
-**      <3> len
-**  ]
-**
-*******************************************************************************/
+//
+//  to-hex: native [
+//      {Converts numeric value to a hex issue! datatype (with leading # and 0's).}
+//      value [integer! tuple!] "Value to be converted"
+//      /size "Specify number of hex digits in result"
+//      len [integer!]
+//  ]
+//
 
 REBNATIVE(to_hex)
 {
@@ -867,16 +812,12 @@ REBNATIVE(to_hex)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "find_script"
-**  Summary: {Find a script header within a binary string. Returns starting position.}
-**  Details: none
-**  Spec: [
-**      <1> script
-**  ]
-**
-*******************************************************************************/
+//
+//  find-script: native [
+//      {Find a script header within a binary string. Returns starting position.}
+//      script [binary!]
+//  ]
+//
 
 REBNATIVE(find_script)
 {
@@ -899,16 +840,12 @@ REBNATIVE(find_script)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "utfq"
-**  Summary: {Returns UTF BOM (byte order marker) encoding; + for BE, - for LE.}
-**  Details: none
-**  Spec: [
-**      <1> data
-**  ]
-**
-*******************************************************************************/
+//
+//  utf?: native [
+//      {Returns UTF BOM (byte order marker) encoding; + for BE, - for LE.}
+//      data [binary!]
+//  ]
+//
 
 REBNATIVE(utfq)
 {
@@ -918,18 +855,14 @@ REBNATIVE(utfq)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "invalid_utfq"
-**  Summary: {Checks UTF encoding; if correct, returns none else position of error.}
-**  Details: none
-**  Spec: [
-**      <1> data
-**      <2> /utf
-**      <3> num
-**  ]
-**
-*******************************************************************************/
+//
+//  invalid-utf?: native [
+//      {Checks UTF encoding; if correct, returns none else position of error.}
+//      data [binary!]
+//      /utf "Check encodings other than UTF-8"
+//      num [integer!] "Bit size - positive for BE negative for LE"
+//  ]
+//
 
 REBNATIVE(invalid_utfq)
 {
@@ -945,81 +878,77 @@ REBNATIVE(invalid_utfq)
 
 
 #ifndef NDEBUG
-/***********************************************************************
-**
-*/	REBYTE *b_cast_(char *s)
-/*
-**		Debug-only version of b_cast() that does type checking.
-**		If you get a complaint you probably meant to use cb_cast().
-**
-***********************************************************************/
+//
+//  b_cast_: C
+//  
+//      Debug-only version of b_cast() that does type checking.
+//      If you get a complaint you probably meant to use cb_cast().
+//
+
+REBYTE *b_cast_(char *s)
 {
 	return cast(REBYTE *, s);
 }
 
 
-/***********************************************************************
-**
-*/	const REBYTE *cb_cast_(const char *s)
-/*
-**		Debug-only version of cb_cast() that does type checking.
-**		If you get a complaint you probably meant to use b_cast().
-**
-***********************************************************************/
+//
+//  cb_cast_: C
+//  
+//      Debug-only version of cb_cast() that does type checking.
+//      If you get a complaint you probably meant to use b_cast().
+//
+
+const REBYTE *cb_cast_(const char *s)
 {
 	return cast(const REBYTE *, s);
 }
 
 
-/***********************************************************************
-**
-*/	char *s_cast_(REBYTE *s)
-/*
-**		Debug-only version of s_cast() that does type checking.
-**		If you get a complaint you probably meant to use cs_cast().
-**
-***********************************************************************/
+//
+//  s_cast_: C
+//  
+//      Debug-only version of s_cast() that does type checking.
+//      If you get a complaint you probably meant to use cs_cast().
+//
+
+char *s_cast_(REBYTE *s)
 {
 	return cast(char*, s);
 }
 
 
-/***********************************************************************
-**
-*/	const char *cs_cast_(const REBYTE *s)
-/*
-**		Debug-only version of cs_cast() that does type checking.
-**		If you get a complaint you probably meant to use s_cast().
-**
-***********************************************************************/
+//
+//  cs_cast_: C
+//  
+//      Debug-only version of cs_cast() that does type checking.
+//      If you get a complaint you probably meant to use s_cast().
+//
+
+const char *cs_cast_(const REBYTE *s)
 {
 	return cast(const char *, s);
 }
 
 
-/***********************************************************************
-**
-*/	REBYTE *COPY_BYTES_(REBYTE *dest, const REBYTE *src, size_t count)
-/*
-**		Debug-only REBYTE-checked substitute for COPY_BYTES macro
-**		If you meant characters, consider if you wanted strncpy()
-**
-***********************************************************************/
+//
+//  COPY_BYTES_: C
+//  
+//      Debug-only REBYTE-checked substitute for COPY_BYTES macro
+//      If you meant characters, consider if you wanted strncpy()
+//
+
+REBYTE *COPY_BYTES_(REBYTE *dest, const REBYTE *src, size_t count)
 {
 	return b_cast(strncpy(s_cast(dest), cs_cast(src), count));
 }
 
 
-/*******************************************************************************
-**
-**  Name: "LEN_BYTES_"
-**  Summary: none
-**  Details: {
-**      Debug-only REBYTE-checked substitute for LEN_BYTES macro
-**      If you meant characters, consider if you wanted strlen()}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  LEN_BYTES_: C
+//  
+//      Debug-only REBYTE-checked substitute for LEN_BYTES macro
+//      If you meant characters, consider if you wanted strlen()
+//
 
 size_t LEN_BYTES_(const REBYTE *str)
 {
@@ -1027,16 +956,12 @@ size_t LEN_BYTES_(const REBYTE *str)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "COMPARE_BYTES_"
-**  Summary: none
-**  Details: {
-**      Debug-only REBYTE-checked function for COMPARE_BYTES macro
-**      If you meant characters, consider if you wanted strcmp()}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  COMPARE_BYTES_: C
+//  
+//      Debug-only REBYTE-checked function for COMPARE_BYTES macro
+//      If you meant characters, consider if you wanted strcmp()
+//
 
 int COMPARE_BYTES_(const REBYTE *lhs, const REBYTE *rhs)
 {
@@ -1044,15 +969,15 @@ int COMPARE_BYTES_(const REBYTE *lhs, const REBYTE *rhs)
 }
 
 
-/***********************************************************************
-**
-*/	REBYTE *APPEND_BYTES_LIMIT_(REBYTE *dest, const REBYTE *src, size_t max)
-/*
-**		REBYTE-checked function for APPEND_BYTES_LIMIT macro in Debug
-**		If you meant characters, you'll have to use strncat()/strlen()
-**		(there's no single <string.h> entry point for this purpose)
-**
-***********************************************************************/
+//
+//  APPEND_BYTES_LIMIT_: C
+//  
+//      REBYTE-checked function for APPEND_BYTES_LIMIT macro in Debug
+//      If you meant characters, you'll have to use strncat()/strlen()
+//      (there's no single <string.h> entry point for this purpose)
+//
+
+REBYTE *APPEND_BYTES_LIMIT_(REBYTE *dest, const REBYTE *src, size_t max)
 {
 	return b_cast(strncat(
 		s_cast(dest), cs_cast(src), MAX(max - LEN_BYTES(dest) - 1, 0)
@@ -1060,13 +985,13 @@ int COMPARE_BYTES_(const REBYTE *lhs, const REBYTE *rhs)
 }
 
 
-/***********************************************************************
-**
-*/	REBCHR *OS_STRNCPY_(REBCHR *dest, const REBCHR *src, size_t count)
-/*
-**		Debug-only REBCHR-checked substitute for OS_STRNCPY macro
-**
-***********************************************************************/
+//
+//  OS_STRNCPY_: C
+//  
+//      Debug-only REBCHR-checked substitute for OS_STRNCPY macro
+//
+
+REBCHR *OS_STRNCPY_(REBCHR *dest, const REBCHR *src, size_t count)
 {
 #ifdef OS_WIDE_CHAR
 	return cast(REBCHR*,
@@ -1086,13 +1011,13 @@ int COMPARE_BYTES_(const REBYTE *lhs, const REBYTE *rhs)
 }
 
 
-/***********************************************************************
-**
-*/	REBCHR *OS_STRNCAT_(REBCHR *dest, const REBCHR *src, size_t max)
-/*
-**		Debug-only REBCHR-checked function for OS_STRNCAT macro
-**
-***********************************************************************/
+//
+//  OS_STRNCAT_: C
+//  
+//      Debug-only REBCHR-checked function for OS_STRNCAT macro
+//
+
+REBCHR *OS_STRNCAT_(REBCHR *dest, const REBCHR *src, size_t max)
 {
 #ifdef OS_WIDE_CHAR
 	return cast(REBCHR*,
@@ -1112,15 +1037,11 @@ int COMPARE_BYTES_(const REBYTE *lhs, const REBYTE *rhs)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "OS_STRNCMP_"
-**  Summary: none
-**  Details: {
-**      Debug-only REBCHR-checked substitute for OS_STRNCMP macro}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  OS_STRNCMP_: C
+//  
+//      Debug-only REBCHR-checked substitute for OS_STRNCMP macro
+//
 
 int OS_STRNCMP_(const REBCHR *lhs, const REBCHR *rhs, size_t max)
 {
@@ -1132,15 +1053,11 @@ int OS_STRNCMP_(const REBCHR *lhs, const REBCHR *rhs, size_t max)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "OS_STRLEN_"
-**  Summary: none
-**  Details: {
-**      Debug-only REBCHR-checked substitute for OS_STRLEN macro}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  OS_STRLEN_: C
+//  
+//      Debug-only REBCHR-checked substitute for OS_STRLEN macro
+//
 
 size_t OS_STRLEN_(const REBCHR *str)
 {
@@ -1152,13 +1069,13 @@ size_t OS_STRLEN_(const REBCHR *str)
 }
 
 
-/***********************************************************************
-**
-*/	REBCHR *OS_STRCHR_(const REBCHR *str, REBCNT ch)
-/*
-**		Debug-only REBCHR-checked function for OS_STRCHR macro
-**
-***********************************************************************/
+//
+//  OS_STRCHR_: C
+//  
+//      Debug-only REBCHR-checked function for OS_STRCHR macro
+//
+
+REBCHR *OS_STRCHR_(const REBCHR *str, REBCNT ch)
 {
 #ifdef OS_WIDE_CHAR
 	return cast(REBCHR*, wcschr(cast(const wchar_t*, str), ch));
@@ -1170,15 +1087,11 @@ size_t OS_STRLEN_(const REBCHR *str)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "OS_MAKE_CH_"
-**  Summary: none
-**  Details: {
-**      Debug-only REBCHR-checked function for OS_MAKE_CH macro}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  OS_MAKE_CH_: C
+//  
+//      Debug-only REBCHR-checked function for OS_MAKE_CH macro
+//
 
 REBCHR OS_MAKE_CH_(REBCNT ch)
 {

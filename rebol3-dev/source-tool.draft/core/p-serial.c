@@ -33,14 +33,9 @@
 
 #define MAX_SERIAL_DEV_PATH 128
 
-/*******************************************************************************
-**
-**  Name: "Serial_Actor"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Serial_Actor: C
+//
 
 static REB_R Serial_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
@@ -244,14 +239,9 @@ static REB_R Serial_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Serial_Scheme"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Serial_Scheme: C
+//
 
 void Init_Serial_Scheme(void)
 {

@@ -36,6 +36,7 @@ test.source-tool: func [
 
 		boot.natives.file: src-folder/boot/natives.r
 		logfile: clean-path test-folder/source-tool.log.txt
+;;		debug: :log
 
 		attempt [delete logfile]
 
@@ -74,7 +75,7 @@ test.source-tool: func [
 
 		[{Roundtrip files should not have changed from conversion.}
 			all map-each file read conversion.folder [
-				equal? read conversion.folder/:file roundtrip.folder/:file
+				equal? read conversion.folder/:file read roundtrip.folder/:file
 			]
 		]
 	]

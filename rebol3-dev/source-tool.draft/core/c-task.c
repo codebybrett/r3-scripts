@@ -59,14 +59,9 @@
 
 #include "sys-core.h"
 
-/*******************************************************************************
-**
-**  Name: "Launch_Task"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Launch_Task: C
+//
 
 static void Launch_Task(void *task_rebval)
 {
@@ -89,14 +84,9 @@ static void Launch_Task(void *task_rebval)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Do_Task"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Do_Task: C
+//
 
 void Do_Task(REBVAL *task)
 {

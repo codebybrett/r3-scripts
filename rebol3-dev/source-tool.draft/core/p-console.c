@@ -39,14 +39,9 @@
 #define MAKE_OS_BUFFER Make_Binary
 #endif
 
-/*******************************************************************************
-**
-**  Name: "Console_Actor"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Console_Actor: C
+//
 
 static REB_R Console_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
@@ -141,14 +136,9 @@ static REB_R Console_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Console_Scheme"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Console_Scheme: C
+//
 
 void Init_Console_Scheme(void)
 {

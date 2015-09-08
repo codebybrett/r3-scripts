@@ -31,15 +31,11 @@
 
 
 
-/*******************************************************************************
-**
-**  Name: "Extend_Series"
-**  Summary: none
-**  Details: {
-**      Extend a series at its end without affecting its tail index.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Extend_Series: C
+//  
+//      Extend a series at its end without affecting its tail index.
+//
 
 void Extend_Series(REBSER *series, REBCNT delta)
 {
@@ -49,17 +45,13 @@ void Extend_Series(REBSER *series, REBCNT delta)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Insert_Series"
-**  Summary: none
-**  Details: {
-**      Insert a series of values (bytes, longs, reb-vals) into the
-**      series at the given index.  Expand it if necessary.  Does
-**      not add a terminator to tail.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Insert_Series: C
+//  
+//      Insert a series of values (bytes, longs, reb-vals) into the
+//      series at the given index.  Expand it if necessary.  Does
+//      not add a terminator to tail.
+//
 
 REBCNT Insert_Series(REBSER *series, REBCNT index, const REBYTE *data, REBCNT len)
 {
@@ -72,19 +64,15 @@ REBCNT Insert_Series(REBSER *series, REBCNT index, const REBYTE *data, REBCNT le
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Append_Series"
-**  Summary: none
-**  Details: {
-**      Append value(s) onto the tail of a series.  The len is
-**      the number of units (bytes, REBVALS, etc.) of the data,
-**      and does not include the terminator (which will be added).
-**      The new tail position will be returned as the result.
-**      A terminator will be added to the end of the appended data.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Append_Series: C
+//  
+//      Append value(s) onto the tail of a series.  The len is
+//      the number of units (bytes, REBVALS, etc.) of the data,
+//      and does not include the terminator (which will be added).
+//      The new tail position will be returned as the result.
+//      A terminator will be added to the end of the appended data.
+//
 
 void Append_Series(REBSER *series, const REBYTE *data, REBCNT len)
 {
@@ -97,19 +85,15 @@ void Append_Series(REBSER *series, const REBYTE *data, REBCNT len)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Append_Mem_Extra"
-**  Summary: none
-**  Details: {
-**      An optimized function for appending raw memory bytes to
-**      a byte-sized series. The series will be expanded if room
-**      is needed. A zero terminator will be added at the tail.
-**      The extra size will be assured in the series, but is not
-**      part of the appended length. (Allows adding additional bytes.)}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Append_Mem_Extra: C
+//  
+//      An optimized function for appending raw memory bytes to
+//      a byte-sized series. The series will be expanded if room
+//      is needed. A zero terminator will be added at the tail.
+//      The extra size will be assured in the series, but is not
+//      part of the appended length. (Allows adding additional bytes.)
+//
 
 void Append_Mem_Extra(REBSER *series, const REBYTE *data, REBCNT len, REBCNT extra)
 {
@@ -128,25 +112,25 @@ void Append_Mem_Extra(REBSER *series, const REBYTE *data, REBCNT len, REBCNT ext
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Copy_Sequence(REBSER *source)
-/*
-**		Copy any series that *isn't* an "array" (such as STRING!,
-**		BINARY!, BITSET!, VECTOR!...).  Includes the terminator.
-**
-**		Use Copy_Array routines (which specify Shallow, Deep, etc.) for
-**		greater detail needed when expressing intent for Rebol Arrays.
-**
-**		Note: No suitable name for "non-array-series" has been picked.
-**		"Sequence" is used for now because Copy_Non_Array() doesn't
-**		look good and lots of things aren't "Rebol Arrays" that aren't
-**		series.  The main idea was just to get rid of the generic
-**		Copy_Series() routine, which doesn't call any attention
-**		to the importance of stating one's intentions specifically
-**		about semantics when copying an array.
-**
-***********************************************************************/
+//
+//  Copy_Sequence: C
+//  
+//      Copy any series that *isn't* an "array" (such as STRING!,
+//      BINARY!, BITSET!, VECTOR!...).  Includes the terminator.
+//  
+//      Use Copy_Array routines (which specify Shallow, Deep, etc.) for
+//      greater detail needed when expressing intent for Rebol Arrays.
+//  
+//      Note: No suitable name for "non-array-series" has been picked.
+//      "Sequence" is used for now because Copy_Non_Array() doesn't
+//      look good and lots of things aren't "Rebol Arrays" that aren't
+//      series.  The main idea was just to get rid of the generic
+//      Copy_Series() routine, which doesn't call any attention
+//      to the importance of stating one's intentions specifically
+//      about semantics when copying an array.
+//
+
+REBSER *Copy_Sequence(REBSER *source)
 {
 	REBCNT len = source->tail + 1;
 	REBSER *series = Make_Series(len, SERIES_WIDE(source), MKS_NONE);
@@ -159,17 +143,17 @@ void Append_Mem_Extra(REBSER *series, const REBYTE *data, REBCNT len, REBCNT ext
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Copy_Sequence_At_Len(REBSER *source, REBCNT index, REBCNT len)
-/*
-**		Copy a subseries out of a series that is not an array.
-**		Includes the terminator for it.
-**
-**		Use Copy_Array routines (which specify Shallow, Deep, etc.) for
-**		greater detail needed when expressing intent for Rebol Arrays.
-**
-***********************************************************************/
+//
+//  Copy_Sequence_At_Len: C
+//  
+//      Copy a subseries out of a series that is not an array.
+//      Includes the terminator for it.
+//  
+//      Use Copy_Array routines (which specify Shallow, Deep, etc.) for
+//      greater detail needed when expressing intent for Rebol Arrays.
+//
+
+REBSER *Copy_Sequence_At_Len(REBSER *source, REBCNT index, REBCNT len)
 {
 	REBSER *series = Make_Series(len + 1, SERIES_WIDE(source), MKS_NONE);
 
@@ -185,14 +169,14 @@ void Append_Mem_Extra(REBSER *series, const REBYTE *data, REBCNT len, REBCNT ext
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Copy_Sequence_At_Position(const REBVAL *position)
-/*
-**		Copy a non-array series from its value structure, using the
-**		value's index as the location to start copying the data.
-**
-***********************************************************************/
+//
+//  Copy_Sequence_At_Position: C
+//  
+//      Copy a non-array series from its value structure, using the
+//      value's index as the location to start copying the data.
+//
+
+REBSER *Copy_Sequence_At_Position(const REBVAL *position)
 {
 	return Copy_Sequence_At_Len(
 		VAL_SERIES(position), VAL_INDEX(position), VAL_LEN(position)
@@ -200,16 +184,12 @@ void Append_Mem_Extra(REBSER *series, const REBYTE *data, REBCNT len, REBCNT ext
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Remove_Series"
-**  Summary: none
-**  Details: {
-**      Remove a series of values (bytes, longs, reb-vals) from the
-**      series at the given index.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Remove_Series: C
+//  
+//      Remove a series of values (bytes, longs, reb-vals) from the
+//      series at the given index.
+//
 
 void Remove_Series(REBSER *series, REBCNT index, REBINT len)
 {
@@ -280,14 +260,11 @@ void Remove_Series(REBSER *series, REBCNT index, REBINT len)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Remove_Last"
-**  Summary: none
-**  Details: "^/        Remove last value from a series."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Remove_Last: C
+//  
+//      Remove last value from a series.
+//
 
 void Remove_Last(REBSER *series)
 {
@@ -297,14 +274,11 @@ void Remove_Last(REBSER *series)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Reset_Bias"
-**  Summary: none
-**  Details: "^/        Reset series bias."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Reset_Bias: C
+//  
+//      Reset series bias.
+//
 
 void Reset_Bias(REBSER *series)
 {
@@ -320,16 +294,12 @@ void Reset_Bias(REBSER *series)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Reset_Series"
-**  Summary: none
-**  Details: {
-**      Reset series to empty. Reset bias, tail, and termination.
-**      The tail is reset to zero.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Reset_Series: C
+//  
+//      Reset series to empty. Reset bias, tail, and termination.
+//      The tail is reset to zero.
+//
 
 void Reset_Series(REBSER *series)
 {
@@ -339,16 +309,12 @@ void Reset_Series(REBSER *series)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Clear_Series"
-**  Summary: none
-**  Details: {
-**      Clear an entire series to zero. Resets bias and tail.
-**      The tail is reset to zero.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Clear_Series: C
+//  
+//      Clear an entire series to zero. Resets bias and tail.
+//      The tail is reset to zero.
+//
 
 void Clear_Series(REBSER *series)
 {
@@ -358,16 +324,12 @@ void Clear_Series(REBSER *series)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Resize_Series"
-**  Summary: none
-**  Details: {
-**      Reset series and expand it to required size.
-**      The tail is reset to zero.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Resize_Series: C
+//  
+//      Reset series and expand it to required size.
+//      The tail is reset to zero.
+//
 
 void Resize_Series(REBSER *series, REBCNT size)
 {
@@ -379,14 +341,11 @@ void Resize_Series(REBSER *series, REBCNT size)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Terminate_Series"
-**  Summary: none
-**  Details: "^/        Put terminator at tail of the series."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Terminate_Series: C
+//  
+//      Put terminator at tail of the series.
+//
 
 void Terminate_Series(REBSER *series)
 {
@@ -394,15 +353,15 @@ void Terminate_Series(REBSER *series)
 }
 
 
-/***********************************************************************
-**
-*/  REBYTE *Reset_Buffer(REBSER *buf, REBCNT len)
-/*
-**		Setup to reuse a shared buffer. Expand it if needed.
-**
-**		NOTE:The tail is set to the length position.
-**
-***********************************************************************/
+//
+//  Reset_Buffer: C
+//  
+//      Setup to reuse a shared buffer. Expand it if needed.
+//  
+//      NOTE:The tail is set to the length position.
+//
+
+REBYTE *Reset_Buffer(REBSER *buf, REBCNT len)
 {
 	if (!buf) Panic_DEAD_END(RP_NO_BUFFER);
 
@@ -414,13 +373,13 @@ void Terminate_Series(REBSER *series)
 }
 
 
-/***********************************************************************
-**
-*/  REBSER *Copy_Buffer(REBSER *buf, void *end)
-/*
-**		Copy a shared buffer. Set tail and termination.
-**
-***********************************************************************/
+//
+//  Copy_Buffer: C
+//  
+//      Copy a shared buffer. Set tail and termination.
+//
+
+REBSER *Copy_Buffer(REBSER *buf, void *end)
 {
 	REBSER *ser;
 	REBCNT len;
@@ -444,14 +403,9 @@ void Terminate_Series(REBSER *series)
 
 #if !defined(NDEBUG)
 
-/*******************************************************************************
-**
-**  Name: "Assert_Series_Term_Core"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Assert_Series_Term_Core: C
+//
 
 void Assert_Series_Term_Core(REBSER *series)
 {

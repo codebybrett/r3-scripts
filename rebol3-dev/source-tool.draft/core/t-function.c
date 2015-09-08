@@ -39,14 +39,9 @@ static REBOOL Same_Func(REBVAL *val, REBVAL *arg)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Function"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Function: C
+//
 
 REBINT CT_Function(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -55,11 +50,11 @@ REBINT CT_Function(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *As_Typesets(REBSER *types)
-/*
-***********************************************************************/
+//
+//  As_Typesets: C
+//
+
+REBSER *As_Typesets(REBSER *types)
 {
 	REBVAL *val;
 
@@ -71,14 +66,9 @@ REBINT CT_Function(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "MT_Function"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_Function: C
+//
 
 REBFLG MT_Function(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -86,14 +76,9 @@ REBFLG MT_Function(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Function)
 {

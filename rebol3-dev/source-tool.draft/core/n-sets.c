@@ -43,14 +43,11 @@ enum {
 #define SET_OP_DIFFERENCE	(FLAGIT(SOP_BOTH) | FLAGIT(SOP_CHECK) | FLAGIT(SOP_INVERT))
 
 
-/*******************************************************************************
-**
-**  Name: "Do_Set_Operation"
-**  Summary: none
-**  Details: "^/        Do set operations on a series."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Do_Set_Operation: C
+//  
+//      Do set operations on a series.
+//
 
 static REBINT Do_Set_Operation(struct Reb_Call *call_, REBCNT flags)
 {
@@ -227,27 +224,24 @@ static REBINT Do_Set_Operation(struct Reb_Call *call_, REBCNT flags)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "difference"
-**  Summary: "Returns the special difference of two values."
-**  Details: {
-**  Set functions use this arg pattern:
-**  
-**      set1 [ series! bitset! date! ] "first set"
-**      set2 [ series! bitset! date! ] "second set"
-**      /case "case sensitive"
-**      /skip "treat the series as records of fixed size"
-**      size [integer!]}
-**  Spec: [
-**      <1> set1
-**      <2> set2
-**      <3> /case
-**      <4> /skip
-**      <5> size
-**  ]
-**
-*******************************************************************************/
+//
+//  difference: native [
+//      "Returns the special difference of two values."
+//      set1 [block! string! binary! bitset! date! typeset!] "First data set"
+//      set2 [block! string! binary! bitset! date! typeset!] "Second data set"
+//      /case "Uses case-sensitive comparison"
+//      /skip "Treat the series as records of fixed size"
+//      size [integer!]
+//  ]
+//  
+//  Set functions use this arg pattern:
+//  
+//      set1 [ series! bitset! date! ] "first set"
+//      set2 [ series! bitset! date! ] "second set"
+//      /case "case sensitive"
+//      /skip "treat the series as records of fixed size"
+//      size [integer!]
+//
 
 REBNATIVE(difference)
 {
@@ -267,20 +261,16 @@ REBNATIVE(difference)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "exclude"
-**  Summary: {Returns the first data set less the second data set.}
-**  Details: none
-**  Spec: [
-**      <1> set1
-**      <2> set2
-**      <3> /case
-**      <4> /skip
-**      <5> size
-**  ]
-**
-*******************************************************************************/
+//
+//  exclude: native [
+//      {Returns the first data set less the second data set.}
+//      set1 [block! string! binary! bitset! typeset!] "First data set"
+//      set2 [block! string! binary! bitset! typeset!] "Second data set"
+//      /case "Uses case-sensitive comparison"
+//      /skip "Treat the series as records of fixed size"
+//      size [integer!]
+//  ]
+//
 
 REBNATIVE(exclude)
 {
@@ -288,20 +278,16 @@ REBNATIVE(exclude)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "intersect"
-**  Summary: "Returns the intersection of two data sets."
-**  Details: none
-**  Spec: [
-**      <1> set1
-**      <2> set2
-**      <3> /case
-**      <4> /skip
-**      <5> size
-**  ]
-**
-*******************************************************************************/
+//
+//  intersect: native [
+//      "Returns the intersection of two data sets."
+//      set1 [block! string! binary! bitset! typeset!] "first set"
+//      set2 [block! string! binary! bitset! typeset!] "second set"
+//      /case "Uses case-sensitive comparison"
+//      /skip "Treat the series as records of fixed size"
+//      size [integer!]
+//  ]
+//
 
 REBNATIVE(intersect)
 {
@@ -309,20 +295,16 @@ REBNATIVE(intersect)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "union"
-**  Summary: "Returns the union of two data sets."
-**  Details: none
-**  Spec: [
-**      <1> set1
-**      <2> set2
-**      <3> /case
-**      <4> /skip
-**      <5> size
-**  ]
-**
-*******************************************************************************/
+//
+//  union: native [
+//      "Returns the union of two data sets."
+//      set1 [block! string! binary! bitset! typeset!] "first set"
+//      set2 [block! string! binary! bitset! typeset!] "second set"
+//      /case "Use case-sensitive comparison"
+//      /skip "Treat the series as records of fixed size"
+//      size [integer!]
+//  ]
+//
 
 REBNATIVE(union)
 {
@@ -330,19 +312,15 @@ REBNATIVE(union)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "unique"
-**  Summary: "Returns the data set with duplicates removed."
-**  Details: none
-**  Spec: [
-**      <1> set1
-**      <2> /case
-**      <3> /skip
-**      <4> size
-**  ]
-**
-*******************************************************************************/
+//
+//  unique: native [
+//      "Returns the data set with duplicates removed."
+//      set1 [block! string! binary! bitset! typeset!]
+//      /case "Use case-sensitive comparison (except bitsets)"
+//      /skip "Treat the series as records of fixed size"
+//      size [integer!]
+//  ]
+//
 
 REBNATIVE(unique)
 {

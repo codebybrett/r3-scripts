@@ -60,16 +60,12 @@ static int Check_Char_Range(REBVAL *val, REBINT limit)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "asciiq"
-**  Summary: {Returns TRUE if value or string is in ASCII character range (below 128).}
-**  Details: none
-**  Spec: [
-**      <1> value
-**  ]
-**
-*******************************************************************************/
+//
+//  ascii?: native [
+//      {Returns TRUE if value or string is in ASCII character range (below 128).}
+//      value [any-string! char! integer!]
+//  ]
+//
 
 REBNATIVE(asciiq)
 {
@@ -77,16 +73,12 @@ REBNATIVE(asciiq)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "latin1q"
-**  Summary: {Returns TRUE if value or string is in Latin-1 character range (below 256).}
-**  Details: none
-**  Spec: [
-**      <1> value
-**  ]
-**
-*******************************************************************************/
+//
+//  latin1?: native [
+//      {Returns TRUE if value or string is in Latin-1 character range (below 256).}
+//      value [any-string! char! integer!]
+//  ]
+//
 
 REBNATIVE(latin1q)
 {
@@ -94,16 +86,12 @@ REBNATIVE(latin1q)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Is_Of_Type"
-**  Summary: none
-**  Details: {
-**      Types can be: word or block. Each element must be either
-**      a datatype or a typeset.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Is_Of_Type: C
+//  
+//      Types can be: word or block. Each element must be either
+//      a datatype or a typeset.
+//
 
 static REBOOL Is_Of_Type(const REBVAL *value, REBVAL *types)
 {
@@ -139,17 +127,13 @@ static REBOOL Is_Of_Type(const REBVAL *value, REBVAL *types)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "assert"
-**  Summary: {Assert that condition is true, else cause an assertion error.}
-**  Details: none
-**  Spec: [
-**      <1> conditions
-**      <2> /type
-**  ]
-**
-*******************************************************************************/
+//
+//  assert: native [
+//      {Assert that condition is true, else cause an assertion error.}
+//      conditions [block!]
+//      /type {Safely check datatypes of variables (words and paths)}
+//  ]
+//
 
 REBNATIVE(assert)
 {
@@ -204,17 +188,13 @@ REBNATIVE(assert)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "as_pair"
-**  Summary: "Combine X and Y values into a pair."
-**  Details: none
-**  Spec: [
-**      <1> x
-**      <2> y
-**  ]
-**
-*******************************************************************************/
+//
+//  as-pair: native [
+//      "Combine X and Y values into a pair."
+//      x [number!]
+//      y [number!]
+//  ]
+//
 
 REBNATIVE(as_pair)
 {
@@ -241,27 +221,24 @@ REBNATIVE(as_pair)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "bind"
-**  Summary: "Binds words to the specified context."
-**  Details: {
-**      1 words
-**      2 context | word
-**      3 /copy
-**      4 /only
-**      5 /new
-**      6 /set}
-**  Spec: [
-**      <1> word
-**      <2> context
-**      <3> /copy
-**      <4> /only
-**      <5> /new
-**      <6> /set
-**  ]
-**
-*******************************************************************************/
+//
+//  bind: native [
+//      "Binds words to the specified context."
+//      word [block! any-word!] "A word or block (modified) (returned)"
+//      context [any-word! any-object!] "A reference to the target context"
+//      /copy {Bind and return a deep copy of a block, don't modify original}
+//      /only "Bind only first block (not deep)"
+//      /new "Add to context any new words found"
+//      /set "Add to context any new set-words found"
+//  ]
+//  
+//      1 words
+//      2 context | word
+//      3 /copy
+//      4 /only
+//      5 /new
+//      6 /set
+//
 
 REBNATIVE(bind)
 {
@@ -320,16 +297,12 @@ REBNATIVE(bind)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "boundq"
-**  Summary: "Returns the context in which a word is bound."
-**  Details: none
-**  Spec: [
-**      <1> word
-**  ]
-**
-*******************************************************************************/
+//
+//  bound?: native [
+//      "Returns the context in which a word is bound."
+//      word [any-word!]
+//  ]
+//
 
 REBNATIVE(boundq)
 {
@@ -342,17 +315,16 @@ REBNATIVE(boundq)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "unbind"
-**  Summary: "Unbinds words from context."
-**  Details: "^/        word | context^/        /deep"
-**  Spec: [
-**      <1> word
-**      <2> /deep
-**  ]
-**
-*******************************************************************************/
+//
+//  unbind: native [
+//      "Unbinds words from context."
+//      word [block! any-word!] "A word or block (modified) (returned)"
+//      /deep "Process nested blocks"
+//  ]
+//  
+//      word | context
+//      /deep
+//
 
 REBNATIVE(unbind)
 {
@@ -367,25 +339,22 @@ REBNATIVE(unbind)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "collect_words"
-**  Summary: {Collect unique words used in a block (used for context construction).}
-**  Details: {
-**      1 block
-**      3 /deep
-**      4 /set
-**    4 /ignore
-**    5 object | block}
-**  Spec: [
-**      <1> block
-**      <2> /deep
-**      <3> /set
-**      <4> /ignore
-**      <5> words
-**  ]
-**
-*******************************************************************************/
+//
+//  collect-words: native [
+//      {Collect unique words used in a block (used for context construction).}
+//      block [block!]
+//      /deep "Include nested blocks"
+//      /set "Only include set-words"
+//      /ignore "Ignore prior words"
+//      words [any-object! block! none!] "Words to ignore"
+//  ]
+//  
+//      1 block
+//      3 /deep
+//      4 /set
+//      4 /ignore
+//      5 object | block
+//
 
 REBNATIVE(collect_words)
 {
@@ -414,17 +383,13 @@ REBNATIVE(collect_words)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "get"
-**  Summary: {Gets the value of a word or path, or values of an object.}
-**  Details: none
-**  Spec: [
-**      <1> word
-**      <2> /any
-**  ]
-**
-*******************************************************************************/
+//
+//  get: native [
+//      {Gets the value of a word or path, or values of an object.}
+//      word "Word, path, object to get"
+//      /any "Allows word to have no value (allows unset)"
+//  ]
+//
 
 REBNATIVE(get)
 {
@@ -457,17 +422,13 @@ REBNATIVE(get)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "in"
-**  Summary: "Returns the word or block in the object's context."
-**  Details: none
-**  Spec: [
-**      <1> object
-**      <2> word
-**  ]
-**
-*******************************************************************************/
+//
+//  in: native [
+//      "Returns the word or block in the object's context."
+//      object [any-object! block!]
+//      word [any-word! block! paren!] "(modified if series)"
+//  ]
+//
 
 REBNATIVE(in)
 {
@@ -521,16 +482,12 @@ REBNATIVE(in)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "not"
-**  Summary: "Returns the logic complement."
-**  Details: none
-**  Spec: [
-**      <1> value
-**  ]
-**
-*******************************************************************************/
+//
+//  not: native [
+//      "Returns the logic complement."
+//      value "(Only FALSE and NONE return TRUE)"
+//  ]
+//
 
 REBNATIVE(not)
 {
@@ -538,25 +495,21 @@ REBNATIVE(not)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "resolve"
-**  Summary: {Copy context by setting values in the target from those in the source.}
-**  Details: {
-**      3 /only
-**      4 from
-**      5 /all
-**      6 /expand}
-**  Spec: [
-**      <1> target
-**      <2> source
-**      <3> /only
-**      <4> from
-**      <5> /all
-**      <6> /extend
-**  ]
-**
-*******************************************************************************/
+//
+//  resolve: native [
+//      {Copy context by setting values in the target from those in the source.}
+//      target [any-object!] "(modified)"
+//      source [any-object!]
+//      /only from [block! integer!] {Only specific words (exports) or new words in target (index to tail)}
+//      /all {Set all words, even those in the target that already have a value}
+//      /extend "Add source words to the target if necessary"
+//  ]
+//  
+//      3 /only
+//      4 from
+//      5 /all
+//      6 /expand
+//
 
 REBNATIVE(resolve)
 {
@@ -568,23 +521,20 @@ REBNATIVE(resolve)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "set"
-**  Summary: {Sets a word, path, block of words, or object to specified value(s).}
-**  Details: {
-**      word [any-word! block! object!] {Word or words to set}
-**      value [any-type!] {Value or block of values}
-**      /any {Allows setting words to any value.}
-**      /pad {For objects, if block is too short, remaining words are set to NONE.}}
-**  Spec: [
-**      <1> word
-**      <2> value
-**      <3> /any
-**      <4> /pad
-**  ]
-**
-*******************************************************************************/
+//
+//  set: native [
+//      {Sets a word, path, block of words, or object to specified value(s).}
+//      word [any-word! any-path! block! object!] {Word, block of words, path, or object to be set (modified)}
+//      value [any-type!] "Value or block of values"
+//      /any "Allows setting words to any value, including unset"
+//      /pad {For objects, if block is too short, remaining words are set to NONE}
+//  ]
+//  
+//      word [any-word! block! object!] {Word or words to set}
+//      value [any-type!] {Value or block of values}
+//      /any {Allows setting words to any value.}
+//      /pad {For objects, if block is too short, remaining words are set to NONE.}
+//
 
 REBNATIVE(set)
 {
@@ -672,17 +622,13 @@ REBNATIVE(set)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "type_of"
-**  Summary: "Returns the datatype of a value."
-**  Details: none
-**  Spec: [
-**      <1> value
-**      <2> /word
-**  ]
-**
-*******************************************************************************/
+//
+//  type-of: native [
+//      "Returns the datatype of a value."
+//      value [any-type!]
+//      /word "Returns the datatype as a word"
+//  ]
+//
 
 REBNATIVE(type_of)
 {
@@ -696,16 +642,12 @@ REBNATIVE(type_of)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "unset"
-**  Summary: {Unsets the value of a word (in its current context.)}
-**  Details: none
-**  Spec: [
-**      <1> word
-**  ]
-**
-*******************************************************************************/
+//
+//  unset: native [
+//      {Unsets the value of a word (in its current context.)}
+//      word [word! block!] "Word or block of words"
+//  ]
+//
 
 REBNATIVE(unset)
 {
@@ -729,16 +671,12 @@ REBNATIVE(unset)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "infixq"
-**  Summary: {Returns TRUE if the function gets its first argument prior to the call}
-**  Details: none
-**  Spec: [
-**      <1> value
-**  ]
-**
-*******************************************************************************/
+//
+//  infix?: native [
+//      {Returns TRUE if the function gets its first argument prior to the call}
+//      value [any-function!]
+//  ]
+//
 
 REBNATIVE(infixq)
 {
@@ -752,16 +690,12 @@ REBNATIVE(infixq)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "valueq"
-**  Summary: "Returns TRUE if the word has a value."
-**  Details: none
-**  Spec: [
-**      <1> value
-**  ]
-**
-*******************************************************************************/
+//
+//  value?: native [
+//      "Returns TRUE if the word has a value."
+//      value
+//  ]
+//
 
 REBNATIVE(valueq)
 {
@@ -777,14 +711,12 @@ REBNATIVE(valueq)
 //** SERIES ************************************************************
 
 
-/*******************************************************************************
-**
-**  Name: "_add_add"
-**  Summary: none
-**  Details: "^/        i: ++ int^/        s: ++ series"
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  -add-add: native none
+//  
+//      i: ++ int
+//      s: ++ series
+//
 
 REBNATIVE(_add_add)
 {
@@ -813,16 +745,15 @@ REBNATIVE(_add_add)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "__"
-**  Summary: {Decrement an integer or series index. Return its prior value.}
-**  Details: "^/        i: -- int^/        s: -- series"
-**  Spec: [
-**      <1> 'word
-**  ]
-**
-*******************************************************************************/
+//
+//  --: native [
+//      {Decrement an integer or series index. Return its prior value.}
+//      'word [word!] "Integer or series variable"
+//  ]
+//  
+//      i: -- int
+//      s: -- series
+//
 
 REBNATIVE(__)
 {
@@ -851,16 +782,9 @@ REBNATIVE(__)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "dump"
-**  Summary: "Temporary debug dump"
-**  Details: none
-**  Spec: [
-**      <1> v
-**  ]
-**
-*******************************************************************************/
+//
+//  dump: native ["Temporary debug dump" v]
+//
 
 REBNATIVE(dump)
 {
@@ -876,14 +800,14 @@ REBNATIVE(dump)
 }
 
 
-/***********************************************************************
-**
-*/	static REBGOB *Map_Gob_Inner(REBGOB *gob, REBXYF *offset)
-/*
-**		Map a higher level gob coordinate to a lower level.
-**		Returns GOB and sets new offset pair.
-**
-***********************************************************************/
+//
+//  Map_Gob_Inner: C
+//  
+//      Map a higher level gob coordinate to a lower level.
+//      Returns GOB and sets new offset pair.
+//
+
+static REBGOB *Map_Gob_Inner(REBGOB *gob, REBXYF *offset)
 {
 	REBD32 xo = offset->x;
 	REBD32 yo = offset->y;
@@ -920,16 +844,12 @@ REBNATIVE(dump)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "map_event"
-**  Summary: {Returns event with inner-most graphical object and coordinate.}
-**  Details: none
-**  Spec: [
-**      <1> event
-**  ]
-**
-*******************************************************************************/
+//
+//  map-event: native [
+//      {Returns event with inner-most graphical object and coordinate.}
+//      event [event!]
+//  ]
+//
 
 REBNATIVE(map_event)
 {
@@ -947,14 +867,9 @@ REBNATIVE(map_event)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Return_Gob_Pair"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Return_Gob_Pair: C
+//
 
 static void Return_Gob_Pair(REBVAL *out, REBGOB *gob, REBD32 x, REBD32 y)
 {
@@ -972,18 +887,14 @@ static void Return_Gob_Pair(REBVAL *out, REBGOB *gob, REBD32 x, REBD32 y)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "map_gob_offset"
-**  Summary: {Translates a gob and offset to the deepest gob and offset in it, returned as a block.}
-**  Details: none
-**  Spec: [
-**      <1> gob
-**      <2> xy
-**      <3> /reverse
-**  ]
-**
-*******************************************************************************/
+//
+//  map-gob-offset: native [
+//      {Translates a gob and offset to the deepest gob and offset in it, returned as a block.}
+//      gob [gob!] "Starting object"
+//      xy [pair!] "Staring offset"
+//      /reverse "Translate from deeper gob to top gob."
+//  ]
+//
 
 REBNATIVE(map_gob_offset)
 {

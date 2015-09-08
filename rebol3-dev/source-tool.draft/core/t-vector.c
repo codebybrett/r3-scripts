@@ -191,13 +191,13 @@ void Set_Vector_Row(REBSER *ser, REBVAL *blk)
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Make_Vector_Block(REBVAL *vect)
-/*
-**		Convert a vector to a block.
-**
-***********************************************************************/
+//
+//  Make_Vector_Block: C
+//  
+//      Convert a vector to a block.
+//
+
+REBSER *Make_Vector_Block(REBVAL *vect)
 {
 	REBCNT len = VAL_LEN(vect);
 	REBYTE *data = VAL_SERIES(vect)->data;
@@ -224,14 +224,9 @@ void Set_Vector_Row(REBSER *ser, REBVAL *blk)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Compare_Vector"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Compare_Vector: C
+//
 
 REBINT Compare_Vector(const REBVAL *v1, const REBVAL *v2)
 {
@@ -266,14 +261,9 @@ REBINT Compare_Vector(const REBVAL *v1, const REBVAL *v2)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Shuffle_Vector"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Shuffle_Vector: C
+//
 
 void Shuffle_Vector(REBVAL *vect, REBFLG secure)
 {
@@ -298,14 +288,9 @@ void Shuffle_Vector(REBVAL *vect, REBFLG secure)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Set_Vector_Value"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_Vector_Value: C
+//
 
 void Set_Vector_Value(REBVAL *var, REBSER *series, REBCNT index)
 {
@@ -318,17 +303,17 @@ void Set_Vector_Value(REBVAL *var, REBSER *series, REBCNT index)
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Make_Vector(REBINT type, REBINT sign, REBINT dims, REBINT bits, REBINT size)
-/*
-**		type: the datatype
-**		sign: signed or unsigned
-**		dims: number of dimensions
-**		bits: number of bits per unit (8, 16, 32, 64)
-**		size: size of array ?
-**
-***********************************************************************/
+//
+//  Make_Vector: C
+//  
+//      type: the datatype
+//      sign: signed or unsigned
+//      dims: number of dimensions
+//      bits: number of bits per unit (8, 16, 32, 64)
+//      size: size of array ?
+//
+
+REBSER *Make_Vector(REBINT type, REBINT sign, REBINT dims, REBINT bits, REBINT size)
 {
 	REBCNT len;
 	REBSER *ser;
@@ -353,24 +338,24 @@ void Set_Vector_Value(REBVAL *var, REBSER *series, REBCNT index)
 	return ser;
 }
 
-/***********************************************************************
-**
-*/	REBVAL *Make_Vector_Spec(REBVAL *bp, REBVAL *value)
-/*
-**	Make a vector from a block spec.
-**
-**     make vector! [integer! 32 100]
-**     make vector! [decimal! 64 100]
-**     make vector! [unsigned integer! 32]
-**     Fields:
-**          signed:     signed, unsigned
-**    		datatypes:  integer, decimal
-**    		dimensions: 1 - N
-**    		bitsize:    1, 8, 16, 32, 64
-**    		size:       integer units
-**    		init:		block of values
-**
-***********************************************************************/
+//
+//  Make_Vector_Spec: C
+//  
+//  Make a vector from a block spec.
+//  
+//     make vector! [integer! 32 100]
+//     make vector! [decimal! 64 100]
+//     make vector! [unsigned integer! 32]
+//     Fields:
+//          signed:     signed, unsigned
+//            datatypes:  integer, decimal
+//            dimensions: 1 - N
+//            bitsize:    1, 8, 16, 32, 64
+//            size:       integer units
+//            init:        block of values
+//
+
+REBVAL *Make_Vector_Spec(REBVAL *bp, REBVAL *value)
 {
 	REBINT type = -1; // 0 = int,    1 = float
 	REBINT sign = -1; // 0 = signed, 1 = unsigned
@@ -453,14 +438,9 @@ void Set_Vector_Value(REBVAL *var, REBSER *series, REBCNT index)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "MT_Vector"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_Vector: C
+//
 
 REBFLG MT_Vector(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -469,14 +449,9 @@ REBFLG MT_Vector(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Vector"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Vector: C
+//
 
 REBINT CT_Vector(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -489,14 +464,9 @@ REBINT CT_Vector(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "PD_Vector"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  PD_Vector: C
+//
 
 REBINT PD_Vector(REBPVS *pvs)
 {
@@ -567,14 +537,9 @@ REBINT PD_Vector(REBPVS *pvs)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Vector)
 {
@@ -659,14 +624,9 @@ bad_make:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Mold_Vector"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Mold_Vector: C
+//
 
 void Mold_Vector(const REBVAL *value, REB_MOLD *mold, REBFLG molded)
 {

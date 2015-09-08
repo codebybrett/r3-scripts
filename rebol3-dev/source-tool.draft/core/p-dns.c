@@ -31,14 +31,9 @@
 #include "reb-net.h"
 
 
-/*******************************************************************************
-**
-**  Name: "DNS_Actor"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  DNS_Actor: C
+//
 
 static REB_R DNS_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
@@ -139,14 +134,9 @@ pick:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_DNS_Scheme"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_DNS_Scheme: C
+//
 
 void Init_DNS_Scheme(void)
 {

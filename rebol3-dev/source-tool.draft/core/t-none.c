@@ -29,14 +29,9 @@
 
 #include "sys-core.h"
 
-/*******************************************************************************
-**
-**  Name: "CT_None"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_None: C
+//
 
 REBINT CT_None(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -45,14 +40,9 @@ REBINT CT_None(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "MT_None"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_None: C
+//
 
 REBFLG MT_None(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -61,14 +51,11 @@ REBFLG MT_None(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: "^/        ALSO used for unset!"
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//  
+//      ALSO used for unset!
+//
 
 REBTYPE(None)
 {

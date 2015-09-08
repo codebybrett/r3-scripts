@@ -111,14 +111,9 @@ REBOOL almost_equal(REBDEC a, REBDEC b, REBCNT max_diff) {
 }
 
 
-/*******************************************************************************
-**
-**  Name: "MT_Decimal"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_Decimal: C
+//
 
 REBFLG MT_Decimal(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -136,14 +131,9 @@ REBFLG MT_Decimal(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Eq_Decimal"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Eq_Decimal: C
+//
 
 REBFLG Eq_Decimal(REBDEC a, REBDEC b)
 {
@@ -159,14 +149,9 @@ REBFLG Eq_Decimal(REBDEC a, REBDEC b)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Eq_Decimal2"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Eq_Decimal2: C
+//
 
 REBFLG Eq_Decimal2(REBDEC a, REBDEC b)
 {
@@ -181,14 +166,9 @@ REBFLG Eq_Decimal2(REBDEC a, REBDEC b)
 #endif
 }
 
-/*******************************************************************************
-**
-**  Name: "CT_Decimal"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Decimal: C
+//
 
 REBINT CT_Decimal(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -201,14 +181,9 @@ REBINT CT_Decimal(REBVAL *a, REBVAL *b, REBINT mode)
 	return VAL_DECIMAL(a) > VAL_DECIMAL(b);
 }
 
-/*******************************************************************************
-**
-**  Name: "Check_Overflow"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Check_Overflow: C
+//
 
 static void Check_Overflow(REBDEC dval)
 {
@@ -216,14 +191,9 @@ static void Check_Overflow(REBDEC dval)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Binary_To_Decimal"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Binary_To_Decimal: C
+//
 
 static void Binary_To_Decimal(REBVAL *bin, REBVAL *dec)
 {
@@ -241,14 +211,9 @@ static void Binary_To_Decimal(REBVAL *bin, REBVAL *dec)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Decimal)
 {

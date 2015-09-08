@@ -29,14 +29,9 @@
 
 #include "sys-core.h"
 
-/*******************************************************************************
-**
-**  Name: "CT_Library"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Library: C
+//
 
 REBINT CT_Library(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -47,14 +42,9 @@ REBINT CT_Library(REBVAL *a, REBVAL *b, REBINT mode)
 	return -1;
 }
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Library)
 {

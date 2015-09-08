@@ -71,11 +71,11 @@ enum {
 ************************************************************************
 ***********************************************************************/
 
-/***********************************************************************
-**
-*/  REBSER *Emit(REB_MOLD *mold, const char *fmt, ...)
-/*
-***********************************************************************/
+//
+//  Emit: C
+//
+
+REBSER *Emit(REB_MOLD *mold, const char *fmt, ...)
 {
 	va_list args;
 	REBYTE ender = 0;
@@ -148,15 +148,15 @@ enum {
 }
 
 
-/***********************************************************************
-**
-*/  REBSER *Prep_String(REBSER *series, REBYTE **str, REBCNT len)
-/*
-**		Helper function for the string related Mold functions below.
-**		Creates or expands the series and provides the location to
-**		copy text into.
-**
-***********************************************************************/
+//
+//  Prep_String: C
+//  
+//      Helper function for the string related Mold functions below.
+//      Creates or expands the series and provides the location to
+//      copy text into.
+//
+
+REBSER *Prep_String(REBSER *series, REBYTE **str, REBCNT len)
 {
 	REBCNT tail;
 
@@ -174,11 +174,11 @@ enum {
 }
 
 
-/***********************************************************************
-**
-*/  REBUNI *Prep_Uni_Series(REB_MOLD *mold, REBCNT len)
-/*
-***********************************************************************/
+//
+//  Prep_Uni_Series: C
+//
+
+REBUNI *Prep_Uni_Series(REB_MOLD *mold, REBCNT len)
 {
 	REBCNT tail = SERIES_TAIL(mold->series);
 
@@ -196,15 +196,11 @@ enum {
 ************************************************************************
 ***********************************************************************/
 
-/*******************************************************************************
-**
-**  Name: "Pre_Mold"
-**  Summary: none
-**  Details: {
-**      Emit the initial datatype function, depending on /ALL option}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Pre_Mold: C
+//  
+//      Emit the initial datatype function, depending on /ALL option
+//
 
 void Pre_Mold(const REBVAL *value, REB_MOLD *mold)
 {
@@ -212,15 +208,11 @@ void Pre_Mold(const REBVAL *value, REB_MOLD *mold)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "End_Mold"
-**  Summary: none
-**  Details: {
-**      Finish the mold, depending on /ALL with close block.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  End_Mold: C
+//  
+//      Finish the mold, depending on /ALL with close block.
+//
 
 void End_Mold(REB_MOLD *mold)
 {
@@ -228,16 +220,12 @@ void End_Mold(REB_MOLD *mold)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Post_Mold"
-**  Summary: none
-**  Details: {
-**      For series that has an index, add the index for mold/all.
-**      Add closing block.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Post_Mold: C
+//  
+//      For series that has an index, add the index for mold/all.
+//      Add closing block.
+//
 
 void Post_Mold(const REBVAL *value, REB_MOLD *mold)
 {
@@ -249,15 +237,11 @@ void Post_Mold(const REBVAL *value, REB_MOLD *mold)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "New_Indented_Line"
-**  Summary: none
-**  Details: {
-**      Create a newline with auto-indent on next line if needed.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  New_Indented_Line: C
+//  
+//      Create a newline with auto-indent on next line if needed.
+//
 
 void New_Indented_Line(REB_MOLD *mold)
 {
@@ -526,14 +510,9 @@ static void Mold_Tag(const REBVAL *value, REB_MOLD *mold)
 
 }
 
-/*******************************************************************************
-**
-**  Name: "Mold_Binary"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Mold_Binary: C
+//
 
 void Mold_Binary(const REBVAL *value, REB_MOLD *mold)
 {
@@ -578,14 +557,13 @@ static void Mold_All_String(const REBVAL *value, REB_MOLD *mold)
 }
 
 
-/*******************************************************************************
+/***********************************************************************
+************************************************************************
 **
-**  Name: "Mold_Block_Series"
-**  Summary: none
-**  Details: none
-**  Spec: none
+**	SECTION: Block Series Datatypes
 **
-*******************************************************************************/
+************************************************************************
+***********************************************************************/
 
 static void Mold_Block_Series(REB_MOLD *mold, REBSER *series, REBCNT index, const char *sep)
 {
@@ -768,14 +746,14 @@ static void Form_Block_Series(REBSER *blk, REBCNT index, REB_MOLD *mold, REBSER 
 }
 
 
-/*******************************************************************************
+/***********************************************************************
+************************************************************************
 **
-**  Name: "Mold_Typeset"
-**  Summary: none
-**  Details: none
-**  Spec: none
+**	SECTION: Special Datatypes
 **
-*******************************************************************************/
+************************************************************************
+***********************************************************************/
+
 
 static void Mold_Typeset(const REBVAL *value, REB_MOLD *mold, REBFLG molded)
 {
@@ -998,15 +976,11 @@ static void Mold_Error(const REBVAL *value, REB_MOLD *mold, REBFLG molded)
 ************************************************************************
 ***********************************************************************/
 
-/*******************************************************************************
-**
-**  Name: "Mold_Value"
-**  Summary: none
-**  Details: {
-**      Mold or form any value to string series tail.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Mold_Value: C
+//  
+//      Mold or form any value to string series tail.
+//
 
 void Mold_Value(REB_MOLD *mold, const REBVAL *value, REBFLG molded)
 {
@@ -1307,13 +1281,13 @@ append:
 }
 
 
-/***********************************************************************
-**
-*/  REBSER *Copy_Form_Value(const REBVAL *value, REBCNT opts)
-/*
-**		Form a value based on the mold opts provided.
-**
-***********************************************************************/
+//
+//  Copy_Form_Value: C
+//  
+//      Form a value based on the mold opts provided.
+//
+
+REBSER *Copy_Form_Value(const REBVAL *value, REBCNT opts)
 {
 	REB_MOLD mo;
 	CLEARS(&mo);
@@ -1325,13 +1299,13 @@ append:
 }
 
 
-/***********************************************************************
-**
-*/  REBSER *Copy_Mold_Value(const REBVAL *value, REBCNT opts)
-/*
-**		Form a value based on the mold opts provided.
-**
-***********************************************************************/
+//
+//  Copy_Mold_Value: C
+//  
+//      Form a value based on the mold opts provided.
+//
+
+REBSER *Copy_Mold_Value(const REBVAL *value, REBCNT opts)
 {
 	REB_MOLD mo;
 	CLEARS(&mo);
@@ -1343,14 +1317,14 @@ append:
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Form_Reduce(REBSER *block, REBCNT index)
-/*
-**		Reduce a block and then form each value into a string. Return the
-**		string or NULL if an unwind triggered while reducing.
-**
-***********************************************************************/
+//
+//  Form_Reduce: C
+//  
+//      Reduce a block and then form each value into a string. Return the
+//      string or NULL if an unwind triggered while reducing.
+//
+
+REBSER *Form_Reduce(REBSER *block, REBCNT index)
 {
 	REBINT start = DSP + 1;
 	REBINT n;
@@ -1379,11 +1353,11 @@ return_balanced:
 }
 
 
-/***********************************************************************
-**
-*/  REBSER *Form_Tight_Block(const REBVAL *blk)
-/*
-***********************************************************************/
+//
+//  Form_Tight_Block: C
+//
+
+REBSER *Form_Tight_Block(const REBVAL *blk)
 {
 	REBVAL *val;
 
@@ -1397,14 +1371,9 @@ return_balanced:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Reset_Mold"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Reset_Mold: C
+//
 
 void Reset_Mold(REB_MOLD *mold)
 {
@@ -1439,15 +1408,15 @@ void Reset_Mold(REB_MOLD *mold)
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Mold_Print_Value(const REBVAL *value, REBCNT limit, REBFLG mold)
-/*
-**		Basis function for print.  Can do a form or a mold based
-**		on the mold flag setting.  Can limit string output to a
-**		specified size to prevent long console garbage output.
-**
-***********************************************************************/
+//
+//  Mold_Print_Value: C
+//  
+//      Basis function for print.  Can do a form or a mold based
+//      on the mold flag setting.  Can limit string output to a
+//      specified size to prevent long console garbage output.
+//
+
+REBSER *Mold_Print_Value(const REBVAL *value, REBCNT limit, REBFLG mold)
 {
 	REB_MOLD mo;
 	CLEARS(&mo);
@@ -1464,14 +1433,9 @@ void Reset_Mold(REB_MOLD *mold)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Mold"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Mold: C
+//
 
 void Init_Mold(REBCNT size)
 {

@@ -50,16 +50,12 @@ const double pi2 = 2.0 * 3.14159265358979323846;
 enum {SINE, COSINE, TANGENT};
 
 
-/*******************************************************************************
-**
-**  Name: "Trig_Value"
-**  Summary: none
-**  Details: {
-**  Convert integer arg, if present, to decimal and convert to radians
-**  if necessary.  Clip ranges for correct REBOL behavior.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Trig_Value: C
+//  
+//  Convert integer arg, if present, to decimal and convert to radians
+//  if necessary.  Clip ranges for correct REBOL behavior.
+//
 
 static REBDEC Trig_Value(const REBVAL *value, REBOOL degrees, REBCNT which)
 {
@@ -85,14 +81,9 @@ static REBDEC Trig_Value(const REBVAL *value, REBOOL degrees, REBCNT which)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Arc_Trans"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Arc_Trans: C
+//
 
 static void Arc_Trans(REBVAL *out, const REBVAL *value, REBOOL degrees, REBCNT kind)
 {
@@ -109,17 +100,13 @@ static void Arc_Trans(REBVAL *out, const REBVAL *value, REBOOL degrees, REBCNT k
 }
 
 
-/*******************************************************************************
-**
-**  Name: "cosine"
-**  Summary: "Returns the trigonometric cosine."
-**  Details: none
-**  Spec: [
-**      <1> value
-**      <2> /radians
-**  ]
-**
-*******************************************************************************/
+//
+//  cosine: native [
+//      "Returns the trigonometric cosine."
+//      value [number!] "In degrees by default"
+//      /radians "Value is specified in radians"
+//  ]
+//
 
 REBNATIVE(cosine)
 {
@@ -130,17 +117,13 @@ REBNATIVE(cosine)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "sine"
-**  Summary: "Returns the trigonometric sine."
-**  Details: none
-**  Spec: [
-**      <1> value
-**      <2> /radians
-**  ]
-**
-*******************************************************************************/
+//
+//  sine: native [
+//      "Returns the trigonometric sine."
+//      value [number!] "In degrees by default"
+//      /radians "Value is specified in radians"
+//  ]
+//
 
 REBNATIVE(sine)
 {
@@ -151,17 +134,13 @@ REBNATIVE(sine)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "tangent"
-**  Summary: "Returns the trigonometric tangent."
-**  Details: none
-**  Spec: [
-**      <1> value
-**      <2> /radians
-**  ]
-**
-*******************************************************************************/
+//
+//  tangent: native [
+//      "Returns the trigonometric tangent."
+//      value [number!] "In degrees by default"
+//      /radians "Value is specified in radians"
+//  ]
+//
 
 REBNATIVE(tangent)
 {
@@ -172,17 +151,13 @@ REBNATIVE(tangent)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "arccosine"
-**  Summary: {Returns the trigonometric arccosine (in degrees by default).}
-**  Details: none
-**  Spec: [
-**      <1> value
-**      <2> /radians
-**  ]
-**
-*******************************************************************************/
+//
+//  arccosine: native [
+//      {Returns the trigonometric arccosine (in degrees by default).}
+//      value [number!]
+//      /radians "Returns result in radians"
+//  ]
+//
 
 REBNATIVE(arccosine)
 {
@@ -191,17 +166,13 @@ REBNATIVE(arccosine)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "arcsine"
-**  Summary: {Returns the trigonometric arcsine (in degrees by default).}
-**  Details: none
-**  Spec: [
-**      <1> value
-**      <2> /radians
-**  ]
-**
-*******************************************************************************/
+//
+//  arcsine: native [
+//      {Returns the trigonometric arcsine (in degrees by default).}
+//      value [number!]
+//      /radians "Returns result in radians"
+//  ]
+//
 
 REBNATIVE(arcsine)
 {
@@ -210,17 +181,13 @@ REBNATIVE(arcsine)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "arctangent"
-**  Summary: {Returns the trigonometric arctangent (in degrees by default).}
-**  Details: none
-**  Spec: [
-**      <1> value
-**      <2> /radians
-**  ]
-**
-*******************************************************************************/
+//
+//  arctangent: native [
+//      {Returns the trigonometric arctangent (in degrees by default).}
+//      value [number!]
+//      /radians "Returns result in radians"
+//  ]
+//
 
 REBNATIVE(arctangent)
 {
@@ -229,16 +196,12 @@ REBNATIVE(arctangent)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "exp"
-**  Summary: {Raises E (the base of natural logarithm) to the power specified}
-**  Details: none
-**  Spec: [
-**      <1> power
-**  ]
-**
-*******************************************************************************/
+//
+//  exp: native [
+//      {Raises E (the base of natural logarithm) to the power specified}
+//      power [number!]
+//  ]
+//
 
 REBNATIVE(exp)
 {
@@ -252,16 +215,12 @@ REBNATIVE(exp)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "log_10"
-**  Summary: "Returns the base-10 logarithm."
-**  Details: none
-**  Spec: [
-**      <1> value
-**  ]
-**
-*******************************************************************************/
+//
+//  log-10: native [
+//      "Returns the base-10 logarithm."
+//      value [number!]
+//  ]
+//
 
 REBNATIVE(log_10)
 {
@@ -272,16 +231,12 @@ REBNATIVE(log_10)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "log_2"
-**  Summary: "Return the base-2 logarithm."
-**  Details: none
-**  Spec: [
-**      <1> value
-**  ]
-**
-*******************************************************************************/
+//
+//  log-2: native [
+//      "Return the base-2 logarithm."
+//      value [number!]
+//  ]
+//
 
 REBNATIVE(log_2)
 {
@@ -292,16 +247,12 @@ REBNATIVE(log_2)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "log_e"
-**  Summary: {Returns the natural (base-E) logarithm of the given value}
-**  Details: none
-**  Spec: [
-**      <1> value
-**  ]
-**
-*******************************************************************************/
+//
+//  log-e: native [
+//      {Returns the natural (base-E) logarithm of the given value}
+//      value [number!]
+//  ]
+//
 
 REBNATIVE(log_e)
 {
@@ -312,16 +263,12 @@ REBNATIVE(log_e)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "square_root"
-**  Summary: "Returns the square root of a number."
-**  Details: none
-**  Spec: [
-**      <1> value
-**  ]
-**
-*******************************************************************************/
+//
+//  square-root: native [
+//      "Returns the square root of a number."
+//      value [number!]
+//  ]
+//
 
 REBNATIVE(square_root)
 {
@@ -332,18 +279,16 @@ REBNATIVE(square_root)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "shift"
-**  Summary: {Shifts an integer left or right by a number of bits.}
-**  Details: "^/        shift int bits arithmetic or logical"
-**  Spec: [
-**      <1> value
-**      <2> bits
-**      <3> /logical
-**  ]
-**
-*******************************************************************************/
+//
+//  shift: native [
+//      {Shifts an integer left or right by a number of bits.}
+//      value [integer!]
+//      bits [integer!] "Positive for left shift, negative for right shift"
+//      /logical "Logical shift (sign bit ignored)"
+//  ]
+//  
+//      shift int bits arithmetic or logical
+//
 
 REBNATIVE(shift)
 {
@@ -381,33 +326,29 @@ REBNATIVE(shift)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Compare_Modify_Values"
-**  Summary: none
-**  Details: {
-**      Compare 2 values depending on level of strictness.  It leans
-**      upon the per-type comparison functions (that have a more typical
-**      interface of returning [1, 0, -1] and taking a CASE parameter)
-**      but adds a layer of being able to check for specific types
-**      of equality...which those comparison functions do not discern.
-**  
-**      Strictness:
-**          0 - coersed equality
-**          1 - equivalence
-**          2 - strict equality
-**          3 - same (identical bits)
-**  
-**         -1 - greater or equal
-**         -2 - greater
-**  
-**      !!! This routine (may) modify the value cells for 'a' and 'b' in
-**      order to coerce them for easier comparison.  Most usages are
-**      in native code that can overwrite its argument values without
-**      that being a problem, so it doesn't matter.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Compare_Modify_Values: C
+//  
+//      Compare 2 values depending on level of strictness.  It leans
+//      upon the per-type comparison functions (that have a more typical
+//      interface of returning [1, 0, -1] and taking a CASE parameter)
+//      but adds a layer of being able to check for specific types
+//      of equality...which those comparison functions do not discern.
+//  
+//      Strictness:
+//          0 - coersed equality
+//          1 - equivalence
+//          2 - strict equality
+//          3 - same (identical bits)
+//  
+//         -1 - greater or equal
+//         -2 - greater
+//  
+//      !!! This routine (may) modify the value cells for 'a' and 'b' in
+//      order to coerce them for easier comparison.  Most usages are
+//      in native code that can overwrite its argument values without
+//      that being a problem, so it doesn't matter.
+//
 
 REBINT Compare_Modify_Values(REBVAL *a, REBVAL *b, REBINT strictness)
 {
@@ -490,17 +431,13 @@ compare:
 
 //	EQUAL? < EQUIV? < STRICT-EQUAL? < SAME?
 
-/*******************************************************************************
-**
-**  Name: "equalq"
-**  Summary: "Returns TRUE if the values are equal."
-**  Details: none
-**  Spec: [
-**      <1> value1
-**      <2> value2
-**  ]
-**
-*******************************************************************************/
+//
+//  equal?: native [
+//      "Returns TRUE if the values are equal."
+//      value1 [any-type!]
+//      value2 [any-type!]
+//  ]
+//
 
 REBNATIVE(equalq)
 {
@@ -508,17 +445,13 @@ REBNATIVE(equalq)
 	return R_FALSE;
 }
 
-/*******************************************************************************
-**
-**  Name: "not_equalq"
-**  Summary: "Returns TRUE if the values are not equal."
-**  Details: none
-**  Spec: [
-**      <1> value1
-**      <2> value2
-**  ]
-**
-*******************************************************************************/
+//
+//  not-equal?: native [
+//      "Returns TRUE if the values are not equal."
+//      value1 [any-type!]
+//      value2 [any-type!]
+//  ]
+//
 
 REBNATIVE(not_equalq)
 {
@@ -526,17 +459,13 @@ REBNATIVE(not_equalq)
 	return R_TRUE;
 }
 
-/*******************************************************************************
-**
-**  Name: "equivq"
-**  Summary: "Returns TRUE if the values are equivalent."
-**  Details: none
-**  Spec: [
-**      <1> value1
-**      <2> value2
-**  ]
-**
-*******************************************************************************/
+//
+//  equiv?: native [
+//      "Returns TRUE if the values are equivalent."
+//      value1 [any-type!]
+//      value2 [any-type!]
+//  ]
+//
 
 REBNATIVE(equivq)
 {
@@ -544,17 +473,13 @@ REBNATIVE(equivq)
 	return R_FALSE;
 }
 
-/*******************************************************************************
-**
-**  Name: "not_equivq"
-**  Summary: "Returns TRUE if the values are not equivalent."
-**  Details: none
-**  Spec: [
-**      <1> value1
-**      <2> value2
-**  ]
-**
-*******************************************************************************/
+//
+//  not-equiv?: native [
+//      "Returns TRUE if the values are not equivalent."
+//      value1 [any-type!]
+//      value2 [any-type!]
+//  ]
+//
 
 REBNATIVE(not_equivq)
 {
@@ -562,17 +487,13 @@ REBNATIVE(not_equivq)
 	return R_TRUE;
 }
 
-/*******************************************************************************
-**
-**  Name: "strict_equalq"
-**  Summary: "Returns TRUE if the values are strictly equal."
-**  Details: none
-**  Spec: [
-**      <1> value1
-**      <2> value2
-**  ]
-**
-*******************************************************************************/
+//
+//  strict-equal?: native [
+//      "Returns TRUE if the values are strictly equal."
+//      value1 [any-type!]
+//      value2 [any-type!]
+//  ]
+//
 
 REBNATIVE(strict_equalq)
 {
@@ -580,17 +501,13 @@ REBNATIVE(strict_equalq)
 	return R_FALSE;
 }
 
-/*******************************************************************************
-**
-**  Name: "strict_not_equalq"
-**  Summary: "Returns TRUE if the values are not strictly equal."
-**  Details: none
-**  Spec: [
-**      <1> value1
-**      <2> value2
-**  ]
-**
-*******************************************************************************/
+//
+//  strict-not-equal?: native [
+//      "Returns TRUE if the values are not strictly equal."
+//      value1 [any-type!]
+//      value2 [any-type!]
+//  ]
+//
 
 REBNATIVE(strict_not_equalq)
 {
@@ -598,17 +515,13 @@ REBNATIVE(strict_not_equalq)
 	return R_TRUE;
 }
 
-/*******************************************************************************
-**
-**  Name: "sameq"
-**  Summary: "Returns TRUE if the values are identical."
-**  Details: none
-**  Spec: [
-**      <1> value1
-**      <2> value2
-**  ]
-**
-*******************************************************************************/
+//
+//  same?: native [
+//      "Returns TRUE if the values are identical."
+//      value1 [any-type!]
+//      value2 [any-type!]
+//  ]
+//
 
 REBNATIVE(sameq)
 {
@@ -616,17 +529,12 @@ REBNATIVE(sameq)
 	return R_FALSE;
 }
 
-/*******************************************************************************
-**
-**  Name: "lesserq"
-**  Summary: {Returns TRUE if the first value is less than the second value.}
-**  Details: none
-**  Spec: [
-**      <1> value1
-**      <2> value2
-**  ]
-**
-*******************************************************************************/
+//
+//  lesser?: native [
+//      {Returns TRUE if the first value is less than the second value.}
+//      value1 value2
+//  ]
+//
 
 REBNATIVE(lesserq)
 {
@@ -634,17 +542,12 @@ REBNATIVE(lesserq)
 	return R_TRUE;
 }
 
-/*******************************************************************************
-**
-**  Name: "lesser_or_equalq"
-**  Summary: {Returns TRUE if the first value is less than or equal to the second value.}
-**  Details: none
-**  Spec: [
-**      <1> value1
-**      <2> value2
-**  ]
-**
-*******************************************************************************/
+//
+//  lesser-or-equal?: native [
+//      {Returns TRUE if the first value is less than or equal to the second value.}
+//      value1 value2
+//  ]
+//
 
 REBNATIVE(lesser_or_equalq)
 {
@@ -652,17 +555,12 @@ REBNATIVE(lesser_or_equalq)
 	return R_TRUE;
 }
 
-/*******************************************************************************
-**
-**  Name: "greaterq"
-**  Summary: {Returns TRUE if the first value is greater than the second value.}
-**  Details: none
-**  Spec: [
-**      <1> value1
-**      <2> value2
-**  ]
-**
-*******************************************************************************/
+//
+//  greater?: native [
+//      {Returns TRUE if the first value is greater than the second value.}
+//      value1 value2
+//  ]
+//
 
 REBNATIVE(greaterq)
 {
@@ -670,17 +568,12 @@ REBNATIVE(greaterq)
 	return R_FALSE;
 }
 
-/*******************************************************************************
-**
-**  Name: "greater_or_equalq"
-**  Summary: {Returns TRUE if the first value is greater than or equal to the second value.}
-**  Details: none
-**  Spec: [
-**      <1> value1
-**      <2> value2
-**  ]
-**
-*******************************************************************************/
+//
+//  greater-or-equal?: native [
+//      {Returns TRUE if the first value is greater than or equal to the second value.}
+//      value1 value2
+//  ]
+//
 
 REBNATIVE(greater_or_equalq)
 {
@@ -688,17 +581,13 @@ REBNATIVE(greater_or_equalq)
 	return R_FALSE;
 }
 
-/*******************************************************************************
-**
-**  Name: "maximum"
-**  Summary: "Returns the greater of the two values."
-**  Details: none
-**  Spec: [
-**      <1> value1
-**      <2> value2
-**  ]
-**
-*******************************************************************************/
+//
+//  maximum: native [
+//      "Returns the greater of the two values."
+//      value1 [scalar! date! series!]
+//      value2 [scalar! date! series!]
+//  ]
+//
 
 REBNATIVE(maximum)
 {
@@ -715,17 +604,13 @@ REBNATIVE(maximum)
 	return R_ARG2;
 }
 
-/*******************************************************************************
-**
-**  Name: "minimum"
-**  Summary: "Returns the lesser of the two values."
-**  Details: none
-**  Spec: [
-**      <1> value1
-**      <2> value2
-**  ]
-**
-*******************************************************************************/
+//
+//  minimum: native [
+//      "Returns the lesser of the two values."
+//      value1 [scalar! date! series!]
+//      value2 [scalar! date! series!]
+//  ]
+//
 
 REBNATIVE(minimum)
 {
@@ -743,16 +628,12 @@ REBNATIVE(minimum)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "negativeq"
-**  Summary: "Returns TRUE if the number is negative."
-**  Details: none
-**  Spec: [
-**      <1> number
-**  ]
-**
-*******************************************************************************/
+//
+//  negative?: native [
+//      "Returns TRUE if the number is negative."
+//      number [number! money! time! pair!]
+//  ]
+//
 
 REBNATIVE(negativeq)
 {
@@ -764,16 +645,12 @@ REBNATIVE(negativeq)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "positiveq"
-**  Summary: "Returns TRUE if the value is positive."
-**  Details: none
-**  Spec: [
-**      <1> number
-**  ]
-**
-*******************************************************************************/
+//
+//  positive?: native [
+//      "Returns TRUE if the value is positive."
+//      number [number! money! time! pair!]
+//  ]
+//
 
 REBNATIVE(positiveq)
 {
@@ -786,16 +663,12 @@ REBNATIVE(positiveq)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "zeroq"
-**  Summary: {Returns TRUE if the value is zero (for its datatype).}
-**  Details: none
-**  Spec: [
-**      <1> value
-**  ]
-**
-*******************************************************************************/
+//
+//  zero?: native [
+//      {Returns TRUE if the value is zero (for its datatype).}
+//      value
+//  ]
+//
 
 REBNATIVE(zeroq)
 {

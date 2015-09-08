@@ -38,14 +38,9 @@ typedef int cmp_t(const void *, const void *);
 extern void reb_qsort(void *a, size_t n, size_t es, cmp_t *cmp);
 
 
-/*******************************************************************************
-**
-**  Name: "CT_String"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_String: C
+//
 
 REBINT CT_String(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -67,7 +62,8 @@ REBINT CT_String(REBVAL *a, REBVAL *b, REBINT mode)
 **
 ***********************************************************************/
 
-// !!! "STRING value to CHAR value (save some code space)" <-- what?
+//  !!! "STRING value to CHAR value (save some code space)" <-- what?
+
 static void str_to_char(REBVAL *out, REBVAL *val, REBCNT idx)
 {
 	// Note: out may equal val, do assignment in two steps
@@ -284,14 +280,9 @@ static REBSER *make_binary(REBVAL *arg, REBOOL make)
 	return ser;
 }
 
-/*******************************************************************************
-**
-**  Name: "MT_String"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_String: C
+//
 
 REBFLG MT_String(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -307,14 +298,9 @@ REBFLG MT_String(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Compare_Chr"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Compare_Chr: C
+//
 
 static int Compare_Chr(const void *v1, const void *v2)
 {
@@ -323,14 +309,9 @@ static int Compare_Chr(const void *v1, const void *v2)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Compare_Chr_Rev"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Compare_Chr_Rev: C
+//
 
 static int Compare_Chr_Rev(const void *v1, const void *v2)
 {
@@ -339,14 +320,9 @@ static int Compare_Chr_Rev(const void *v1, const void *v2)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Sort_String"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Sort_String: C
+//
 
 static void Sort_String(REBVAL *string, REBFLG ccase, REBVAL *skipv, REBVAL *compv, REBVAL *part, REBFLG all, REBFLG rev)
 {
@@ -375,14 +351,9 @@ static void Sort_String(REBVAL *string, REBFLG ccase, REBVAL *skipv, REBVAL *com
 }
 
 
-/*******************************************************************************
-**
-**  Name: "PD_String"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  PD_String: C
+//
 
 REBINT PD_String(REBPVS *pvs)
 {
@@ -440,14 +411,9 @@ REBINT PD_String(REBPVS *pvs)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "PD_File"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  PD_File: C
+//
 
 REBINT PD_File(REBPVS *pvs)
 {
@@ -484,14 +450,9 @@ REBINT PD_File(REBPVS *pvs)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(String)
 {

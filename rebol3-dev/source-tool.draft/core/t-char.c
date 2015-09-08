@@ -30,14 +30,9 @@
 #include "sys-core.h"
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Char"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Char: C
+//
 
 REBINT CT_Char(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -57,14 +52,9 @@ REBINT CT_Char(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Char)
 {

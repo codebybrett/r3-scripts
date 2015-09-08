@@ -161,17 +161,22 @@ source-tool: context [
 
 		comment: context [
 
-			format: func [
-				spec
-				/local text bol width
-			] [
+			format: context [
 
-				width: max-line-length - 2
+				slashed: func [text] [
 
-				rejoin [
-					{/*} line* width newline
-					mold-comment spec
-					line* width {*/} newline
+					encode-lines copy text {//} {  }
+				]
+
+				starred: funct [text] [
+
+					width: max-line-length - 2
+
+					rejoin [
+						{/*} line* width newline
+						encode-lines copy text {**} {  }
+						line* width {*/} newline
+					]
 				]
 			]
 
@@ -180,20 +185,30 @@ source-tool: context [
 				head insert/dup copy {} #"*" count
 			]
 
-			load: func [string /local lines] [
+			load: func [string /local lines prefix] [
 
 				if none? string [return none]
 
 				parse/all string [
-					{/*} 20 200 #"*" newline
-					copy lines some [{**} [newline | #" " thru newline]]
-					20 200 #"*" #"/" newline
-					to end
+
+					; Slashed.
+					copy lines some [{//} [newline | #" " thru newline]]
+					(prefix: {//})
+
+					| [ ; Starred
+						{/*} 20 200 #"*" newline
+						copy lines some [{**} [newline | #" " thru newline]]
+						20 200 #"*" #"/" newline
+						to end
+						(prefix: {**})
+					]
 				]
 
-				if lines [load-comment lines]
+				if lines [
+					lines: decode-lines lines prefix {  }
+					load-until-blank lines
+				]
 			]
-
 		]
 
 		decl: context [
@@ -202,9 +217,14 @@ source-tool: context [
 
 			format: funct [def][
 
-				string: rejoin collect [
+				intro: comment/format/slashed def/intro-notes
 
-					keep comment/format meta-of def
+				if text/width-exceeded? intro [
+					log [line-width-exceeded intro (mold def/file) (def/name) (def/param)]
+				]
+
+				parts: collect [
+
 					keep newline
 
 					if def/pre-comment [
@@ -212,84 +232,66 @@ source-tool: context [
 						keep newline
 					]
 
-					foreach word def/keywords [keep word keep #" "]
+					foreach word def/keywords [
+						keep word
+						if "*" <> word [keep #" "]
+					]
+
 					keep def/name
 					keep rejoin [#"(" def/param #")" newline]
 
 					keep #"^{"
 				]
 
-				parse/all string [
-					some [
-						bol: to newline eol: skip (
-							if max-line-length < subtract index? eol index? bol [
-								width-exceeded: true
-							]
-						)
-					]
-				]
-				if width-exceeded [
-					log [line-width-exceeded (mold def/file) (def/name) (def/param)]
+				rest: rejoin parts
+
+				if text/width-exceeded? rest [
+					log [line-width-exceeded non-intro (mold def/file) (def/name) (def/param)]
 				]
 
-				string
+				join intro rest
 			]
 
-			meta-of: funct [
-				{Return function metadata.}
-				def
-			] [
-		
+			normalise: funct [def][
+
 				name: def/name
-
-				if native: rebnative? def [
-					r.id: id-to-word name: def/param
-					r-info: attempt [r-source/native/cache/:r.id]
-				]
-
-				if r-info [
-					summary: if string? first r-info [first r-info]
-					spec: synopsis r-info
-				]
 
 				either def/style = 'new-style-decl [
 
-					meta: comment/load def/intro-notes
-					details: attempt [second find meta first [Details:]]
+					set [meta notes] comment/load def/intro-notes
+				][
 
-				][ ; old-style-decl
+					either native: rebnative? def [
 
-					details: def/post-notes
+						r.id: id-to-word name: def/param
+						r-info: attempt [r-source/native/cache/:r.id]
+
+						meta: compose/only [
+							(to set-word! r.id) native (r-info)
+						]
+					][
+
+						meta: compose/only [
+							(to set-word! form name) C
+						]
+					]
+
+					new-line meta true
+
+					if def/post-notes [def/post-notes: rejoin [newline def/post-notes newline]]
+					notes: def/post-notes
+					def/post-notes: none
+
 					if def/intro-notes [
 						def/pre-comment: rejoin [{/*} def/intro-notes {*/}]
 						def/intro-notes: none
 					]
+
 				]
 
-				pretty-spec compose/only [
-					Name: (form name)
-					Summary: (summary)
-					Details: (details)
-					Spec: (spec)
-				]
-			]
-
-			synopsis: funct [spec /local block] [
-
-				block: pretty-spec collect [
-
-					count: 0
-
-					foreach x spec [
-						if any [word? x refinement? x] [
-							count: count + 1
-							keep to-tag count
-							keep :x
-						]
-					]
-				]
-
-				if not empty? block [block]
+				notes: any [notes {}]
+				def/intro-notes: rejoin [mold-contents meta notes]
+				def/style: 'new-style-decl
 			]
 
 			sync-to-code: funct [def][
@@ -298,7 +300,7 @@ source-tool: context [
 				position: at tree def/token
 
 				node: first position
-				node/1: 'new-style-decl
+				node/1: def/style
 				node/3/content: format def
 
 				debug [update-decl (def/name) (def/param)]
@@ -334,7 +336,7 @@ source-tool: context [
 					pattern: first position
 
 					if all [
-						word: in text/declaration-parsers pattern/1
+						word: in text/decl-parsers pattern/1
 						def: do get word position
 					] [
 						insert def reduce ['file name]
@@ -351,7 +353,7 @@ source-tool: context [
 					not parse/all name [thru %.c]
 				]
 
-				ugly-tmp-var
+				sort ugly-tmp-var
 			]
 
 			process: func [file /local source tree] [
@@ -442,14 +444,7 @@ source-tool: context [
 			]
 		]
 
-		indexing: func [/local id] [
-
-			decl/list: make block! []
-
-			foreach name file/list [
-				debug [indexing-file (name)]
-				append decl/list file/declarations name
-			]
+		index-decls: func [/local id] [
 
 			rebnative-index: collect [
 
@@ -488,16 +483,35 @@ source-tool: context [
 			]
 		]
 
-		parsing: func [] [
+		parse-decls: func [] [
+
+			decl/list: make block! []
+
+			foreach name file/list [
+				debug [file-decls (name)]
+				append decl/list file/declarations name
+			]
+
+			if empty? decl/list [do make error! {No declarations found. Check declaration parsing.}]
+		]
+
+		parse-files: func [] [
 
 			foreach name file/list [file/process name]
+		]
+
+		normalise-decls: func [] [
+
+			foreach def decl/list [decl/normalise def]
 		]
 
 		process: func [] [
 
 			reset
-			timing [parsing]
-			timing [indexing]
+			timing [parse-files]
+			timing [parse-decls]
+			timing [normalise-decls]
+			timing [index-decls]
 			exit
 		]
 
@@ -510,7 +524,7 @@ source-tool: context [
 
 		text: context [
 
-			declaration-parsers: context [
+			decl-parsers: context [
 
 				; TODO: Is there a simpler way to get info from tree while checking assumptions?
 
@@ -543,8 +557,8 @@ source-tool: context [
 					apropos text/parser/grammar [
 
 						tree: get-parse [parse/all string new-style-decl] [
-							decl.words decl.args.single decl.args.multi c.id
-							comment.banner comment.multiline.intact
+							decl.words decl.args.single decl.args.multi c.id c.special
+							comment.doubleslash comment.banner comment.multiline.intact
 						]
 					]
 
@@ -554,7 +568,7 @@ source-tool: context [
 
 					position: at tree 4
 
-					if 'comment.banner = position/1/1 [
+					if find [comment.doubleslash comment.banner] position/1/1 [
 						intro-notes: position/1/3/content
 						position: next position
 					]
@@ -568,7 +582,7 @@ source-tool: context [
 					childpos: at decl.words 4
 					decl.words: collect [
 						forall childpos [
-							c.id: assert-node 'c.id childpos
+							c.id: assert-node [find [c.special c.id] node/1] childpos
 							keep c.id/3/content
 						]
 					]
@@ -592,9 +606,13 @@ source-tool: context [
 						position/1/1 = 'comment.notes
 					][
 						post-notes: position/1/3/content
+
 						insert post-notes newline
-						replace/all post-notes {^/**} newline
+						replace/all post-notes {^/**^-} {^/**  }
+						remove post-notes
+						decode-lines post-notes {**} {  }
 						replace/all post-notes tab {    }
+
 						trim/tail post-notes
 					]
 
@@ -620,7 +638,8 @@ source-tool: context [
 					apropos text/parser/grammar [
 
 						tree: get-parse [parse/all string old-style-decl] [
-							decl.words decl.args.single decl.args.multi c.id comment.notes
+							decl.words decl.args.single decl.args.multi c.id c.special
+							comment.notes
 						]
 					]
 
@@ -641,7 +660,7 @@ source-tool: context [
 					childpos: at decl.words 4
 					decl.words: collect [
 						forall childpos [
-							c.id: assert-node 'c.id childpos
+							c.id: assert-node [find [c.special c.id] node/1] childpos
 							keep c.id/3/content
 						]
 					]
@@ -665,9 +684,13 @@ source-tool: context [
 						position/1/1 = 'comment.notes
 					][
 						post-notes: position/1/3/content
+
 						insert post-notes newline
-						replace/all post-notes {^/**} newline
+						replace/all post-notes {^/**^-} {^/**  }
+						remove post-notes
+						decode-lines post-notes {**} {  }
 						replace/all post-notes tab {    }
+
 						trim/tail post-notes
 					]
 
@@ -704,47 +727,55 @@ source-tool: context [
 					;
 
 					rule: [opt file-comment some pattern rest]
-					file-comment: [comment.multiline]
-					pattern: [old-style-decl | new-style-decl | to-next]
+					file-comment: [comment.multiline.standard]
+					pattern: [old-section | old-style-decl | new-style-decl | comment | to-next]
+					old-section: [{/*} stars newline stars newline opt comment.notes stars {*/} newline]
 					old-style-decl: [
-						[comment.decorative | comment.multiline]
+						[comment.decorative | comment.multiline.standard]
 						wsp decl
-						[comment.decorative | comment.multiline]
+						[comment.decorative | comment.multiline.standard]
 						any newline #"{"
 					]
 					new-style-decl: [
-						comment.banner
+						[comment.doubleslash | comment.banner]
 						any newline
 						opt comment.multiline.intact
 						any newline
 						decl
 						any newline #"{"
 					]
-					comment: [comment.multiline | comment.decorative]
-					to-next: [to {^//*} newline]
+					comment: [comment.doubleslash | comment.multiline.other]
+					to-next: [first-comment-marker newline]
+					first-comment-marker: parsing-earliest [[to {^///}] [to {^//*}]]
 					rest: [to end]
 
 					decl: [decl.words #"(" decl.args #")" opt wsp newline]
-					decl.words: [c.id any [wsp c.id]]
+					decl.words: [c.id any [wsp c.id] opt [wsp c.special c.id]]
 					decl.args: [decl.args.single | decl.args.multi]
 					decl.args.single: [c.id pos: #")" :pos]
 					decl.args.multi: [to #")"]
 					c.id: [id.nondigit any id.rest]
+					c.special: [#"*"]
 
 					comment.banner: [{/*} stars newline opt comment.notes stars {*/} newline]
 					comment.decorative: [{/*} some [stars | wsp | newline] {*/}]
 					comment.multiline.intact: [{/*} opt stars newline any comment.note.line opt stars {*/}]
-					comment.multiline: [{/*} opt stars newline opt comment.notes opt stars {*/}]
+					comment.multiline.standard: [{/*} opt stars newline opt comment.notes opt stars {*/}]
+					comment.multiline.other: [{/*} some [newline | stars | comment.note.text] {*/}]
+
+					comment.doubleslash: [some [{//} thru newline]]
+
 					comment.notes: [some comment.note.line]
-					comment.note.line: [[{**} comment.note.text | stars] newline]
+					comment.note.line: [[[{**} | {//}] comment.note.text | stars] newline]
 					comment.note.text: [some [not-eoc skip]]
+					; Modified cheaply to accept doubleslash comments.
 
 					stars: [#"*" some #"*" opt [pos: #"/" (pos: back pos) :pos]]
 
 					not-eoc: either system/version > 2.100.0 [; Rebol3
-						[not [stars | newline]]
+						[not [{*/} | stars | newline]]
 					] [; Rebol2
-						[(guard: [none]) [opt [[stars | newline] (guard: [end skip])] guard]]
+						[(guard: [none]) [opt [[{*/} | stars | newline] (guard: [end skip])] guard]]
 					]
 
 					wsp: compose [some (charset { ^-})]
@@ -762,8 +793,10 @@ source-tool: context [
 
 				terms: bind [
 					file-comment
+					old-section
 					old-style-decl
 					new-style-decl
+					comment
 					to-next rest
 				] parser/grammar
 
@@ -781,6 +814,21 @@ source-tool: context [
 				either empty? children [block/3/content] [
 					rejoin map-each node children [regenerate node]
 				]
+			]
+
+			width-exceeded?: funct [string][
+
+				parse/all string [
+					some [
+						bol: to newline eol: skip (
+							if max-line-length < subtract index? eol index? bol [
+								width-exceeded: true
+							]
+						)
+					]
+				]
+
+				width-exceeded
 			]
 
 		]
@@ -831,7 +879,7 @@ source-tool: context [
 				]
 
 				sort/skip cache 2
-				spec
+				exit
 			]
 
 		]

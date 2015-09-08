@@ -2,8 +2,6 @@ REBOL [
 	Title: {Parsing Kit}
 	Purpose: "A collection of parsing tools."
 	File: %parse-kit.r
-	Date: 31-Aug-2015
-	Version: 1.5.1
 	Author: "Brett Handley"
 	Web: http://www.codeconscious.com
 	License: {
@@ -32,6 +30,7 @@ REBOL [
 		1.4.0 [8-Jul-2015 "Added after." "Brett Handley"]
 		1.5.0 [26-Aug-2015 "Added position and length properties to root. Rename ctx to output." "Brett Handley"]
 		1.5.1 [31-Aug-2015 "Fix parsing-unless and optimise for Rebol 3." "Brett Handley"]
+		1.6.0 [7-Sep-2015 "Add parsing-earliest and parsing-matched." "Brett Handley"]
 	]
 ]
 
@@ -60,6 +59,14 @@ REBOL [
 ;
 ;		Example:
 ;			parse [a [[x]]] parsing-deep ['x]
+;
+;	parsing-earliest
+;
+;		Create a rule that finds the minimum matched index position for a list of rules.
+;
+;	parsing-matched
+;
+;		Create a rule that evaluates a block of positions, one for each rule in a list.
 ;
 ;	parsing-expression
 ;
@@ -266,6 +273,38 @@ parsing-deep: func [
 
 ]
 
+parsing-earliest: funct [
+	{Create a rule that parses every TO rule in a list to find the match with lowest index.}
+	rules [block!] {Block of rules to pass to TO.}
+] [
+
+	use [pos min] [
+		parsing-matched list rules [
+
+			remove-each x list [none? x]
+
+			if not empty? list [
+
+				min: index? pos: list/1
+				list: next list
+				while [not tail? list] [
+					if list/1 [
+						if not same? head pos head list/1 [
+							do make error! {Can only compare rule positions for the same series.}
+						]
+						if lesser? index? list/1 min [
+							min: index? pos: list/1
+						]
+					]
+					list: next list
+				]
+
+				pos
+			]
+		]
+	]
+]
+
 parsing-expression: funct [
 	{Creates a rule that replaces an expression with it's evaluation.}
 	symbol [word! block!] {The word or block of words that denote the expression to be evaluated.}
@@ -295,6 +334,32 @@ parsing-expression: funct [
 	if stay [rule: compose/only [position: (rule) :position]]
 	if all [rule: parsing-deep/all rule]
 	rule
+]
+
+parsing-matched: funct [
+	{Create a rule that evaluates a block of positions, one for each rule in a list.}
+	'word [word!] {Word set to result positions of the rules (will be local).}
+	rules [block!] {Block of rules to match.}
+	block [block!] {Block to evaluate. Return next input position, or none/false.}
+] [
+
+	word: use reduce [:word] reduce [compose [(word)]]
+
+	use [result positions position start] [
+		collect [
+			keep compose/only [(to paren! compose [positions: array (length? rules)]) start:]
+			for i 1 length? rules 1 [
+				keep compose/deep/only [
+					:start (to paren! [position: none]) opt [(:rules/:i) position:] (to paren! compose [poke positions (i) position])
+				]
+			]
+			keep/only to paren! compose/only [
+				(to set-word! word/1) positions
+				result: either position: (to paren! bind/copy block word/1) [[:position]] [[end skip]]
+			]
+			keep/only 'result
+		]
+	]
 ]
 
 parsing-rewrite: funct [

@@ -902,16 +902,12 @@ static const REBUNI Char_Cases[] = {
 };
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Char_Cases"
-**  Summary: none
-**  Details: {
-**      Initialize the Unicode character casing tables.
-**      These tables support simple 1-to-1 casing methods.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Char_Cases: C
+//  
+//      Initialize the Unicode character casing tables.
+//      These tables support simple 1-to-1 casing methods.
+//
 
 void Init_Char_Cases(void)
 {

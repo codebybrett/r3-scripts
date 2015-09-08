@@ -30,14 +30,11 @@
 #include "sys-core.h"
 
 
-/*******************************************************************************
-**
-**  Name: "halt"
-**  Summary: "Stops evaluation and returns to the input prompt."
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  halt: native [
+//      "Stops evaluation and returns to the input prompt."
+//  ]
+//
 
 REBNATIVE(halt)
 {
@@ -46,27 +43,24 @@ REBNATIVE(halt)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "quit"
-**  Summary: {Stop evaluating and return control to command shell or calling script.}
-**  Details: {
-**  1: /with
-**  2: value
-**  3: /return (deprecated)
-**  4: /return-value (deprecated)
-**  
-**  While QUIT is implemented via a THROWN() value that bubbles up
-**  through the stack, it may not ultimately use the WORD! of QUIT
-**  as its /NAME when more specific values are allowed as names.}
-**  Spec: [
-**      <1> /with
-**      <2> value
-**      <3> /return
-**      <4> return-value
-**  ]
-**
-*******************************************************************************/
+//
+//  quit: native [
+//      {Stop evaluating and return control to command shell or calling script.}
+//      /with {Yield a result (mapped to an integer if given to shell)}
+//      value [any-type!] "See: http://en.wikipedia.org/wiki/Exit_status"
+//      /return "(deprecated synonym for /WITH)"
+//      return-value
+//  ]
+//  
+//  1: /with
+//  2: value
+//  3: /return (deprecated)
+//  4: /return-value (deprecated)
+//  
+//  While QUIT is implemented via a THROWN() value that bubbles up
+//  through the stack, it may not ultimately use the WORD! of QUIT
+//  as its /NAME when more specific values are allowed as names.
+//
 
 REBNATIVE(quit)
 {
@@ -92,20 +86,16 @@ REBNATIVE(quit)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "recycle"
-**  Summary: "Recycles unused memory."
-**  Details: none
-**  Spec: [
-**      <1> /off
-**      <2> /on
-**      <3> /ballast
-**      <4> size
-**      <5> /torture
-**  ]
-**
-*******************************************************************************/
+//
+//  recycle: native [
+//      "Recycles unused memory."
+//      /off "Disable auto-recycling"
+//      /on "Enable auto-recycling"
+//      /ballast "Trigger for auto-recycle (memory used)"
+//      size [integer!]
+//      /torture "Constant recycle (for internal debugging)"
+//  ]
+//
 
 REBNATIVE(recycle)
 {
@@ -138,21 +128,16 @@ REBNATIVE(recycle)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "stats"
-**  Summary: {Provides status and statistics information about the interpreter.}
-**  Details: none
-**  Spec: [
-**      <1> /show
-**      <2> /profile
-**      <3> /timer
-**      <4> /evals
-**      <5> /dump-series
-**      <6> pool-id
-**  ]
-**
-*******************************************************************************/
+//
+//  stats: native [
+//      {Provides status and statistics information about the interpreter.}
+//      /show "Print formatted results to console"
+//      /profile "Returns profiler object"
+//      /timer "High resolution time difference from start"
+//      /evals "Number of values evaluated by interpreter"
+//      /dump-series pool-id [integer!] "Dump all series in pool pool-id, -1 for all pools"
+//  ]
+//
 
 REBNATIVE(stats)
 {
@@ -231,16 +216,12 @@ const char *evoke_help = "Evoke values:\n"
 	"3: check bind table\n"
 ;
 
-/*******************************************************************************
-**
-**  Name: "evoke"
-**  Summary: "Special guru meditations. (Not for beginners.)"
-**  Details: none
-**  Spec: [
-**      <1> chant
-**  ]
-**
-*******************************************************************************/
+//
+//  evoke: native [
+//      "Special guru meditations. (Not for beginners.)"
+//      chant [word! block! integer!] "Single or block of words ('? to list)"
+//  ]
+//
 
 REBNATIVE(evoke)
 {
@@ -306,14 +287,9 @@ REBNATIVE(evoke)
 }
 
 #ifdef NOT_USED
-/*******************************************************************************
-**
-**  Name: "in_context"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  in-context: native none
+//
 
 REBNATIVE(in_context)
 {
@@ -324,17 +300,13 @@ REBNATIVE(in_context)
 }
 #endif
 
-/*******************************************************************************
-**
-**  Name: "limit_usage"
-**  Summary: "Set a usage limit only once (used for SECURE)."
-**  Details: none
-**  Spec: [
-**      <1> field
-**      <2> limit
-**  ]
-**
-*******************************************************************************/
+//
+//  limit-usage: native [
+//      "Set a usage limit only once (used for SECURE)."
+//      field [word!] "eval (count) or memory (bytes)"
+//      limit [number!]
+//  ]
+//
 
 REBNATIVE(limit_usage)
 {
@@ -352,34 +324,31 @@ REBNATIVE(limit_usage)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "stack"
-**  Summary: "Returns stack backtrace or other values."
-**  Details: {
-**  stack: native [
-**      {Returns stack backtrace or other values.}
-**      offset [integer!] "Relative backward offset"
-**      /block "Block evaluation position"
-**      /word "Function or object name, if known"
-**      /func "Function value"
-**      /args "Block of args (may be modified)"
-**      /size "Current stack size (in value units)"
-**      /depth "Stack depth (frames)"
-**      /limit "Stack bounds (auto expanding)"
-**  ]}
-**  Spec: [
-**      <1> offset
-**      <2> /block
-**      <3> /word
-**      <4> /func
-**      <5> /args
-**      <6> /size
-**      <7> /depth
-**      <8> /limit
-**  ]
-**
-*******************************************************************************/
+//
+//  stack: native [
+//      "Returns stack backtrace or other values."
+//      offset [integer!] "Relative backward offset"
+//      /block "Block evaluation position"
+//      /word "Function or object name, if known"
+//      /func "Function value"
+//      /args "Block of args (may be modified)"
+//      /size "Current stack size (in value units)"
+//      /depth "Stack depth (frames)"
+//      /limit "Stack bounds (auto expanding)"
+//  ]
+//  
+//  stack: native [
+//      {Returns stack backtrace or other values.}
+//      offset [integer!] "Relative backward offset"
+//      /block "Block evaluation position"
+//      /word "Function or object name, if known"
+//      /func "Function value"
+//      /args "Block of args (may be modified)"
+//      /size "Current stack size (in value units)"
+//      /depth "Stack depth (frames)"
+//      /limit "Stack bounds (auto expanding)"
+//  ]
+//
 
 REBNATIVE(stack)
 {
@@ -421,16 +390,9 @@ REBNATIVE(stack)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "check"
-**  Summary: "Temporary series debug check"
-**  Details: none
-**  Spec: [
-**      <1> val
-**  ]
-**
-*******************************************************************************/
+//
+//  check: native ["Temporary series debug check" val [series!]]
+//
 
 REBNATIVE(check)
 {
@@ -460,14 +422,9 @@ err:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "ds"
-**  Summary: "Temporary stack debug"
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  ds: native ["Temporary stack debug"]
+//
 
 REBNATIVE(ds)
 {
@@ -476,25 +433,22 @@ REBNATIVE(ds)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "do_codec"
-**  Summary: {Evaluate a CODEC function to encode or decode media types.}
-**  Details: {
-**      Calls a codec handle with specific data:
-**  
-**  Args:
-**      1: codec:  handle!
-**      2: action: word! (identify, decode, encode)
-**      3: data:   binary! image! sound!
-**      4: option: (optional)}
-**  Spec: [
-**      <1> handle
-**      <2> action
-**      <3> data
-**  ]
-**
-*******************************************************************************/
+//
+//  do-codec: native [
+//      {Evaluate a CODEC function to encode or decode media types.}
+//      handle [handle!] "Internal link to codec"
+//      action [word!] "Decode, encode, identify"
+//      data [binary! image! string!]
+//  ]
+//  
+//      Calls a codec handle with specific data:
+//  
+//  Args:
+//      1: codec:  handle!
+//      2: action: word! (identify, decode, encode)
+//      3: data:   binary! image! sound!
+//      4: option: (optional)
+//
 
 REBNATIVE(do_codec)
 {
@@ -608,16 +562,12 @@ REBNATIVE(do_codec)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "selflessq"
-**  Summary: "Returns true if the context doesn't bind 'self."
-**  Details: none
-**  Spec: [
-**      <1> context
-**  ]
-**
-*******************************************************************************/
+//
+//  selfless?: native [
+//      "Returns true if the context doesn't bind 'self."
+//      context [any-word! any-object!] "A reference to the target context"
+//  ]
+//
 
 REBNATIVE(selflessq)
 {

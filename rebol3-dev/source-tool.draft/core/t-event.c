@@ -35,14 +35,9 @@
 #include "reb-net.h"
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Event"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Event: C
+//
 
 REBINT CT_Event(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -52,14 +47,11 @@ REBINT CT_Event(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Cmp_Event"
-**  Summary: none
-**  Details: "^/    Given two events, compare them."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Cmp_Event: C
+//  
+//  Given two events, compare them.
+//
 
 REBINT Cmp_Event(const REBVAL *t1, const REBVAL *t2)
 {
@@ -75,14 +67,9 @@ REBINT Cmp_Event(const REBVAL *t1, const REBVAL *t2)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Set_Event_Var"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_Event_Var: C
+//
 
 static REBFLG Set_Event_Var(REBVAL *value, const REBVAL *word, const REBVAL *val)
 {
@@ -196,14 +183,9 @@ static REBFLG Set_Event_Var(REBVAL *value, const REBVAL *word, const REBVAL *val
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Set_Event_Vars"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_Event_Vars: C
+//
 
 static void Set_Event_Vars(REBVAL *evt, REBVAL *blk)
 {
@@ -226,14 +208,9 @@ static void Set_Event_Vars(REBVAL *evt, REBVAL *blk)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Get_Event_Var"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Get_Event_Var: C
+//
 
 static REBFLG Get_Event_Var(const REBVAL *value, REBCNT sym, REBVAL *val)
 {
@@ -372,14 +349,9 @@ is_none:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "MT_Event"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_Event: C
+//
 
 REBFLG MT_Event(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -394,14 +366,9 @@ REBFLG MT_Event(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "PD_Event"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  PD_Event: C
+//
 
 REBINT PD_Event(REBPVS *pvs)
 {
@@ -418,14 +385,9 @@ REBINT PD_Event(REBPVS *pvs)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Event)
 {
@@ -576,14 +538,9 @@ enum rebol_event_fields {
 #endif
 
 
-/*******************************************************************************
-**
-**  Name: "Mold_Event"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Mold_Event: C
+//
 
 void Mold_Event(const REBVAL *value, REB_MOLD *mold)
 {

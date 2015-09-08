@@ -53,14 +53,9 @@
 };
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Typeset"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Typeset: C
+//
 
 REBINT CT_Typeset(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -69,17 +64,13 @@ REBINT CT_Typeset(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Typesets"
-**  Summary: none
-**  Details: {
-**      Create typeset variables that are defined above.
-**      For example: NUMBER is both integer and decimal.
-**      Add the new variables to the system context.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Typesets: C
+//  
+//      Create typeset variables that are defined above.
+//      For example: NUMBER is both integer and decimal.
+//      Add the new variables to the system context.
+//
 
 void Init_Typesets(void)
 {
@@ -98,16 +89,12 @@ void Init_Typesets(void)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Make_Typeset"
-**  Summary: none
-**  Details: {
-**      block - block of datatypes (datatype words ok too)
-**      value - value to hold result (can be word-spec type too)}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Make_Typeset: C
+//  
+//      block - block of datatypes (datatype words ok too)
+//      value - value to hold result (can be word-spec type too)
+//
 
 REBFLG Make_Typeset(REBVAL *block, REBVAL *value, REBFLG load)
 {
@@ -146,14 +133,9 @@ REBFLG Make_Typeset(REBVAL *block, REBVAL *value, REBFLG load)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "MT_Typeset"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_Typeset: C
+//
 
 REBFLG MT_Typeset(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -166,14 +148,9 @@ REBFLG MT_Typeset(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Find_Typeset"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Find_Typeset: C
+//
 
 REBINT Find_Typeset(REBVAL *block)
 {
@@ -199,14 +176,14 @@ REBINT Find_Typeset(REBVAL *block)
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Typeset_To_Block(REBVAL *tset)
-/*
-**		Converts typeset value to a block of datatypes.
-**		No order is specified.
-**
-***********************************************************************/
+//
+//  Typeset_To_Block: C
+//  
+//      Converts typeset value to a block of datatypes.
+//      No order is specified.
+//
+
+REBSER *Typeset_To_Block(REBVAL *tset)
 {
 	REBSER *block;
 	REBVAL *value;
@@ -230,14 +207,9 @@ REBINT Find_Typeset(REBVAL *block)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Typeset)
 {

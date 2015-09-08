@@ -30,14 +30,9 @@
 #include "sys-core.h"
 
 
-/*******************************************************************************
-**
-**  Name: "CT_Word"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Word: C
+//
 
 REBINT CT_Word(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -61,14 +56,9 @@ REBINT CT_Word(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Word)
 {

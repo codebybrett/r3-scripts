@@ -61,18 +61,18 @@ REBREQ *req;		//!!! move this global
 #define EVENTS_LIMIT 0xFFFF //64k
 #define EVENTS_CHUNK 128
 
-/***********************************************************************
-**
-*/	REBVAL *Append_Event(void)
-/*
-**		Append an event to the end of the current event port queue.
-**		Return a pointer to the event value.
-**
-**		Note: this function may be called from out of environment,
-**		so do NOT extend the event queue here. If it does not have
-**		space, return 0. (Should it overwrite or wrap???)
-**
-***********************************************************************/
+//
+//  Append_Event: C
+//  
+//      Append an event to the end of the current event port queue.
+//      Return a pointer to the event value.
+//  
+//      Note: this function may be called from out of environment,
+//      so do NOT extend the event queue here. If it does not have
+//      space, return 0. (Should it overwrite or wrap???)
+//
+
+REBVAL *Append_Event(void)
 {
 	REBVAL *port;
 	REBVAL *value;
@@ -140,14 +140,11 @@ REBREQ *req;		//!!! move this global
 	return NULL;
 }
 
-/*******************************************************************************
-**
-**  Name: "Event_Actor"
-**  Summary: none
-**  Details: "^/        Internal port handler for events."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Event_Actor: C
+//  
+//      Internal port handler for events.
+//
 
 static REB_R Event_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
@@ -234,14 +231,9 @@ act_blk:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_Event_Scheme"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_Event_Scheme: C
+//
 
 void Init_Event_Scheme(void)
 {

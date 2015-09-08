@@ -699,17 +699,13 @@ static void emitchunk(unsigned char **cpp,const char *type,const char *data,int 
 	*cpp=cp;
 }
 
-/*******************************************************************************
-**
-**  Name: "Encode_PNG_Image"
-**  Summary: none
-**  Details: {
-**      Input:  Image bits (codi->extra.bits, w, h)
-**      Output: PNG encoded image (codi->data, len)
-**      Error:  Code in codi->error}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Encode_PNG_Image: C
+//  
+//      Input:  Image bits (codi->extra.bits, w, h)
+//      Output: PNG encoded image (codi->data, len)
+//      Error:  Code in codi->error
+//
 
 void Encode_PNG_Image(REBCDI *codi)
 {
@@ -818,17 +814,13 @@ error:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Decode_PNG_Image"
-**  Summary: none
-**  Details: {
-**      Input:  PNG encoded image (codi->data, len)
-**      Output: Image bits (codi->extra.bits, w, h)
-**      Error:  Code in codi->error}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Decode_PNG_Image: C
+//  
+//      Input:  PNG encoded image (codi->data, len)
+//      Output: Image bits (codi->extra.bits, w, h)
+//      Error:  Code in codi->error
+//
 
 void Decode_PNG_Image(REBCDI *codi)
 {
@@ -845,14 +837,9 @@ void Decode_PNG_Image(REBCDI *codi)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Codec_PNG_Image"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Codec_PNG_Image: C
+//
 
 REBINT Codec_PNG_Image(REBCDI *codi)
 {
@@ -885,14 +872,9 @@ REBINT Codec_PNG_Image(REBCDI *codi)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_PNG_Codec"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_PNG_Codec: C
+//
 
 void Init_PNG_Codec(void)
 {

@@ -37,14 +37,9 @@
 	while (start < stop) *start++ = 0xff000000; \
 } while(0)
 
-/*******************************************************************************
-**
-**  Name: "CT_Image"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  CT_Image: C
+//
 
 REBINT CT_Image(REBVAL *a, REBVAL *b, REBINT mode)
 {
@@ -58,14 +53,9 @@ REBINT CT_Image(REBVAL *a, REBVAL *b, REBINT mode)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "MT_Image"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  MT_Image: C
+//
 
 REBFLG MT_Image(REBVAL *out, REBVAL *data, REBCNT type)
 {
@@ -75,14 +65,11 @@ REBFLG MT_Image(REBVAL *out, REBVAL *data, REBCNT type)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Reset_Height"
-**  Summary: none
-**  Details: "^/        Set height based on tail and width."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Reset_Height: C
+//  
+//      Set height based on tail and width.
+//
 
 void Reset_Height(REBVAL *value)
 {
@@ -91,14 +78,9 @@ void Reset_Height(REBVAL *value)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Set_Pixel_Tuple"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_Pixel_Tuple: C
+//
 
 void Set_Pixel_Tuple(REBYTE *dp, const REBVAL *tuple)
 {
@@ -115,14 +97,9 @@ void Set_Pixel_Tuple(REBYTE *dp, const REBVAL *tuple)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Set_Tuple_Pixel"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Set_Tuple_Pixel: C
+//
 
 void Set_Tuple_Pixel(REBYTE *dp, REBVAL *tuple)
 {
@@ -137,14 +114,9 @@ void Set_Tuple_Pixel(REBYTE *dp, REBVAL *tuple)
 	tup[3] = dp[C_A];
 }
 
-/*******************************************************************************
-**
-**  Name: "Fill_Line"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Fill_Line: C
+//
 
 void Fill_Line(REBCNT *ip, REBCNT color, REBCNT len, REBOOL only)
 {
@@ -156,14 +128,9 @@ void Fill_Line(REBCNT *ip, REBCNT color, REBCNT len, REBOOL only)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Fill_Rect"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Fill_Rect: C
+//
 
 void Fill_Rect(REBCNT *ip, REBCNT color, REBCNT w, REBINT dupx, REBINT dupy, REBOOL only)
 {
@@ -172,14 +139,9 @@ void Fill_Rect(REBCNT *ip, REBCNT color, REBCNT w, REBINT dupx, REBINT dupy, REB
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Fill_Alpha_Line"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Fill_Alpha_Line: C
+//
 
 void Fill_Alpha_Line(REBYTE *rgba, REBYTE alpha, REBINT len)
 {
@@ -188,14 +150,9 @@ void Fill_Alpha_Line(REBYTE *rgba, REBYTE alpha, REBINT len)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Fill_Alpha_Rect"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Fill_Alpha_Rect: C
+//
 
 void Fill_Alpha_Rect(REBCNT *ip, REBYTE alpha, REBINT w, REBINT dupx, REBINT dupy)
 {
@@ -204,11 +161,11 @@ void Fill_Alpha_Rect(REBCNT *ip, REBYTE alpha, REBINT w, REBINT dupx, REBINT dup
 }
 
 
-/***********************************************************************
-**
-*/	REBCNT *Find_Color(REBCNT *ip, REBCNT color, REBCNT len, REBOOL only)
-/*
-***********************************************************************/
+//
+//  Find_Color: C
+//
+
+REBCNT *Find_Color(REBCNT *ip, REBCNT color, REBCNT len, REBOOL only)
 {
 	if (only) { // only RGB, do not touch Alpha
 		for (; len > 0; len--, ip++)
@@ -221,11 +178,11 @@ void Fill_Alpha_Rect(REBCNT *ip, REBYTE alpha, REBINT w, REBINT dupx, REBINT dup
 }
 
 
-/***********************************************************************
-**
-*/	REBCNT *Find_Alpha(REBCNT *ip, REBCNT alpha, REBCNT len)
-/*
-***********************************************************************/
+//
+//  Find_Alpha: C
+//
+
+REBCNT *Find_Alpha(REBCNT *ip, REBCNT alpha, REBCNT len)
 {
 	for (; len > 0; len--, ip++) {
 		if (alpha == (*ip >> 24)) return ip;
@@ -234,14 +191,9 @@ void Fill_Alpha_Rect(REBCNT *ip, REBYTE alpha, REBINT w, REBINT dupx, REBINT dup
 }
 
 
-/*******************************************************************************
-**
-**  Name: "RGB_To_Bin"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  RGB_To_Bin: C
+//
 
 void RGB_To_Bin(REBYTE *bin, REBYTE *rgba, REBINT len, REBOOL alpha)
 {
@@ -264,14 +216,9 @@ void RGB_To_Bin(REBYTE *bin, REBYTE *rgba, REBINT len, REBOOL alpha)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Bin_To_RGB"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Bin_To_RGB: C
+//
 
 void Bin_To_RGB(REBYTE *rgba, REBCNT size, REBYTE *bin, REBCNT len)
 {
@@ -286,14 +233,9 @@ void Bin_To_RGB(REBYTE *rgba, REBCNT size, REBYTE *bin, REBCNT len)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Bin_To_RGBA"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Bin_To_RGBA: C
+//
 
 void Bin_To_RGBA(REBYTE *rgba, REBCNT size, REBYTE *bin, REBINT len, REBOOL only)
 {
@@ -309,14 +251,9 @@ void Bin_To_RGBA(REBYTE *rgba, REBCNT size, REBYTE *bin, REBINT len, REBOOL only
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Alpha_To_Bin"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Alpha_To_Bin: C
+//
 
 void Alpha_To_Bin(REBYTE *bin, REBYTE *rgba, REBINT len)
 {
@@ -325,14 +262,9 @@ void Alpha_To_Bin(REBYTE *bin, REBYTE *rgba, REBINT len)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Bin_To_Alpha"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Bin_To_Alpha: C
+//
 
 void Bin_To_Alpha(REBYTE *rgba, REBCNT size, REBYTE *bin, REBINT len)
 {
@@ -343,14 +275,9 @@ void Bin_To_Alpha(REBYTE *rgba, REBCNT size, REBYTE *bin, REBINT len)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Valid_Tuples"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Valid_Tuples: C
+//
 
 REBFLG Valid_Tuples(REBVAL *blk)
 {
@@ -366,14 +293,9 @@ REBFLG Valid_Tuples(REBVAL *blk)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Tuples_To_RGBA"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Tuples_To_RGBA: C
+//
 
 void Tuples_To_RGBA(REBYTE *rgba, REBCNT size, REBVAL *blk, REBCNT len)
 {
@@ -391,14 +313,9 @@ void Tuples_To_RGBA(REBYTE *rgba, REBCNT size, REBVAL *blk, REBCNT len)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Image_To_RGBA"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Image_To_RGBA: C
+//
 
 void Image_To_RGBA(REBYTE *rgba, REBYTE *bin, REBINT len)
 {
@@ -421,14 +338,9 @@ REBCNT ARGB_To_BGR(REBCNT i)
 }
 #endif
 
-/*******************************************************************************
-**
-**  Name: "Mold_Image_Data"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Mold_Image_Data: C
+//
 
 void Mold_Image_Data(const REBVAL *value, REB_MOLD *mold)
 {
@@ -470,11 +382,11 @@ void Mold_Image_Data(const REBVAL *value, REB_MOLD *mold)
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Make_Image_Binary(REBVAL *image)
-/*
-***********************************************************************/
+//
+//  Make_Image_Binary: C
+//
+
+REBSER *Make_Image_Binary(REBVAL *image)
 {
 	REBSER *ser;
 	REBINT len;
@@ -486,15 +398,15 @@ void Mold_Image_Data(const REBVAL *value, REB_MOLD *mold)
 }
 
 
-/***********************************************************************
-**
-*/	REBSER *Make_Image(REBCNT w, REBCNT h, REBFLG error)
-/*
-**		Allocate and initialize an image.
-**		If error is TRUE, throw error on bad size.
-**		Return zero on oversized image.
-**
-***********************************************************************/
+//
+//  Make_Image: C
+//  
+//      Allocate and initialize an image.
+//      If error is TRUE, throw error on bad size.
+//      Return zero on oversized image.
+//
+
+REBSER *Make_Image(REBCNT w, REBCNT h, REBFLG error)
 {
 	REBSER *img;
 
@@ -513,14 +425,11 @@ void Mold_Image_Data(const REBVAL *value, REB_MOLD *mold)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Clear_Image"
-**  Summary: none
-**  Details: "^/    Clear image data."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Clear_Image: C
+//  
+//  Clear image data.
+//
 
 void Clear_Image(REBVAL *img)
 {
@@ -531,13 +440,13 @@ void Clear_Image(REBVAL *img)
 }
 
 
-/***********************************************************************
-**
-*/	REBVAL *Create_Image(REBVAL *block, REBVAL *val, REBCNT modes)
-/*
-**	Create an image value from components block [pair rgb alpha].
-**
-***********************************************************************/
+//
+//  Create_Image: C
+//  
+//  Create an image value from components block [pair rgb alpha].
+//
+
+REBVAL *Create_Image(REBVAL *block, REBVAL *val, REBCNT modes)
 {
 	REBINT w, h;
 	REBYTE *ip; // image pointer
@@ -598,14 +507,14 @@ void Clear_Image(REBVAL *img)
 }
 
 
-/***********************************************************************
-**
-*/  REBVAL *Modify_Image(struct Reb_Call *call_, REBCNT action)
-/*
-**		Insert or change image
-**		ACTION value arg /part len /only /dup count
-**
-***********************************************************************/
+//
+//  Modify_Image: C
+//  
+//      Insert or change image
+//      ACTION value arg /part len /only /dup count
+//
+
+REBVAL *Modify_Image(struct Reb_Call *call_, REBCNT action)
 {
 	REBVAL	*value = D_ARG(1);
 	REBVAL	*arg   = D_ARG(2);
@@ -765,29 +674,29 @@ void Clear_Image(REBVAL *img)
 }
 
 
-/***********************************************************************
-**
-*/  REBVAL *Find_Image(struct Reb_Call *call_)
-/*
-**	Finds a value in a series and returns the series at the start of it.
-**
-**		 1 image
-**		 2 value [any-type!]
-**		 3 /part {Limits the search to a given length or position.}
-**		 4 range [number! series! port!]
-**		 5 /only {ignore alpha value.}
-**		 6 /case - ignored
-**		 7 /any  - ignored
-**		 8 /with - ignored
-**		 9 wild  - ignored
-**		10 /skip - ignored
-**		11 size  - ignored
-**		12 /match {Performs comparison and returns the tail of the match.}
-**		13 /tail  {Returns the end of the string.}
-**		14 /last  {Backwards from end of string.}
-**		15 /reverse {Backwards from the current position.}
-**
-***********************************************************************/
+//
+//  Find_Image: C
+//  
+//  Finds a value in a series and returns the series at the start of it.
+//  
+//       1 image
+//       2 value [any-type!]
+//       3 /part {Limits the search to a given length or position.}
+//       4 range [number! series! port!]
+//       5 /only {ignore alpha value.}
+//       6 /case - ignored
+//       7 /any  - ignored
+//       8 /with - ignored
+//       9 wild  - ignored
+//      10 /skip - ignored
+//      11 size  - ignored
+//      12 /match {Performs comparison and returns the tail of the match.}
+//      13 /tail  {Returns the end of the string.}
+//      14 /last  {Backwards from end of string.}
+//      15 /reverse {Backwards from the current position.}
+//
+
+REBVAL *Find_Image(struct Reb_Call *call_)
 {
 	REBVAL	*value = D_ARG(1);
 	REBVAL	*arg   = D_ARG(2);
@@ -839,14 +748,9 @@ find_none:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Image_Has_Alpha"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Image_Has_Alpha: C
+//
 
 REBFLG Image_Has_Alpha(const REBVAL *v, REBFLG save)
 {
@@ -870,14 +774,9 @@ REBFLG Image_Has_Alpha(const REBVAL *v, REBFLG save)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Copy_Rect_Data"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Copy_Rect_Data: C
+//
 
 void Copy_Rect_Data(REBVAL *dst, REBINT dx, REBINT dy, REBINT w, REBINT h, REBVAL *src, REBINT sx, REBINT sy)
 {
@@ -899,11 +798,11 @@ void Copy_Rect_Data(REBVAL *dst, REBINT dx, REBINT dy, REBINT w, REBINT h, REBVA
 }
 
 
-/***********************************************************************
-**
-*/  static REBSER *Complement_Image(REBVAL *value)
-/*
-***********************************************************************/
+//
+//  Complement_Image: C
+//
+
+static REBSER *Complement_Image(REBVAL *value)
 {
 	REBCNT *img = (REBCNT*) VAL_IMAGE_DATA(value);
 	REBCNT *out;
@@ -919,14 +818,9 @@ void Copy_Rect_Data(REBVAL *dst, REBINT dx, REBINT dy, REBINT w, REBINT h, REBVA
 }
 
 
-/*******************************************************************************
-**
-**  Name: "REBTYPE"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  REBTYPE: C
+//
 
 REBTYPE(Image)
 {
@@ -1216,14 +1110,9 @@ is_true:
 }
 
 
-/*******************************************************************************
-**
-**  Name: "PD_Image"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  PD_Image: C
+//
 
 REBINT PD_Image(REBPVS *pvs)
 {

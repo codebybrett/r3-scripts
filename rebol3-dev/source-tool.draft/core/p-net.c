@@ -39,14 +39,9 @@ enum Transport_Types {
 	TRANSPORT_UDP
 };
 
-/*******************************************************************************
-**
-**  Name: "Ret_Query_Net"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Ret_Query_Net: C
+//
 
 static void Ret_Query_Net(REBSER *port, REBREQ *sock, REBVAL *ret)
 {
@@ -74,15 +69,11 @@ static void Ret_Query_Net(REBSER *port, REBREQ *sock, REBVAL *ret)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Accept_New_Port"
-**  Summary: none
-**  Details: {
-**      Clone a listening port as a new accept port.}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Accept_New_Port: C
+//  
+//      Clone a listening port as a new accept port.
+//
 
 static void Accept_New_Port(REBVAL *out, REBSER *port, REBREQ *sock)
 {
@@ -109,14 +100,9 @@ static void Accept_New_Port(REBVAL *out, REBSER *port, REBREQ *sock)
 	OS_FREE(nsock); // allocated by dev_net.c (MT issues?)
 }
 
-/*******************************************************************************
-**
-**  Name: "Transport_Actor"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Transport_Actor: C
+//
 
 static REB_R Transport_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action, enum Transport_Types proto)
 {
@@ -326,55 +312,35 @@ static REB_R Transport_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action
 	return R_OUT;
 }
 
-/*******************************************************************************
-**
-**  Name: "TCP_Actor"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  TCP_Actor: C
+//
 
 static REB_R TCP_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
 	return Transport_Actor(call_, port, action, TRANSPORT_TCP);
 }
 
-/*******************************************************************************
-**
-**  Name: "UDP_Actor"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  UDP_Actor: C
+//
 
 static REB_R UDP_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
 	return Transport_Actor(call_, port, action, TRANSPORT_UDP);
 }
 
-/*******************************************************************************
-**
-**  Name: "Init_TCP_Scheme"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_TCP_Scheme: C
+//
 
 void Init_TCP_Scheme(void)
 {
 	Register_Scheme(SYM_TCP, 0, TCP_Actor);
 }
-/*******************************************************************************
-**
-**  Name: "Init_UDP_Scheme"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_UDP_Scheme: C
+//
 
 void Init_UDP_Scheme(void)
 {

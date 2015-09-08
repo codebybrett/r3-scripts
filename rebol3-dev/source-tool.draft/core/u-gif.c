@@ -71,14 +71,11 @@ void Chrom_Key_Alpha(REBVAL *v,REBCNT col,REBINT blitmode) {
 }
 #endif
 
-/*******************************************************************************
-**
-**  Name: "Decode_LZW"
-**  Summary: none
-**  Details: "^/    Perform LZW decompression."
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Decode_LZW: C
+//  
+//  Perform LZW decompression.
+//
 
 void Decode_LZW(REBCNT *data, REBYTE **cpp, REBYTE *colortab, REBINT w, REBINT h, REBOOL interlaced)
 {
@@ -204,18 +201,14 @@ void Decode_LZW(REBCNT *data, REBYTE **cpp, REBYTE *colortab, REBINT w, REBINT h
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Decode_GIF_Image"
-**  Summary: none
-**  Details: {
-**      Input:  GIF encoded image (codi->data, len)
-**      Output: Image bits (codi->extra.bits, w, h)
-**      Error:  Code in codi->error
-**      Return: Success as TRUE or FALSE}
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Decode_GIF_Image: C
+//  
+//      Input:  GIF encoded image (codi->data, len)
+//      Output: Image bits (codi->extra.bits, w, h)
+//      Error:  Code in codi->error
+//      Return: Success as TRUE or FALSE
+//
 
 void Decode_GIF_Image(REBCDI *codi)
 {
@@ -329,14 +322,9 @@ void Decode_GIF_Image(REBCDI *codi)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Codec_GIF_Image"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Codec_GIF_Image: C
+//
 
 REBINT Codec_GIF_Image(REBCDI *codi)
 {
@@ -357,14 +345,9 @@ REBINT Codec_GIF_Image(REBCDI *codi)
 }
 
 
-/*******************************************************************************
-**
-**  Name: "Init_GIF_Codec"
-**  Summary: none
-**  Details: none
-**  Spec: none
-**
-*******************************************************************************/
+//
+//  Init_GIF_Codec: C
+//
 
 void Init_GIF_Codec(void)
 {
