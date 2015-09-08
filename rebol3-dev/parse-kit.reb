@@ -278,27 +278,29 @@ parsing-earliest: funct [
 	rules [block!] {Block of rules to pass to TO.}
 ] [
 
-	parsing-matched list rules [
+	use [pos min] [
+		parsing-matched list rules [
 
-		remove-each x list [none? x]
+			remove-each x list [none? x]
 
-		if not empty? list [
+			if not empty? list [
 
-			min: index? pos: list/1
-			list: next list
-			while [not tail? list] [
-				if list/1 [
-					if not same? head pos head list/1 [
-						do make error! {Can only compare rule positions for the same series.}
-					]
-					if lesser? index? list/1 min [
-						min: index? pos: list/1
-					]
-				]
+				min: index? pos: list/1
 				list: next list
-			]
+				while [not tail? list] [
+					if list/1 [
+						if not same? head pos head list/1 [
+							do make error! {Can only compare rule positions for the same series.}
+						]
+						if lesser? index? list/1 min [
+							min: index? pos: list/1
+						]
+					]
+					list: next list
+				]
 
-			pos
+				pos
+			]
 		]
 	]
 ]
@@ -339,18 +341,21 @@ parsing-matched: funct [
 	'word [word!] {Word set to result positions of the rules (will be local).}
 	rules [block!] {Block of rules to match.}
 	block [block!] {Block to evaluate. Return next input position, or none/false.}
-][
-	use [result positions position start][
+] [
+
+	word: use reduce [:word] reduce [compose [(word)]]
+
+	use [result positions position start] [
 		collect [
-			keep [(positions: array length? rules) start:]
+			keep compose/only [(to paren! compose [positions: array (length? rules)]) start:]
 			for i 1 length? rules 1 [
 				keep compose/deep/only [
 					:start (to paren! [position: none]) opt [(:rules/:i) position:] (to paren! compose [poke positions (i) position])
 				]
 			]
 			keep/only to paren! compose/only [
-				(to set-word! :word) positions
-				result: either position: (to paren! block) [[:position]][[end skip]]
+				(to set-word! word/1) positions
+				result: either position: (to paren! bind/copy block word/1) [[:position]] [[end skip]]
 			]
 			keep/only 'result
 		]
