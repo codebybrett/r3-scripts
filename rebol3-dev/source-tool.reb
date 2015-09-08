@@ -227,7 +227,11 @@ source-tool: context [
 						keep newline
 					]
 
-					foreach word def/keywords [keep word keep #" "]
+					foreach word def/keywords [
+						keep word
+						if "*" <> word [keep #" "]
+					]
+
 					keep def/name
 					keep rejoin [#"(" def/param #")" newline]
 
@@ -255,21 +259,27 @@ source-tool: context [
 
 				name: def/name
 
-				if native: rebnative? def [
-					r.id: id-to-word name: def/param
-					r-info: attempt [r-source/native/cache/:r.id]
-				]
-
-				if r-info [
-					summary: if string? first r-info [first r-info]
-					spec: synopsis.native r-info
-				]
-
 				either def/style = 'new-style-decl [
 
-					meta: comment/load def/intro-notes
-					set [meta notes] meta
+					set [meta notes] comment/load def/intro-notes
 				][
+
+					either native: rebnative? def [
+
+						r.id: id-to-word name: def/param
+						r-info: attempt [r-source/native/cache/:r.id]
+
+						meta: compose/only [
+							(to set-word! r.id) native (r-info)
+						]
+					][
+
+						meta: compose/only [
+							(to set-word! form name) C
+						]
+					]
+
+					new-line meta true
 
 					if def/post-notes [def/post-notes: rejoin [newline def/post-notes newline]]
 					notes: def/post-notes
@@ -279,36 +289,12 @@ source-tool: context [
 						def/pre-comment: rejoin [{/*} def/intro-notes {*/}]
 						def/intro-notes: none
 					]
-				]
 
-				meta: pretty-spec compose/only [
-					Name: (form name)
-					Summary: (summary)
-					Spec: (spec)
 				]
 
 				notes: any [notes {}]
-
 				def/intro-notes: rejoin [mold-contents meta notes]
 				def/style: 'new-style-decl
-			]
-
-			synopsis.native: funct [spec /local block] [
-
-				block: pretty-spec collect [
-
-					count: 0
-
-					foreach x spec [
-						if any [word? x refinement? x] [
-							count: count + 1
-							keep to-tag count
-							keep :x
-						]
-					]
-				]
-
-				if not empty? block [block]
 			]
 
 			sync-to-code: funct [def][
@@ -574,7 +560,7 @@ source-tool: context [
 					apropos text/parser/grammar [
 
 						tree: get-parse [parse/all string new-style-decl] [
-							decl.words decl.args.single decl.args.multi c.id
+							decl.words decl.args.single decl.args.multi c.id c.special
 							comment.doubleslash comment.banner comment.multiline.intact
 						]
 					]
@@ -599,7 +585,7 @@ source-tool: context [
 					childpos: at decl.words 4
 					decl.words: collect [
 						forall childpos [
-							c.id: assert-node 'c.id childpos
+							c.id: assert-node [find [c.special c.id] node/1] childpos
 							keep c.id/3/content
 						]
 					]
@@ -655,7 +641,8 @@ source-tool: context [
 					apropos text/parser/grammar [
 
 						tree: get-parse [parse/all string old-style-decl] [
-							decl.words decl.args.single decl.args.multi c.id comment.notes
+							decl.words decl.args.single decl.args.multi c.id c.special
+							comment.notes
 						]
 					]
 
@@ -676,7 +663,7 @@ source-tool: context [
 					childpos: at decl.words 4
 					decl.words: collect [
 						forall childpos [
-							c.id: assert-node 'c.id childpos
+							c.id: assert-node [find [c.special c.id] node/1] childpos
 							keep c.id/3/content
 						]
 					]
@@ -766,11 +753,12 @@ source-tool: context [
 					rest: [to end]
 
 					decl: [decl.words #"(" decl.args #")" opt wsp newline]
-					decl.words: [c.id any [wsp c.id]]
+					decl.words: [c.id any [wsp c.id] opt [wsp c.special c.id]]
 					decl.args: [decl.args.single | decl.args.multi]
 					decl.args.single: [c.id pos: #")" :pos]
 					decl.args.multi: [to #")"]
 					c.id: [id.nondigit any id.rest]
+					c.special: [#"*"]
 
 					comment.banner: [{/*} stars newline opt comment.notes stars {*/} newline]
 					comment.decorative: [{/*} some [stars | wsp | newline] {*/}]
