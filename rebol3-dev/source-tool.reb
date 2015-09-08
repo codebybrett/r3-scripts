@@ -163,24 +163,18 @@ source-tool: context [
 
 			format: context [
 
-				slashed: func [
-					spec
-					/local text bol width
-				] [
+				slashed: func [text] [
 
-					encode-lines {//} {  } mold-contents spec
+					encode-lines {//} {  } text
 				]
 
-				starred: func [
-					spec
-					/local text bol width
-				] [
+				starred: funct [text] [
 
 					width: max-line-length - 2
 
 					rejoin [
 						{/*} line* width newline
-						encode-lines {**} {  } mold-contents spec
+						encode-lines {**} {  } text
 						line* width {*/} newline
 					]
 				]
@@ -225,7 +219,7 @@ source-tool: context [
 
 				string: rejoin collect [
 
-					keep comment/format/slashed meta-of def
+					keep comment/format/slashed def/intro-notes
 					keep newline
 
 					if def/pre-comment [
@@ -249,6 +243,7 @@ source-tool: context [
 						)
 					]
 				]
+
 				if width-exceeded [
 					log [line-width-exceeded (mold def/file) (def/name) (def/param)]
 				]
@@ -256,11 +251,10 @@ source-tool: context [
 				string
 			]
 
-			meta-of: funct [
-				{Return function metadata.}
-				def
-			] [
-		
+			normalise: funct [def][
+
+				if not equal? def/style 'old-style-decl [exit]
+
 				name: def/name
 
 				if native: rebnative? def [
@@ -273,27 +267,22 @@ source-tool: context [
 					spec: synopsis r-info
 				]
 
-				either def/style = 'new-style-decl [
+				notes: def/post-notes
+				def/post-notes: none
 
-					meta: comment/load def/intro-notes
-					meta: first meta
-					details: attempt [second find meta first [Details:]]
-
-				][ ; old-style-decl
-
-					details: def/post-notes
-					if def/intro-notes [
-						def/pre-comment: rejoin [{/*} def/intro-notes {*/}]
-						def/intro-notes: none
-					]
+				if def/intro-notes [
+					def/pre-comment: rejoin [{/*} def/intro-notes {*/}]
+					def/intro-notes: none
 				]
 
-				pretty-spec compose/only [
+				meta: pretty-spec compose/only [
 					Name: (form name)
 					Summary: (summary)
-					Details: (details)
 					Spec: (spec)
 				]
+
+				def/intro-notes: rejoin [mold-contents meta notes newline]
+				def/style: 'new-style-decl
 			]
 
 			synopsis: funct [spec /local block] [
@@ -464,16 +453,7 @@ source-tool: context [
 			]
 		]
 
-		indexing: func [/local id] [
-
-			decl/list: make block! []
-
-			foreach name file/list [
-				debug [indexing-file (name)]
-				append decl/list file/declarations name
-			]
-
-			if empty? decl/list [do make error! {No declarations found. Check declaration parsing.}]
+		index-decls: func [/local id] [
 
 			rebnative-index: collect [
 
@@ -512,16 +492,35 @@ source-tool: context [
 			]
 		]
 
-		parsing: func [] [
+		parse-decls: func [] [
+
+			decl/list: make block! []
+
+			foreach name file/list [
+				debug [indexing-file (name)]
+				append decl/list file/declarations name
+			]
+
+			if empty? decl/list [do make error! {No declarations found. Check declaration parsing.}]
+		]
+
+		parse-files: func [] [
 
 			foreach name file/list [file/process name]
+		]
+
+		normalise-decls: func [] [
+
+			foreach def decl/list [decl/normalise def]
 		]
 
 		process: func [] [
 
 			reset
-			timing [parsing]
-			timing [indexing]
+			timing [parse-files]
+			timing [parse-decls]
+			timing [normalise-decls]
+			timing [index-decls]
 			exit
 		]
 
