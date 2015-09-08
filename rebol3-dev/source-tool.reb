@@ -217,9 +217,14 @@ source-tool: context [
 
 			format: funct [def][
 
-				string: rejoin collect [
+				intro: comment/format/slashed def/intro-notes
 
-					keep comment/format/slashed def/intro-notes
+				if text/width-exceeded? intro [
+					log [line-width-exceeded intro (mold def/file) (def/name) (def/param)]
+				]
+
+				parts: collect [
+
 					keep newline
 
 					if def/pre-comment [
@@ -238,21 +243,13 @@ source-tool: context [
 					keep #"^{"
 				]
 
-				parse/all string [
-					some [
-						bol: to newline eol: skip (
-							if max-line-length < subtract index? eol index? bol [
-								width-exceeded: true
-							]
-						)
-					]
+				rest: rejoin parts
+
+				if text/width-exceeded? rest [
+					log [line-width-exceeded non-intro (mold def/file) (def/name) (def/param)]
 				]
 
-				if width-exceeded [
-					log [line-width-exceeded (mold def/file) (def/name) (def/param)]
-				]
-
-				string
+				join intro rest
 			]
 
 			normalise: funct [def][
@@ -817,6 +814,21 @@ source-tool: context [
 				either empty? children [block/3/content] [
 					rejoin map-each node children [regenerate node]
 				]
+			]
+
+			width-exceeded?: funct [string][
+
+				parse/all string [
+					some [
+						bol: to newline eol: skip (
+							if max-line-length < subtract index? eol index? bol [
+								width-exceeded: true
+							]
+						)
+					]
+				]
+
+				width-exceeded
 			]
 
 		]

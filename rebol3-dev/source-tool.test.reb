@@ -36,7 +36,7 @@ test.source-tool: func [
 
 		boot.natives.file: src-folder/boot/natives.r
 		logfile: clean-path test-folder/source-tool.log.txt
-		debug: :log
+;;		debug: :log
 
 		attempt [delete logfile]
 
