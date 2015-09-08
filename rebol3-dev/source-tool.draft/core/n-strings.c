@@ -161,22 +161,22 @@ REBNATIVE(ajoin)
 //      key-value [any-string!] "Key to use"
 //  ]
 //  
-//      Computes checksum or hash value.
+//  Computes checksum or hash value.
 //  
-//      Note: Currently BINARY only.
+//  Note: Currently BINARY only.
 //  
 //  Args:
 //  
-//      data [any-string!] {Data to checksum}
-//      /part limit
-//      /tcp {Returns an Internet TCP 16-bit checksum.}
-//      /secure {Returns a cryptographically secure checksum.}
-//      /hash {Returns a hash value}
-//      size [integer!] {Size of the hash table}
-//      /method {Method to use}
-//      word [word!] {Method: SHA1 MD5}
-//      /key {Returns keyed HMAC value}
-//      key-value [any-string!] {Key to use}
+//  data [any-string!] {Data to checksum}
+//  /part limit
+//  /tcp {Returns an Internet TCP 16-bit checksum.}
+//  /secure {Returns a cryptographically secure checksum.}
+//  /hash {Returns a hash value}
+//  size [integer!] {Size of the hash table}
+//  /method {Method to use}
+//  word [word!] {Method: SHA1 MD5}
+//  /key {Returns keyed HMAC value}
+//  key-value [any-string!] {Key to use}
 //
 REBNATIVE(checksum)
 {
@@ -304,7 +304,7 @@ REBNATIVE(checksum)
 //      /gzip "Use GZIP checksum"
 //  ]
 //  
-//      Binary and string (gets UTF8 converted).
+//  Binary and string (gets UTF8 converted).
 //
 REBNATIVE(compress)
 {
@@ -331,7 +331,7 @@ REBNATIVE(compress)
 //      /limit size "Error out if result is larger than this"
 //  ]
 //  
-//      Binary only.
+//  Binary only.
 //
 REBNATIVE(decompress)
 {
@@ -405,9 +405,9 @@ REBNATIVE(construct)
 //      base-value [integer!] "The base to convert from: 64, 16, or 2"
 //  ]
 //  
-//      Converts a binary base representation string to binary.
-//      Input is a STRING, but BINARY is also accepted.
-//      BINARY is returned. We don't know the encoding.
+//  Converts a binary base representation string to binary.
+//  Input is a STRING, but BINARY is also accepted.
+//  BINARY is returned. We don't know the encoding.
 //
 REBNATIVE(debase)
 {
@@ -435,8 +435,8 @@ REBNATIVE(debase)
 //      base-value [integer!] "The base to convert to: 64, 16, or 2"
 //  ]
 //  
-//      Converts a binary to a binary base representation STRING.
-//      Input is BINARY or STRING (UTF8 encoded).
+//  Converts a binary to a binary base representation STRING.
+//  Input is BINARY or STRING (UTF8 encoded).
 //
 REBNATIVE(enbase)
 {
@@ -478,7 +478,7 @@ REBNATIVE(enbase)
 //      /with "Use a string! key as-is (do not generate hash)"
 //  ]
 //  
-//      Input is BINARY only. Modifies input.
+//  Input is BINARY only. Modifies input.
 //
 REBNATIVE(decloak)
 {
@@ -500,7 +500,7 @@ REBNATIVE(decloak)
 //      /with "Use a string! key as-is (do not generate hash)"
 //  ]
 //  
-//      Input is BINARY only. Modifies input.
+//  Input is BINARY only. Modifies input.
 //
 REBNATIVE(encloak)
 {
@@ -520,7 +520,7 @@ REBNATIVE(encloak)
 //      value [any-string!] "The string to dehex"
 //  ]
 //  
-//      Works for any string.
+//  Works for any string.
 //
 REBNATIVE(dehex)
 {
@@ -575,7 +575,7 @@ REBNATIVE(dehex)
 //      /lines {Return block of lines (works for LF, CR, CR-LF endings) (no modify)}
 //  ]
 //  
-//      Convert CR or CRLF strings to just LF strings.
+//  Convert CR or CRLF strings to just LF strings.
 //
 REBNATIVE(deline)
 {
@@ -608,7 +608,7 @@ REBNATIVE(deline)
 //      series [any-string! block!] "(modified)"
 //  ]
 //  
-//      Convert LF to CRLF or native format.
+//  Convert LF to CRLF or native format.
 //
 REBNATIVE(enline)
 {
@@ -634,7 +634,7 @@ REBNATIVE(enline)
 //      number [integer!]
 //  ]
 //  
-//      Modifies input.
+//  Modifies input.
 //
 REBNATIVE(entab)
 {
@@ -861,8 +861,8 @@ REBNATIVE(invalid_utfq)
 //
 //  b_cast_: C
 //  
-//      Debug-only version of b_cast() that does type checking.
-//      If you get a complaint you probably meant to use cb_cast().
+//  Debug-only version of b_cast() that does type checking.
+//  If you get a complaint you probably meant to use cb_cast().
 //
 REBYTE *b_cast_(char *s)
 {
@@ -873,8 +873,8 @@ REBYTE *b_cast_(char *s)
 //
 //  cb_cast_: C
 //  
-//      Debug-only version of cb_cast() that does type checking.
-//      If you get a complaint you probably meant to use b_cast().
+//  Debug-only version of cb_cast() that does type checking.
+//  If you get a complaint you probably meant to use b_cast().
 //
 const REBYTE *cb_cast_(const char *s)
 {
@@ -885,8 +885,8 @@ const REBYTE *cb_cast_(const char *s)
 //
 //  s_cast_: C
 //  
-//      Debug-only version of s_cast() that does type checking.
-//      If you get a complaint you probably meant to use cs_cast().
+//  Debug-only version of s_cast() that does type checking.
+//  If you get a complaint you probably meant to use cs_cast().
 //
 char *s_cast_(REBYTE *s)
 {
@@ -897,8 +897,8 @@ char *s_cast_(REBYTE *s)
 //
 //  cs_cast_: C
 //  
-//      Debug-only version of cs_cast() that does type checking.
-//      If you get a complaint you probably meant to use s_cast().
+//  Debug-only version of cs_cast() that does type checking.
+//  If you get a complaint you probably meant to use s_cast().
 //
 const char *cs_cast_(const REBYTE *s)
 {
@@ -909,8 +909,8 @@ const char *cs_cast_(const REBYTE *s)
 //
 //  COPY_BYTES_: C
 //  
-//      Debug-only REBYTE-checked substitute for COPY_BYTES macro
-//      If you meant characters, consider if you wanted strncpy()
+//  Debug-only REBYTE-checked substitute for COPY_BYTES macro
+//  If you meant characters, consider if you wanted strncpy()
 //
 REBYTE *COPY_BYTES_(REBYTE *dest, const REBYTE *src, size_t count)
 {
@@ -921,8 +921,8 @@ REBYTE *COPY_BYTES_(REBYTE *dest, const REBYTE *src, size_t count)
 //
 //  LEN_BYTES_: C
 //  
-//      Debug-only REBYTE-checked substitute for LEN_BYTES macro
-//      If you meant characters, consider if you wanted strlen()
+//  Debug-only REBYTE-checked substitute for LEN_BYTES macro
+//  If you meant characters, consider if you wanted strlen()
 //
 size_t LEN_BYTES_(const REBYTE *str)
 {
@@ -933,8 +933,8 @@ size_t LEN_BYTES_(const REBYTE *str)
 //
 //  COMPARE_BYTES_: C
 //  
-//      Debug-only REBYTE-checked function for COMPARE_BYTES macro
-//      If you meant characters, consider if you wanted strcmp()
+//  Debug-only REBYTE-checked function for COMPARE_BYTES macro
+//  If you meant characters, consider if you wanted strcmp()
 //
 int COMPARE_BYTES_(const REBYTE *lhs, const REBYTE *rhs)
 {
@@ -945,9 +945,9 @@ int COMPARE_BYTES_(const REBYTE *lhs, const REBYTE *rhs)
 //
 //  APPEND_BYTES_LIMIT_: C
 //  
-//      REBYTE-checked function for APPEND_BYTES_LIMIT macro in Debug
-//      If you meant characters, you'll have to use strncat()/strlen()
-//      (there's no single <string.h> entry point for this purpose)
+//  REBYTE-checked function for APPEND_BYTES_LIMIT macro in Debug
+//  If you meant characters, you'll have to use strncat()/strlen()
+//  (there's no single <string.h> entry point for this purpose)
 //
 REBYTE *APPEND_BYTES_LIMIT_(REBYTE *dest, const REBYTE *src, size_t max)
 {
@@ -960,7 +960,7 @@ REBYTE *APPEND_BYTES_LIMIT_(REBYTE *dest, const REBYTE *src, size_t max)
 //
 //  OS_STRNCPY_: C
 //  
-//      Debug-only REBCHR-checked substitute for OS_STRNCPY macro
+//  Debug-only REBCHR-checked substitute for OS_STRNCPY macro
 //
 REBCHR *OS_STRNCPY_(REBCHR *dest, const REBCHR *src, size_t count)
 {
@@ -985,7 +985,7 @@ REBCHR *OS_STRNCPY_(REBCHR *dest, const REBCHR *src, size_t count)
 //
 //  OS_STRNCAT_: C
 //  
-//      Debug-only REBCHR-checked function for OS_STRNCAT macro
+//  Debug-only REBCHR-checked function for OS_STRNCAT macro
 //
 REBCHR *OS_STRNCAT_(REBCHR *dest, const REBCHR *src, size_t max)
 {
@@ -1010,7 +1010,7 @@ REBCHR *OS_STRNCAT_(REBCHR *dest, const REBCHR *src, size_t max)
 //
 //  OS_STRNCMP_: C
 //  
-//      Debug-only REBCHR-checked substitute for OS_STRNCMP macro
+//  Debug-only REBCHR-checked substitute for OS_STRNCMP macro
 //
 int OS_STRNCMP_(const REBCHR *lhs, const REBCHR *rhs, size_t max)
 {
@@ -1025,7 +1025,7 @@ int OS_STRNCMP_(const REBCHR *lhs, const REBCHR *rhs, size_t max)
 //
 //  OS_STRLEN_: C
 //  
-//      Debug-only REBCHR-checked substitute for OS_STRLEN macro
+//  Debug-only REBCHR-checked substitute for OS_STRLEN macro
 //
 size_t OS_STRLEN_(const REBCHR *str)
 {
@@ -1040,7 +1040,7 @@ size_t OS_STRLEN_(const REBCHR *str)
 //
 //  OS_STRCHR_: C
 //  
-//      Debug-only REBCHR-checked function for OS_STRCHR macro
+//  Debug-only REBCHR-checked function for OS_STRCHR macro
 //
 REBCHR *OS_STRCHR_(const REBCHR *str, REBCNT ch)
 {
@@ -1057,7 +1057,7 @@ REBCHR *OS_STRCHR_(const REBCHR *str, REBCNT ch)
 //
 //  OS_MAKE_CH_: C
 //  
-//      Debug-only REBCHR-checked function for OS_MAKE_CH macro
+//  Debug-only REBCHR-checked function for OS_MAKE_CH macro
 //
 REBCHR OS_MAKE_CH_(REBCNT ch)
 {

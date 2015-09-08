@@ -60,8 +60,8 @@ static const char *Dia_Fmt = "DELECT - cmd: %s length: %d missed: %d total: %d";
 //
 //  Find_Mutable_In_Contexts: C
 //  
-//      Search a block of objects for a given word symbol and
-//      return the value for the word. NULL if not found.
+//  Search a block of objects for a given word symbol and
+//  return the value for the word. NULL if not found.
 //
 REBVAL *Find_Mutable_In_Contexts(REBCNT sym, REBVAL *where)
 {
@@ -92,8 +92,8 @@ REBVAL *Find_Mutable_In_Contexts(REBCNT sym, REBVAL *where)
 //
 //  Find_Command: C
 //  
-//      Given a word, check to see if it is in the dialect object.
-//      If so, return its index. If not, return 0.
+//  Given a word, check to see if it is in the dialect object.
+//  If so, return its index. If not, return 0.
 //
 static int Find_Command(REBSER *dialect, REBVAL *word)
 {
@@ -117,8 +117,8 @@ static int Find_Command(REBSER *dialect, REBVAL *word)
 //
 //  Count_Dia_Args: C
 //  
-//      Return number of formal args provided to the function.
-//      This is just a guess, because * repeats count as zero.
+//  Return number of formal args provided to the function.
+//  This is just a guess, because * repeats count as zero.
 //
 static int Count_Dia_Args(REBVAL *args)
 {
@@ -139,13 +139,13 @@ static int Count_Dia_Args(REBVAL *args)
 //
 //  Eval_Arg: C
 //  
-//      Handle all values passed in a dialect.
+//  Handle all values passed in a dialect.
 //  
-//      Contexts can be used for finding a word in a block of
-//      contexts without using a path.
+//  Contexts can be used for finding a word in a block of
+//  contexts without using a path.
 //  
-//      Returns zero on error.
-//      Note: stack used to hold temp values
+//  Returns zero on error.
+//  Note: stack used to hold temp values
 //
 static REBVAL *Eval_Arg(REBDIA *dia)
 {
@@ -201,15 +201,15 @@ static REBVAL *Eval_Arg(REBDIA *dia)
 //
 //  Add_Arg: C
 //  
-//      Add an actual argument to the output block.
+//  Add an actual argument to the output block.
 //  
-//      Note that the argument may be out sequence with the formal
-//      arguments so we must scan for a slot that matches.
+//  Note that the argument may be out sequence with the formal
+//  arguments so we must scan for a slot that matches.
 //  
-//      Returns:
-//        1: arg matches a formal arg and has been stored
-//        0: no arg of that type was found
-//       -N: error (type block contains a bad value)
+//  Returns:
+//    1: arg matches a formal arg and has been stored
+//    0: no arg of that type was found
+//   -N: error (type block contains a bad value)
 //
 static REBINT Add_Arg(REBDIA *dia, REBVAL *value)
 {
@@ -359,7 +359,7 @@ again:
 //
 //  Do_Cmd: C
 //  
-//      Returns the length of command processed or error. See below.
+//  Returns the length of command processed or error. See below.
 //
 static REBINT Do_Cmd(REBDIA *dia)
 {
@@ -432,11 +432,11 @@ static REBINT Do_Cmd(REBDIA *dia)
 //
 //  Do_Dia: C
 //  
-//      Process the next command in the dialect.
-//      Returns the length of command processed.
-//      Zero indicates end of block.
-//      Negative indicate error.
-//      The args holds resulting args.
+//  Process the next command in the dialect.
+//  Returns the length of command processed.
+//  Zero indicates end of block.
+//  Negative indicate error.
+//  The args holds resulting args.
 //
 static REBINT Do_Dia(REBDIA *dia)
 {
@@ -479,19 +479,19 @@ static REBINT Do_Dia(REBDIA *dia)
 //
 //  Do_Dialect: C
 //  
-//      Format for dialect is:
-//          CMD arg1 arg2 arg3 CMD arg1 arg2 ...
+//  Format for dialect is:
+//      CMD arg1 arg2 arg3 CMD arg1 arg2 ...
 //  
-//      Returns:
-//          cmd value or error as result (or zero for end)
-//          index is updated
-//          if *out is zero, then we create a new output block
+//  Returns:
+//      cmd value or error as result (or zero for end)
+//      index is updated
+//      if *out is zero, then we create a new output block
 //  
-//      The arg sequence is terminated by:
-//          1. Maximum # of args for command
-//          2. An arg that is not of a specified datatype for CMD
-//          3. Encountering a new CMD
-//          4. End of the dialect block
+//  The arg sequence is terminated by:
+//      1. Maximum # of args for command
+//      2. An arg that is not of a specified datatype for CMD
+//      3. Encountering a new CMD
+//      4. End of the dialect block
 //
 REBINT Do_Dialect(REBSER *dialect, REBSER *block, REBCNT *index, REBSER **out)
 {

@@ -70,9 +70,9 @@ REBINT CT_Map(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  Make_Map: C
 //  
-//      Makes a MAP block (that holds both keys and values).
-//      Size is the number of key-value pairs.
-//      If size >= MIN_DICT, then a hash series is also created.
+//  Makes a MAP block (that holds both keys and values).
+//  Size is the number of key-value pairs.
+//  If size >= MIN_DICT, then a hash series is also created.
 //
 static REBSER *Make_Map(REBINT size)
 {
@@ -90,15 +90,15 @@ static REBSER *Make_Map(REBINT size)
 //
 //  Find_Key: C
 //  
-//      Returns hash index (either the match or the new one).
-//      A return of zero is valid (as a hash index);
+//  Returns hash index (either the match or the new one).
+//  A return of zero is valid (as a hash index);
 //  
-//      Wide: width of record (normally 2, a key and a value).
+//  Wide: width of record (normally 2, a key and a value).
 //  
-//      Modes:
-//          0 - search, return hash if found or not
-//          1 - search, return hash, else return -1 if not
-//          2 - search, return hash, else append value and return -1
+//  Modes:
+//      0 - search, return hash if found or not
+//      1 - search, return hash, else return -1 if not
+//      2 - search, return hash, else append value and return -1
 //
 REBINT Find_Key(REBSER *series, REBSER *hser, REBVAL *key, REBINT wide, REBCNT cased, REBYTE mode)
 {
@@ -167,7 +167,7 @@ REBINT Find_Key(REBSER *series, REBSER *hser, REBVAL *key, REBINT wide, REBCNT c
 //
 //  Rehash_Hash: C
 //  
-//      Recompute the entire hash table. Table must be large enough.
+//  Recompute the entire hash table. Table must be large enough.
 //
 static void Rehash_Hash(REBSER *series)
 {
@@ -191,11 +191,11 @@ static void Rehash_Hash(REBSER *series)
 //
 //  Find_Entry: C
 //  
-//      Try to find the entry in the map. If not found
-//      and val is SET, create the entry and store the key and
-//      val.
+//  Try to find the entry in the map. If not found
+//  and val is SET, create the entry and store the key and
+//  val.
 //  
-//      RETURNS: the index to the VALUE or zero if there is none.
+//  RETURNS: the index to the VALUE or zero if there is none.
 //
 static REBCNT Find_Entry(REBSER *series, REBVAL *key, REBVAL *val)
 {
@@ -373,8 +373,8 @@ REBFLG MT_Map(REBVAL *out, REBVAL *data, REBCNT type)
 //
 //  Map_To_Block: C
 //  
-//      mapser = series of the map
-//      what: -1 - words, +1 - values, 0 -both
+//  mapser = series of the map
+//  what: -1 - words, +1 - values, 0 -both
 //
 REBSER *Map_To_Block(REBSER *mapser, REBINT what)
 {
@@ -407,7 +407,7 @@ REBSER *Map_To_Block(REBSER *mapser, REBINT what)
 //
 //  Block_As_Map: C
 //  
-//      Convert existing block to a map.
+//  Convert existing block to a map.
 //
 void Block_As_Map(REBSER *blk)
 {

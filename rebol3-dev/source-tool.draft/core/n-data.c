@@ -87,8 +87,8 @@ REBNATIVE(latin1q)
 //
 //  Is_Of_Type: C
 //  
-//      Types can be: word or block. Each element must be either
-//      a datatype or a typeset.
+//  Types can be: word or block. Each element must be either
+//  a datatype or a typeset.
 //
 static REBOOL Is_Of_Type(const REBVAL *value, REBVAL *types)
 {
@@ -227,12 +227,12 @@ REBNATIVE(as_pair)
 //      /set "Add to context any new set-words found"
 //  ]
 //  
-//      1 words
-//      2 context | word
-//      3 /copy
-//      4 /only
-//      5 /new
-//      6 /set
+//  1 words
+//  2 context | word
+//  3 /copy
+//  4 /only
+//  5 /new
+//  6 /set
 //
 REBNATIVE(bind)
 {
@@ -315,8 +315,8 @@ REBNATIVE(boundq)
 //      /deep "Process nested blocks"
 //  ]
 //  
-//      word | context
-//      /deep
+//  word | context
+//  /deep
 //
 REBNATIVE(unbind)
 {
@@ -341,11 +341,11 @@ REBNATIVE(unbind)
 //      words [any-object! block! none!] "Words to ignore"
 //  ]
 //  
-//      1 block
-//      3 /deep
-//      4 /set
-//      4 /ignore
-//      5 object | block
+//  1 block
+//  3 /deep
+//  4 /set
+//  4 /ignore
+//  5 object | block
 //
 REBNATIVE(collect_words)
 {
@@ -493,10 +493,10 @@ REBNATIVE(not)
 //      /extend "Add source words to the target if necessary"
 //  ]
 //  
-//      3 /only
-//      4 from
-//      5 /all
-//      6 /expand
+//  3 /only
+//  4 from
+//  5 /all
+//  6 /expand
 //
 REBNATIVE(resolve)
 {
@@ -517,10 +517,10 @@ REBNATIVE(resolve)
 //      /pad {For objects, if block is too short, remaining words are set to NONE}
 //  ]
 //  
-//      word [any-word! block! object!] {Word or words to set}
-//      value [any-type!] {Value or block of values}
-//      /any {Allows setting words to any value.}
-//      /pad {For objects, if block is too short, remaining words are set to NONE.}
+//  word [any-word! block! object!] {Word or words to set}
+//  value [any-type!] {Value or block of values}
+//  /any {Allows setting words to any value.}
+//  /pad {For objects, if block is too short, remaining words are set to NONE.}
 //
 REBNATIVE(set)
 {
@@ -696,8 +696,8 @@ REBNATIVE(valueq)
 //
 //  -add-add: native none
 //  
-//      i: ++ int
-//      s: ++ series
+//  i: ++ int
+//  s: ++ series
 //
 REBNATIVE(_add_add)
 {
@@ -732,8 +732,8 @@ REBNATIVE(_add_add)
 //      'word [word!] "Integer or series variable"
 //  ]
 //  
-//      i: -- int
-//      s: -- series
+//  i: -- int
+//  s: -- series
 //
 REBNATIVE(__)
 {
@@ -782,8 +782,8 @@ REBNATIVE(dump)
 //
 //  Map_Gob_Inner: C
 //  
-//      Map a higher level gob coordinate to a lower level.
-//      Returns GOB and sets new offset pair.
+//  Map a higher level gob coordinate to a lower level.
+//  Returns GOB and sets new offset pair.
 //
 static REBGOB *Map_Gob_Inner(REBGOB *gob, REBXYF *offset)
 {

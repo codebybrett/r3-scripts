@@ -45,17 +45,17 @@ enum Panic_Msg_Nums {
 //
 //  Panic_Core: C
 //  
-//      Print a failure message and abort.
+//  Print a failure message and abort.
 //  
-//      LATIN1 ONLY!! (For now)
+//  LATIN1 ONLY!! (For now)
 //  
-//      The error is identified by id number, which can reference an
-//      error message string in the boot strings block.
+//  The error is identified by id number, which can reference an
+//  error message string in the boot strings block.
 //  
-//      Note that lower level error messages should not attempt to
-//      use the %r (mold value) format (uses higher level functions).
+//  Note that lower level error messages should not attempt to
+//  use the %r (mold value) format (uses higher level functions).
 //  
-//      See panics.h for list of crash errors.
+//  See panics.h for list of crash errors.
 //
 /***
 ** coverity[+kill]
@@ -132,7 +132,7 @@ void Panic_Core(REBINT id, ...)
 //
 //  NA: C
 //  
-//      Feature not available.
+//  Feature not available.
 //
 void NA(void)
 {

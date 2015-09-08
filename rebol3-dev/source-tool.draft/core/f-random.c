@@ -127,7 +127,7 @@ static REBI64 ran_arr_cycle()
 //
 //  Random_Int: C
 //  
-//      Return random integer. Secure uses SHA1 for better safety.
+//  Return random integer. Secure uses SHA1 for better safety.
 //
 REBI64 Random_Int(REBFLG secure)
 {

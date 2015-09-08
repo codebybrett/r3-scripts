@@ -44,36 +44,36 @@ static REBCNT *CRC_Table;
 //
 //  Generate_CRC: C
 //  
-//      Simulates CRC hardware circuit.  Generates true CRC
-//      directly, without requiring extra NULL bytes to be appended
-//      to the message. Returns new updated CRC accumulator.
+//  Simulates CRC hardware circuit.  Generates true CRC
+//  directly, without requiring extra NULL bytes to be appended
+//  to the message. Returns new updated CRC accumulator.
 //  
-//      These CRC functions are derived from code in chapter 19 of the book
-//      "C Programmer's Guide to Serial Communications", by Joe Campbell.
-//      Generalized to any CRC width by Philip Zimmermann.
+//  These CRC functions are derived from code in chapter 19 of the book
+//  "C Programmer's Guide to Serial Communications", by Joe Campbell.
+//  Generalized to any CRC width by Philip Zimmermann.
 //  
-//          CRC-16        X^16 + X^15 + X^2 + 1
-//          CRC-CCITT    X^16 + X^12 + X^2 + 1
+//      CRC-16        X^16 + X^15 + X^2 + 1
+//      CRC-CCITT    X^16 + X^12 + X^2 + 1
 //  
-//      Notes on making a good 24-bit CRC:
-//      The primitive irreducible polynomial of degree 23 over GF(2),
-//      040435651 (octal), comes from Appendix C of "Error Correcting Codes,
-//      2nd edition" by Peterson and Weldon, page 490.  This polynomial was
-//      chosen for its uniform density of ones and zeros, which has better
-//      error detection properties than polynomials with a minimal number of
-//      nonzero terms.    Multiplying this primitive degree-23 polynomial by
-//      the polynomial x+1 yields the additional property of detecting any
-//      odd number of bits in error, which means it adds parity.  This
-//      approach was recommended by Neal Glover.
+//  Notes on making a good 24-bit CRC:
+//  The primitive irreducible polynomial of degree 23 over GF(2),
+//  040435651 (octal), comes from Appendix C of "Error Correcting Codes,
+//  2nd edition" by Peterson and Weldon, page 490.  This polynomial was
+//  chosen for its uniform density of ones and zeros, which has better
+//  error detection properties than polynomials with a minimal number of
+//  nonzero terms.    Multiplying this primitive degree-23 polynomial by
+//  the polynomial x+1 yields the additional property of detecting any
+//  odd number of bits in error, which means it adds parity.  This
+//  approach was recommended by Neal Glover.
 //  
-//      To multiply the polynomial 040435651 by x+1, shift it left 1 bit and
-//      bitwise add (xor) the unshifted version back in.  Dropping the unused
-//      upper bit (bit 24) produces a CRC-24 generator bitmask of 041446373
-//      octal, or 0x864cfb hex.
+//  To multiply the polynomial 040435651 by x+1, shift it left 1 bit and
+//  bitwise add (xor) the unshifted version back in.  Dropping the unused
+//  upper bit (bit 24) produces a CRC-24 generator bitmask of 041446373
+//  octal, or 0x864cfb hex.
 //  
-//      You can detect spurious leading zeros or framing errors in the
-//      message by initializing the CRC accumulator to some agreed-upon
-//      nonzero "random-like" value, but this is a bit nonstandard.
+//  You can detect spurious leading zeros or framing errors in the
+//  message by initializing the CRC accumulator to some agreed-upon
+//  nonzero "random-like" value, but this is a bit nonstandard.
 //
 static REBCNT Generate_CRC(REBYTE ch, REBCNT poly, REBCNT accum)
 {
@@ -95,9 +95,9 @@ static REBCNT Generate_CRC(REBYTE ch, REBCNT poly, REBCNT accum)
 //
 //  Make_CRC_Table: C
 //  
-//      Derives a CRC lookup table from the CRC polynomial.
-//      The table is used later by crcupdate function given below.
-//      Only needs to be called once at the dawn of time.
+//  Derives a CRC lookup table from the CRC polynomial.
+//  The table is used later by crcupdate function given below.
+//  Only needs to be called once at the dawn of time.
 //
 static void Make_CRC_Table(REBCNT poly)
 {
@@ -128,8 +128,8 @@ REBINT Compute_CRC(REBYTE *str, REBCNT len)
 //
 //  Hash_String: C
 //  
-//      Return a case insensitive hash value for the string.  The
-//      string does not have to be zero terminated and UTF8 is ok.
+//  Return a case insensitive hash value for the string.  The
+//  string does not have to be zero terminated and UTF8 is ok.
 //
 REBINT Hash_String(REBYTE *str, REBCNT len)
 {
@@ -148,7 +148,7 @@ REBINT Hash_String(REBYTE *str, REBCNT len)
 //
 //  Hash_Word: C
 //  
-//      Return a case insensitive hash value for the string.
+//  Return a case insensitive hash value for the string.
 //
 REBINT Hash_Word(const REBYTE *str, REBCNT len)
 {
@@ -175,10 +175,10 @@ REBINT Hash_Word(const REBYTE *str, REBCNT len)
 //
 //  Hash_Value: C
 //  
-//      Return a case insensitive hash value for any value.
+//  Return a case insensitive hash value for any value.
 //  
-//      Result will be > 0 and < hash_size, except if
-//      datatype cannot be hashed, a 0 is returned.
+//  Result will be > 0 and < hash_size, except if
+//  datatype cannot be hashed, a 0 is returned.
 //
 REBINT Hash_Value(REBVAL *val, REBCNT hash_size)
 {
@@ -284,9 +284,9 @@ REBSER *Make_Hash_Sequence(REBCNT len)
 //
 //  Val_Init_Map: C
 //  
-//      A map has an additional hash element hidden in the ->extra
-//      field of the REBSER which needs to be given to memory
-//      management as well.
+//  A map has an additional hash element hidden in the ->extra
+//  field of the REBSER which needs to be given to memory
+//  management as well.
 //
 void Val_Init_Map(REBVAL *out, REBSER *ser)
 {
@@ -299,10 +299,10 @@ void Val_Init_Map(REBVAL *out, REBSER *ser)
 //
 //  Hash_Block: C
 //  
-//      Hash ALL values of a block. Return hash array series.
-//      Used for SET logic (unique, union, etc.)
+//  Hash ALL values of a block. Return hash array series.
+//  Used for SET logic (unique, union, etc.)
 //  
-//      Note: hash array contents (indexes) are 1-based!
+//  Note: hash array contents (indexes) are 1-based!
 //
 REBSER *Hash_Block(REBVAL *block, REBCNT cased)
 {
@@ -338,8 +338,8 @@ void Init_CRC(void)
 //
 //  Compute_IPC: C
 //  
-//      Compute an IP checksum given some data and a length.
-//      Used only on BINARY values.
+//  Compute an IP checksum given some data and a length.
+//  Used only on BINARY values.
 //
 REBINT Compute_IPC(REBYTE *data, REBCNT length)
 {

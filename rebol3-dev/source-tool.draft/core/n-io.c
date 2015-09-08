@@ -66,11 +66,11 @@ REBNATIVE(echo)
 //      value [any-type!] "The value to form"
 //  ]
 //  
-//      Converts a value to a REBOL readable string.
-//      value    "The value to mold"
-//      /only   "For a block value, give only contents, no outer [ ]"
-//      /all    "Mold in serialized format"
-//      /flat    "No line indentation"
+//  Converts a value to a REBOL readable string.
+//  value    "The value to mold"
+//  /only   "For a block value, give only contents, no outer [ ]"
+//  /all    "Mold in serialized format"
+//  /flat    "No line indentation"
 //
 REBNATIVE(form)
 {
@@ -88,11 +88,11 @@ REBNATIVE(form)
 //      /flat "No indentation"
 //  ]
 //  
-//      Converts a value to a REBOL readable string.
-//      value    "The value to mold"
-//      /only   "For a block value, give only contents, no outer [ ]"
-//      /all    "Mold in serialized format"
-//      /flat    "No line indentation"
+//  Converts a value to a REBOL readable string.
+//  value    "The value to mold"
+//  /only   "For a block value, give only contents, no outer [ ]"
+//  /all    "Mold in serialized format"
+//  /flat    "No line indentation"
 //
 REBNATIVE(mold)
 {
@@ -367,8 +367,8 @@ chk_neg:
 //      event [event!]
 //  ]
 //  
-//      Calls port update for native actors.
-//      Calls port awake function.
+//  Calls port update for native actors.
+//  Calls port awake function.
 //
 REBNATIVE(wake_up)
 {
@@ -888,8 +888,8 @@ REBNATIVE(browse)
 //
 //  String_List_To_Block: C
 //  
-//      Convert a series of null terminated strings to
-//      a block of strings separated with '='.
+//  Convert a series of null terminated strings to
+//  a block of strings separated with '='.
 //
 static REBSER *String_List_To_Block(REBCHR *str)
 {
@@ -924,9 +924,9 @@ static REBSER *String_List_To_Block(REBCHR *str)
 //
 //  Block_To_String_List: C
 //  
-//      Convert block of values to a string that holds
-//      a series of null terminated strings, followed
-//      by a final terminating string.
+//  Convert block of values to a string that holds
+//  a series of null terminated strings, followed
+//  by a final terminating string.
 //
 REBSER *Block_To_String_List(REBVAL *blk)
 {
@@ -949,7 +949,7 @@ REBSER *Block_To_String_List(REBVAL *blk)
 //
 //  File_List_To_Block: C
 //  
-//      Convert file directory and file name list to block.
+//  Convert file directory and file name list to block.
 //
 static REBSER *File_List_To_Block(const REBCHR *str)
 {

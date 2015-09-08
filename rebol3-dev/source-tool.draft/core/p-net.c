@@ -71,7 +71,7 @@ static void Ret_Query_Net(REBSER *port, REBREQ *sock, REBVAL *ret)
 //
 //  Accept_New_Port: C
 //  
-//      Clone a listening port as a new accept port.
+//  Clone a listening port as a new accept port.
 //
 static void Accept_New_Port(REBVAL *out, REBSER *port, REBREQ *sock)
 {

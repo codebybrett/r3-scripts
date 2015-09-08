@@ -34,7 +34,7 @@
 //
 //  Is_Not_ASCII: C
 //  
-//      Returns TRUE if byte string uses upper code page.
+//  Returns TRUE if byte string uses upper code page.
 //
 REBOOL Is_Not_ASCII(REBYTE *bp, REBCNT len)
 {
@@ -48,7 +48,7 @@ REBOOL Is_Not_ASCII(REBYTE *bp, REBCNT len)
 //
 //  Is_Wide: C
 //  
-//      Returns TRUE if uni string needs 16 bits.
+//  Returns TRUE if uni string needs 16 bits.
 //
 REBOOL Is_Wide(const REBUNI *up, REBCNT len)
 {
@@ -181,7 +181,7 @@ REBSER *Prep_Bin_Str(REBVAL *val, REBCNT *index, REBCNT *length)
 //
 //  Xandor_Binary: C
 //  
-//      Only valid for BINARY data.
+//  Only valid for BINARY data.
 //
 REBSER *Xandor_Binary(REBCNT action, REBVAL *value, REBVAL *arg)
 {
@@ -233,7 +233,7 @@ REBSER *Xandor_Binary(REBCNT action, REBVAL *value, REBVAL *arg)
 //
 //  Complement_Binary: C
 //  
-//      Only valid for BINARY data.
+//  Only valid for BINARY data.
 //
 REBSER *Complement_Binary(REBVAL *value)
 {
@@ -255,8 +255,8 @@ REBSER *Complement_Binary(REBVAL *value)
 //
 //  Shuffle_String: C
 //  
-//      Randomize a string. Return a new string series.
-//      Handles both BYTE and UNICODE strings.
+//  Randomize a string. Return a new string series.
+//  Handles both BYTE and UNICODE strings.
 //
 void Shuffle_String(REBVAL *value, REBFLG secure)
 {
@@ -288,10 +288,10 @@ static REBYTE seed_str[SEED_LEN] = {
 //
 //  Cloak: C
 //  
-//      Simple data scrambler. Quality depends on the key length.
-//      Result is made in place (data string).
+//  Simple data scrambler. Quality depends on the key length.
+//  Result is made in place (data string).
 //  
-//      The key (kp) is passed as a REBVAL or REBYTE (when klen is !0).
+//  The key (kp) is passed as a REBVAL or REBYTE (when klen is !0).
 //
 REBOOL Cloak(REBOOL decode, REBYTE *cp, REBCNT dlen, REBYTE *kp, REBCNT klen, REBFLG as_is)
 {
@@ -350,7 +350,7 @@ REBOOL Cloak(REBOOL decode, REBYTE *cp, REBCNT dlen, REBYTE *kp, REBCNT klen, RE
 //
 //  Trim_Tail: C
 //  
-//      Used to trim off hanging spaces during FORM and MOLD.
+//  Used to trim off hanging spaces during FORM and MOLD.
 //
 void Trim_Tail(REBSER *src, REBYTE chr)
 {
@@ -370,9 +370,9 @@ void Trim_Tail(REBSER *src, REBYTE chr)
 //
 //  Deline_Bytes: C
 //  
-//      This function converts any combination of CR and
-//      LF line endings to the internal REBOL line ending.
-//      The new length of the buffer is returned.
+//  This function converts any combination of CR and
+//  LF line endings to the internal REBOL line ending.
+//  The new length of the buffer is returned.
 //
 REBCNT Deline_Bytes(REBYTE *buf, REBCNT len)
 {
@@ -496,7 +496,7 @@ void Enline_Uni(REBSER *ser, REBCNT idx, REBCNT len)
 //
 //  Entab_Bytes: C
 //  
-//      Entab a string and return a new series.
+//  Entab a string and return a new series.
 //
 REBSER *Entab_Bytes(REBYTE *bp, REBCNT index, REBCNT len, REBINT tabsize)
 {
@@ -542,7 +542,7 @@ REBSER *Entab_Bytes(REBYTE *bp, REBCNT index, REBCNT len, REBINT tabsize)
 //
 //  Entab_Unicode: C
 //  
-//      Entab a string and return a new series.
+//  Entab a string and return a new series.
 //
 REBSER *Entab_Unicode(REBUNI *bp, REBCNT index, REBCNT len, REBINT tabsize)
 {
@@ -588,7 +588,7 @@ REBSER *Entab_Unicode(REBUNI *bp, REBCNT index, REBCNT len, REBINT tabsize)
 //
 //  Detab_Bytes: C
 //  
-//      Detab a string and return a new series.
+//  Detab a string and return a new series.
 //
 REBSER *Detab_Bytes(REBYTE *bp, REBCNT index, REBCNT len, REBINT tabsize)
 {
@@ -628,7 +628,7 @@ REBSER *Detab_Bytes(REBYTE *bp, REBCNT index, REBCNT len, REBINT tabsize)
 //
 //  Detab_Unicode: C
 //  
-//      Detab a unicode string and return a new series.
+//  Detab a unicode string and return a new series.
 //
 REBSER *Detab_Unicode(REBUNI *bp, REBCNT index, REBCNT len, REBINT tabsize)
 {
@@ -668,7 +668,7 @@ REBSER *Detab_Unicode(REBUNI *bp, REBCNT index, REBCNT len, REBINT tabsize)
 //
 //  Change_Case: C
 //  
-//      Common code for string case handling.
+//  Common code for string case handling.
 //
 void Change_Case(REBVAL *out, REBVAL *val, REBVAL *part, REBOOL upper)
 {
@@ -720,8 +720,8 @@ void Change_Case(REBVAL *out, REBVAL *val, REBVAL *part, REBOOL upper)
 //
 //  Split_Lines: C
 //  
-//      Given a string series, split lines on CR-LF.
-//      Series can be bytes or Unicode.
+//  Given a string series, split lines on CR-LF.
+//  Series can be bytes or Unicode.
 //
 REBSER *Split_Lines(REBVAL *val)
 {

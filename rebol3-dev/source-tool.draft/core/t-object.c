@@ -285,7 +285,7 @@ REBINT PD_Object(REBPVS *pvs)
 //
 //  REBTYPE: C
 //  
-//      Handles object! and error! datatypes.
+//  Handles object! and error! datatypes.
 //
 REBTYPE(Object)
 {
@@ -560,7 +560,7 @@ is_true:
 //
 //  PD_Frame: C
 //  
-//      pvs->value points to the first value in frame (SELF).
+//  pvs->value points to the first value in frame (SELF).
 //
 REBINT PD_Frame(REBPVS *pvs)
 {

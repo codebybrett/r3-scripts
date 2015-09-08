@@ -274,7 +274,7 @@ REBNATIVE(square_root)
 //      /logical "Logical shift (sign bit ignored)"
 //  ]
 //  
-//      shift int bits arithmetic or logical
+//  shift int bits arithmetic or logical
 //
 REBNATIVE(shift)
 {
@@ -315,25 +315,25 @@ REBNATIVE(shift)
 //
 //  Compare_Modify_Values: C
 //  
-//      Compare 2 values depending on level of strictness.  It leans
-//      upon the per-type comparison functions (that have a more typical
-//      interface of returning [1, 0, -1] and taking a CASE parameter)
-//      but adds a layer of being able to check for specific types
-//      of equality...which those comparison functions do not discern.
+//  Compare 2 values depending on level of strictness.  It leans
+//  upon the per-type comparison functions (that have a more typical
+//  interface of returning [1, 0, -1] and taking a CASE parameter)
+//  but adds a layer of being able to check for specific types
+//  of equality...which those comparison functions do not discern.
 //  
-//      Strictness:
-//          0 - coersed equality
-//          1 - equivalence
-//          2 - strict equality
-//          3 - same (identical bits)
+//  Strictness:
+//      0 - coersed equality
+//      1 - equivalence
+//      2 - strict equality
+//      3 - same (identical bits)
 //  
-//         -1 - greater or equal
-//         -2 - greater
+//     -1 - greater or equal
+//     -2 - greater
 //  
-//      !!! This routine (may) modify the value cells for 'a' and 'b' in
-//      order to coerce them for easier comparison.  Most usages are
-//      in native code that can overwrite its argument values without
-//      that being a problem, so it doesn't matter.
+//  !!! This routine (may) modify the value cells for 'a' and 'b' in
+//  order to coerce them for easier comparison.  Most usages are
+//  in native code that can overwrite its argument values without
+//  that being a problem, so it doesn't matter.
 //
 REBINT Compare_Modify_Values(REBVAL *a, REBVAL *b, REBINT strictness)
 {

@@ -84,7 +84,7 @@
 //
 //  Get_Hash_Prime: C
 //  
-//      Given a size, return a prime number that is larger.
+//  Given a size, return a prime number that is larger.
 //
 REBINT Get_Hash_Prime(REBCNT size)
 {
@@ -101,7 +101,7 @@ REBINT Get_Hash_Prime(REBCNT size)
 //
 //  Expand_Hash: C
 //  
-//      Expand hash series. Clear it but set its tail.
+//  Expand hash series. Clear it but set its tail.
 //
 void Expand_Hash(REBSER *ser)
 {
@@ -119,9 +119,9 @@ void Expand_Hash(REBSER *ser)
 //
 //  Expand_Word_Table: C
 //  
-//      Expand the hash table part of the word_table by allocating
-//      the next larger table size and rehashing all the words of
-//      the current table.  Free the old hash array.
+//  Expand the hash table part of the word_table by allocating
+//  the next larger table size and rehashing all the words of
+//  the current table.  Free the old hash array.
 //
 static void Expand_Word_Table(void)
 {
@@ -158,7 +158,7 @@ static void Expand_Word_Table(void)
 //
 //  Make_Word_Name: C
 //  
-//      Allocates and copies the text string of the word.
+//  Allocates and copies the text string of the word.
 //
 static REBCNT Make_Word_Name(const REBYTE *str, REBCNT len)
 {
@@ -173,9 +173,9 @@ static REBCNT Make_Word_Name(const REBYTE *str, REBCNT len)
 //
 //  Make_Word: C
 //  
-//      Given a string and its length, compute its hash value,
-//      search for a match, and if not found, add it to the table.
-//      Return the table index for the word (whether found or new).
+//  Given a string and its length, compute its hash value,
+//  search for a match, and if not found, add it to the table.
+//  Return the table index for the word (whether found or new).
 //
 REBCNT Make_Word(const REBYTE *str, REBCNT len)
 {
@@ -265,8 +265,8 @@ make_sym:
 //
 //  Last_Word_Num: C
 //  
-//      Return the number of the last word created.  Used to
-//      mark a range of canon-words (e.g. operators).
+//  Return the number of the last word created.  Used to
+//  mark a range of canon-words (e.g. operators).
 //
 REBCNT Last_Word_Num(void)
 {
@@ -277,7 +277,7 @@ REBCNT Last_Word_Num(void)
 //
 //  Val_Init_Word: C
 //  
-//      Initialize an ANY-WORD! type with a binding to a context.
+//  Initialize an ANY-WORD! type with a binding to a context.
 //
 void Val_Init_Word(REBVAL *value, REBCNT type, REBINT sym, REBSER *frame, REBCNT index)
 {
@@ -293,7 +293,7 @@ void Val_Init_Word(REBVAL *value, REBCNT type, REBINT sym, REBSER *frame, REBCNT
 //
 //  Val_Init_Word_Unbound: C
 //  
-//      Initialize a value as a word. Set frame as unbound (no context).
+//  Initialize a value as a word. Set frame as unbound (no context).
 //
 void Val_Init_Word_Unbound(REBVAL *value, REBCNT type, REBCNT sym)
 {
@@ -310,19 +310,19 @@ void Val_Init_Word_Unbound(REBVAL *value, REBCNT type, REBCNT sym)
 //
 //  Val_Init_Word_Typed: C
 //  
-//      When a special flag is set on a REB_WORD--or a value of
-//      ANY-WORD! type--it becomes an internal value holding a
-//      64-bit typeset (rather than a pointer and a binding index).
+//  When a special flag is set on a REB_WORD--or a value of
+//  ANY-WORD! type--it becomes an internal value holding a
+//  64-bit typeset (rather than a pointer and a binding index).
 //  
-//      These 'typed' words are found in the identifying function
-//      argument series or the words of an object.  For functions,
-//      typeset bits hold the legal Rebol types those elements can
-//      hold.  They are currently unused in objects.
+//  These 'typed' words are found in the identifying function
+//  argument series or the words of an object.  For functions,
+//  typeset bits hold the legal Rebol types those elements can
+//  hold.  They are currently unused in objects.
 //  
-//      NOTE: These should not be leaked out to the user as ordinary
-//      words.  When a user reflects the `words-of` list, any series
-//      with typed words in them must be copied and mutated back to
-//      ordinary words.
+//  NOTE: These should not be leaked out to the user as ordinary
+//  words.  When a user reflects the `words-of` list, any series
+//  with typed words in them must be copied and mutated back to
+//  ordinary words.
 //
 void Val_Init_Word_Typed(REBVAL *value, REBCNT type, REBCNT sym, REBU64 typeset)
 {
@@ -366,9 +366,9 @@ const REBYTE *Get_Type_Name(const REBVAL *value)
 //
 //  Compare_Word: C
 //  
-//      Compare the names of two words and return the difference.
-//      Note that words are kept UTF8 encoded.
-//      Positive result if s > t and negative if s < t.
+//  Compare the names of two words and return the difference.
+//  Note that words are kept UTF8 encoded.
+//  Positive result if s > t and negative if s < t.
 //
 REBINT Compare_Word(const REBVAL *s, const REBVAL *t, REBFLG is_case)
 {
@@ -389,7 +389,7 @@ REBINT Compare_Word(const REBVAL *s, const REBVAL *t, REBFLG is_case)
 //
 //  Init_Words: C
 //  
-//      Only flags BIND_Table creation only (for threads).
+//  Only flags BIND_Table creation only (for threads).
 //
 void Init_Words(REBFLG only)
 {

@@ -256,7 +256,7 @@ x*/	REBRXT Do_Callback(REBSER *obj, u32 name, RXIARG *rxis, RXIARG *result)
 //      event [event!] "Callback event"
 //  ]
 //  
-//      object word arg1 arg2
+//  object word arg1 arg2
 //
 REBNATIVE(do_callback)
 {
@@ -292,24 +292,24 @@ typedef REBYTE *(INFO_FUNC)(REBINT opts, void *lib);
 //      function [handle!] "Command dispatcher (native)"
 //  ]
 //  
-//      arg 1: filename | body binary string (UTF-8)
-//      arg 2: dispatch
-//      arg 3: function handle
+//  arg 1: filename | body binary string (UTF-8)
+//  arg 2: dispatch
+//  arg 3: function handle
 //  
 //  Low level extension loader:
 //  
-//      1. Opens the DLL for the extension
-//      2. Calls its Info() command to get its definition header (REBOL)
-//      3. Inits an extension structure (dll, Call() function)
-//      4. Creates a extension object and returns it
-//      5. REBOL code then uses that object to define the extension module
-//         including commands, functions, data, exports, etc.
+//  1. Opens the DLL for the extension
+//  2. Calls its Info() command to get its definition header (REBOL)
+//  3. Inits an extension structure (dll, Call() function)
+//  4. Creates a extension object and returns it
+//  5. REBOL code then uses that object to define the extension module
+//     including commands, functions, data, exports, etc.
 //  
 //  Each extension is defined as DLL with:
 //  
-//      init() - init anything needed
-//      quit() - cleanup anything needed
-//      call() - dispatch a native
+//  init() - init anything needed
+//  quit() - cleanup anything needed
+//  call() - dispatch a native
 //
 REBNATIVE(load_extension)
 {
@@ -390,8 +390,8 @@ REBNATIVE(load_extension)
 //
 //  Make_Command: C
 //  
-//      Assumes prior function has already stored the spec and args
-//      series. This function validates the body.
+//  Assumes prior function has already stored the spec and args
+//  series. This function validates the body.
 //
 void Make_Command(REBVAL *value, REBVAL *def)
 {
@@ -506,11 +506,11 @@ void Do_Command(const REBVAL *value)
 //
 //  Do_Commands: C
 //  
-//      Evaluate a block of commands as efficiently as possible.
-//      The arguments to each command must already be reduced or
-//      use only variable lookup.
+//  Evaluate a block of commands as efficiently as possible.
+//  The arguments to each command must already be reduced or
+//  use only variable lookup.
 //  
-//      Returns the last evaluated value, if provided.
+//  Returns the last evaluated value, if provided.
 //
 void Do_Commands(REBVAL *out, REBSER *cmds, void *context)
 {

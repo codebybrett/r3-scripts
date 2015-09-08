@@ -65,7 +65,7 @@ void Init_StdIO(void)
 //
 //  Print_OS_Line: C
 //  
-//      Print a new line.
+//  Print a new line.
 //
 static void Print_OS_Line(void)
 {
@@ -85,9 +85,9 @@ static void Print_OS_Line(void)
 //
 //  Prin_OS_String: C
 //  
-//      Print a string, but no line terminator or space.
+//  Print a string, but no line terminator or space.
 //  
-//      The width of the input is specified by UNI.
+//  The width of the input is specified by UNI.
 //
 static void Prin_OS_String(const void *p, REBCNT len, REBOOL uni)
 {
@@ -261,7 +261,7 @@ void Debug_Line(void)
 //
 //  Debug_Str: C
 //  
-//      Print a string followed by a newline.
+//  Print a string followed by a newline.
 //
 void Debug_Str(const char *str)
 {
@@ -272,7 +272,7 @@ void Debug_Str(const char *str)
 //
 //  Debug_Uni: C
 //  
-//      Print debug unicode string followed by a newline.
+//  Print debug unicode string followed by a newline.
 //
 void Debug_Uni(const REBSER *ser)
 {
@@ -344,7 +344,7 @@ void Debug_Series(const REBSER *ser)
 //
 //  Debug_Num: C
 //  
-//      Print a string followed by a number.
+//  Print a string followed by a number.
 //
 void Debug_Num(const REBYTE *str, REBINT num)
 {
@@ -360,7 +360,7 @@ void Debug_Num(const REBYTE *str, REBINT num)
 //
 //  Debug_Chars: C
 //  
-//      Print a number of spaces.
+//  Print a number of spaces.
 //
 void Debug_Chars(REBYTE chr, REBCNT num)
 {
@@ -375,7 +375,7 @@ void Debug_Chars(REBYTE chr, REBCNT num)
 //
 //  Debug_Space: C
 //  
-//      Print a number of spaces.
+//  Print a number of spaces.
 //
 void Debug_Space(REBCNT num)
 {
@@ -386,7 +386,7 @@ void Debug_Space(REBCNT num)
 //
 //  Debug_Word: C
 //  
-//      Print a REBOL word.
+//  Print a REBOL word.
 //
 void Debug_Word(const REBVAL *word)
 {
@@ -397,7 +397,7 @@ void Debug_Word(const REBVAL *word)
 //
 //  Debug_Type: C
 //  
-//      Print a REBOL datatype name.
+//  Print a REBOL datatype name.
 //
 void Debug_Type(const REBVAL *value)
 {
@@ -448,21 +448,21 @@ void Debug_Values(const REBVAL *value, REBCNT count, REBCNT limit)
 //
 //  Debug_Buf: C
 //  
-//      (va_list by pointer: http://stackoverflow.com/a/3369762/211160)
+//  (va_list by pointer: http://stackoverflow.com/a/3369762/211160)
 //  
-//      Lower level formatted print for debugging purposes.
+//  Lower level formatted print for debugging purposes.
 //  
-//      1. Does not support UNICODE.
-//      2. Does not auto-expand the output buffer.
-//      3. No termination buffering (limited length).
+//  1. Does not support UNICODE.
+//  2. Does not auto-expand the output buffer.
+//  3. No termination buffering (limited length).
 //  
-//      Print using a format string and variable number
-//      of arguments.  All args must be long word aligned
-//      (no short or char sized values unless recast to long).
+//  Print using a format string and variable number
+//  of arguments.  All args must be long word aligned
+//  (no short or char sized values unless recast to long).
 //  
-//      Output will be held in series print buffer and
-//      will not exceed its max size.  No line termination
-//      is supplied after the print.
+//  Output will be held in series print buffer and
+//  will not exceed its max size.  No line termination
+//  is supplied after the print.
 //
 void Debug_Buf(const char *fmt, va_list *args)
 {
@@ -497,12 +497,12 @@ void Debug_Buf(const char *fmt, va_list *args)
 //
 //  Debug_Fmt_: C
 //  
-//      Print using a format string and variable number
-//      of arguments.  All args must be long word aligned
-//      (no short or char sized values unless recast to long).
-//      Output will be held in series print buffer and
-//      will not exceed its max size.  No line termination
-//      is supplied after the print.
+//  Print using a format string and variable number
+//  of arguments.  All args must be long word aligned
+//  (no short or char sized values unless recast to long).
+//  Output will be held in series print buffer and
+//  will not exceed its max size.  No line termination
+//  is supplied after the print.
 //
 void Debug_Fmt_(const char *fmt, ...)
 {
@@ -516,12 +516,12 @@ void Debug_Fmt_(const char *fmt, ...)
 //
 //  Debug_Fmt: C
 //  
-//      Print using a formatted string and variable number
-//      of arguments.  All args must be long word aligned
-//      (no short or char sized values unless recast to long).
-//      Output will be held in a series print buffer and
-//      will not exceed its max size.  A line termination
-//      is supplied after the print.
+//  Print using a formatted string and variable number
+//  of arguments.  All args must be long word aligned
+//  (no short or char sized values unless recast to long).
+//  Output will be held in a series print buffer and
+//  will not exceed its max size.  A line termination
+//  is supplied after the print.
 //
 void Debug_Fmt(const char *fmt, ...)
 {
@@ -538,9 +538,9 @@ void Debug_Fmt(const char *fmt, ...)
 //
 //  Probe_Core_Debug: C
 //  
-//      Debug function for outputting a value.  Done as a function
-//      instead of just a macro due to how easy it is with varargs
-//      to order the types of the parameters wrong.  :-/
+//  Debug function for outputting a value.  Done as a function
+//  instead of just a macro due to how easy it is with varargs
+//  to order the types of the parameters wrong.  :-/
 //
 void Probe_Core_Debug(const char *msg, const char *file, int line, const REBVAL *val)
 {
@@ -566,11 +566,11 @@ REBFLG Echo_File(REBCHR *file)
 //
 //  Form_Hex_Pad: C
 //  
-//      Form an integer hex string in the given buffer with a
-//      width padded out with zeros.
-//      If len = 0 and val = 0, a null string is formed.
-//      Does not insert a #.
-//      Make sure you have room in your buffer before calling this!
+//  Form an integer hex string in the given buffer with a
+//  width padded out with zeros.
+//  If len = 0 and val = 0, a null string is formed.
+//  Does not insert a #.
+//  Make sure you have room in your buffer before calling this!
 //
 REBYTE *Form_Hex_Pad(REBYTE *buf, REBI64 val, REBINT len)
 {
@@ -599,7 +599,7 @@ REBYTE *Form_Hex_Pad(REBYTE *buf, REBI64 val, REBINT len)
 //
 //  Form_Hex2: C
 //  
-//      Convert byte-sized int to xx format. Very fast.
+//  Convert byte-sized int to xx format. Very fast.
 //
 REBYTE *Form_Hex2(REBYTE *bp, REBCNT val)
 {
@@ -613,7 +613,7 @@ REBYTE *Form_Hex2(REBYTE *bp, REBCNT val)
 //
 //  Form_Hex2_Uni: C
 //  
-//      Convert byte-sized int to unicode xx format. Very fast.
+//  Convert byte-sized int to unicode xx format. Very fast.
 //
 REBUNI *Form_Hex2_Uni(REBUNI *up, REBCNT val)
 {
@@ -627,7 +627,7 @@ REBUNI *Form_Hex2_Uni(REBUNI *up, REBCNT val)
 //
 //  Form_Hex_Esc_Uni: C
 //  
-//      Convert byte int to %xx format (in unicode destination)
+//  Convert byte int to %xx format (in unicode destination)
 //
 REBUNI *Form_Hex_Esc_Uni(REBUNI *up, REBUNI c)
 {
@@ -642,7 +642,7 @@ REBUNI *Form_Hex_Esc_Uni(REBUNI *up, REBUNI c)
 //
 //  Form_RGB_Uni: C
 //  
-//      Convert 24 bit RGB to xxxxxx format.
+//  Convert 24 bit RGB to xxxxxx format.
 //
 REBUNI *Form_RGB_Uni(REBUNI *up, REBCNT val)
 {
@@ -670,8 +670,8 @@ REBUNI *Form_RGB_Uni(REBUNI *up, REBCNT val)
 //
 //  Form_Uni_Hex: C
 //  
-//      Fast var-length hex output for uni-chars.
-//      Returns next position (just past the insert).
+//  Fast var-length hex output for uni-chars.
+//  Returns next position (just past the insert).
 //
 REBUNI *Form_Uni_Hex(REBUNI *out, REBCNT n)
 {
@@ -692,10 +692,10 @@ REBUNI *Form_Uni_Hex(REBUNI *out, REBCNT n)
 //
 //  Form_Var_Args: C
 //  
-//      (va_list by pointer: http://stackoverflow.com/a/3369762/211160)
+//  (va_list by pointer: http://stackoverflow.com/a/3369762/211160)
 //  
-//      Lower level (debugging) value formatter.
-//      Can restrict to max char size.
+//  Lower level (debugging) value formatter.
+//  Can restrict to max char size.
 //
 REBYTE *Form_Var_Args(REBYTE *bp, REBCNT max, const char *fmt, va_list *args)
 {
@@ -829,8 +829,8 @@ mold_value:
 //
 //  Prin_Value: C
 //  
-//      Print a value or block's contents for user viewing.
-//      Can limit output to a given size. Set limit to 0 for full size.
+//  Print a value or block's contents for user viewing.
+//  Can limit output to a given size. Set limit to 0 for full size.
 //
 void Prin_Value(const REBVAL *value, REBCNT limit, REBOOL mold)
 {
@@ -842,8 +842,8 @@ void Prin_Value(const REBVAL *value, REBCNT limit, REBOOL mold)
 //
 //  Print_Value: C
 //  
-//      Print a value or block's contents for user viewing.
-//      Can limit output to a given size. Set limit to 0 for full size.
+//  Print a value or block's contents for user viewing.
+//  Can limit output to a given size. Set limit to 0 for full size.
 //
 void Print_Value(const REBVAL *value, REBCNT limit, REBOOL mold)
 {
@@ -855,7 +855,7 @@ void Print_Value(const REBVAL *value, REBCNT limit, REBOOL mold)
 //
 //  Init_Raw_Print: C
 //  
-//      Initialize print module.
+//  Initialize print module.
 //
 void Init_Raw_Print(void)
 {

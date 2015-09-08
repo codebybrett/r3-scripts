@@ -83,30 +83,30 @@
 //
 //  Alloc_Mem: C
 //  
-//      NOTE: Instead of Alloc_Mem, use the ALLOC and ALLOC_ARRAY
-//      wrapper macros to ensure the memory block being freed matches
-//      the appropriate size for the type.
+//  NOTE: Instead of Alloc_Mem, use the ALLOC and ALLOC_ARRAY
+//  wrapper macros to ensure the memory block being freed matches
+//  the appropriate size for the type.
 //  
 //  ***********************************************************************
 //  
-//      Alloc_Mem is an interface for a basic memory allocator.
-//      It is coupled with a Free_Mem function that clients must
-//      call with the correct size of the memory block to be freed.
-//      It is thus lower-level than malloc()... whose memory blocks
-//      remember the size of the allocation so you don't need to
-//      pass it into free().
+//  Alloc_Mem is an interface for a basic memory allocator.
+//  It is coupled with a Free_Mem function that clients must
+//  call with the correct size of the memory block to be freed.
+//  It is thus lower-level than malloc()... whose memory blocks
+//  remember the size of the allocation so you don't need to
+//  pass it into free().
 //  
-//      One motivation behind using such an allocator in Rebol
-//      is to allow it to keep knowledge of how much memory the
-//      system is using.  This means it can decide when to trigger a
-//      garbage collection, or raise an out-of-memory error before
-//      the operating system would, e.g. via 'ulimit':
+//  One motivation behind using such an allocator in Rebol
+//  is to allow it to keep knowledge of how much memory the
+//  system is using.  This means it can decide when to trigger a
+//  garbage collection, or raise an out-of-memory error before
+//  the operating system would, e.g. via 'ulimit':
 //  
-//          http://stackoverflow.com/questions/1229241/
+//      http://stackoverflow.com/questions/1229241/
 //  
-//      Finer-grained allocations are done with memory pooling.  But
-//      the blocks of memory used by the pools are still acquired
-//      using ALLOC_ARRAY and FREE_ARRAY.
+//  Finer-grained allocations are done with memory pooling.  But
+//  the blocks of memory used by the pools are still acquired
+//  using ALLOC_ARRAY and FREE_ARRAY.
 //
 void *Alloc_Mem(size_t size)
 {
@@ -140,9 +140,9 @@ void *Alloc_Mem(size_t size)
 //
 //  Free_Mem: C
 //  
-//      NOTE: Instead of Free_Mem, use the FREE and FREE_ARRAY
-//      wrapper macros to ensure the memory block being freed matches
-//      the appropriate size for the type.
+//  NOTE: Instead of Free_Mem, use the FREE and FREE_ARRAY
+//  wrapper macros to ensure the memory block being freed matches
+//  the appropriate size for the type.
 //
 void Free_Mem(void *mem, size_t size)
 {
@@ -248,7 +248,7 @@ const REBPOOLSPEC Mem_Pool_Spec[MAX_POOLS] =
 //
 //  Init_Pools: C
 //  
-//      Initialize memory pool array.
+//  Initialize memory pool array.
 //
 void Init_Pools(REBINT scale)
 {
@@ -293,7 +293,7 @@ void Init_Pools(REBINT scale)
 //
 //  Find_Pool: C
 //  
-//      Given a size, tell us what pool it belongs to.
+//  Given a size, tell us what pool it belongs to.
 //
 static REBCNT Find_Pool(REBCNT size)
 {
@@ -325,10 +325,10 @@ static REBCNT Find_Pool(REBCNT size)
 //
 //  Fill_Pool: C
 //  
-//      Allocate memory for a pool.  The amount allocated will be
-//      determined from the size and units specified when the
-//      pool header was created.  The nodes of the pool are linked
-//      to the free list.
+//  Allocate memory for a pool.  The amount allocated will be
+//  determined from the size and units specified when the
+//  pool header was created.  The nodes of the pool are linked
+//  to the free list.
 //
 static void Fill_Pool(REBPOL *pool)
 {
@@ -376,8 +376,8 @@ static void Fill_Pool(REBPOL *pool)
 //
 //  Make_Node: C
 //  
-//      Allocate a node from a pool.  The node will NOT be cleared.
-//      If the pool has run out of nodes, it will be refilled.
+//  Allocate a node from a pool.  The node will NOT be cleared.
+//  If the pool has run out of nodes, it will be refilled.
 //
 void *Make_Node(REBCNT pool_id)
 {
@@ -402,7 +402,7 @@ void *Make_Node(REBCNT pool_id)
 //
 //  Free_Node: C
 //  
-//      Free a node, returning it to its pool.
+//  Free a node, returning it to its pool.
 //
 void Free_Node(REBCNT pool_id, REBNOD *node)
 {
@@ -426,14 +426,14 @@ void Free_Node(REBCNT pool_id, REBNOD *node)
 //
 //  Series_Data_Alloc: C
 //  
-//      Allocates element array for an already allocated REBSER header
-//      structure.  Resets the bias and tail to zero, and sets the new
-//      width.  Flags like SER_PROTECT or SER_KEEP are left as they
-//      were, and other fields in the series structure are untouched.
+//  Allocates element array for an already allocated REBSER header
+//  structure.  Resets the bias and tail to zero, and sets the new
+//  width.  Flags like SER_PROTECT or SER_KEEP are left as they
+//  were, and other fields in the series structure are untouched.
 //  
-//      This routine can thus be used for an initial construction
-//      or an operation like expansion.  Currently not exported
-//      from this file.
+//  This routine can thus be used for an initial construction
+//  or an operation like expansion.  Currently not exported
+//  from this file.
 //
 static REBOOL Series_Data_Alloc(REBSER *series, REBCNT length, REBYTE wide, REBCNT flags)
 {
@@ -528,23 +528,23 @@ static REBOOL Series_Data_Alloc(REBSER *series, REBCNT length, REBYTE wide, REBC
 //
 //  Series_Allocated_Size: C
 //  
-//      When we want the actual memory accounting for a series, the
-//      whole story may not be told by the element size multiplied
-//      by the capacity.  The series may have been allocated from
-//      a pool where it was rounded up to the pool size, and the
-//      elements may not fit evenly in that space.  Or it may have
-//      been allocated from the "system pool" via Alloc_Mem, but
-//      rounded up to a power of 2.
+//  When we want the actual memory accounting for a series, the
+//  whole story may not be told by the element size multiplied
+//  by the capacity.  The series may have been allocated from
+//  a pool where it was rounded up to the pool size, and the
+//  elements may not fit evenly in that space.  Or it may have
+//  been allocated from the "system pool" via Alloc_Mem, but
+//  rounded up to a power of 2.
 //  
-//      (Note: It's necessary to know the size because Free_Mem
-//      requires it, as Rebol's allocator doesn't remember the size
-//      of system pool allocations for you.  It also needs it in
-//      order to keep track of GC boundaries and memory use quotas.)
+//  (Note: It's necessary to know the size because Free_Mem
+//  requires it, as Rebol's allocator doesn't remember the size
+//  of system pool allocations for you.  It also needs it in
+//  order to keep track of GC boundaries and memory use quotas.)
 //  
-//      Rather than pay for the cost on every series of an "actual
-//      allocation size", the optimization choice is to only pay
-//      for a "rounded up to power of 2" bit.  (Since there are a
-//      LOT of series created in Rebol, each byte is scrutinized.)
+//  Rather than pay for the cost on every series of an "actual
+//  allocation size", the optimization choice is to only pay
+//  for a "rounded up to power of 2" bit.  (Since there are a
+//  LOT of series created in Rebol, each byte is scrutinized.)
 //
 REBCNT Series_Allocated_Size(REBSER *series)
 {
@@ -571,10 +571,10 @@ REBCNT Series_Allocated_Size(REBSER *series)
 //
 //  Make_Series: C
 //  
-//      Make a series of a given length and width (unit size).
-//      Small series will be allocated from a REBOL pool.
-//      Large series will be allocated from system memory.
-//      A width of zero is not allowed.
+//  Make a series of a given length and width (unit size).
+//  Small series will be allocated from a REBOL pool.
+//  Large series will be allocated from system memory.
+//  A width of zero is not allowed.
 //
 REBSER *Make_Series(REBCNT length, REBYTE wide, REBCNT flags)
 {
@@ -657,12 +657,12 @@ REBSER *Make_Series(REBCNT length, REBYTE wide, REBCNT flags)
 //
 //  Free_Unbiased_Series_Data: C
 //  
-//      Routines that are part of the core series implementation
-//      call this, including Expand_Series.  It requires a low-level
-//      awareness that the series data pointer cannot be freed
-//      without subtracting out the "biasing" which skips the pointer
-//      ahead to account for unused capacity at the head of the
-//      allocation.  They also must know the total allocation size.
+//  Routines that are part of the core series implementation
+//  call this, including Expand_Series.  It requires a low-level
+//  awareness that the series data pointer cannot be freed
+//  without subtracting out the "biasing" which skips the pointer
+//  ahead to account for unused capacity at the head of the
+//  allocation.  They also must know the total allocation size.
 //
 static void Free_Unbiased_Series_Data(REBYTE *unbiased, REBCNT size)
 {
@@ -700,45 +700,45 @@ static void Free_Unbiased_Series_Data(REBYTE *unbiased, REBCNT size)
 //
 //  Expand_Series: C
 //  
-//      Expand a series at a particular index point by the number
-//      number of units specified by delta.
+//  Expand a series at a particular index point by the number
+//  number of units specified by delta.
 //  
-//          index - where space is expanded (but not cleared)
-//          delta - number of UNITS to expand (keeping terminator)
-//          tail  - will be updated
+//      index - where space is expanded (but not cleared)
+//      delta - number of UNITS to expand (keeping terminator)
+//      tail  - will be updated
 //  
-//                  |<---rest--->|
-//          <-bias->|<-tail->|   |
-//          +--------------------+
-//          |       abcdefghi    |
-//          +--------------------+
-//                  |    |
-//                  data index
+//              |<---rest--->|
+//      <-bias->|<-tail->|   |
+//      +--------------------+
+//      |       abcdefghi    |
+//      +--------------------+
+//              |    |
+//              data index
 //  
-//      If the series has enough space within it, then it will be used,
-//      otherwise the series data will be reallocated.
+//  If the series has enough space within it, then it will be used,
+//  otherwise the series data will be reallocated.
 //  
-//      When expanded at the head, if bias space is available, it will
-//      be used (if it provides enough space).
+//  When expanded at the head, if bias space is available, it will
+//  be used (if it provides enough space).
 //  
-//      !!! It seems the original intent of this routine was
-//      to be used with a group of other routines that were "Noterm"
-//      and do not terminate.  However, Expand_Series assumed that
-//      the capacity of the original series was at least (tail + 1)
-//      elements, and would include the terminator when "sliding"
-//      the data in the update.  This makes the other Noterm routines
-//      seem a bit high cost for their benefit.  If this were to be
-//      changed to Expand_Series_Noterm it would put more burden
-//      on the clients...for a *potential* benefit in being able to
-//      write just a REB_END byte into the terminal REBVAL vs. copying
-//      the entire value cell.  (Of course, with a good memcpy it
-//      might be an irrelevant difference.)  For the moment we reverse
-//      the burden by enforcing the assumption that the incoming series
-//      was already terminated.  That way our "slide" of the data via
-//      memcpy will keep it terminated.
+//  !!! It seems the original intent of this routine was
+//  to be used with a group of other routines that were "Noterm"
+//  and do not terminate.  However, Expand_Series assumed that
+//  the capacity of the original series was at least (tail + 1)
+//  elements, and would include the terminator when "sliding"
+//  the data in the update.  This makes the other Noterm routines
+//  seem a bit high cost for their benefit.  If this were to be
+//  changed to Expand_Series_Noterm it would put more burden
+//  on the clients...for a *potential* benefit in being able to
+//  write just a REB_END byte into the terminal REBVAL vs. copying
+//  the entire value cell.  (Of course, with a good memcpy it
+//  might be an irrelevant difference.)  For the moment we reverse
+//  the burden by enforcing the assumption that the incoming series
+//  was already terminated.  That way our "slide" of the data via
+//  memcpy will keep it terminated.
 //  
-//      WARNING: never use direct pointers into the series data, as the
-//      series data can be relocated in memory.
+//  WARNING: never use direct pointers into the series data, as the
+//  series data can be relocated in memory.
 //
 void Expand_Series(REBSER *series, REBCNT index, REBCNT delta)
 {
@@ -869,10 +869,10 @@ void Expand_Series(REBSER *series, REBCNT index, REBCNT delta)
 //
 //  Remake_Series: C
 //  
-//      Reallocate a series as a given maximum size. Content in the
-//      retained portion of the length may be kept as-is if the
-//      MKS_PRESERVE is passed in the flags.  The other flags are
-//      handled the same as when passed to Make_Series.
+//  Reallocate a series as a given maximum size. Content in the
+//  retained portion of the length may be kept as-is if the
+//  MKS_PRESERVE is passed in the flags.  The other flags are
+//  handled the same as when passed to Make_Series.
 //
 void Remake_Series(REBSER *series, REBCNT units, REBYTE wide, REBCNT flags)
 {
@@ -932,9 +932,9 @@ void Remake_Series(REBSER *series, REBCNT units, REBYTE wide, REBCNT flags)
 //
 //  GC_Kill_Series: C
 //  
-//      Only the garbage collector should be calling this routine.
-//      It frees a series even though it is under GC management,
-//      because the GC has figured out no references exist.
+//  Only the garbage collector should be calling this routine.
+//  It frees a series even though it is under GC management,
+//  because the GC has figured out no references exist.
 //
 void GC_Kill_Series(REBSER *series)
 {
@@ -985,8 +985,8 @@ void GC_Kill_Series(REBSER *series)
 //
 //  Free_Series: C
 //  
-//      Free a series, returning its memory for reuse.  You can only
-//      call this on series that are not managed by the GC.
+//  Free a series, returning its memory for reuse.  You can only
+//  call this on series that are not managed by the GC.
 //
 void Free_Series(REBSER *series)
 {
@@ -1017,9 +1017,9 @@ void Free_Series(REBSER *series)
 //
 //  Widen_String: C
 //  
-//      Widen string from 1 byte to 2 bytes.
+//  Widen string from 1 byte to 2 bytes.
 //  
-//      NOTE: allocates new memory. Cached pointers are invalid.
+//  NOTE: allocates new memory. Cached pointers are invalid.
 //
 void Widen_String(REBSER *series, REBOOL preserve)
 {
@@ -1077,21 +1077,21 @@ void Widen_String(REBSER *series, REBOOL preserve)
 //
 //  Manage_Series_Debug: C
 //  
-//      When a series is first created, it is in a state of being
-//      manually memory managed.  Thus, you can call Free_Series on
-//      it if you are sure you do not need it.  This will transition
-//      a manually managed series to be one managed by the GC.  There
-//      is no way to transition it back--once a series has become
-//      managed, only the GC can free it.
+//  When a series is first created, it is in a state of being
+//  manually memory managed.  Thus, you can call Free_Series on
+//  it if you are sure you do not need it.  This will transition
+//  a manually managed series to be one managed by the GC.  There
+//  is no way to transition it back--once a series has become
+//  managed, only the GC can free it.
 //  
-//      All series that wind up in user-visible values *must* be
-//      managed, because the user can make copies of values
-//      containing that series.  When these copies are made, it's
-//      no longer safe to assume it's okay to free the original.
+//  All series that wind up in user-visible values *must* be
+//  managed, because the user can make copies of values
+//  containing that series.  When these copies are made, it's
+//  no longer safe to assume it's okay to free the original.
 //  
-//      Though marking a series as managed is just setting a bit in
-//      the release build (and hence, cheap+fast), we do some more
-//      work to ensure coherence in the debug build.
+//  Though marking a series as managed is just setting a bit in
+//  the release build (and hence, cheap+fast), we do some more
+//  work to ensure coherence in the debug build.
 //
 void Manage_Series_Debug(REBSER *series)
 {
@@ -1112,9 +1112,9 @@ void Manage_Series_Debug(REBSER *series)
 //
 //  Manage_Frame_Debug: C
 //  
-//      Special handler for making sure frames are managed by the GC,
-//      specifically.  If you've poked in a wordlist from somewhere
-//      else you might not be able to use this.
+//  Special handler for making sure frames are managed by the GC,
+//  specifically.  If you've poked in a wordlist from somewhere
+//  else you might not be able to use this.
 //
 void Manage_Frame_Debug(REBSER *frame)
 {
@@ -1139,10 +1139,10 @@ void Manage_Frame_Debug(REBSER *frame)
 //
 //  Manuals_Leak_Check_Debug: C
 //  
-//      Routine for checking that the pointer passed in is the
-//      same as the head of the series that the GC is not tracking,
-//      which is used to check for leaks relative to an initial
-//      status of outstanding series.
+//  Routine for checking that the pointer passed in is the
+//  same as the head of the series that the GC is not tracking,
+//  which is used to check for leaks relative to an initial
+//  status of outstanding series.
 //
 void Manuals_Leak_Check_Debug(REBSER *manuals, const char *label_str)
 {
@@ -1167,10 +1167,10 @@ void Manuals_Leak_Check_Debug(REBSER *manuals, const char *label_str)
 //
 //  Assert_Value_Managed_Debug: C
 //  
-//      Routine for checking that the pointer passed in is the
-//      same as the head of the series that the GC is not tracking,
-//      which is used to check for leaks relative to an initial
-//      status of outstanding series.
+//  Routine for checking that the pointer passed in is the
+//  same as the head of the series that the GC is not tracking,
+//  which is used to check for leaks relative to an initial
+//  status of outstanding series.
 //
 void Assert_Value_Managed_Debug(const REBVAL *value)
 {
@@ -1199,7 +1199,7 @@ void Assert_Value_Managed_Debug(const REBVAL *value)
 //
 //  Free_Gob: C
 //  
-//      Free a gob, returning its memory for reuse.
+//  Free a gob, returning its memory for reuse.
 //
 void Free_Gob(REBGOB *gob)
 {
@@ -1218,7 +1218,7 @@ void Free_Gob(REBGOB *gob)
 //
 //  Series_In_Pool: C
 //  
-//      Confirm that the series value is in the series pool.
+//  Confirm that the series value is in the series pool.
 //
 REBFLG Series_In_Pool(REBSER *series)
 {
@@ -1239,11 +1239,11 @@ REBFLG Series_In_Pool(REBSER *series)
 //
 //  Check_Memory: C
 //  
-//      FOR DEBUGGING ONLY:
-//      Traverse the free lists of all pools -- just to prove we can.
-//      This is useful for finding corruption from bad memory writes,
-//      because a write past the end of a node will destory the pointer
-//      for the next free area.
+//  FOR DEBUGGING ONLY:
+//  Traverse the free lists of all pools -- just to prove we can.
+//  This is useful for finding corruption from bad memory writes,
+//  because a write past the end of a node will destory the pointer
+//  for the next free area.
 //
 REBCNT Check_Memory(void)
 {
@@ -1303,7 +1303,7 @@ crash:
 //
 //  Dump_All: C
 //  
-//      Dump all series of a given size.
+//  Dump all series of a given size.
 //
 void Dump_All(REBINT size)
 {
@@ -1329,7 +1329,7 @@ void Dump_All(REBINT size)
 //
 //  Dump_Series_In_Pool: C
 //  
-//      Dump all series in pool @pool_id, UNKNOWN (-1) for all pools
+//  Dump all series in pool @pool_id, UNKNOWN (-1) for all pools
 //
 void Dump_Series_In_Pool(REBCNT pool_id)
 {
@@ -1375,7 +1375,7 @@ void Dump_Series_In_Pool(REBCNT pool_id)
 //
 //  Dump_Pools: C
 //  
-//      Print statistics about all memory pools.
+//  Print statistics about all memory pools.
 //
 static void Dump_Pools(void)
 {

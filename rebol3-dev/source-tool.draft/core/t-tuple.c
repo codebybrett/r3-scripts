@@ -102,8 +102,8 @@ REBINT Cmp_Tuple(const REBVAL *t1, const REBVAL *t2)
 //
 //  PD_Tuple: C
 //  
-//      Implements PATH and SET_PATH for tuple.
-//      Sets DS_TOP if found. Always returns 0.
+//  Implements PATH and SET_PATH for tuple.
+//  Sets DS_TOP if found. Always returns 0.
 //
 REBINT PD_Tuple(REBPVS *pvs)
 {
@@ -146,8 +146,8 @@ REBINT PD_Tuple(REBPVS *pvs)
 //
 //  Emit_Tuple: C
 //  
-//      The out array must be large enough to hold longest tuple.
-//      Longest is: (3 digits + '.') * 11 nums + 1 term => 45
+//  The out array must be large enough to hold longest tuple.
+//  Longest is: (3 digits + '.') * 11 nums + 1 term => 45
 //
 REBINT Emit_Tuple(const REBVAL *value, REBYTE *out)
 {

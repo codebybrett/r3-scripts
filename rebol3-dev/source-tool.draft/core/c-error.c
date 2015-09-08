@@ -114,8 +114,8 @@
 //
 //  Push_Trap_Helper: C
 //  
-//      Used by both TRY and TRY_ANY, whose differentiation comes
-//      from how they react to HALT.
+//  Used by both TRY and TRY_ANY, whose differentiation comes
+//  from how they react to HALT.
 //
 void Push_Trap_Helper(REBOL_STATE *s)
 {
@@ -143,23 +143,23 @@ void Push_Trap_Helper(REBOL_STATE *s)
 //
 //  Trapped_Helper_Halted: C
 //  
-//      This is used by both PUSH_TRAP and PUSH_UNHALTABLE_TRAP to do
-//      the work of responding to a longjmp.  (Hence it is run when
-//      setjmp returns TRUE.)  Its job is to safely recover from
-//      a sudden interruption, though the list of things which can
-//      be safely recovered from is finite.  Among the countless
-//      things that are not handled automatically would be a memory
-//      allocation.
+//  This is used by both PUSH_TRAP and PUSH_UNHALTABLE_TRAP to do
+//  the work of responding to a longjmp.  (Hence it is run when
+//  setjmp returns TRUE.)  Its job is to safely recover from
+//  a sudden interruption, though the list of things which can
+//  be safely recovered from is finite.  Among the countless
+//  things that are not handled automatically would be a memory
+//  allocation.
 //  
-//      (Note: This is a crucial difference between C and C++, as
-//      C++ will walk up the stack at each level and make sure
-//      any constructors have their associated destructors run.
-//      *Much* safer for large systems, though not without cost.
-//      Rebol's greater concern is not so much the cost of setup
-//      for stack unwinding, but being able to be compiled without
-//      requiring a C++ compiler.)
+//  (Note: This is a crucial difference between C and C++, as
+//  C++ will walk up the stack at each level and make sure
+//  any constructors have their associated destructors run.
+//  *Much* safer for large systems, though not without cost.
+//  Rebol's greater concern is not so much the cost of setup
+//  for stack unwinding, but being able to be compiled without
+//  requiring a C++ compiler.)
 //  
-//      Returns whether the trapped error was a RE_HALT or not.
+//  Returns whether the trapped error was a RE_HALT or not.
 //
 REBOOL Trapped_Helper_Halted(REBOL_STATE *state)
 {
@@ -195,10 +195,10 @@ REBOOL Trapped_Helper_Halted(REBOL_STATE *state)
 //
 //  Convert_Name_To_Thrown_Debug: C
 //  
-//      Debug-only version of CONVERT_NAME_TO_THROWN
+//  Debug-only version of CONVERT_NAME_TO_THROWN
 //  
-//      Sets a task-local value to be associated with the name and
-//      mark it as the proxy value indicating a THROW().
+//  Sets a task-local value to be associated with the name and
+//  mark it as the proxy value indicating a THROW().
 //
 void Convert_Name_To_Thrown_Debug(REBVAL *name, const REBVAL *arg)
 {
@@ -222,12 +222,12 @@ void Convert_Name_To_Thrown_Debug(REBVAL *name, const REBVAL *arg)
 //
 //  Take_Thrown_Arg_Debug: C
 //  
-//      Debug-only version of TAKE_THROWN_ARG
+//  Debug-only version of TAKE_THROWN_ARG
 //  
-//      Gets the task-local value associated with the thrown,
-//      and clears the thrown bit from thrown.
+//  Gets the task-local value associated with the thrown,
+//  and clears the thrown bit from thrown.
 //  
-//      WARNING: 'out' can be the same pointer as 'thrown'
+//  WARNING: 'out' can be the same pointer as 'thrown'
 //
 void Take_Thrown_Arg_Debug(REBVAL *out, REBVAL *thrown)
 {
@@ -249,12 +249,12 @@ void Take_Thrown_Arg_Debug(REBVAL *out, REBVAL *thrown)
 //
 //  Do_Error: C
 //  
-//      Cause a "trap" of an error by longjmp'ing to the enclosing
-//      PUSH_TRAP or PUSH_TRAP_ANY.  Although the error being passed
-//      may not be something that strictly represents an error
-//      condition (e.g. a BREAK or CONTINUE or THROW), if it gets
-//      passed to this routine then it has not been caught by its
-//      intended recipient, and is being treated as an error.
+//  Cause a "trap" of an error by longjmp'ing to the enclosing
+//  PUSH_TRAP or PUSH_TRAP_ANY.  Although the error being passed
+//  may not be something that strictly represents an error
+//  condition (e.g. a BREAK or CONTINUE or THROW), if it gets
+//  passed to this routine then it has not been caught by its
+//  intended recipient, and is being treated as an error.
 //
 void Do_Error(const REBVAL *err)
 {
@@ -301,10 +301,10 @@ void Do_Error(const REBVAL *err)
 //
 //  Trap_Stack_Overflow: C
 //  
-//      See comments on CHECK_C_STACK_OVERFLOW.  This routine is
-//      deliberately separate and simple so that it allocates no
-//      objects or locals...and doesn't run any code that itself
-//      might wind up calling CHECK_C_STACK_OVERFLOW.
+//  See comments on CHECK_C_STACK_OVERFLOW.  This routine is
+//  deliberately separate and simple so that it allocates no
+//  objects or locals...and doesn't run any code that itself
+//  might wind up calling CHECK_C_STACK_OVERFLOW.
 //
 void Trap_Stack_Overflow(void)
 {
@@ -320,9 +320,9 @@ void Trap_Stack_Overflow(void)
 //
 //  Halt: C
 //  
-//      Halts are designed to go all the way up to the top level of
-//      the CATCH stack.  They cannot be intercepted by any
-//      intermediate stack levels.
+//  Halts are designed to go all the way up to the top level of
+//  the CATCH stack.  They cannot be intercepted by any
+//  intermediate stack levels.
 //
 void Halt(void)
 {
@@ -349,7 +349,7 @@ REBCNT Stack_Depth(void)
 //
 //  Make_Backtrace: C
 //  
-//      Return a block of backtrace words.
+//  Return a block of backtrace words.
 //
 REBSER *Make_Backtrace(REBINT start)
 {
@@ -372,7 +372,7 @@ REBSER *Make_Backtrace(REBINT start)
 //
 //  Set_Error_Type: C
 //  
-//      Sets error type and id fields based on code number.
+//  Sets error type and id fields based on code number.
 //
 void Set_Error_Type(ERROR_OBJ *error)
 {
@@ -404,11 +404,11 @@ void Set_Error_Type(ERROR_OBJ *error)
 //
 //  Find_Error_Info: C
 //  
-//      Return the error message needed to print an error.
-//      Must scan the error catalog and its error lists.
-//      Note that the error type and id words no longer need
-//      to be bound to the error catalog context.
-//      If the message is not found, return null.
+//  Return the error message needed to print an error.
+//  Must scan the error catalog and its error lists.
+//  Note that the error type and id words no longer need
+//  to be bound to the error catalog context.
+//  If the message is not found, return null.
 //
 REBVAL *Find_Error_Info(ERROR_OBJ *error, REBINT *num)
 {
@@ -443,7 +443,7 @@ REBVAL *Find_Error_Info(ERROR_OBJ *error, REBINT *num)
 //
 //  Val_Init_Error: C
 //  
-//      Returns FALSE if a THROWN() value is made during evaluation.
+//  Returns FALSE if a THROWN() value is made during evaluation.
 //
 void Val_Init_Error(REBVAL *out, REBSER *err_frame)
 {
@@ -460,11 +460,11 @@ void Val_Init_Error(REBVAL *out, REBSER *err_frame)
 //
 //  Make_Error_Object: C
 //  
-//      Creates an error object from arg and puts it in value.
-//      The arg can be a string or an object body block.
-//      This function is called by MAKE ERROR!.
+//  Creates an error object from arg and puts it in value.
+//  The arg can be a string or an object body block.
+//  This function is called by MAKE ERROR!.
 //  
-//      Returns FALSE if a THROWN() value is made during evaluation.
+//  Returns FALSE if a THROWN() value is made during evaluation.
 //
 REBOOL Make_Error_Object(REBVAL *out, REBVAL *arg)
 {
@@ -539,7 +539,7 @@ REBOOL Make_Error_Object(REBVAL *out, REBVAL *arg)
 //
 //  Make_Error: C
 //  
-//      Create and init a new error object.
+//  Create and init a new error object.
 //
 REBSER *Make_Error(REBINT code, const REBVAL *arg1, const REBVAL *arg2, const REBVAL *arg3)
 {
@@ -658,7 +658,7 @@ void Trap_Thrown(REBVAL *thrown)
 //
 //  Trap_Type: C
 //  
-//      <type> type is not allowed here
+//  <type> type is not allowed here
 //
 void Trap_Type(const REBVAL *arg)
 {
@@ -669,7 +669,7 @@ void Trap_Type(const REBVAL *arg)
 //
 //  Trap_Range: C
 //  
-//      value out of range: <value>
+//  value out of range: <value>
 //
 void Trap_Range(const REBVAL *arg)
 {
@@ -719,8 +719,8 @@ void Trap_Types(REBCNT errnum, REBCNT type1, REBCNT type2)
 //
 //  Trap_Expect: C
 //  
-//      Object field is not of expected type.
-//      PORT expected SCHEME of OBJECT type
+//  Object field is not of expected type.
+//  PORT expected SCHEME of OBJECT type
 //
 void Trap_Expect(const REBVAL *object, REBCNT index, REBCNT type)
 {
@@ -777,12 +777,12 @@ void Trap_Port(REBCNT errnum, REBSER *port, REBINT err_code)
 //
 //  Process_Loop_Throw: C
 //  
-//      Process values thrown during loop. Returns:
+//  Process values thrown during loop. Returns:
 //  
-//           1 - break or break/return (changes result)
-//          -1 - if continue, change val to unset
-//           0 - if not break or continue
-//          else: error if not an ERROR value
+//       1 - break or break/return (changes result)
+//      -1 - if continue, change val to unset
+//       0 - if not break or continue
+//      else: error if not an ERROR value
 //
 REBINT Process_Loop_Throw(REBVAL *val)
 {
@@ -812,10 +812,10 @@ REBINT Process_Loop_Throw(REBVAL *val)
 //
 //  Exit_Status_From_Value: C
 //  
-//      This routine's job is to turn an arbitrary value into an
-//      operating system exit status:
+//  This routine's job is to turn an arbitrary value into an
+//  operating system exit status:
 //  
-//          https://en.wikipedia.org/wiki/Exit_status
+//      https://en.wikipedia.org/wiki/Exit_status
 //
 int Exit_Status_From_Value(REBVAL *value)
 {
@@ -974,8 +974,8 @@ error:
 //
 //  Trap_Security: C
 //  
-//      Take action on the policy flags provided. The sym and value
-//      are provided for error message purposes only.
+//  Take action on the policy flags provided. The sym and value
+//  are provided for error message purposes only.
 //
 void Trap_Security(REBCNT flag, REBCNT sym, REBVAL *value)
 {
@@ -993,9 +993,9 @@ void Trap_Security(REBCNT flag, REBCNT sym, REBVAL *value)
 //
 //  Check_Security: C
 //  
-//      A helper function that fetches the security flags for
-//      a given symbol (FILE) and value (path), and then tests
-//      that they are allowed.
+//  A helper function that fetches the security flags for
+//  a given symbol (FILE) and value (path), and then tests
+//  that they are allowed.
 //
 void Check_Security(REBCNT sym, REBCNT policy, REBVAL *value)
 {
@@ -1011,7 +1011,7 @@ void Check_Security(REBCNT sym, REBCNT policy, REBVAL *value)
 //
 //  Assert_Error_Debug: C
 //  
-//      Debug-only implementation of ASSERT_ERROR
+//  Debug-only implementation of ASSERT_ERROR
 //
 void Assert_Error_Debug(const REBVAL *err)
 {

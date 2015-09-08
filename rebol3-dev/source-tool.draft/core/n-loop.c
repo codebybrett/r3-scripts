@@ -34,8 +34,8 @@
 //
 //  Init_Loop: C
 //  
-//      Initialize standard for loops (copy block, make frame, bind).
-//      Spec: WORD or [WORD ...]
+//  Initialize standard for loops (copy block, make frame, bind).
+//  Spec: WORD or [WORD ...]
 //
 static REBSER *Init_Loop(const REBVAL *spec, REBVAL *body_blk, REBSER **fram)
 {
@@ -185,8 +185,8 @@ static void Loop_Number(REBVAL *out, REBVAL *var, REBSER* body, REBVAL *start, R
 //
 //  Loop_All: C
 //  
-//      0: forall
-//      1: forskip
+//  0: forall
+//  1: forskip
 //
 static int Loop_All(struct Reb_Call *call_, REBINT mode)
 {
@@ -255,10 +255,10 @@ static int Loop_All(struct Reb_Call *call_, REBINT mode)
 //
 //  Loop_Each: C
 //  
-//      Supports these natives (modes):
-//          0: foreach
-//          1: remove-each
-//          2: map
+//  Supports these natives (modes):
+//      0: foreach
+//      1: remove-each
+//      2: map
 //
 static REB_R Loop_Each(struct Reb_Call *call_, REBINT mode)
 {
@@ -492,7 +492,7 @@ skip_hidden: ;
 //      body [block!] "Block to evaluate"
 //  ]
 //  
-//      FOR var start end bump [ body ]
+//  FOR var start end bump [ body ]
 //
 REBNATIVE(for)
 {
@@ -582,10 +582,10 @@ REBNATIVE(forever)
 //      body [block!] "Block to evaluate each time"
 //  ]
 //  
-//      {Evaluates a block for each value(s) in a series.}
-//      'word [get-word! word! block!] {Word or block of words}
-//      data [series!] {The series to traverse}
-//      body [block!] {Block to evaluate each time}
+//  {Evaluates a block for each value(s) in a series.}
+//  'word [get-word! word! block!] {Word or block of words}
+//  data [series!] {The series to traverse}
+//  body [block!] {Block to evaluate each time}
 //
 REBNATIVE(foreach)
 {
@@ -601,9 +601,9 @@ REBNATIVE(foreach)
 //      body [block!] "Block to evaluate (return TRUE to remove)"
 //  ]
 //  
-//      'word [get-word! word! block!] {Word or block of words}
-//      data [series!] {The series to traverse}
-//      body [block!] {Block to evaluate each time}
+//  'word [get-word! word! block!] {Word or block of words}
+//  data [series!] {The series to traverse}
+//  body [block!] {Block to evaluate each time}
 //
 REBNATIVE(remove_each)
 {
@@ -619,9 +619,9 @@ REBNATIVE(remove_each)
 //      body [block!] "Block to evaluate each time"
 //  ]
 //  
-//      'word [get-word! word! block!] {Word or block of words}
-//      data [series!] {The series to traverse}
-//      body [block!] {Block to evaluate each time}
+//  'word [get-word! word! block!] {Word or block of words}
+//  data [series!] {The series to traverse}
+//  body [block!] {Block to evaluate each time}
 //
 REBNATIVE(map_each)
 {
@@ -662,7 +662,7 @@ REBNATIVE(loop)
 //      body [block!] "Block to evaluate each time"
 //  ]
 //  
-//      REPEAT var 123 [ body ]
+//  REPEAT var 123 [ body ]
 //
 REBNATIVE(repeat)
 {

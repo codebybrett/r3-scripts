@@ -203,10 +203,10 @@ void Decode_LZW(REBCNT *data, REBYTE **cpp, REBYTE *colortab, REBINT w, REBINT h
 //
 //  Decode_GIF_Image: C
 //  
-//      Input:  GIF encoded image (codi->data, len)
-//      Output: Image bits (codi->extra.bits, w, h)
-//      Error:  Code in codi->error
-//      Return: Success as TRUE or FALSE
+//  Input:  GIF encoded image (codi->data, len)
+//  Output: Image bits (codi->extra.bits, w, h)
+//  Error:  Code in codi->error
+//  Return: Success as TRUE or FALSE
 //
 void Decode_GIF_Image(REBCDI *codi)
 {

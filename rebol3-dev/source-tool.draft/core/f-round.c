@@ -46,15 +46,15 @@ enum {
 //
 //  Get_Round_Flags: C
 //  
-//      1 n [number! money! time!] "The value to round"
-//      2 /to "Return the nearest multiple of the scale parameter"
-//      3    scale [number! money! time!] "Must be a non-zero value"
-//      4 /even      "Halves round toward even results"
-//      5 /down      "Round toward zero, ignoring discarded digits. (truncate)"
-//      6 /half-down "Halves round toward zero"
-//      7 /floor     "Round in negative direction"
-//      8 /ceiling   "Round in positive direction"
-//      9 /half-ceiling "Halves round in positive direction"
+//  1 n [number! money! time!] "The value to round"
+//  2 /to "Return the nearest multiple of the scale parameter"
+//  3    scale [number! money! time!] "Must be a non-zero value"
+//  4 /even      "Halves round toward even results"
+//  5 /down      "Round toward zero, ignoring discarded digits. (truncate)"
+//  6 /half-down "Halves round toward zero"
+//  7 /floor     "Round in negative direction"
+//  8 /ceiling   "Round in positive direction"
+//  9 /half-ceiling "Halves round in positive direction"
 //
 REBCNT Get_Round_Flags(struct Reb_Call *call_)
 {
@@ -78,8 +78,8 @@ REBCNT Get_Round_Flags(struct Reb_Call *call_)
 //
 //  Round_Dec: C
 //  
-//      Identical to ROUND mezzanine function.
-//      Note: scale arg only valid if RF_TO is set
+//  Identical to ROUND mezzanine function.
+//  Note: scale arg only valid if RF_TO is set
 //
 REBDEC Round_Dec(REBDEC dec, REBCNT flags, REBDEC scale)
 {
@@ -165,8 +165,8 @@ REBDEC Round_Dec(REBDEC dec, REBCNT flags, REBDEC scale)
 //
 //  Round_Int: C
 //  
-//      Identical to ROUND mezzanine function.
-//      Note: scale arg only valid if RF_TO is set
+//  Identical to ROUND mezzanine function.
+//  Note: scale arg only valid if RF_TO is set
 //
 REBI64 Round_Int(REBI64 num, REBCNT flags, REBI64 scale)
 {
@@ -208,8 +208,8 @@ REBI64 Round_Int(REBI64 num, REBCNT flags, REBI64 scale)
 //
 //  Round_Deci: C
 //  
-//      Identical to ROUND mezzanine function.
-//      Note: scale arg only valid if RF_TO is set
+//  Identical to ROUND mezzanine function.
+//  Note: scale arg only valid if RF_TO is set
 //
 deci Round_Deci(deci num, REBCNT flags, deci scale)
 {

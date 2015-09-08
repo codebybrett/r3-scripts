@@ -60,7 +60,7 @@ static void Protect_Word(REBVAL *value, REBCNT flags)
 //
 //  Protect_Value: C
 //  
-//      Anything that calls this must call Unmark() when done.
+//  Anything that calls this must call Unmark() when done.
 //
 static void Protect_Value(REBVAL *value, REBCNT flags)
 {
@@ -74,7 +74,7 @@ static void Protect_Value(REBVAL *value, REBCNT flags)
 //
 //  Protect_Series: C
 //  
-//      Anything that calls this must call Unmark() when done.
+//  Anything that calls this must call Unmark() when done.
 //
 void Protect_Series(REBVAL *val, REBCNT flags)
 {
@@ -100,7 +100,7 @@ void Protect_Series(REBVAL *val, REBCNT flags)
 //
 //  Protect_Object: C
 //  
-//      Anything that calls this must call Unmark() when done.
+//  Anything that calls this must call Unmark() when done.
 //
 void Protect_Object(REBVAL *value, REBCNT flags)
 {
@@ -305,9 +305,9 @@ REBNATIVE(any)
 //      /only "Use arg values as-is, do not reduce the block"
 //  ]
 //  
-//      1: func
-//      2: block
-//      3: /only
+//  1: func
+//  2: block
+//  3: /only
 //
 REBNATIVE(apply)
 {
@@ -360,10 +360,10 @@ REBNATIVE(attempt)
 //      return-value [any-type!]
 //  ]
 //  
-//      1: /with
-//      2: value
-//      3: /return (deprecated)
-//      4: return-value
+//  1: /with
+//  2: value
+//  3: /return (deprecated)
+//  4: return-value
 //  
 //  While BREAK is implemented via a THROWN() value that bubbles up
 //  through the stack, it may not ultimately use the WORD! of BREAK
@@ -738,15 +738,15 @@ REBNATIVE(comment)
 //      out [any-array! any-string! binary!]
 //  ]
 //  
-//      {Evaluates a block of expressions, only evaluating parens, and returns a block.}
-//      1: value "Block to compose"
-//      2: /deep "Compose nested blocks"
-//      3: /only "Inserts a block value as a block"
-//      4: /into "Output results into a block with no intermediate storage"
-//      5: target
+//  {Evaluates a block of expressions, only evaluating parens, and returns a block.}
+//  1: value "Block to compose"
+//  2: /deep "Compose nested blocks"
+//  3: /only "Inserts a block value as a block"
+//  4: /into "Output results into a block with no intermediate storage"
+//  5: target
 //  
-//      !!! Should 'compose quote (a (1 + 2) b)' give back '(a 3 b)' ?
-//      !!! What about 'compose quote a/(1 + 2)/b' ?
+//  !!! Should 'compose quote (a (1 + 2) b)' give back '(a 3 b)' ?
+//  !!! What about 'compose quote a/(1 + 2)/b' ?
 //
 REBNATIVE(compose)
 {
@@ -1070,11 +1070,11 @@ REBNATIVE(return)
 //      /all "Evaluate all matches (not just first one)"
 //  ]
 //  
-//      value
-//      cases [block!]
-//      /default
-//      case
-//      /all {Check all cases}
+//  value
+//  cases [block!]
+//  /default
+//  case
+//  /all {Check all cases}
 //
 REBNATIVE(switch)
 {
@@ -1119,9 +1119,9 @@ REBNATIVE(switch)
 //      handler [block! any-function!] "If FUNCTION!, spec allows [error [error!]]"
 //  ]
 //  
-//      1: block
-//      2: /with
-//      3: handler
+//  1: block
+//  2: /with
+//  3: handler
 //
 REBNATIVE(trap)
 {

@@ -61,7 +61,7 @@ REBINT CT_Gob(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  Make_Gob: C
 //  
-//      Allocate a new GOB.
+//  Allocate a new GOB.
 //
 REBGOB *Make_Gob(void)
 {
@@ -116,8 +116,8 @@ static REBFLG Set_Pair(REBXYF *pair, const REBVAL *val)
 //
 //  Find_Gob: C
 //  
-//      Find a target GOB within the pane of another gob.
-//      Return the index, or a -1 if not found.
+//  Find a target GOB within the pane of another gob.
+//  Return the index, or a -1 if not found.
 //
 static REBCNT Find_Gob(REBGOB *gob, REBGOB *target)
 {
@@ -138,8 +138,8 @@ static REBCNT Find_Gob(REBGOB *gob, REBGOB *target)
 //
 //  Detach_Gob: C
 //  
-//      Remove a gob value from its parent.
-//      Done normally in advance of inserting gobs into new parent.
+//  Remove a gob value from its parent.
+//  Done normally in advance of inserting gobs into new parent.
 //
 static void Detach_Gob(REBGOB *gob)
 {
@@ -157,9 +157,9 @@ static void Detach_Gob(REBGOB *gob)
 //
 //  Insert_Gobs: C
 //  
-//      Insert one or more gobs into a pane at the given index.
-//      If index >= tail, an append occurs. Each gob has its parent
-//      gob field set. (Call Detach_Gobs() before inserting.)
+//  Insert one or more gobs into a pane at the given index.
+//  If index >= tail, an append occurs. Each gob has its parent
+//  gob field set. (Call Detach_Gobs() before inserting.)
 //
 static void Insert_Gobs(REBGOB *gob, const REBVAL *arg, REBCNT index, REBCNT len, REBFLG change)
 {
@@ -236,7 +236,7 @@ static void Insert_Gobs(REBGOB *gob, const REBVAL *arg, REBCNT index, REBCNT len
 //
 //  Remove_Gobs: C
 //  
-//      Remove one or more gobs from a pane at the given index.
+//  Remove one or more gobs from a pane at the given index.
 //
 static void Remove_Gobs(REBGOB *gob, REBCNT index, REBCNT len)
 {
@@ -255,7 +255,7 @@ static void Remove_Gobs(REBGOB *gob, REBCNT index, REBCNT len)
 //
 //  Pane_To_Block: C
 //  
-//      Convert pane list of gob pointers to a block of GOB!s.
+//  Convert pane list of gob pointers to a block of GOB!s.
 //
 static REBSER *Pane_To_Block(REBGOB *gob, REBCNT index, REBINT len)
 {
@@ -608,7 +608,7 @@ static void Set_GOB_Vars(REBGOB *gob, const REBVAL *blk)
 //
 //  Gob_To_Block: C
 //  
-//      Used by MOLD to create a block.
+//  Used by MOLD to create a block.
 //
 REBSER *Gob_To_Block(REBGOB *gob)
 {

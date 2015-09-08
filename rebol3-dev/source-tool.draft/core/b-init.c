@@ -145,14 +145,14 @@ static void Print_Banner(REBARGS *rargs)
 //
 //  Do_Global_Block: C
 //  
-//      Bind and evaluate a global block.
-//      Rebind:
-//          0: bind set into sys or lib
-//         -1: bind shallow into sys (for NATIVE and ACTION)
-//          1: add new words to LIB, bind/deep to LIB
-//          2: add new words to SYS, bind/deep to LIB
+//  Bind and evaluate a global block.
+//  Rebind:
+//      0: bind set into sys or lib
+//     -1: bind shallow into sys (for NATIVE and ACTION)
+//      1: add new words to LIB, bind/deep to LIB
+//      2: add new words to SYS, bind/deep to LIB
 //  
-//      Expects result to be UNSET!
+//  Expects result to be UNSET!
 //
 static void Do_Global_Block(REBSER *block, REBINT rebind)
 {
@@ -177,9 +177,9 @@ static void Do_Global_Block(REBSER *block, REBINT rebind)
 //
 //  Load_Boot: C
 //  
-//      Decompress and scan in the boot block structure.  Can
-//      only be called at the correct point because it will
-//      create new symbols.
+//  Decompress and scan in the boot block structure.  Can
+//  only be called at the correct point because it will
+//  create new symbols.
 //
 static void Load_Boot(void)
 {
@@ -236,7 +236,7 @@ static void Load_Boot(void)
 //
 //  Init_Datatypes: C
 //  
-//      Create the datatypes.
+//  Create the datatypes.
 //
 static void Init_Datatypes(void)
 {
@@ -258,9 +258,9 @@ static void Init_Datatypes(void)
 //
 //  Init_Datatype_Checks: C
 //  
-//      Create datatype test functions (e.g. integer?, time?, etc)
-//      Must be done after typesets are initialized, so this cannot
-//      be merged with the above.
+//  Create datatype test functions (e.g. integer?, time?, etc)
+//  Must be done after typesets are initialized, so this cannot
+//  be merged with the above.
 //
 static void Init_Datatype_Checks(void)
 {
@@ -297,10 +297,10 @@ static void Init_Datatype_Checks(void)
 //
 //  Init_Constants: C
 //  
-//      Init constant words.
+//  Init constant words.
 //  
-//      WARNING: Do not create direct pointers into the Lib_Context
-//      because it may get expanded and the pointers will be invalid.
+//  WARNING: Do not create direct pointers into the Lib_Context
+//  because it may get expanded and the pointers will be invalid.
 //
 static void Init_Constants(void)
 {
@@ -324,8 +324,8 @@ static void Init_Constants(void)
 //
 //  Use_Natives: C
 //  
-//      Setup to use NATIVE function. If limit == 0, then the
-//      native function table will be zero terminated (N_native).
+//  Setup to use NATIVE function. If limit == 0, then the
+//  native function table will be zero terminated (N_native).
 //
 void Use_Natives(const REBFUN *funcs, REBCNT limit)
 {
@@ -371,10 +371,10 @@ REBNATIVE(action)
 //      spec [block!] "Object words and values (modified)"
 //  ]
 //  
-//      The spec block has already been bound to Lib_Context, to
-//      allow any embedded values and functions to evaluate.
+//  The spec block has already been bound to Lib_Context, to
+//  allow any embedded values and functions to evaluate.
 //  
-//      Note: Overlaps MAKE OBJECT! code (REBTYPE(Object)'s A_MAKE)
+//  Note: Overlaps MAKE OBJECT! code (REBTYPE(Object)'s A_MAKE)
 //
 REBNATIVE(context)
 {
@@ -415,7 +415,7 @@ static void Init_Ops(void)
 //
 //  Init_Natives: C
 //  
-//      Create native functions.
+//  Create native functions.
 //
 static void Init_Natives(void)
 {
@@ -450,7 +450,7 @@ static void Init_Natives(void)
 //
 //  Get_Action_Word: C
 //  
-//      Return the word symbol for a given Action number.
+//  Return the word symbol for a given Action number.
 //
 REBVAL *Get_Action_Word(REBCNT action)
 {
@@ -461,7 +461,7 @@ REBVAL *Get_Action_Word(REBCNT action)
 //
 //  Get_Action_Value: C
 //  
-//      Return the value (function) for a given Action number.
+//  Return the value (function) for a given Action number.
 //
 REBVAL *Get_Action_Value(REBCNT action)
 {
@@ -472,7 +472,7 @@ REBVAL *Get_Action_Value(REBCNT action)
 //
 //  Init_UType_Proto: C
 //  
-//      Create prototype func object for UTypes.
+//  Create prototype func object for UTypes.
 //
 void Init_UType_Proto(void)
 {
@@ -499,12 +499,12 @@ void Init_UType_Proto(void)
 //
 //  Init_Root_Context: C
 //  
-//      Hand-build the root context where special REBOL values are
-//      stored. Called early, so it cannot depend on any other
-//      system structures or values.
+//  Hand-build the root context where special REBOL values are
+//  stored. Called early, so it cannot depend on any other
+//  system structures or values.
 //  
-//      Note that the Root_Context's word table is unset!
-//      None of its values are exported.
+//  Note that the Root_Context's word table is unset!
+//  None of its values are exported.
 //
 static void Init_Root_Context(void)
 {
@@ -552,7 +552,7 @@ static void Init_Root_Context(void)
 //
 //  Set_Root_Series: C
 //  
-//      Used to set block and string values in the ROOT context.
+//  Used to set block and string values in the ROOT context.
 //
 void Set_Root_Series(REBVAL *value, REBSER *ser, const char *label)
 {
@@ -581,7 +581,7 @@ void Set_Root_Series(REBVAL *value, REBSER *ser, const char *label)
 //
 //  Init_Task_Context: C
 //  
-//      See above notes (same as root context, except for tasks)
+//  See above notes (same as root context, except for tasks)
 //
 static void Init_Task_Context(void)
 {
@@ -618,7 +618,7 @@ static void Init_Task_Context(void)
 //
 //  Init_System_Object: C
 //  
-//      The system object is defined in boot.r.
+//  The system object is defined in boot.r.
 //
 static void Init_System_Object(void)
 {
@@ -863,7 +863,7 @@ REBINT Codec_Markup(REBCDI *codi)
 //
 //  Register_Codec: C
 //  
-//      Internal function for adding a codec.
+//  Internal function for adding a codec.
 //
 void Register_Codec(const REBYTE *name, codo dispatcher)
 {
@@ -922,7 +922,7 @@ static REBCNT Set_Option_Word(REBCHR *str, REBCNT field)
 //
 //  Init_Main_Args: C
 //  
-//      The system object is defined in boot.r.
+//  The system object is defined in boot.r.
 //
 static void Init_Main_Args(REBARGS *rargs)
 {
@@ -1075,8 +1075,8 @@ void Init_Year(void)
 //
 //  Init_Core: C
 //  
-//      GC is disabled during all init code, so these functions
-//      need not protect themselves.
+//  GC is disabled during all init code, so these functions
+//  need not protect themselves.
 //
 void Init_Core(REBARGS *rargs)
 {
@@ -1279,8 +1279,8 @@ void Init_Core(REBARGS *rargs)
 //
 //  Shutdown_Core: C
 //  
-//      !!! Merging soon to a Git branch near you:
-//      !!!    The ability to do clean shutdown, zero leaks.
+//  !!! Merging soon to a Git branch near you:
+//  !!!    The ability to do clean shutdown, zero leaks.
 //
 void Shutdown_Core(void)
 {

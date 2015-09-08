@@ -54,8 +54,8 @@
 //
 //  List_Func_Words: C
 //  
-//      Return a block of function words, unbound.
-//      Note: skips 0th entry.
+//  Return a block of function words, unbound.
+//  Note: skips 0th entry.
 //
 REBSER *List_Func_Words(const REBVAL *func)
 {
@@ -82,8 +82,8 @@ REBSER *List_Func_Words(const REBVAL *func)
 //
 //  List_Func_Types: C
 //  
-//      Return a block of function arg types.
-//      Note: skips 0th entry.
+//  Return a block of function arg types.
+//  Note: skips 0th entry.
 //
 REBSER *List_Func_Types(REBVAL *func)
 {
@@ -110,11 +110,11 @@ REBSER *List_Func_Types(REBVAL *func)
 //
 //  Check_Func_Spec: C
 //  
-//      Check function spec of the form:
+//  Check function spec of the form:
 //  
-//      ["description" arg "notes" [type! type2! ...] /ref ...]
+//  ["description" arg "notes" [type! type2! ...] /ref ...]
 //  
-//      Throw an error for invalid values.
+//  Throw an error for invalid values.
 //
 REBSER *Check_Func_Spec(REBSER *block, REBYTE *exts)
 {
@@ -427,8 +427,8 @@ void Do_Function(const REBVAL *func)
 //
 //  Do_Closure: C
 //  
-//      Do a closure by cloning its body and rebinding it to
-//      a new frame of words/values.
+//  Do a closure by cloning its body and rebinding it to
+//  a new frame of words/values.
 //
 void Do_Closure(const REBVAL *func)
 {

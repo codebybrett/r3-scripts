@@ -194,7 +194,7 @@ void Set_Vector_Row(REBSER *ser, REBVAL *blk)
 //
 //  Make_Vector_Block: C
 //  
-//      Convert a vector to a block.
+//  Convert a vector to a block.
 //
 REBSER *Make_Vector_Block(REBVAL *vect)
 {
@@ -302,11 +302,11 @@ void Set_Vector_Value(REBVAL *var, REBSER *series, REBCNT index)
 //
 //  Make_Vector: C
 //  
-//      type: the datatype
-//      sign: signed or unsigned
-//      dims: number of dimensions
-//      bits: number of bits per unit (8, 16, 32, 64)
-//      size: size of array ?
+//  type: the datatype
+//  sign: signed or unsigned
+//  dims: number of dimensions
+//  bits: number of bits per unit (8, 16, 32, 64)
+//  size: size of array ?
 //
 REBSER *Make_Vector(REBINT type, REBINT sign, REBINT dims, REBINT bits, REBINT size)
 {

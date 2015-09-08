@@ -52,7 +52,7 @@ REBFLG MT_None(REBVAL *out, REBVAL *data, REBCNT type)
 //
 //  REBTYPE: C
 //  
-//      ALSO used for unset!
+//  ALSO used for unset!
 //
 REBTYPE(None)
 {

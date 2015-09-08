@@ -36,8 +36,8 @@
 //
 //  Make_Port: C
 //  
-//      Create a new port. This is done by calling the MAKE_PORT
-//      function stored in the system/intrinsic object.
+//  Create a new port. This is done by calling the MAKE_PORT
+//  function stored in the system/intrinsic object.
 //
 void Make_Port(REBVAL *out, const REBVAL *spec)
 {
@@ -55,8 +55,8 @@ void Make_Port(REBVAL *out, const REBVAL *spec)
 //
 //  Is_Port_Open: C
 //  
-//      Standard method for checking if port is open.
-//      A convention. Not all ports use this method.
+//  Standard method for checking if port is open.
+//  A convention. Not all ports use this method.
 //
 REBFLG Is_Port_Open(REBSER *port)
 {
@@ -69,8 +69,8 @@ REBFLG Is_Port_Open(REBSER *port)
 //
 //  Set_Port_Open: C
 //  
-//      Standard method for setting a port open/closed.
-//      A convention. Not all ports use this method.
+//  Standard method for setting a port open/closed.
+//  A convention. Not all ports use this method.
 //
 void Set_Port_Open(REBSER *port, REBFLG flag)
 {
@@ -85,9 +85,9 @@ void Set_Port_Open(REBSER *port, REBFLG flag)
 //
 //  Use_Port_State: C
 //  
-//      Use private state area in a port. Create if necessary.
-//      The size is that of a binary structure used by
-//      the port for storing internal information.
+//  Use private state area in a port. Create if necessary.
+//  The size is that of a binary structure used by
+//  the port for storing internal information.
 //
 void *Use_Port_State(REBSER *port, REBCNT device, REBCNT size)
 {
@@ -114,8 +114,8 @@ void *Use_Port_State(REBSER *port, REBCNT device, REBCNT size)
 //
 //  Pending_Port: C
 //  
-//      Return TRUE if port value is pending a signal.
-//      Not valid for all ports - requires request struct!!!
+//  Return TRUE if port value is pending a signal.
+//  Not valid for all ports - requires request struct!!!
 //
 REBFLG Pending_Port(REBVAL *port)
 {
@@ -247,8 +247,8 @@ REBINT Wait_Ports(REBSER *ports, REBCNT timeout, REBINT only)
 //
 //  Sieve_Ports: C
 //  
-//      Remove all ports not found in the WAKE list.
-//      ports could be NULL, in which case the WAKE list is cleared.
+//  Remove all ports not found in the WAKE list.
+//  ports could be NULL, in which case the WAKE list is cleared.
 //
 void Sieve_Ports(REBSER *ports)
 {
@@ -281,8 +281,8 @@ void Sieve_Ports(REBSER *ports)
 //
 //  Find_Action: C
 //  
-//      Given an action number, return the action's index in
-//      the specified object. If not found, a zero is returned.
+//  Given an action number, return the action's index in
+//  the specified object. If not found, a zero is returned.
 //
 REBCNT Find_Action(REBVAL *object, REBCNT action)
 {
@@ -293,11 +293,11 @@ REBCNT Find_Action(REBVAL *object, REBCNT action)
 //
 //  Do_Port_Action: C
 //  
-//      Call a PORT actor (action) value. Search PORT actor
-//      first. If not found, search the PORT scheme actor.
+//  Call a PORT actor (action) value. Search PORT actor
+//  first. If not found, search the PORT scheme actor.
 //  
-//      NOTE: stack must already be setup correctly for action, and
-//      the caller must cleanup the stack.
+//  NOTE: stack must already be setup correctly for action, and
+//  the caller must cleanup the stack.
 //
 int Do_Port_Action(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {
@@ -356,10 +356,10 @@ int Do_Port_Action(struct Reb_Call *call_, REBSER *port, REBCNT action)
 //
 //  Secure_Port: C
 //  
-//      kind: word that represents the type (e.g. 'file)
-//      req:  I/O request
-//      name: value that holds the original user spec
-//      path: the local path to compare with
+//  kind: word that represents the type (e.g. 'file)
+//  req:  I/O request
+//  name: value that holds the original user spec
+//  path: the local path to compare with
 //
 void Secure_Port(REBCNT kind, REBREQ *req, REBVAL *name, REBSER *path)
 {
@@ -379,8 +379,8 @@ void Secure_Port(REBCNT kind, REBREQ *req, REBVAL *name, REBSER *path)
 //
 //  Validate_Port: C
 //  
-//      Because port actors are exposed to the user level, we must
-//      prevent them from being called with invalid values.
+//  Because port actors are exposed to the user level, we must
+//  prevent them from being called with invalid values.
 //
 void Validate_Port(REBSER *port, REBCNT action)
 {
@@ -436,8 +436,8 @@ SCHEME_ACTIONS *Scheme_Actions;	// Initial Global (not threaded)
 //
 //  Register_Scheme: C
 //  
-//      Associate a scheme word (e.g. FILE) with a set of native
-//      scheme actions. This will be used by the Set_Scheme native
+//  Associate a scheme word (e.g. FILE) with a set of native
+//  scheme actions. This will be used by the Set_Scheme native
 //
 void Register_Scheme(REBCNT sym, const PORT_ACTION *map, REBPAF fun)
 {
@@ -534,13 +534,13 @@ REBNATIVE(set_scheme)
 //
 //  Init_Ports: C
 //  
-//      Initialize port scheme related subsystems.
+//  Initialize port scheme related subsystems.
 //  
 //  In order to add a port scheme:
 //  
-//      In mezz-ports.r add a make-scheme.
-//      Add an Init_*_Scheme() here.
-//      Be sure host-devices.c has the device enabled.
+//  In mezz-ports.r add a make-scheme.
+//  Add an Init_*_Scheme() here.
+//  Be sure host-devices.c has the device enabled.
 //
 void Init_Ports(void)
 {

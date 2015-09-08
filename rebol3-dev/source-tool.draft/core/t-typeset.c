@@ -66,9 +66,9 @@ REBINT CT_Typeset(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  Init_Typesets: C
 //  
-//      Create typeset variables that are defined above.
-//      For example: NUMBER is both integer and decimal.
-//      Add the new variables to the system context.
+//  Create typeset variables that are defined above.
+//  For example: NUMBER is both integer and decimal.
+//  Add the new variables to the system context.
 //
 void Init_Typesets(void)
 {
@@ -90,8 +90,8 @@ void Init_Typesets(void)
 //
 //  Make_Typeset: C
 //  
-//      block - block of datatypes (datatype words ok too)
-//      value - value to hold result (can be word-spec type too)
+//  block - block of datatypes (datatype words ok too)
+//  value - value to hold result (can be word-spec type too)
 //
 REBFLG Make_Typeset(REBVAL *block, REBVAL *value, REBFLG load)
 {
@@ -174,8 +174,8 @@ REBINT Find_Typeset(REBVAL *block)
 //
 //  Typeset_To_Block: C
 //  
-//      Converts typeset value to a block of datatypes.
-//      No order is specified.
+//  Converts typeset value to a block of datatypes.
+//  No order is specified.
 //
 REBSER *Typeset_To_Block(REBVAL *tset)
 {

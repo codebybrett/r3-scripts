@@ -55,11 +55,11 @@ void Split_Time(REBI64 t, REB_TIMEF *tf)
 //
 //  Join_Time: C
 //  
-//      !! A REB_TIMEF has lost the sign bit available on the REBI64
-//      used for times.  If you want to make it negative, you need
-//      pass in a flag here.  (Flag added to help document the
-//      issue, as previous code falsely tried to judge the sign
-//      of tf->h, which is always positive.)
+//  !! A REB_TIMEF has lost the sign bit available on the REBI64
+//  used for times.  If you want to make it negative, you need
+//  pass in a flag here.  (Flag added to help document the
+//  issue, as previous code falsely tried to judge the sign
+//  of tf->h, which is always positive.)
 //
 REBI64 Join_Time(REB_TIMEF *tf, REBFLG neg)
 {
@@ -72,7 +72,7 @@ REBI64 Join_Time(REB_TIMEF *tf, REBFLG neg)
 //
 //  Scan_Time: C
 //  
-//      Scan string and convert to time.  Return zero if error.
+//  Scan string and convert to time.  Return zero if error.
 //
 const REBYTE *Scan_Time(const REBYTE *cp, REBCNT len, REBVAL *value)
 {
@@ -172,7 +172,7 @@ REBINT CT_Time(REBVAL *a, REBVAL *b, REBINT mode)
 //
 //  Make_Time: C
 //  
-//      Returns NO_TIME if error.
+//  Returns NO_TIME if error.
 //
 REBI64 Make_Time(REBVAL *val)
 {

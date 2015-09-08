@@ -39,9 +39,9 @@ static REBFLG find_in_uni(REBUNI *up, REBINT len, REBUNI c)
 //
 //  replace_with: C
 //  
-//      Replace whitespace chars that match WITH string.
+//  Replace whitespace chars that match WITH string.
 //  
-//      Resulting string is always smaller than it was to start.
+//  Resulting string is always smaller than it was to start.
 //
 static void replace_with(REBSER *ser, REBCNT index, REBCNT tail, REBVAL *with)
 {
@@ -97,11 +97,11 @@ static void replace_with(REBSER *ser, REBCNT index, REBCNT tail, REBVAL *with)
 //
 //  trim_auto: C
 //  
-//      Skip any blank lines and then determine indent of
-//      first line and make the rest align with it.
+//  Skip any blank lines and then determine indent of
+//  first line and make the rest align with it.
 //  
-//      BUG!!! If the indentation uses TABS, then it could
-//      fill past the source pointer!
+//  BUG!!! If the indentation uses TABS, then it could
+//  fill past the source pointer!
 //
 static void trim_auto(REBSER *ser, REBCNT index, REBCNT tail)
 {
@@ -158,7 +158,7 @@ static void trim_auto(REBSER *ser, REBCNT index, REBCNT tail)
 //
 //  trim_lines: C
 //  
-//      Remove all newlines and extra space.
+//  Remove all newlines and extra space.
 //
 static void trim_lines(REBSER *ser, REBCNT index, REBCNT tail)
 {
@@ -194,8 +194,8 @@ static void trim_lines(REBSER *ser, REBCNT index, REBCNT tail)
 //
 //  trim_head_tail: C
 //  
-//      Trim from head and tail of each line, trim any leading or
-//      trailing lines as well, leaving one at the end if present
+//  Trim from head and tail of each line, trim any leading or
+//  trailing lines as well, leaving one at the end if present
 //
 static void trim_head_tail(REBSER *ser, REBCNT index, REBCNT tail, REBFLG h, REBFLG t)
 {

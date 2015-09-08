@@ -99,23 +99,23 @@ REBFLG MT_Array(REBVAL *out, REBVAL *data, REBCNT type)
 //
 //  Find_Block: C
 //  
-//      Flags are set according to: ALL_FIND_REFS
+//  Flags are set according to: ALL_FIND_REFS
 //  
 //  Main Parameters:
-//      start - index to start search
-//      end   - ending position
-//      len   - length of target
-//      skip  - skip factor
-//      dir   - direction
+//  start - index to start search
+//  end   - ending position
+//  len   - length of target
+//  skip  - skip factor
+//  dir   - direction
 //  
 //  Comparison Parameters:
-//      case  - case sensitivity
-//      wild  - wild cards/keys
+//  case  - case sensitivity
+//  wild  - wild cards/keys
 //  
 //  Final Parmameters:
-//      tail  - tail position
-//      match - sequence
-//      SELECT - (value that follows)
+//  tail  - tail position
+//  match - sequence
+//  SELECT - (value that follows)
 //
 REBCNT Find_Block(REBSER *series, REBCNT index, REBCNT end, const REBVAL *target, REBCNT len, REBCNT flags, REBINT skip)
 {
@@ -198,14 +198,14 @@ REBCNT Find_Block(REBSER *series, REBCNT index, REBCNT end, const REBVAL *target
 //
 //  Make_Block_Type: C
 //  
-//      Value can be:
-//          1. a datatype (e.g. BLOCK!)
-//          2. a value (e.g. [...])
+//  Value can be:
+//      1. a datatype (e.g. BLOCK!)
+//      2. a value (e.g. [...])
 //  
-//      Arg can be:
-//          1. integer (length of block)
-//          2. block (copy it)
-//          3. value (convert to a block)
+//  Arg can be:
+//      1. integer (length of block)
+//      2. block (copy it)
+//      3. value (convert to a block)
 //
 void Make_Block_Type(REBFLG make, REBVAL *value, REBVAL *arg)
 {
@@ -374,16 +374,16 @@ static int Compare_Call(const void *v1, const void *v2)
 //
 //  Sort_Block: C
 //  
-//      series [series!]
-//      /case {Case sensitive sort}
-//      /skip {Treat the series as records of fixed size}
-//      size [integer!] {Size of each record}
-//      /compare  {Comparator offset, block or function}
-//      comparator [integer! block! function!]
-//      /part {Sort only part of a series}
-//      limit [number! series!] {Length of series to sort}
-//      /all {Compare all fields}
-//      /reverse {Reverse sort order}
+//  series [series!]
+//  /case {Case sensitive sort}
+//  /skip {Treat the series as records of fixed size}
+//  size [integer!] {Size of each record}
+//  /compare  {Comparator offset, block or function}
+//  comparator [integer! block! function!]
+//  /part {Sort only part of a series}
+//  limit [number! series!] {Length of series to sort}
+//  /all {Compare all fields}
+//  /reverse {Reverse sort order}
 //
 static void Sort_Block(REBVAL *block, REBFLG ccase, REBVAL *skipv, REBVAL *compv, REBVAL *part, REBFLG all, REBFLG rev)
 {
@@ -425,7 +425,7 @@ static void Sort_Block(REBVAL *block, REBFLG ccase, REBVAL *skipv, REBVAL *compv
 //
 //  Trim_Block: C
 //  
-//      See Trim_String().
+//  See Trim_String().
 //
 static void Trim_Block(REBSER *ser, REBCNT index, REBCNT flags)
 {

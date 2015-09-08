@@ -66,7 +66,7 @@ REBFLG MT_Image(REBVAL *out, REBVAL *data, REBCNT type)
 //
 //  Reset_Height: C
 //  
-//      Set height based on tail and width.
+//  Set height based on tail and width.
 //
 void Reset_Height(REBVAL *value)
 {
@@ -380,9 +380,9 @@ REBSER *Make_Image_Binary(REBVAL *image)
 //
 //  Make_Image: C
 //  
-//      Allocate and initialize an image.
-//      If error is TRUE, throw error on bad size.
-//      Return zero on oversized image.
+//  Allocate and initialize an image.
+//  If error is TRUE, throw error on bad size.
+//  Return zero on oversized image.
 //
 REBSER *Make_Image(REBCNT w, REBCNT h, REBFLG error)
 {
@@ -486,8 +486,8 @@ REBVAL *Create_Image(REBVAL *block, REBVAL *val, REBCNT modes)
 //
 //  Modify_Image: C
 //  
-//      Insert or change image
-//      ACTION value arg /part len /only /dup count
+//  Insert or change image
+//  ACTION value arg /part len /only /dup count
 //
 REBVAL *Modify_Image(struct Reb_Call *call_, REBCNT action)
 {

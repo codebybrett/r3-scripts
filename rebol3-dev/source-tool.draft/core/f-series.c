@@ -34,7 +34,7 @@
 //
 //  Do_Series_Action: C
 //  
-//      Common series functions.
+//  Common series functions.
 //
 REBINT Do_Series_Action(struct Reb_Call *call_, REBCNT action, REBVAL *value, REBVAL *arg)
 {
@@ -148,8 +148,8 @@ is_true:
 //
 //  Cmp_Block: C
 //  
-//      Compare two blocks and return the difference of the first
-//      non-matching value.
+//  Compare two blocks and return the difference of the first
+//  non-matching value.
 //
 REBINT Cmp_Block(const REBVAL *sval, const REBVAL *tval, REBFLG is_case)
 {
@@ -176,9 +176,9 @@ REBINT Cmp_Block(const REBVAL *sval, const REBVAL *tval, REBFLG is_case)
 //
 //  Cmp_Value: C
 //  
-//      Compare two values and return the difference.
+//  Compare two values and return the difference.
 //  
-//      is_case TRUE for case sensitive compare
+//  is_case TRUE for case sensitive compare
 //
 REBINT Cmp_Value(const REBVAL *s, const REBVAL *t, REBFLG is_case)
 {
@@ -311,8 +311,8 @@ chkDecimal:
 //
 //  Find_Block_Simple: C
 //  
-//      Simple search for a value in a block. Return the index of
-//      the value or the TAIL index if not found.
+//  Simple search for a value in a block. Return the index of
+//  the value or the TAIL index if not found.
 //
 REBCNT Find_Block_Simple(REBSER *series, REBCNT index, REBVAL *target)
 {

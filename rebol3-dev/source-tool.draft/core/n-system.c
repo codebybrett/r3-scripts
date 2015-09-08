@@ -431,13 +431,13 @@ REBNATIVE(ds)
 //      data [binary! image! string!]
 //  ]
 //  
-//      Calls a codec handle with specific data:
+//  Calls a codec handle with specific data:
 //  
 //  Args:
-//      1: codec:  handle!
-//      2: action: word! (identify, decode, encode)
-//      3: data:   binary! image! sound!
-//      4: option: (optional)
+//  1: codec:  handle!
+//  2: action: word! (identify, decode, encode)
+//  3: data:   binary! image! sound!
+//  4: option: (optional)
 //
 REBNATIVE(do_codec)
 {

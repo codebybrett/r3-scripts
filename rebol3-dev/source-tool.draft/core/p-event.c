@@ -64,12 +64,12 @@ REBREQ *req;		//!!! move this global
 //
 //  Append_Event: C
 //  
-//      Append an event to the end of the current event port queue.
-//      Return a pointer to the event value.
+//  Append an event to the end of the current event port queue.
+//  Return a pointer to the event value.
 //  
-//      Note: this function may be called from out of environment,
-//      so do NOT extend the event queue here. If it does not have
-//      space, return 0. (Should it overwrite or wrap???)
+//  Note: this function may be called from out of environment,
+//  so do NOT extend the event queue here. If it does not have
+//  space, return 0. (Should it overwrite or wrap???)
 //
 REBVAL *Append_Event(void)
 {
@@ -142,7 +142,7 @@ REBVAL *Append_Event(void)
 //
 //  Event_Actor: C
 //  
-//      Internal port handler for events.
+//  Internal port handler for events.
 //
 static REB_R Event_Actor(struct Reb_Call *call_, REBSER *port, REBCNT action)
 {

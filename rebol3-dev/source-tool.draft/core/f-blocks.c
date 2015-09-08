@@ -33,9 +33,9 @@
 //
 //  Make_Array: C
 //  
-//      Make a series that is the right size to store REBVALs (and
-//      marked for the garbage collector to look into recursively).
-//      Terminator included implicitly. Sets TAIL to zero.
+//  Make a series that is the right size to store REBVALs (and
+//  marked for the garbage collector to look into recursively).
+//  Terminator included implicitly. Sets TAIL to zero.
 //
 REBSER *Make_Array(REBCNT capacity)
 {
@@ -49,9 +49,9 @@ REBSER *Make_Array(REBCNT capacity)
 //
 //  Copy_Array_At_Extra_Shallow: C
 //  
-//      Shallow copy an array from the given index thru the tail.
-//      Additional capacity beyond what is required can be added
-//      by giving an `extra` count of how many value cells one needs.
+//  Shallow copy an array from the given index thru the tail.
+//  Additional capacity beyond what is required can be added
+//  by giving an `extra` count of how many value cells one needs.
 //
 REBSER *Copy_Array_At_Extra_Shallow(REBSER *array, REBCNT index, REBCNT extra)
 {
@@ -74,8 +74,8 @@ REBSER *Copy_Array_At_Extra_Shallow(REBSER *array, REBCNT index, REBCNT extra)
 //
 //  Copy_Array_At_Max_Shallow: C
 //  
-//      Shallow copy an array from the given index for given maximum
-//      length (clipping if it exceeds the array length)
+//  Shallow copy an array from the given index for given maximum
+//  length (clipping if it exceeds the array length)
 //
 REBSER *Copy_Array_At_Max_Shallow(REBSER *array, REBCNT index, REBCNT max)
 {
@@ -97,8 +97,8 @@ REBSER *Copy_Array_At_Max_Shallow(REBSER *array, REBCNT index, REBCNT max)
 //
 //  Copy_Values_Len_Shallow: C
 //  
-//      Shallow copy the first 'len' values of `value[]` into a new
-//      series created to hold exactly that many entries.
+//  Shallow copy the first 'len' values of `value[]` into a new
+//  series created to hold exactly that many entries.
 //
 REBSER *Copy_Values_Len_Shallow(REBVAL value[], REBCNT len)
 {
@@ -117,17 +117,17 @@ REBSER *Copy_Values_Len_Shallow(REBVAL value[], REBCNT len)
 //
 //  Clonify_Values_Len_Managed: C
 //  
-//      Update the first `len` elements of value[] to clone the series
-//      embedded in them *if* they are in the given set of types (and
-//      if "cloning" makes sense for them, e.g. they are not simple
-//      scalars).  If the `deep` flag is set, recurse into subseries
-//      and objects when that type is matched for clonifying.
+//  Update the first `len` elements of value[] to clone the series
+//  embedded in them *if* they are in the given set of types (and
+//  if "cloning" makes sense for them, e.g. they are not simple
+//  scalars).  If the `deep` flag is set, recurse into subseries
+//  and objects when that type is matched for clonifying.
 //  
-//      Note: The resulting clones will be managed.  The model for
-//      lists only allows the topmost level to contain unmanaged
-//      values...and we *assume* the values we are operating on here
-//      live inside of an array.  (We also assume the source values
-//      are in an array, and assert that they are managed.)
+//  Note: The resulting clones will be managed.  The model for
+//  lists only allows the topmost level to contain unmanaged
+//  values...and we *assume* the values we are operating on here
+//  live inside of an array.  (We also assume the source values
+//  are in an array, and assert that they are managed.)
 //
 void Clonify_Values_Len_Managed(REBVAL value[], REBCNT len, REBOOL deep, REBU64 types)
 {
@@ -210,10 +210,10 @@ void Clonify_Values_Len_Managed(REBVAL value[], REBCNT len, REBOOL deep, REBU64 
 //
 //  Copy_Array_Core_Managed: C
 //  
-//      Copy a block, copy specified values, deeply if indicated.
+//  Copy a block, copy specified values, deeply if indicated.
 //  
-//      The resulting series will already be under GC management,
-//      and hence cannot be freed with Free_Series().
+//  The resulting series will already be under GC management,
+//  and hence cannot be freed with Free_Series().
 //
 REBSER *Copy_Array_Core_Managed(REBSER *block, REBCNT index, REBCNT tail, REBOOL deep, REBU64 types)
 {
@@ -247,16 +247,16 @@ REBSER *Copy_Array_Core_Managed(REBSER *block, REBCNT index, REBCNT tail, REBOOL
 //
 //  Copy_Array_At_Deep_Managed: C
 //  
-//      Deep copy an array, including all series (strings, blocks,
-//      parens, objects...) excluding images, bitsets, maps, etc.
-//      The set of exclusions is the typeset TS_NOT_COPIED.
+//  Deep copy an array, including all series (strings, blocks,
+//  parens, objects...) excluding images, bitsets, maps, etc.
+//  The set of exclusions is the typeset TS_NOT_COPIED.
 //  
-//      The resulting array will already be under GC management,
-//      and hence cannot be freed with Free_Series().
+//  The resulting array will already be under GC management,
+//  and hence cannot be freed with Free_Series().
 //  
-//      Note: If this were declared as a macro it would use the
-//      `array` parameter more than once, and have to be in all-caps
-//      to warn against usage with arguments that have side-effects.
+//  Note: If this were declared as a macro it would use the
+//  `array` parameter more than once, and have to be in all-caps
+//  to warn against usage with arguments that have side-effects.
 //
 REBSER *Copy_Array_At_Deep_Managed(REBSER *array, REBCNT index)
 {
@@ -273,10 +273,10 @@ REBSER *Copy_Array_At_Deep_Managed(REBSER *array, REBCNT index)
 //
 //  Copy_Stack_Values: C
 //  
-//      Copy computed values from the stack into the series
-//      specified by "into", or if into is NULL then store it as a
-//      block on top of the stack.  (Also checks to see if into
-//      is protected, and will trigger a trap if that is the case.)
+//  Copy computed values from the stack into the series
+//  specified by "into", or if into is NULL then store it as a
+//  block on top of the stack.  (Also checks to see if into
+//  is protected, and will trigger a trap if that is the case.)
 //
 void Copy_Stack_Values(REBINT start, REBVAL *into)
 {
@@ -358,12 +358,12 @@ void Copy_Stack_Values(REBINT start, REBVAL *into)
 //
 //  Alloc_Tail_Array: C
 //  
-//      Append a REBVAL-size slot to Rebol Array series at its tail.
-//      Will use existing memory capacity already in the series if it
-//      is available, but will expand the series if necessary.
-//      Returns the new value for you to initialize.
+//  Append a REBVAL-size slot to Rebol Array series at its tail.
+//  Will use existing memory capacity already in the series if it
+//  is available, but will expand the series if necessary.
+//  Returns the new value for you to initialize.
 //  
-//      Note: Updates the termination and tail.
+//  Note: Updates the termination and tail.
 //
 REBVAL *Alloc_Tail_Array(REBSER *block)
 {
@@ -381,10 +381,10 @@ REBVAL *Alloc_Tail_Array(REBSER *block)
 //
 //  Find_Same_Block: C
 //  
-//      Scan a block for any values that reference blocks related
-//      to the value provided.
+//  Scan a block for any values that reference blocks related
+//  to the value provided.
 //  
-//      Defect: only checks certain kinds of values.
+//  Defect: only checks certain kinds of values.
 //
 REBINT Find_Same_Block(REBSER *blk, const REBVAL *val)
 {
@@ -423,10 +423,10 @@ REBINT Find_Same_Block(REBSER *blk, const REBVAL *val)
 //
 //  Unmark: C
 //  
-//      Clear the recusion markers for series and object trees.
+//  Clear the recusion markers for series and object trees.
 //  
-//      Note: these markers are also used for GC. Functions that
-//      call this must not be able to trigger GC!
+//  Note: these markers are also used for GC. Functions that
+//  call this must not be able to trigger GC!
 //
 void Unmark(REBVAL *val)
 {

@@ -57,16 +57,16 @@
 //
 //  Compress: C
 //  
-//      Compress a binary (only).
-//      data
-//      /part
-//      length
-//      /crc32
+//  Compress a binary (only).
+//  data
+//  /part
+//  length
+//  /crc32
 //  
-//      Note: If the file length is "small", it can't overrun on
-//      compression too much so we use our magic numbers; otherwise,
-//      we'll just be safe by a percentage of the file size.  This may
-//      be a bit much, though.
+//  Note: If the file length is "small", it can't overrun on
+//  compression too much so we use our magic numbers; otherwise,
+//  we'll just be safe by a percentage of the file size.  This may
+//  be a bit much, though.
 //
 REBSER *Compress(REBSER *input, REBINT index, REBINT len, REBFLG use_crc)
 {
@@ -112,10 +112,10 @@ REBSER *Compress(REBSER *input, REBINT index, REBINT len, REBFLG use_crc)
 //
 //  Decompress: C
 //  
-//      Decompress a binary (only).
+//  Decompress a binary (only).
 //  
-//      Rebol's compress/decompress functions store an extra length
-//      at the tail of the data, to double-check the zlib result
+//  Rebol's compress/decompress functions store an extra length
+//  at the tail of the data, to double-check the zlib result
 //
 REBSER *Decompress(const REBYTE *data, REBCNT len, REBCNT limit, REBFLG use_crc)
 {

@@ -162,7 +162,7 @@ static void Set_Struct_Vars(REBSTU *strut, REBVAL *blk)
 //
 //  Struct_To_Block: C
 //  
-//      Used by MOLD to create a block.
+//  Used by MOLD to create a block.
 //
 REBSER *Struct_To_Block(const REBSTU *stu)
 {

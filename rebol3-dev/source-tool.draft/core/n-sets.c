@@ -46,7 +46,7 @@ enum {
 //
 //  Do_Set_Operation: C
 //  
-//      Do set operations on a series.
+//  Do set operations on a series.
 //
 static REBINT Do_Set_Operation(struct Reb_Call *call_, REBCNT flags)
 {

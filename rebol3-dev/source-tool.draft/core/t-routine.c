@@ -1004,16 +1004,16 @@ static void callback_dispatcher(ffi_cif *cif, void *ret, void **args, void *user
 //
 //  MT_Routine: C
 //  
-//   format:
-//   make routine! [[
-//       "document"
-//       arg1 [type1 type2] "note"
-//       arg2 [type3] "note"
-//       ...
-//       argn [typen] "note"
-//       return: [type] "note"
-//       abi: word "note"
-//   ] lib "name"]
+//  format:
+//  make routine! [[
+//      "document"
+//      arg1 [type1 type2] "note"
+//      arg2 [type3] "note"
+//      ...
+//      argn [typen] "note"
+//      return: [type] "note"
+//      abi: word "note"
+//  ] lib "name"]
 //
 REBFLG MT_Routine(REBVAL *out, REBVAL *data, REBCNT type)
 {

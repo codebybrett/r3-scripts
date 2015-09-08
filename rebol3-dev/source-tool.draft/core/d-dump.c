@@ -110,8 +110,8 @@ void Dump_Bytes(REBYTE *bp, REBCNT limit)
 //
 //  Dump_Values: C
 //  
-//      Print out values in raw hex; If memory is corrupted
-//      this function still needs to work.
+//  Print out values in raw hex; If memory is corrupted
+//  this function still needs to work.
 //
 void Dump_Values(REBVAL *vp, REBCNT count)
 {

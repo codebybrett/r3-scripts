@@ -74,14 +74,14 @@ void Shutdown_Stacks(void)
 //
 //  Push_Stack_Values: C
 //  
-//      Pushes sequential values from a series onto the stack all
-//      in one go.  All of this needs review in terms of whether
-//      things like COMPOSE should be using arbitrary stack pushes
-//           in the first place or if it should not pile up the stack
-//      like this.
+//  Pushes sequential values from a series onto the stack all
+//  in one go.  All of this needs review in terms of whether
+//  things like COMPOSE should be using arbitrary stack pushes
+//       in the first place or if it should not pile up the stack
+//  like this.
 //  
-//      !!! Notably simple implementation, just hammering out the
-//      client interfaces that made sequential stack memory assumptions.
+//  !!! Notably simple implementation, just hammering out the
+//  client interfaces that made sequential stack memory assumptions.
 //
 void Push_Stack_Values(const REBVAL *values, REBINT length)
 {
@@ -94,12 +94,12 @@ void Push_Stack_Values(const REBVAL *values, REBINT length)
 //
 //  Pop_Stack_Values: C
 //  
-//      Pop_Stack_Values computed values from the stack into the series
-//      specified by "into", or if into is NULL then store it as a
-//      block on top of the stack.  (Also checks to see if into
-//      is protected, and will trigger a trap if that is the case.)
+//  Pop_Stack_Values computed values from the stack into the series
+//  specified by "into", or if into is NULL then store it as a
+//  block on top of the stack.  (Also checks to see if into
+//  is protected, and will trigger a trap if that is the case.)
 //  
-//      Protocol for /INTO is to set the position to the tail.
+//  Protocol for /INTO is to set the position to the tail.
 //
 void Pop_Stack_Values(REBVAL *out, REBINT dsp_start, REBOOL into)
 {
@@ -127,9 +127,9 @@ void Pop_Stack_Values(REBVAL *out, REBINT dsp_start, REBOOL into)
 //
 //  Expand_Stack: C
 //  
-//      Expand the datastack. Invalidates any references to stack
-//      values, so code should generally use stack index integers,
-//      not pointers into the stack.
+//  Expand the datastack. Invalidates any references to stack
+//  values, so code should generally use stack index integers,
+//  not pointers into the stack.
 //
 void Expand_Stack(REBCNT amount)
 {
@@ -142,16 +142,16 @@ void Expand_Stack(REBCNT amount)
 //
 //  Make_Call: C
 //  
-//      Create a function call frame.  This doesn't necessarily call
-//      Alloc_Mem, because call frames are allocated sequentially
-//      inside of "memory chunks" in their ordering on the stack.
-//      Allocation is only required if we need to step into a new
-//      chunk (and even then only if we aren't stepping into a chunk
-//      that we are reusing from a prior expansion).
+//  Create a function call frame.  This doesn't necessarily call
+//  Alloc_Mem, because call frames are allocated sequentially
+//  inside of "memory chunks" in their ordering on the stack.
+//  Allocation is only required if we need to step into a new
+//  chunk (and even then only if we aren't stepping into a chunk
+//  that we are reusing from a prior expansion).
 //  
-//      We do not set the frame as "Running" at the same time we create
-//      it, because we need to fulfill its arguments in the caller's
-//      frame before we actually invoke the function.
+//  We do not set the frame as "Running" at the same time we create
+//  it, because we need to fulfill its arguments in the caller's
+//  frame before we actually invoke the function.
 //
 struct Reb_Call *Make_Call(REBVAL *out, REBSER *block, REBCNT index, const REBVAL *label, const REBVAL *func)
 {
@@ -268,9 +268,9 @@ struct Reb_Call *Make_Call(REBVAL *out, REBSER *block, REBCNT index, const REBVA
 //
 //  Free_Call: C
 //  
-//      Free a call frame.  This only occasionally requires an actual
-//      call to Free_Mem(), due to allocating call frames sequentially
-//      in chunks of memory.
+//  Free a call frame.  This only occasionally requires an actual
+//  call to Free_Mem(), due to allocating call frames sequentially
+//  in chunks of memory.
 //
 void Free_Call(struct Reb_Call* call)
 {
@@ -310,9 +310,9 @@ void Free_Call(struct Reb_Call* call)
 //
 //  DSF_VAR_Debug: C
 //  
-//      Debug-only version of getting a variable out of a call
-//      frame, which asserts if you use an index that is higher
-//      than the number of arguments in the frame.
+//  Debug-only version of getting a variable out of a call
+//  frame, which asserts if you use an index that is higher
+//  than the number of arguments in the frame.
 //
 REBVAL *DSF_VAR_Debug(struct Reb_Call *call, REBCNT n)
 {
