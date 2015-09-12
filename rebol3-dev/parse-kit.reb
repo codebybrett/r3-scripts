@@ -584,9 +584,11 @@ restore-rule: funct [
 	{Restores rule modified by on-parsing function to original definition.}
 	rule [word!] {The rule name.}
 ] [
+
 	if all [(block? def: get rule) (found? pos: find/last :def first [event.end:])] [
 		set rule first get bind 'saved-rule pos/1
 	]
+
 	get rule
 ]
 
@@ -646,13 +648,10 @@ get-parse: funct [
 				append output/1/3 reduce ['length length]
 
 				output: next output ; Accept tree node.
-
 			] [
 
 				remove output ; Reject tree node.
-
 			]
-
 		]
 
 	] node
@@ -687,9 +686,7 @@ get-parse: funct [
 					position: start-position ; Input position
 
 					output: insert/only output reduce [name output compose/only [type terminal position (position) length (length)]]
-
 				]
-
 			]
 
 		] node
