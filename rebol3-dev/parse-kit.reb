@@ -31,6 +31,7 @@ REBOL [
 		1.5.0 [26-Aug-2015 "Added position and length properties to root. Rename ctx to output." "Brett Handley"]
 		1.5.1 [31-Aug-2015 "Fix parsing-unless and optimise for Rebol 3." "Brett Handley"]
 		1.6.0 [7-Sep-2015 "Add parsing-earliest and parsing-matched." "Brett Handley"]
+		1.7.0 [12-Sep-2015 "Optimise parsing-when for Rebol 3." "Brett Handley"]
 	]
 ]
 
@@ -434,6 +435,13 @@ either system/version > 2.100.0 [; Rebol 3
 		compose/only [not (rule)]
 	]
 
+	parsing-when: func [
+		{Creates a rule that succeeds or fails depending on the pattern but does not move input position.}
+		pattern [block!] {Parse pattern.}
+	] [
+		compose/only [and (rule)]
+	]
+
 ] [; Rebol 2
 
 	parsing-unless: func [
@@ -448,15 +456,15 @@ either system/version > 2.100.0 [; Rebol 3
 		]
 	]
 
-]
-
-parsing-when: func [
-	{Creates a rule that succeeds or fails depending on the pattern but does not move input position.}
-	pattern [block!] {Parse pattern.}
-] [
-	use [position][
-		compose/only [position: (pattern) :position]
+	parsing-when: func [
+		{Creates a rule that succeeds or fails depending on the pattern but does not move input position.}
+		pattern [block!] {Parse pattern.}
+	] [
+		use [position] [
+			compose/only [position: (pattern) :position]
+		]
 	]
+
 ]
 
 
