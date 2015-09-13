@@ -87,7 +87,7 @@ load-until-blank: funct [
 
 	rule: [
 		some [not-terminator rebol-value]
-		opt newline position: to end
+		opt [1 2 newline] position: to end
 	]
 
 	if parse/all string rule [
