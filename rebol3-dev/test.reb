@@ -2,4 +2,4 @@ REBOL []
 
 hdr: mold system/script
 
-halt
+opt: mold system/options
