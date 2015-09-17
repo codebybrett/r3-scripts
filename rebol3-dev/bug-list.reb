@@ -9,7 +9,7 @@ requirements 'problems-encountered [
 
 	[{Get path of length 1.}
 
-		use [x] [x: context [v: 1] get to path! 'x]
+		1 = get in use [x] [x: context [v: 1] get to path! 'x] 'v
 	]
 
 	[{Mold should handle blocks with recursive references.}
