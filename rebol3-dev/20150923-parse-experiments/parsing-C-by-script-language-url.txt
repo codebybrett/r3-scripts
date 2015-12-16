@@ -1,0 +1,7 @@
+
+Talks about the typename identifier ambiguity.
+http://wiki.tcl.tk/3906
+
+
+How Clang handles the ambiguity
+http://eli.thegreenplace.net/2012/07/05/how-clang-handles-the-type-variable-name-ambiguity-of-cc
